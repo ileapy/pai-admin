@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 
 use app\admin\BaseController;
+use think\facade\View;
 
 class Index extends BaseController
 {
@@ -14,6 +15,6 @@ class Index extends BaseController
      */
     public function index()
     {
-        return view();
+        return View::fetch();
     }
 }
