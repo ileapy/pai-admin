@@ -5,7 +5,7 @@
 
 return [
     // 模板后缀
-    'view_suffix'  => 'php',
+    'view_suffix'  => 'html',
     // 视图输出字符串内容替换
     'tpl_replace_string'       => [
         '{__PUBLIC_PATH__}' =>  '/',              //public 目录
