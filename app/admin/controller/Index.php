@@ -11,7 +11,8 @@ class Index extends BaseController
 {
     /**
      * 后台首页
-     * @return \think\response\View
+     * @return string
+     * @throws \Exception
      */
     public function index()
     {
