@@ -4,10 +4,10 @@
 namespace app\admin\controller;
 
 
-use app\admin\BaseController;
+use app\admin\AuthController;
 use think\facade\View;
 
-class Index extends BaseController
+class Index extends AuthController
 {
     /**
      * 后台首页
