@@ -10,6 +10,9 @@ class Login extends AuthController
 {
     protected $noNeedLogin = ['login'];
 
+    /**
+     * 登录
+     */
     public function login()
     {
         var_dump("login");
