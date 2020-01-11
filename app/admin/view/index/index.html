@@ -7,9 +7,9 @@
     <meta name="keywords" content="ok-admin v2.0,ok-admin网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
     <meta name="description" content="ok-admin v2.0，顾名思义，很赞的后台模版，它是一款基于Layui框架的轻量级扁平化且完全免费开源的网站后台管理系统模板，适合中小型CMS后台系统。">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="shortcut icon" href="{__ADMIN_PATH__}images/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="{__ADMIN_PATH__}css/okadmin.css">
-    <link rel="stylesheet" href="{__ADMIN_PATH__}lib/loading/okLoading.css" />
+    <link rel="shortcut icon" href="__ADMIN_PATH__images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="__ADMIN_PATH__css/okadmin.css">
+    <link rel="stylesheet" href="__ADMIN_PATH__lib/loading/okLoading.css" />
 </head>
 <body class="layui-layout-body">
 <!-- 更换主体 Eg:orange_theme|blue_theme -->
@@ -55,14 +55,13 @@
 
             <li class="no-line layui-nav-item">
                 <a href="javascript:">
-                    <img src="{__ADMIN_PATH__}images/avatar.png" class="layui-nav-img">
+                    <img src="__ADMIN_PATH__images/avatar.png" class="layui-nav-img">
                     bobi
                 </a>
                 <dl id="userInfo" class="layui-nav-child">
                     <dd><a lay-id="u-1" href="javascript:" data-url="pages/member/user.html">个人中心<span class="layui-badge-dot"></span></a></dd>
                     <dd><a lay-id="u-2" href="javascript:" data-url="pages/member/user-info.html">基本资料</a></dd>
                     <dd><a lay-id="u-3" href="javascript:" data-url="pages/member/user-pwd.html">安全设置</a></dd>
-                    <dd><a lay-id="u-4" href="javascript:" id="alertSkin">皮肤动画</a></dd>
                     <dd>
                         <hr/>
                     </dd>
@@ -79,14 +78,14 @@
             <div class="okadmin-logo">ok-admin v2.0</div>
             <div class="user-photo">
                 <a class="img" title="我的头像">
-                    <img src="{__ADMIN_PATH__}images/avatar.png" class="userAvatar">
+                    <img src="__ADMIN_PATH__images/avatar.png" class="userAvatar">
                 </a>
                 <p>你好！<span class="userName">bobi</span>, 欢迎登录</p>
             </div>
             <!--左侧导航菜单-->
             <ul id="navBar" class="layui-nav okadmin-nav okadmin-bg-20222A layui-nav-tree">
                 <li class="layui-nav-item layui-this">
-                    <a href="javascript:" lay-id="1" data-url="pages/console.html">
+                    <a href="javascript:" lay-id="1" data-url="/console.html">
                         <i is-close=false class="ok-icon">&#xe654;</i>
                         控制台
                     </a>
@@ -124,7 +123,7 @@
 
             <div id="tabContent" class="layui-tab-content ok-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <iframe src='pages/console.html' frameborder="0" scrolling="yes" width="100%"
+                    <iframe src='/console.html' frameborder="0" scrolling="yes" width="100%"
                             height="100%"></iframe>
                 </div>
             </div>
@@ -133,15 +132,13 @@
 
     <!--底部信息-->
     <div class="layui-footer okadmin-text-center">
-        Copyright ©2018-©2019 ok-admin v2.0 All Rights Reserved
-        <button class="layui-btn layui-btn-danger layui-btn-xs donate">捐赠作者</button>
-        <button class="layui-btn layui-btn-danger layui-btn-xs communication">QQ群交流</button>
+        Copyright ©2019-©2020 LEAPY All Rights Reserved
     </div>
 </div>
 <div class="yy"></div>
 <!--js逻辑-->
-<script src="{__ADMIN_PATH__}lib/layui/layui.js"></script>
-<script src="{__ADMIN_PATH__}js/okadmin.js"></script>
-<script type="text/javascript" src="{__ADMIN_PATH__}lib/loading/okLoading.js"></script>
+<script src="__ADMIN_PATH__lib/layui/layui.js"></script>
+<script src="__ADMIN_PATH__js/okadmin.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__lib/loading/okLoading.js"></script>
 </body>
 </html>
