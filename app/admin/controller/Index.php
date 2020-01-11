@@ -18,4 +18,14 @@ class Index extends BaseController
     {
         return View::fetch();
     }
+
+    /**
+     * 控制台
+     * @return string
+     * @throws \Exception
+     */
+    public function console()
+    {
+        return View::fetch();
+    }
 }
