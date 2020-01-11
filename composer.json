@@ -34,7 +34,7 @@
     "autoload": {
         "psr-4": {
             "app\\": "app",
-            "crmeb\\": "crmeb"
+            "learn\\": "learn"
         },
         "psr-0": {
             "": "extend/"
