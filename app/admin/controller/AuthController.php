@@ -76,6 +76,5 @@ abstract class AuthController extends BaseController
     {
         // 不需要登录
         if (in_array($this->action,$this->noNeedLogin)) return true;
-        var_dump(123);
     }
 }

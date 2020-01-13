@@ -4,6 +4,7 @@ declare (strict_types = 1);
 namespace learn\basic\admin;
 
 use think\App;
+use think\exception\HttpResponseException;
 use think\exception\ValidateException;
 use think\facade\View;
 use think\Validate;
@@ -100,5 +101,13 @@ abstract class BaseController
     protected function view()
     {
         return View::fetch();
+    }
+
+    /**
+     * 页面
+     * @param mixed ...$args
+     */
+    protected function redirect(...$args){
+        throw new HttpResponseException(redirect(...$args));
     }
 }
