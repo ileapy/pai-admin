@@ -34,6 +34,7 @@ class Login extends AuthController
         list($account,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
         if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
+        if (!captcha_check($verify)) return app("json")->fail("验证码不正确！");
         // 验证登录
         if (!adminModel::login($account,$pwd)) return app("json")->fail("登录失败！");
         return app("json")->success("登录成功！");
