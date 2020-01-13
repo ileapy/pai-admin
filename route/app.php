@@ -14,4 +14,6 @@ Route::get('think', function () {
     return 'hello,ThinkPHP6!';
 });
 
+Route::get('captcha', 'admin/login/captcha');
+
 Route::get('hello/:name', 'index/hello');

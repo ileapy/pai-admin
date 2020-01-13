@@ -3,12 +3,15 @@
 
 namespace app\admin\controller;
 
-use think\Request;
-use app\admin\controller\AuthController;
+use think\captcha\Captcha;
 
 class Login extends AuthController
 {
-    protected $noNeedLogin = ['login'];
+    /**
+     * 无需登录
+     * @var array
+     */
+    protected $noNeedLogin = ['login','register','forget','captcha'];
 
     /**
      * 登录
@@ -38,5 +41,15 @@ class Login extends AuthController
     public function forget()
     {
         return $this->view();
+    }
+
+    /**
+     * 验证码
+     * @return \think\Response
+     */
+    public function captcha()
+    {
+        $c = new Captcha();
+        return $c->create();
     }
 }
