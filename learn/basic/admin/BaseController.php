@@ -5,6 +5,7 @@ namespace learn\basic\admin;
 
 use think\App;
 use think\exception\ValidateException;
+use think\facade\View;
 use think\Validate;
 
 /**
@@ -44,7 +45,7 @@ abstract class BaseController
     public function __construct(App $app)
     {
         $this->app     = $app;
-        $this->request = $this->app->request;
+        $this->request = app("request");
 
         // 控制器初始化
         $this->initialize();
@@ -89,5 +90,15 @@ abstract class BaseController
         }
 
         return $v->failException(true)->check($data);
+    }
+
+    /**
+     * 返回视图
+     * @return string
+     * @throws \Exception
+     */
+    protected function view()
+    {
+        return View::fetch();
     }
 }
