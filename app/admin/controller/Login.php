@@ -3,10 +3,10 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Admin;
+use app\admin\model\Admin as adminModel;
 use app\Request;
-use learn\services\JsonService;
 use learn\services\UtilService as Util;
+use think\facade\Session;
 
 class Login extends AuthController
 {
@@ -31,10 +31,10 @@ class Login extends AuthController
      */
     public function verify(Request $request)
     {
-        list($name,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
-        if (empty($name) || empty($pwd) || empty($verify)) return app("json")->fail("账号、密码和验证码不能为空！");
-        var_dump($request);
-//        Admin::login();
+        list($account,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
+        if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
+        // 验证码验证
+        var_dump(adminModel::login($account,$pwd));
     }
 
     /**

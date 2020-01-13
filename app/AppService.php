@@ -3,6 +3,7 @@ declare (strict_types = 1);
 
 namespace app;
 
+use learn\utils\Json;
 use think\Service;
 
 /**
@@ -10,6 +11,10 @@ use think\Service;
  */
 class AppService extends Service
 {
+    public $bind = [
+        'json' => Json::class
+    ];
+
     public function register()
     {
         // 服务注册
