@@ -3,7 +3,9 @@
 namespace app\admin\controller;
 
 use learn\basic\admin\BaseController;
-use think\App;
+use think\facade\App;
+use think\facade\Lang;
+
 /**
  * 控制器基础类
  */
@@ -67,6 +69,7 @@ abstract class AuthController extends BaseController
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
         $this->checkAuth();
+        $this->loadlang($this->controller);
     }
 
     /**
@@ -76,5 +79,14 @@ abstract class AuthController extends BaseController
     {
         // 不需要登录
         if (in_array($this->action,$this->noNeedLogin)) return true;
+    }
+
+    /**
+     * 加载语言文件
+     * @param string $name
+     */
+    protected function loadlang($name)
+    {
+        Lang::load(App::getRootPath() . 'app/' . $this->module . '/lang/' . Lang::getLangSet() . '/' . $name . '.php');
     }
 }
