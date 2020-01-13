@@ -5,7 +5,8 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin;
 use app\Request;
-use think\captcha\Captcha;
+use learn\services\JsonService;
+use learn\services\UtilService as Util;
 
 class Login extends AuthController
 {
@@ -30,6 +31,8 @@ class Login extends AuthController
      */
     public function verify(Request $request)
     {
+        list($name,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
+        if (empty($name) || empty($pwd) || empty($verify)) return app("json")->fail("账号、密码和验证码不能为空！");
         var_dump($request);
 //        Admin::login();
     }
