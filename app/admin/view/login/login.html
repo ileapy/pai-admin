@@ -24,7 +24,7 @@
             <div class="layui-form-item input-item captcha-box">
                 <label for="captcha">验证码</label>
                 <input type="text" lay-verify="required|captcha" name="captcha" placeholder="请输入验证码" autocomplete="off" id="captcha" maxlength="4" class="layui-input">
-                <div class="img ok-none-select" id="captchaImg">{:captcha_img()}</div>
+                <div><img src="/admin/login/captcha" class="captchaImg"/></div>
             </div>
             <div class="layui-form-item">
                 <button class="layui-btn layui-block" lay-filter="login" lay-submit="">登录</button>
@@ -41,14 +41,8 @@
         layui.use(["form", "okGVerify", "okUtils", "okLayer"], function () {
             let form = layui.form;
             let $ = layui.jquery;
-            // let okGVerify = layui.okGVerify;
             let okUtils = layui.okUtils;
             let okLayer = layui.okLayer;
-
-            /**
-             * 初始化验证码
-             */
-            // let verifyCode = new okGVerify("#captchaImg");
 
             /**
              * 数据校验

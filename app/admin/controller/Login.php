@@ -11,7 +11,7 @@ class Login extends AuthController
      * 无需登录
      * @var array
      */
-    protected $noNeedLogin = ['login','register','forget','captcha'];
+    protected $noNeedLogin = ['login','register','forget'];
 
     /**
      * 登录
@@ -49,7 +49,7 @@ class Login extends AuthController
      */
     public function captcha()
     {
-        $c = new Captcha();
-        return $c->create();
+        ob_clean();
+        return captcha();
     }
 }
