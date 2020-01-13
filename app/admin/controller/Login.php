@@ -6,7 +6,7 @@ namespace app\admin\controller;
 use app\admin\model\Admin as adminModel;
 use app\Request;
 use learn\services\UtilService as Util;
-use think\facade\Session;
+use think\facade\Route as Url;
 
 class Login extends AuthController
 {
@@ -34,7 +34,7 @@ class Login extends AuthController
         list($account,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
         if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
         // 验证码验证
-        var_dump(adminModel::login($account,$pwd));
+        if (!adminModel::login($account,$pwd)) return $this->redirect(Url::buildUrl('Index/index')->build());;
     }
 
     /**
