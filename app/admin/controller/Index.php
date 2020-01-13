@@ -4,7 +4,7 @@
 namespace app\admin\controller;
 
 
-use app\admin\AuthController;
+use app\admin\controller\AuthController;
 use think\facade\View;
 
 class Index extends AuthController
@@ -16,7 +16,7 @@ class Index extends AuthController
      */
     public function index()
     {
-        return View::fetch();
+        return $this->view();
     }
 
     /**
@@ -26,6 +26,6 @@ class Index extends AuthController
      */
     public function console()
     {
-        return View::fetch();
+        return $this->view();
     }
 }

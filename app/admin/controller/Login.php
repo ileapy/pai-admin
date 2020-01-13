@@ -12,9 +12,11 @@ class Login extends AuthController
 
     /**
      * 登录
+     * @return string
+     * @throws \Exception
      */
     public function login()
     {
-        var_dump("login");
+        return $this->view();
     }
 }
