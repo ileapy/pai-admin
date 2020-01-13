@@ -3,6 +3,8 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\Admin;
+use app\Request;
 use think\captcha\Captcha;
 
 class Login extends AuthController
@@ -26,9 +28,10 @@ class Login extends AuthController
     /**
      * 验证登录
      */
-    public function verify()
+    public function verify(Request $request)
     {
-
+        var_dump($request);
+//        Admin::login();
     }
 
     /**
