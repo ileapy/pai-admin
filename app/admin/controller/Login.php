@@ -11,7 +11,7 @@ class Login extends AuthController
      * 无需登录
      * @var array
      */
-    protected $noNeedLogin = ['login','register','forget','captcha'];
+    protected $noNeedLogin = ['login','register','forget','captcha','verify'];
 
     /**
      * 登录
@@ -21,6 +21,14 @@ class Login extends AuthController
     public function login()
     {
         return $this->view();
+    }
+
+    /**
+     * 验证登录
+     */
+    public function verify()
+    {
+
     }
 
     /**
