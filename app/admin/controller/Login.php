@@ -29,7 +29,7 @@ class Login extends AuthController
     /**
      * 验证登录
      */
-    public function verify(Request $request)
+    public function verify()
     {
         list($account,$pwd,$verify) = Util::postMore(['account','pwd','verify'],null,true);
         if (empty($account) || empty($pwd)) return app("json")->fail("账号、密码和验证码不能为空！");
