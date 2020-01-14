@@ -23,7 +23,7 @@ return [
 
     // 支持workerman的所有配置参数
     'name'           => 'thinkphp',
-    'count'          => 4,
+    'count'          => 1,
     'daemonize'      => false,
     'pidFile'        => '',
 
