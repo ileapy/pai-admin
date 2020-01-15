@@ -8,12 +8,13 @@ use learn\workerman\Response;
 use think\worker\Server;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
+
 /**
  * 后台ws服务
  * Class worker
  * @package learn\workerman\admin
  */
-class WorkerService
+class WorkerService extends Server
 {
     /**
      * 协议
@@ -77,6 +78,7 @@ class WorkerService
      */
     protected function init(Worker $worker)
     {
+        parent::init();
         $this->worker = $worker;
         $this->handle = new WorkerHandle($this);
         $this->response = new Response();
