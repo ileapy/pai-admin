@@ -13,7 +13,7 @@ use Workerman\Worker;
  * Class worker
  * @package learn\workerman\admin
  */
-class WorkerService extends Server
+class WorkerService
 {
     /**
      * 协议
@@ -73,7 +73,6 @@ class WorkerService extends Server
     }
 
     /**
-     *
      * worker constructor.
      */
     protected function init(Worker $worker)
