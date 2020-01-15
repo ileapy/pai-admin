@@ -113,6 +113,7 @@ class WorkerService extends Server
     {
         $connection->lastMessageTime = time();
         $res = json_decode($res, true);
+        var_dump($res);
         if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') return;
         var_dump('onMessage', $res);
         if (!method_exists($this->handle, $res['type'])) return;
