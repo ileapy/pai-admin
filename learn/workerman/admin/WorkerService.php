@@ -116,7 +116,7 @@ class WorkerService extends Server
 
     public function onWorkerStart(Worker $worker)
     {
-        Timer::add(15, array($this->handle, 'timeoutClose'), array(), true);
+        Timer::add(15, array($this->handle, 'timeoutClose'), [$worker], true);
     }
 
     /**
