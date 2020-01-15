@@ -116,43 +116,14 @@ class WorkerService extends Server
 
     public function onWorkerStart(Worker $worker)
     {
-//        ChannelService::connet();
 
-//        Client::on('crmeb', function ($eventData) use ($worker) {
-//            if (!isset($eventData['type']) || !$eventData['type']) return;
-//            $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
-//            foreach ($ids as $id) {
-//                if (isset($this->user[$id]))
-//                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
-//            }
-//        });
-        $task = new Worker();
-        $task->count = 1;
-        $task->onWorkerStart = function($task)
-        {
-            // 每2.5秒执行一次
-            $time_interval = 2;
-            Timer::add($time_interval, function()
-            {
-                echo "task run\n";
-            });
-        };
-
-// 运行worker
-//        $this->timer = Timer::add(15, function ($eventData) use (&$worker) {
-//            var_dump(time());
-//            var_dump($eventData);
-////            $time_now = time();
-////            foreach ($worker->connections as $connection) {
-////                if ($time_now - $connection->lastMessageTime > 12) {
-////                    var_dump($time_now);
-////                    var_dump($connection->lastMessageTime);
-////                    $this->response->connection($connection)->close('timeout');
-////                }
-////            }
-//        });
+        Timer::add(60, array($this, 'index'), array(), true);
     }
 
+    public function index()
+    {
+        echo "1123123";
+    }
     /**
      * 连接关闭
      * @param TcpConnection $connection
