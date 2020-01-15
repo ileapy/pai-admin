@@ -18,6 +18,18 @@ class ChannelService
      */
     protected static $instance;
 
+    /**
+     * 监听地址
+     * @var string
+     */
+    const LISTENHOST = '0.0.0.0';
+
+    /**
+     * 监听端口
+     * @var string
+     */
+    const LISTENPORT = 1996;
+
     public function __construct()
     {
         self::connet();
@@ -33,8 +45,10 @@ class ChannelService
 
     public static function connet()
     {
-        $config = config('workerman.channel');
-        Client::connect($config['ip'], $config['port']);
+        try {
+            Client::connect(self::LISTENHOST, self::LISTENPORT);
+        } catch (\Exception $e) {
+        }
     }
 
     /**
@@ -43,7 +57,7 @@ class ChannelService
      * @param array|null $data 数据
      * @param array|null $ids 用户 id,不传为全部用户
      */
-    public function send(string $type, ? array $data = null, ?array $ids = null)
+    public function send(string $type, ?array $data = null, ?array $ids = null)
     {
         $res = compact('type');
         if (!is_null($data))
@@ -52,7 +66,7 @@ class ChannelService
         if (!is_null($ids) && count($ids))
             $res['ids'] = $ids;
 
-        $this->trigger('crmeb', $res);
+        $this->trigger('LEARN', $res);
     }
 
     public function trigger(string $type, ?array $data = null)
