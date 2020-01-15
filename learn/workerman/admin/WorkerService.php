@@ -112,10 +112,9 @@ class WorkerService extends Server
     public function onMessage(TcpConnection $connection, $res)
     {
         $connection->lastMessageTime = time();
-        $res = json_decode($res, true);
         var_dump($res);
+        $res = json_decode($res, true);
         if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') return;
-        var_dump('onMessage', $res);
         if (!method_exists($this->handle, $res['type'])) return;
         $this->handle->{$res['type']}($connection, $res + ['data' => []], $this->response->connection($connection));
     }
