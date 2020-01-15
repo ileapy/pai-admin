@@ -75,6 +75,7 @@ class WorkerService extends Server
 
     /**
      * worker constructor.
+     * @param Worker|null $worker
      */
     protected function init(Worker $worker = null)
     {
@@ -91,11 +92,7 @@ class WorkerService extends Server
      */
     public function onMessage(TcpConnection $connection, $data)
     {
-        $connection->send('receive success');
-    }
-
-    public function onConnect($connection, $data)
-    {
-
+        var_dump($data);
+//        $connection->send('receive success');
     }
 }
