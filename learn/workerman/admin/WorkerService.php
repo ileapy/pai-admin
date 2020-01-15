@@ -126,10 +126,9 @@ class WorkerService extends Server
 //                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
 //            }
 //        });
-        $task = new Worker();
-        $task->count = 1;
-        $this->timer = Timer::add(15, function () use (&$worker) {
+        $this->timer = Timer::add(15, function ($eventData) use (&$worker) {
             var_dump(time());
+            var_dump($eventData);
 //            $time_now = time();
 //            foreach ($worker->connections as $connection) {
 //                if ($time_now - $connection->lastMessageTime > 12) {
@@ -139,7 +138,6 @@ class WorkerService extends Server
 //                }
 //            }
         });
-        $task->runAll();
     }
 
     /**
