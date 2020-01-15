@@ -24,7 +24,7 @@ return [
     // 支持workerman的所有配置参数
     'name'           => 'admin',
     'count'          => 1,
-    'daemonize'      => true,
+    'daemonize'      => false,
     'pidFile'        => '',
 
     // 支持事件回调
