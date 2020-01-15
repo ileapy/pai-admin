@@ -76,7 +76,7 @@ class WorkerService extends Server
     /**
      * worker constructor.
      */
-    protected function init(Worker $worker)
+    protected function init(Worker $worker = null)
     {
         parent::init();
         $this->worker = $worker;
