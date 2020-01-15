@@ -131,7 +131,7 @@ class WorkerService extends Server
         $task->onWorkerStart = function($task)
         {
             // 每2.5秒执行一次
-            $time_interval = 10;
+            $time_interval = 2;
             Timer::add($time_interval, function()
             {
                 echo "task run\n";
@@ -139,7 +139,6 @@ class WorkerService extends Server
         };
 
 // 运行worker
-        Worker::runAll();
 //        $this->timer = Timer::add(15, function ($eventData) use (&$worker) {
 //            var_dump(time());
 //            var_dump($eventData);
