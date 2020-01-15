@@ -24,7 +24,7 @@ class Worker extends Server
      * 端口
      * @var string
      */
-    protected $port = 997;
+    protected $port = 1997;
 
     /**
      * 基础配置
