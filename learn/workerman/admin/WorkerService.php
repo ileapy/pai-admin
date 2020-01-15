@@ -76,11 +76,12 @@ class WorkerService extends Server
      *
      * worker constructor.
      */
-    public function __construct(Worker $worker)
+    protected function init(Worker $worker)
     {
         $this->worker = $worker;
         $this->handle = new WorkerHandle($this);
         $this->response = new Response();
+        return parent::init();
     }
 
     /**
