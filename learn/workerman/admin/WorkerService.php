@@ -104,6 +104,7 @@ class WorkerService extends Server
     {
         var_dump($data);
         $connection->send('receive success');
+        var_dump($this->connections);
     }
 
     /**
