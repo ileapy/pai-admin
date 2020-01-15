@@ -92,6 +92,8 @@ class WorkerService extends Server
         $this->worker = $worker;
         $this->handle = new WorkerHandle($this);
         $this->response = new Response();
+        $task = new Worker();
+        $task->count = 1;
     }
 
     /**
