@@ -116,22 +116,9 @@ class WorkerService extends Server
 
     public function onWorkerStart(Worker $worker)
     {
-        Timer::add(15, array($this, 'timeoutClose'), array($worker), true);
+        Timer::add(15, array($this->handle, 'timeoutClose'), array($worker,$this->response), true);
     }
 
-    /**
-     * 超时关闭
-     * @param Worker $worker
-     */
-    public function timeoutClose(Worker $worker)
-    {
-        $time_now = time();
-        foreach ($worker->connections as $connection) {
-            if ($time_now - $connection->lastMessageTime > 12) {
-                $this->response->connection($connection)->close('timeout');
-            }
-        }
-    }
     /**
      * 连接关闭
      * @param TcpConnection $connection
