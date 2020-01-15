@@ -26,7 +26,8 @@
         "overtrue/wechat": "^4.2",
         "phpoffice/phpexcel": "^1.8",
         "xaboy/form-builder": "^2.0",
-        "topthink/think-captcha": "^3.0"
+        "topthink/think-captcha": "^3.0",
+        "workerman/channel": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
