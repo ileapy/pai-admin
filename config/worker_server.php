@@ -24,7 +24,7 @@ return [
     // 支持workerman的所有配置参数
     'name'           => 'thinkphp',
     'count'          => 1,
-    'daemonize'      => false,
+    'daemonize'      => true,
     'pidFile'        => '',
 
     // 支持事件回调
