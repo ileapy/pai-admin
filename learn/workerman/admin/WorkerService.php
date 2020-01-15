@@ -92,8 +92,6 @@ class WorkerService extends Server
         $this->worker = $worker;
         $this->handle = new WorkerHandle($this);
         $this->response = new Response();
-        $task = new Worker();
-        $task->count = 1;
     }
 
     /**
@@ -128,7 +126,8 @@ class WorkerService extends Server
 //                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
 //            }
 //        });
-
+        $task = new Worker();
+        $task->count = 1;
         $this->timer = Timer::add(15, function () use (&$worker) {
             var_dump(time());
 //            $time_now = time();
@@ -140,6 +139,7 @@ class WorkerService extends Server
 //                }
 //            }
         });
+        $task->runAll();
     }
 
     /**
