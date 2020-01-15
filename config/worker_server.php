@@ -38,7 +38,7 @@ return [
     },
     // onConnect
     'onConnect'      => function ($connection) {
-        var_dump($connection);
+
     },
     // onMessage
     'onMessage'      => function ($connection, $data) {
