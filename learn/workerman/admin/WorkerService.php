@@ -81,7 +81,6 @@ class WorkerService extends Server
         $this->worker = $worker;
         $this->handle = new WorkerHandle($this);
         $this->response = new Response();
-        return parent::init();
     }
 
     /**
