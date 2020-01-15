@@ -6,7 +6,12 @@ namespace learn\workerman\chat;
 
 use think\worker\Server;
 
-class Worker extends Server
+/**
+ * 客服聊天
+ * Class Worker
+ * @package learn\workerman\chat
+ */
+class WorkerService extends Server
 {
     /**
      * 协议

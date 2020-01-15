@@ -13,7 +13,7 @@
 // | Workerman设置 仅对 php think worker:server 指令有效
 // +----------------------------------------------------------------------
 return [
-        'worker_class'   => ['learn\workerman\admin\Worker','learn\workerman\chat\Worker'], // 自定义Workerman服务类名 支持数组定义多个服务
+        'worker_class'   => ['learn\workerman\admin\WorkerService', 'learn\workerman\chat\WorkerService'], // 自定义Workerman服务类名 支持数组定义多个服务
 //    // 扩展自身需要的配置
 //    'protocol'       => 'websocket', // 协议 支持 tcp udp unix http websocket text
 //    'host'           => '0.0.0.0', // 监听地址
