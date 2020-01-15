@@ -106,14 +106,23 @@ class WorkerService extends Server
 
     /**
      * 当获取到信息
-     * @param $connection
-     * @param $data
+     * @param TcpConnection $connection
+     * @param $res
      */
-    public function onMessage(TcpConnection $connection, $data)
+    public function onMessage(TcpConnection $connection, $res)
     {
-        $connection->send('receive success');
+        $connection->lastMessageTime = time();
+        $res = json_decode($res, true);
+        if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') return;
+        var_dump('onMessage', $res);
+        if (!method_exists($this->handle, $res['type'])) return;
+        $this->handle->{$res['type']}($connection, $res + ['data' => []], $this->response->connection($connection));
     }
 
+    /**
+     * 开启时
+     * @param Worker $worker
+     */
     public function onWorkerStart(Worker $worker)
     {
         Timer::add(15, array($this->handle, 'timeoutClose'), array($worker,$this->response), true);
