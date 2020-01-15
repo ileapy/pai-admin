@@ -126,18 +126,33 @@ class WorkerService extends Server
 //                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
 //            }
 //        });
-        $this->timer = Timer::add(15, function ($eventData) use (&$worker) {
-            var_dump(time());
-            var_dump($eventData);
-//            $time_now = time();
-//            foreach ($worker->connections as $connection) {
-//                if ($time_now - $connection->lastMessageTime > 12) {
-//                    var_dump($time_now);
-//                    var_dump($connection->lastMessageTime);
-//                    $this->response->connection($connection)->close('timeout');
-//                }
-//            }
-        });
+        $task = new Worker();
+// 开启多少个进程运行定时任务，注意业务是否在多进程有并发问题
+        $task->count = 1;
+        $task->onWorkerStart = function($task)
+        {
+            // 每2.5秒执行一次
+            $time_interval = 10;
+            Timer::add($time_interval, function()
+            {
+                echo "task run\n";
+            });
+        };
+
+// 运行worker
+//        Worker::runAll();
+//        $this->timer = Timer::add(15, function ($eventData) use (&$worker) {
+//            var_dump(time());
+//            var_dump($eventData);
+////            $time_now = time();
+////            foreach ($worker->connections as $connection) {
+////                if ($time_now - $connection->lastMessageTime > 12) {
+////                    var_dump($time_now);
+////                    var_dump($connection->lastMessageTime);
+////                    $this->response->connection($connection)->close('timeout');
+////                }
+////            }
+//        });
     }
 
     /**
