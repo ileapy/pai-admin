@@ -1,17 +1,12 @@
 <?php
 
 
-namespace learn\workerman\admin;
+namespace learn\workerman\chat;
 
 
 use think\worker\Server;
 
-/**
- * 后台ws服务
- * Class worker
- * @package learn\workerman\admin
- */
-class worker extends Server
+class Worker extends Server
 {
     /**
      * 协议
@@ -29,7 +24,7 @@ class worker extends Server
      * 端口
      * @var string
      */
-    protected $port = 996;
+    protected $port = 997;
 
     /**
      * 基础配置
@@ -37,8 +32,7 @@ class worker extends Server
      */
     protected $option = [
         'count'		=> 1,
-        'name'		=> 'admin'
+        'name'		=> 'chat'
     ];
-
 
 }
