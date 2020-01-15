@@ -4,10 +4,13 @@
 namespace learn\workerman\admin;
 
 
+use learn\workerman\ChannelService;
 use learn\workerman\Response;
 use think\worker\Server;
 use Workerman\Connection\TcpConnection;
+use Workerman\Lib\Timer;
 use Workerman\Worker;
+use Channel\Client;
 
 /**
  * 后台ws服务
@@ -107,18 +110,16 @@ class WorkerService extends Server
 
     public function onWorkerStart(Worker $worker)
     {
-        var_dump('onWorkerStart');
+//        ChannelService::connet();
 
-        ChannelService::connet();
-
-        Client::on('crmeb', function ($eventData) use ($worker) {
-            if (!isset($eventData['type']) || !$eventData['type']) return;
-            $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
-            foreach ($ids as $id) {
-                if (isset($this->user[$id]))
-                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
-            }
-        });
+//        Client::on('crmeb', function ($eventData) use ($worker) {
+//            if (!isset($eventData['type']) || !$eventData['type']) return;
+//            $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
+//            foreach ($ids as $id) {
+//                if (isset($this->user[$id]))
+//                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
+//            }
+//        });
 
         $this->timer = Timer::add(15, function () use (&$worker) {
             $time_now = time();
@@ -129,6 +130,7 @@ class WorkerService extends Server
             }
         });
     }
+
     /**
      * 连接关闭
      * @param TcpConnection $connection
