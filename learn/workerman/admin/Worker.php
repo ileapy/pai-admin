@@ -13,5 +13,23 @@ use think\worker\Server;
  */
 class worker extends Server
 {
-    protected $name = "admin";
+    /**
+     * 协议
+     * @var string
+     */
+    protected $protocol = "websocket";
+
+    /**
+     * 监听地址
+     * @var string
+     */
+    protected $host = '0.0.0.0';
+
+    /**
+     * 端口
+     * @var string
+     */
+    protected $port = 23455;
+
+
 }
