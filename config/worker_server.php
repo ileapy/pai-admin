@@ -14,7 +14,7 @@
 // +----------------------------------------------------------------------
 return [
     // 自定义Workerman服务类名 支持数组定义多个服务
-    'worker_class'   => ['learn\workerman\admin\WorkerService', 'learn\workerman\chat\WorkerService','learn\workerman\ChannelService'],
+    'worker_class'   => ['learn\workerman\admin\WorkerService', 'learn\workerman\chat\WorkerService'],
 
 //    // 扩展自身需要的配置
 //    'protocol'       => 'websocket', // 协议 支持 tcp udp unix http websocket text
