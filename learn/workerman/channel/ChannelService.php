@@ -56,7 +56,6 @@ class ChannelService extends Server
     {
         parent::init();
         $this->_worker = $this->worker;
-        parent::start();
     }
 
     /**
@@ -92,7 +91,6 @@ class ChannelService extends Server
             return;
         }
         $worker = $this->_worker;
-        var_dump($worker->channels);
         $data = unserialize($data);
         $type = $data['type'];
         $channels = $data['channels'];
