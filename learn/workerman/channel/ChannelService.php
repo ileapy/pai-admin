@@ -71,10 +71,10 @@ class ChannelService extends Server
         }
         foreach($connection->channels as $channel)
         {
-            unset($this->_worker->connections[$channel][$connection->id]);
-            if(empty($this->_worker->connections[$channel]))
+            unset($this->_worker->channels[$channel][$connection->id]);
+            if(empty($this->_worker->channels[$channel]))
             {
-                unset($this->_worker->connections[$channel]);
+                unset($this->_worker->channels[$channel]);
             }
         }
     }
@@ -91,8 +91,6 @@ class ChannelService extends Server
             return;
         }
         $worker = $this->_worker;
-        var_dump($data);
-        var_dump($worker);
         $data = unserialize($data);
         $type = $data['type'];
         $channels = $data['channels'];
@@ -102,7 +100,7 @@ class ChannelService extends Server
                 foreach($channels as $channel)
                 {
                     $connection->channels[$channel] = $channel;
-                    $worker->connections[$channel][$connection->id] = $connection;
+                    $worker->channels[$channel][$connection->id] = $connection;
                 }
                 break;
             case 'unsubscribe':
@@ -114,10 +112,10 @@ class ChannelService extends Server
                     }
                     if(isset($worker->channels[$channel][$connection->id]))
                     {
-                        unset($worker->connections[$channel][$connection->id]);
-                        if(empty($worker->connections[$channel]))
+                        unset($worker->channels[$channel][$connection->id]);
+                        if(empty($worker->channels[$channel]))
                         {
-                            unset($worker->connections[$channel]);
+                            unset($worker->channels[$channel]);
                         }
                     }
                 }
@@ -125,12 +123,12 @@ class ChannelService extends Server
             case 'publish':
                 foreach($channels as $channel)
                 {
-                    if(empty($worker->connections[$channel]))
+                    if(empty($worker->channels[$channel]))
                     {
                         continue;
                     }
                     $buffer = serialize(array('channel'=>$channel, 'data' => $data['data']))."\n";
-                    foreach($worker->connections[$channel] as $connection)
+                    foreach($worker->channels[$channel] as $connection)
                     {
                         $connection->send($buffer);
                     }
