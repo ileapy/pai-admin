@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    var ws = new WebSocket("ws://182.254.133.82:1996");
+
+    try {
+        ws.send('{"type":"login","data":"b14dcdaf514888805a1f0d65614d0488"}');
+    } catch(err) {
+        var tryTime = 0;
+        // 重试10次，每次之间间隔3秒
+        if (tryTime < 1) {
+            var t1 = setTimeout(function () {
+                tryTime++;
+                ws.send('{"type":"login","data":"b14dcdaf514888805a1f0d65614d0488"}');
+            }, 3*1000);
+        } else {
+            console.error("重连失败.");
+        }
+    }
+
+    ws.onmessage = function(e) {
+        alert("收到服务端的消息：" + e.data);
+    };
+</script>
+</html>

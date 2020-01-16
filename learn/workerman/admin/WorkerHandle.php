@@ -8,6 +8,7 @@ use learn\workerman\Response;
 use learn\workerman\admin\WorkerService;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
+use think\facade\Session;
 
 class WorkerHandle
 {
