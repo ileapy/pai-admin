@@ -24,7 +24,7 @@ class ChannelService
      * 监听端口
      * @var string
      */
-    const LISTENPORT = 1996;
+    const LISTENPORT = 1995;
 
     /**
      * construct
