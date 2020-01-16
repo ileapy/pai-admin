@@ -10,7 +10,7 @@ return [
         'HttpEnd'  => [],
         'LogLevel' => [],
         'LogWrite' => [],
-        ''
+        'Test' => [],  // 后台通知测试
     ],
 
     'subscribe' => [
