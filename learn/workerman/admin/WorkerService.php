@@ -4,6 +4,7 @@
 namespace learn\workerman\admin;
 
 use Channel\Client;
+use learn\workerman\channel\ChannelClient;
 use learn\workerman\Response;
 use think\worker\Server;
 use Workerman\Connection\TcpConnection;
@@ -120,9 +121,12 @@ class WorkerService extends Server
     /**
      * 开启时
      * @param Worker $worker
+     * @throws \Exception
      */
     public function onWorkerStart(Worker $worker)
     {
+        // 开启订阅
+        ChannelClient::connet();
         Client::on('learn', function ($eventData) use ($worker) {
             var_dump($eventData);
             if (!isset($eventData['type']) || !$eventData['type']) return;
