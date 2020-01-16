@@ -37,6 +37,6 @@ class Index extends AuthController
 
     public function test()
     {
-        event("Test",["666"]);
+        event("Message",["666"]);
     }
 }
