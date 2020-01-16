@@ -5,10 +5,9 @@ namespace learn\workerman\channel;
 
 
 use Channel\Server;
-use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
-class ChannelService extends Server
+class ChannelService
 {
 
     /**
@@ -51,7 +50,7 @@ class ChannelService extends Server
      * @param string $ip
      * @param int $port
      */
-    public function __construct()
+    public function __construct($ip = '0.0.0.0', $port = 2206)
     {
         $this->instance();
     }
