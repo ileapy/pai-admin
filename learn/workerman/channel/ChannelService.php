@@ -26,7 +26,7 @@ class ChannelService extends Server
      * 端口
      * @var string
      */
-    protected $port = 1996;
+    protected $port = 1998;
 
     /**
      * Worker instance.
