@@ -56,6 +56,7 @@ class ChannelService extends Server
     {
         parent::init();
         $this->_worker = $this->worker;
+        $channel_server = new \Channel\Server('0.0.0.0', 2206);
     }
 
     /**
