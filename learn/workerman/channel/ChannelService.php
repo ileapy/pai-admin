@@ -8,7 +8,7 @@ use Channel\Server;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
-class ChannelService
+class ChannelService extends Server
 {
 
     /**
