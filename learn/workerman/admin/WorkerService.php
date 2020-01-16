@@ -3,14 +3,11 @@
 
 namespace learn\workerman\admin;
 
-
-use learn\workerman\ChannelService;
 use learn\workerman\Response;
 use think\worker\Server;
 use Workerman\Connection\TcpConnection;
 use Workerman\Lib\Timer;
 use Workerman\Worker;
-use Channel\Client;
 
 /**
  * 后台ws服务
