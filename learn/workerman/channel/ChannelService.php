@@ -92,6 +92,7 @@ class ChannelService extends Server
             return;
         }
         $worker = $this->_worker;
+        var_dump($worker->channels);
         $data = unserialize($data);
         $type = $data['type'];
         $channels = $data['channels'];
