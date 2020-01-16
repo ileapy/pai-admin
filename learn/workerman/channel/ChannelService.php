@@ -26,7 +26,7 @@ class ChannelService extends Server
      * 端口
      * @var string
      */
-    protected $port = 1998;
+    protected $port = 1995;
 
     /**
      * Worker instance.
@@ -91,6 +91,8 @@ class ChannelService extends Server
             return;
         }
         $worker = $this->_worker;
+        var_dump($this->_worker);
+        var_dump($data);
         $data = unserialize($data);
         $type = $data['type'];
         $channels = $data['channels'];
