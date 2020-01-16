@@ -39,8 +39,7 @@ class WorkerHandle
 //
 //        $connection->adminInfo = $session->get('adminInfo');
 //        $connection->sessionId = $sessionId;
-        $sessionId['id'] = 1;
-        $connection->adminInfo = [];
+        $connection->adminInfo = ['id'=>1];
         $connection->sessionId = $sessionId;
         $this->service->setUser($connection);
 
