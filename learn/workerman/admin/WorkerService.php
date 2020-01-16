@@ -111,7 +111,6 @@ class WorkerService extends Server
     public function onMessage(TcpConnection $connection, $res)
     {
         $connection->lastMessageTime = time();
-        var_dump($res);
         $res = json_decode($res, true);
         if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') return;
         if (!method_exists($this->handle, $res['type'])) return;
@@ -128,10 +127,8 @@ class WorkerService extends Server
         // 开启订阅
         ChannelClient::connet();
         Client::on('learn', function ($eventData) use ($worker) {
-            var_dump($eventData);
             if (!isset($eventData['type']) || !$eventData['type']) return;
             $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
-            var_dump($ids);
             foreach ($ids as $id) {
                 if (isset($this->user[$id]))
                     $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
