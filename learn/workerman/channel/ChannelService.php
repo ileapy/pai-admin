@@ -4,44 +4,137 @@
 namespace learn\workerman\channel;
 
 
-use Channel\Server;
+use think\worker\Server;
+use Workerman\Connection\TcpConnection;
+use Workerman\Worker;
 
-class ChannelService
+class ChannelService extends Server
 {
-
     /**
-     * @var Server
+     * 协议
+     * @var string
      */
-    private $service;
+    protected $protocol = "frame";
 
     /**
      * 监听地址
      * @var string
      */
-    const LISTENHOST = '0.0.0.0';
+    protected $host = '0.0.0.0';
 
     /**
-     * 监听端口
+     * 端口
      * @var string
      */
-    const LISTENPORT = 1996;
+    protected $port = 1996;
 
     /**
-     * construct
-     * ChannelService constructor.
+     * Worker instance.
+     * @var Worker
      */
-    public function __construct()
+    protected $_worker = null;
+
+    /**
+     * 基础配置
+     * @var array
+     */
+    protected $option = [
+        'count'		=> 1,
+        'name'		=> 'admin'
+    ];
+
+    /**
+     * 事件
+     * @var array
+     */
+    protected $event    = ['onMessage', 'onClose'];
+
+    /**
+     * 实例化
+     * @param Worker|null $worker
+     */
+    public function init(Worker $worker = null)
     {
-        self::start(self::LISTENHOST,self::LISTENPORT);
+        parent::init();
+        $this->_worker = $worker;
     }
 
     /**
-     * 启动
-     * @param string $ip
-     * @param int $port
+     * onClose
+     * @param $connection
+     * @return void
      */
-    public static function start($ip = '0.0.0.0', $port = 1996)
+    public function onClose($connection)
     {
-        $server = new Server($ip, $port);
+        if(empty($connection->channels))
+        {
+            return;
+        }
+        foreach($connection->channels as $channel)
+        {
+            unset($this->_worker->channels[$channel][$connection->id]);
+            if(empty($this->_worker->channels[$channel]))
+            {
+                unset($this->_worker->channels[$channel]);
+            }
+        }
+    }
+
+    /**
+     * onMessage.
+     * @param TcpConnection $connection
+     * @param string $data
+     */
+    public function onMessage($connection, $data)
+    {
+        if(!$data)
+        {
+            return;
+        }
+        $worker = $this->_worker;
+        $data = unserialize($data);
+        $type = $data['type'];
+        $channels = $data['channels'];
+        switch($type)
+        {
+            case 'subscribe':
+                foreach($channels as $channel)
+                {
+                    $connection->channels[$channel] = $channel;
+                    $worker->channels[$channel][$connection->id] = $connection;
+                }
+                break;
+            case 'unsubscribe':
+                foreach($channels as $channel)
+                {
+                    if(isset($connection->channels[$channel]))
+                    {
+                        unset($connection->channels[$channel]);
+                    }
+                    if(isset($worker->channels[$channel][$connection->id]))
+                    {
+                        unset($worker->channels[$channel][$connection->id]);
+                        if(empty($worker->channels[$channel]))
+                        {
+                            unset($worker->channels[$channel]);
+                        }
+                    }
+                }
+                break;
+            case 'publish':
+                foreach($channels as $channel)
+                {
+                    if(empty($worker->channels[$channel]))
+                    {
+                        continue;
+                    }
+                    $buffer = serialize(array('channel'=>$channel, 'data' => $data['data']))."\n";
+                    foreach($worker->channels[$channel] as $connection)
+                    {
+                        $connection->send($buffer);
+                    }
+                }
+                break;
+        }
     }
 }
