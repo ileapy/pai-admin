@@ -18,6 +18,6 @@ class SystemSubscribe
      */
     public function onTest($event)
     {
-        ChannelClient::instance()->send("test",[]);
+        ChannelClient::instance()->send("Message",[]);
     }
 }
