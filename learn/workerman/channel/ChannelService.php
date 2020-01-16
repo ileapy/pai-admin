@@ -5,6 +5,7 @@ namespace learn\workerman\channel;
 
 
 use Channel\Server;
+use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
 class ChannelService
@@ -13,7 +14,7 @@ class ChannelService
     /**
      * @var Server
      */
-    private static $service;
+    private $service;
 
     /**
      * 监听地址
