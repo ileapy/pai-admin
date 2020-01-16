@@ -40,7 +40,7 @@ class ChannelService extends Server
      */
     protected $option = [
         'count'		=> 1,
-        'name'		=> 'admin'
+        'name'		=> 'ChannelServer'
     ];
 
     /**
