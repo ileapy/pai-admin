@@ -3,6 +3,7 @@
 
 namespace learn\workerman\admin;
 
+use Channel\Client;
 use learn\workerman\Response;
 use think\worker\Server;
 use Workerman\Connection\TcpConnection;
@@ -122,6 +123,16 @@ class WorkerService extends Server
      */
     public function onWorkerStart(Worker $worker)
     {
+        Client::on('learn', function ($eventData) use ($worker) {
+            var_dump($eventData);
+            if (!isset($eventData['type']) || !$eventData['type']) return;
+            $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
+            foreach ($ids as $id) {
+                if (isset($this->user[$id]))
+                    $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
+            }
+        });
+
         Timer::add(15, array($this->handle, 'timeoutClose'), array($worker,$this->response), true);
     }
 
