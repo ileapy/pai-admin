@@ -1,12 +1,12 @@
 <?php
 
 
-namespace learn\workerman;
+namespace learn\workerman\channel;
 
 
 use Channel\Client;
 
-class ChannelService
+class ChannelClient
 {
     /**
      * @var Client
@@ -14,7 +14,7 @@ class ChannelService
     protected $channel;
 
     /**
-     * @var ChannelService
+     * @var ChannelClient
      */
     protected static $instance;
 
@@ -45,10 +45,7 @@ class ChannelService
 
     public static function connet()
     {
-        try {
-            Client::connect(self::LISTENHOST, self::LISTENPORT);
-        } catch (\Exception $e) {
-        }
+        Client::connect(self::LISTENHOST, self::LISTENPORT);
     }
 
     /**
