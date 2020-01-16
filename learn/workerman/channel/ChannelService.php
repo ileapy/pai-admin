@@ -54,9 +54,8 @@ class ChannelService extends Server
      */
     public function init()
     {
-        $this->_worker = $this->worker;
-        var_dump($this->_worker);
         parent::init();
+        $this->_worker = $this->worker;
     }
 
     /**
@@ -87,7 +86,6 @@ class ChannelService extends Server
      */
     public function onMessage($connection, $data)
     {
-        var_dump($data);
         if(!$data)
         {
             return;
@@ -123,7 +121,6 @@ class ChannelService extends Server
                 }
                 break;
             case 'publish':
-                var_dump($worker->channels);
                 foreach($channels as $channel)
                 {
                     if(empty($worker->channels[$channel]))
