@@ -68,6 +68,7 @@ class ChannelClient
 
     public function trigger(string $type, ?array $data = null)
     {
+        var_dump($type,$data);
         Client::publish($type, $data);
     }
 }
