@@ -63,7 +63,7 @@ class ChannelClient
         if (!is_null($ids) && count($ids))
             $res['ids'] = $ids;
 
-        $this->trigger('LEARN', $res);
+        $this->trigger('admin', $res);
     }
 
     public function trigger(string $type, ?array $data = null)
