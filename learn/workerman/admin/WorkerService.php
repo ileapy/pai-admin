@@ -131,6 +131,7 @@ class WorkerService extends Server
             var_dump($eventData);
             if (!isset($eventData['type']) || !$eventData['type']) return;
             $ids = isset($eventData['ids']) && count($eventData['ids']) ? $eventData['ids'] : array_keys($this->user);
+            var_dump($ids);
             foreach ($ids as $id) {
                 if (isset($this->user[$id]))
                     $this->response->connection($this->user[$id])->success($eventData['type'], $eventData['data'] ?? null);
