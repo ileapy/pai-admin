@@ -123,7 +123,6 @@ class ChannelService extends Server
             case 'publish':
                 foreach($channels as $channel)
                 {
-                    var_dump($worker->channels);
                     if(empty($worker->channels[$channel]))
                     {
                         continue;
