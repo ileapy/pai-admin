@@ -28,7 +28,7 @@ class ChannelClient
      * 监听端口
      * @var string
      */
-    const LISTENPORT = 1995;
+    const LISTENPORT = 1998;
 
     public function __construct()
     {
