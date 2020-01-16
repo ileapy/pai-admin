@@ -87,6 +87,7 @@ class ChannelService extends Server
      */
     public function onMessage($connection, $data)
     {
+        var_dump($data);
         if(!$data)
         {
             return;

@@ -63,12 +63,11 @@ class ChannelClient
         if (!is_null($ids) && count($ids))
             $res['ids'] = $ids;
 
-        $this->trigger('Message', $res);
+        $this->trigger('learn', $res);
     }
 
     public function trigger(string $type, ?array $data = null)
     {
-        var_dump($type,$data);
         Client::publish($type, $data);
     }
 }
