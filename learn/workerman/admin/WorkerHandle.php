@@ -27,10 +27,9 @@ class WorkerHandle
             ]);
         }
 
-        $session = app('session',[],true);
+        $session = new Session();
         $session->init();
         $session->setId($sessionId);
-        $session->start();
 
         if (!$session->has('adminId') || !$session->has('adminInfo')) {
             return $response->close([
