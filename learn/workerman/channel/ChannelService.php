@@ -54,9 +54,9 @@ class ChannelService extends Server
      */
     public function init()
     {
-        parent::init();
         $this->_worker = $this->worker;
         var_dump($this->_worker);
+        parent::init();
     }
 
     /**
