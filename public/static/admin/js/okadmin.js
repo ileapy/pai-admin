@@ -325,7 +325,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 		},
 		onMessage: function (res) {
 			var data = JSON.parse(res.data);
-			this.vm.$emit(data.type, data.data || {});
+			// this.vm.$emit(data.type, data.data || {});
 		},
 		onClose: function (e) {
 			console.log('ws close', e.code);
