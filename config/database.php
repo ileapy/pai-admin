@@ -59,4 +59,7 @@ return [
 
         // 更多的数据库配置信息
     ],
+
+    // 查询出来的数据为对象
+    'resultset_type ' => 'collection',
 ];
