@@ -3,7 +3,6 @@
 
 namespace learn\workerman\admin;
 
-
 use learn\workerman\Response;
 use learn\workerman\admin\WorkerService;
 use Workerman\Connection\TcpConnection;
@@ -27,7 +26,8 @@ class WorkerHandle
             ]);
         }
 
-        if (!Session::has('adminId') || !Session::has('adminInfo') || Session::getId() != $sessionId) {
+        Session::setId($sessionId);
+        if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
                 'msg' => '授权失败!'
             ]);
