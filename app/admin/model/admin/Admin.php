@@ -1,8 +1,10 @@
 <?php
 
 
-namespace app\admin\model;
+namespace app\admin\model\admin;
 
+use app\admin\model\BaseModel;
+use app\admin\model\ModelTrait;
 use think\facade\Session;
 
 /**

@@ -3,7 +3,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Admin as adminModel;
+use app\admin\model\admin\Admin as adminModel;
 use app\Request;
 use learn\services\UtilService as Util;
 use think\facade\Route as Url;
@@ -38,7 +38,6 @@ class Login extends AuthController
         // 验证登录
         if (!adminModel::login($account,$pwd)) return app("json")->fail("登录失败！");
         return app("json")->success("登录成功！");
-        // return $this->redirect(Url::buildUrl('admin/login/login')->build());;
     }
 
     /**

@@ -10,7 +10,7 @@ use think\facade\View;
 class Index extends AuthController
 {
     // 无需登录的
-    protected $noNeedLogin = ['index','test'];
+    protected $noNeedLogin = [''];
     // 无需权限的
     protected $noNeedRight = [''];
 
@@ -21,7 +21,6 @@ class Index extends AuthController
      */
     public function index()
     {
-        return lang('lang');
         return $this->view();
     }
 
