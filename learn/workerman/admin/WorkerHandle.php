@@ -26,9 +26,11 @@ class WorkerHandle
             ]);
         }
 
-        Session::setId($sessionId);
-        var_dump(Session::getId($sessionId));
-        var_dump(Session::has('adminInfo'));
+        $session = app('session',[],true);
+        $session->init();
+        $session->setId($sessionId);
+        $session->start();
+
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
                 'msg' => '授权失败!'

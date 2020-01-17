@@ -99,7 +99,6 @@ abstract class AuthController extends BaseController
      */
     protected static function isActive()
     {
-        var_dump(Session::get('adminId'));
         return Session::has('adminId') && Session::has('adminInfo');
     }
 }
