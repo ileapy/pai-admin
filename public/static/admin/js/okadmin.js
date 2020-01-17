@@ -325,7 +325,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 			this.init();
 			this.send({
 				type: 'login',
-				data: this.getCookie('PHPSESSID')
+				data: this.cookie('PHPSESSID')
 			})
 		},
 		init: function () {
