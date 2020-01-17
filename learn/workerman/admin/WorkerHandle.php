@@ -50,7 +50,7 @@ class WorkerHandle
     {
         $time_now = time();
         foreach ($worker->connections as $connection) {
-            if ($time_now - $connection->lastMessageTime > 12) {
+            if ($time_now - $connection->lastMessageTime > 28) {
                 $response->connection($connection)->close('timeout');
             }
         }
