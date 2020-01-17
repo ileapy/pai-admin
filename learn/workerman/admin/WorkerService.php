@@ -112,7 +112,8 @@ class WorkerService extends Server
     {
         $connection->lastMessageTime = time();
         $res = json_decode($res, true);
-        if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') return;
+        if (!$res || !isset($res['type']) || !$res['type']) return;
+        if ($res['type'] == 'ping') return $this->response->send('success',['type' => 'pong']);
         if (!method_exists($this->handle, $res['type'])) return;
         $this->handle->{$res['type']}($connection, $res + ['data' => []], $this->response->connection($connection));
     }
