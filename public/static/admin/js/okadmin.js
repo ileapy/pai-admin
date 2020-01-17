@@ -342,6 +342,6 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 
 	Socket.prototype.constructor = Socket;
 
-	var ws = new Socket();
-	ws.setVm(this)
+	// var ws = new Socket();
+	// ws.setVm(this)
 });
