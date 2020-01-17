@@ -293,19 +293,6 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 		});
 	});
 
-	/**
-	 * 获取cookie
-	 * @param name
-	 * @returns {string|null}
-	 */
-	function cookie(name)
-	{
-		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-		if(arr=document.cookie.match(reg))
-			return unescape(arr[2]);
-		else
-			return null;
-	}
 	// ws
 	var Socket = function () {
 		this.ws = new WebSocket(this.getUrl());
@@ -320,12 +307,11 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 			this.vm = vm;
 		},
 		onOpen: function () {
-			var that = this;
 			console.log('ws open');
 			this.init();
 			this.send({
 				type: 'login',
-				data: that.cookie('PHPSESSID')
+				data: this.cookie('PHPSESSID')
 			})
 		},
 		init: function () {
@@ -350,6 +336,11 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 		},
 		getUrl: function () {
 			return 'ws://' + document.URL.split('//')[1].split('/')[0] + ':1996';
+		},
+		cookie: function(name){
+			var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+			if(arr=document.cookie.match(reg)) return unescape(arr[2]);
+			else return null;
 		}
 	};
 
