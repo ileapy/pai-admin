@@ -27,20 +27,15 @@ class WorkerHandle
             ]);
         }
 
-//        $session = new Session();
-//        $session->init();
-//        $session->setId($sessionId);
-//
-//        if (!$session->has('adminId') || !$session->has('adminInfo')) {
-//            return $response->close([
-//                'msg' => '授权失败!'
-//            ]);
-//        }
-//
-//        $connection->adminInfo = $session->get('adminInfo');
-//        $connection->sessionId = $sessionId;
-        $connection->adminInfo = ['id'=>1];
+        if (!Session::has('adminId') || !Session::has('adminInfo') || Session::getId() != $sessionId) {
+            return $response->close([
+                'msg' => '授权失败!'
+            ]);
+        }
+
+        $connection->adminInfo = Session::get('adminInfo');
         $connection->sessionId = $sessionId;
+
         $this->service->setUser($connection);
 
         return $response->success();
