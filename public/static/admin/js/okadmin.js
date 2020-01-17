@@ -2,7 +2,6 @@ var objOkTab = "";
 layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "okHoliday","jquery","okCookie"], function () {
 	var okUtils = layui.okUtils;
 	var $ = layui.jquery;
-	alert(layui.okCookie.cookie('PHPSESSID'));
 	var layer = layui.layer;
 	var okLayer = layui.okLayer;
 	var okHoliday = layui.okHoliday;
@@ -312,7 +311,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 			this.init();
 			this.send({
 				type: 'login',
-				data: that.cookie('PHPSESSID')
+				data: this.$.cookie('PHPSESSID')
 			})
 		},
 		init: function () {
