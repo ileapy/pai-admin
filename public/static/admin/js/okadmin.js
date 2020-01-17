@@ -309,10 +309,10 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 		onOpen: function () {
 			console.log('ws open');
 			this.init();
-			this.send({
-				type: 'login',
-				data: this.cookie('PHPSESSID')
-			})
+			// this.send({
+			// 	type: 'login',
+			// 	data: this.cookie('PHPSESSID')
+			// })
 		},
 		init: function () {
 			var that = this;
