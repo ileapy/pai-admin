@@ -1,5 +1,5 @@
 var objOkTab = "";
-layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "okHoliday","jquery","okCookie"], function () {
+layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "okHoliday","okCookie"], function () {
 	var okUtils = layui.okUtils;
 	var $ = layui.jquery;
 	var layer = layui.layer;
