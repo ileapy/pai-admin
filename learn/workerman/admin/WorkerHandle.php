@@ -27,7 +27,7 @@ class WorkerHandle
         }
 
         Session::setId($sessionId);
-        var_dump(Session::has('adminId'));
+        var_dump(Session::getId($sessionId));
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
                 'msg' => '授权失败!'
