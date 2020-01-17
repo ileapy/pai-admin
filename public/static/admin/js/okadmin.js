@@ -294,53 +294,53 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 	});
 
 	// ws
-	var Socket = function () {
-		this.ws = new WebSocket(this.getUrl());
-		this.ws.onopen = this.onOpen.bind(this);
-		this.ws.onerror = this.onError.bind(this);
-		this.ws.onmessage = this.onMessage.bind(this);
-		this.ws.onclose = this.onClose.bind(this);
-	};
-
-	Socket.prototype = {
-		setVm: function(vm) {
-			this.vm = vm;
-		},
-		onOpen: function () {
-			var that = this;
-			console.log('ws open');
-			this.init();
-			this.send({
-				type: 'login',
-				data: that.cookie('PHPSESSID')
-			})
-		},
-		init: function () {
-			var that = this;
-			this.timer = setInterval(function () {
-				that.send({type: 'ping'})
-			}, 30000);
-		},
-		send: function (data) {
-			return this.ws.send(JSON.stringify(data));
-		},
-		onMessage: function (res) {
-			var data = JSON.parse(res.data);
-			this.vm.$emit(data.type, data.data || {});
-		},
-		onClose: function (e) {
-			console.log('ws close', e.code);
-			clearInterval(this.timer);
-		},
-		onError: function (e) {
-			console.log('ws error', JSON.parse(e.data).message);
-		},
-		getUrl: function () {
-			return 'ws://' + document.URL.split('//')[1].split('/')[0] + ':1996';
-		}
-	};
-
-	Socket.prototype.constructor = Socket;
+	// var Socket = function () {
+	// 	this.ws = new WebSocket(this.getUrl());
+	// 	this.ws.onopen = this.onOpen.bind(this);
+	// 	this.ws.onerror = this.onError.bind(this);
+	// 	this.ws.onmessage = this.onMessage.bind(this);
+	// 	this.ws.onclose = this.onClose.bind(this);
+	// };
+	//
+	// Socket.prototype = {
+	// 	setVm: function(vm) {
+	// 		this.vm = vm;
+	// 	},
+	// 	onOpen: function () {
+	// 		var that = this;
+	// 		console.log('ws open');
+	// 		this.init();
+	// 		this.send({
+	// 			type: 'login',
+	// 			data: that.cookie('PHPSESSID')
+	// 		})
+	// 	},
+	// 	init: function () {
+	// 		var that = this;
+	// 		this.timer = setInterval(function () {
+	// 			that.send({type: 'ping'})
+	// 		}, 30000);
+	// 	},
+	// 	send: function (data) {
+	// 		return this.ws.send(JSON.stringify(data));
+	// 	},
+	// 	onMessage: function (res) {
+	// 		var data = JSON.parse(res.data);
+	// 		this.vm.$emit(data.type, data.data || {});
+	// 	},
+	// 	onClose: function (e) {
+	// 		console.log('ws close', e.code);
+	// 		clearInterval(this.timer);
+	// 	},
+	// 	onError: function (e) {
+	// 		console.log('ws error', JSON.parse(e.data).message);
+	// 	},
+	// 	getUrl: function () {
+	// 		return 'ws://' + document.URL.split('//')[1].split('/')[0] + ':1996';
+	// 	}
+	// };
+	//
+	// Socket.prototype.constructor = Socket;
 
 	// var ws = new Socket();
 	// ws.setVm(this)
