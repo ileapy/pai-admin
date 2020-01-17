@@ -59,7 +59,7 @@ layui.define(["jquery"], function (exports) {
             }
 
             var config = $.cookie = function (key, value, options) {
-
+                alert(key);
                 // Write
 
                 if (arguments.length > 1 && !$.isFunction(value)) {
