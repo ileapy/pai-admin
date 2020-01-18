@@ -267,7 +267,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 				okLayer.greenTickMsg(response.msg, function () {
 					okTab.removeTabStorage(function (res) {
 						okTab.removeTabStorage();
-						window.location = "/login";
+						window.location = "/admin/login/login";
 					});
 				})
 			}).fail(function (error) {
