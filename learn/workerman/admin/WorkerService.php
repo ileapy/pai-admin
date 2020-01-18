@@ -107,6 +107,7 @@ class WorkerService extends Server
      * 当获取到信息
      * @param TcpConnection $connection
      * @param $res
+     * @return bool|void|null
      */
     public function onMessage(TcpConnection $connection, $res)
     {
