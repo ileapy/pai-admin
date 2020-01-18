@@ -105,8 +105,9 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 	 * 左边菜单显隐功能
 	 */
 	$(".ok-menu").click(function () {
-		$(".layui-layout-admin").toggleClass("ok-left-hide");
-		$(this).find("i").toggleClass("ok-menu-hide");
+		// $(".layui-layout-admin").toggleClass("ok-left-hide");
+		// $(this).find("i").toggleClass("ok-menu-hide");
+		$(this).find("city").attr("display","none");
 		localStorage.setItem("isResize", false);
 		setTimeout(function () {
 			localStorage.setItem("isResize", true);
