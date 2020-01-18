@@ -5,7 +5,8 @@ namespace app\admin\controller;
 
 
 use app\admin\controller\AuthController;
-use think\facade\Session;
+use app\Request;
+use think\Session;
 use think\facade\View;
 
 class Index extends AuthController
@@ -35,11 +36,11 @@ class Index extends AuthController
         return $this->view();
     }
 
-    public function test()
+    public function test(Request $request)
     {
+        var_dump($request->param("session"));
         var_dump(Session::getId());
-        var_dump(Session::setId("2924c64237a4bbfae7252f742a01fa68"));
-        var_dump(Session::getId());
+        var_dump(Session::setId($request->param("session")));
         var_dump(Session::all());
 //        session("id","bf69d934d7c38c0a21074d8e3493f643");
 //        var_dump(session_id("bf69d934d7c38c0a21074d8e3493f643"));
