@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 
 use app\admin\controller\AuthController;
+use think\facade\Session;
 use think\facade\View;
 
 class Index extends AuthController
@@ -36,7 +37,12 @@ class Index extends AuthController
 
     public function test()
     {
-        var_dump(session_id("bf69d934d7c38c0a21074d8e3493f643"));
+        var_dump(Session::getId());
+        var_dump(Session::setId("bf69d934d7c38c0a21074d8e3493f643"));
+        var_dump(Session::getId());
+        var_dump($_SESSION);
+//        session("id","bf69d934d7c38c0a21074d8e3493f643");
+//        var_dump(session_id("bf69d934d7c38c0a21074d8e3493f643"));
 //        event("Test",["666"]);
     }
 }
