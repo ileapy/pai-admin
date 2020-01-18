@@ -263,9 +263,15 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 	 */
 	$("#logout").click(function () {
 		okLayer.confirm("确定要退出吗？", function (index) {
-			okTab.removeTabStorage(function (res) {
-				okTab.removeTabStorage();
-				window.location = "pages/login.html";
+			okUtils.ajax("/admin/login/verify", "post", {}, true).done(function (response) {
+				okLayer.greenTickMsg(response.msg, function () {
+					okTab.removeTabStorage(function (res) {
+						okTab.removeTabStorage();
+						window.location = "/login";
+					});
+				})
+			}).fail(function (error) {
+				console.log(error)
 			});
 		});
 	});
