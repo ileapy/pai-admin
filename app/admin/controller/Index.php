@@ -6,7 +6,7 @@ namespace app\admin\controller;
 
 use app\admin\controller\AuthController;
 use app\Request;
-use think\Session;
+use think\facade\Session;
 use think\facade\View;
 
 class Index extends AuthController
