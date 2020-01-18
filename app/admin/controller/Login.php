@@ -61,9 +61,13 @@ class Login extends AuthController
         return $this->view();
     }
 
+    /**
+     * 退出登陆
+     * @return mixed
+     */
     public function logout()
     {
-        return Admin::clearLoginInfo() ? app("json")->success("退出登陆成功") : app("json")->success("退出登陆失败");
+        return Admin::clearLoginInfo() ? app("json")->success("操作成功") : app("json")->success("操作失败");
     }
     /**
      * 验证码
