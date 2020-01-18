@@ -36,6 +36,7 @@ class Index extends AuthController
 
     public function test()
     {
-        event("Test",["666"]);
+        var_dump(session_id("bf69d934d7c38c0a21074d8e3493f643"));
+//        event("Test",["666"]);
     }
 }
