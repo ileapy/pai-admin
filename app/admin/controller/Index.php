@@ -38,7 +38,7 @@ class Index extends AuthController
     public function test()
     {
         var_dump(Session::getId());
-        var_dump(Session::setId("7e0dfb3d54e1c3fab7fbc8af43b2f13d"));
+        var_dump(Session::setId("2924c64237a4bbfae7252f742a01fa68"));
         var_dump(Session::getId());
         var_dump(Session::all());
 //        session("id","bf69d934d7c38c0a21074d8e3493f643");
