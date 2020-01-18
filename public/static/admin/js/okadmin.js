@@ -107,7 +107,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 	$(".ok-menu").click(function () {
 		// $(".layui-layout-admin").toggleClass("ok-left-hide");
 		// $(this).find("i").toggleClass("ok-menu-hide");
-		$(this).find("city").attr("display","none");
+		$(this).find("city").css("display","none");
 		localStorage.setItem("isResize", false);
 		setTimeout(function () {
 			localStorage.setItem("isResize", true);
