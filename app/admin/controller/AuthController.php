@@ -79,7 +79,7 @@ abstract class AuthController extends BaseController
     protected function checkAuth()
     {
         // 不需要登录
-        if (in_array($this->action,$this->noNeedLogin)) return true;
+        if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
         if (!self::isActive()) return $this->redirect($this->request->domain().'/admin/login/login');
     }
