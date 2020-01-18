@@ -263,7 +263,7 @@ layui.use(["element", "layer", "okUtils", "okTab", "okLayer", "okContextMenu", "
 	 */
 	$("#logout").click(function () {
 		okLayer.confirm("确定要退出吗？", function (index) {
-			okUtils.ajax("/admin/login/verify", "post", {}, true).done(function (response) {
+			okUtils.ajax("/admin/login/logout", "post", {}, true).done(function (response) {
 				okLayer.greenTickMsg(response.msg, function () {
 					okTab.removeTabStorage(function (res) {
 						okTab.removeTabStorage();
