@@ -3,6 +3,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\admin\Admin;
 use app\admin\model\admin\Admin as adminModel;
 use app\Request;
 use learn\services\UtilService as Util;
@@ -60,6 +61,10 @@ class Login extends AuthController
         return $this->view();
     }
 
+    public function logout()
+    {
+        return Admin::clearLoginInfo() ? app("json")->success("退出登陆成功") : app("json")->success("退出登陆失败");
+    }
     /**
      * 验证码
      * @return \think\Response
