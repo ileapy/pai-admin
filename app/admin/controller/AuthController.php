@@ -81,7 +81,7 @@ abstract class AuthController extends BaseController
         // 不需要登录
         if (in_array($this->action,$this->noNeedLogin)) return true;
         // 验证登录
-        if (!self::isActive()) return $this->redirect('admin/login/login');
+        if (!self::isActive()) return $this->redirect($this->request->domain().'/admin/login/login');
     }
 
     /**
