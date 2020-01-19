@@ -33,6 +33,6 @@ class AdminLog extends BaseModel
             'ip'            => request()->ip(),
             'create_time'   => time(),
             'user_agent'     => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
-        ]);
+        ]) ? true : false;
     }
 }
