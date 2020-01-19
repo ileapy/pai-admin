@@ -13,4 +13,15 @@ use app\admin\model\BaseModel;
  */
 class AdminAuth extends BaseModel
 {
+    /**
+     * 获取权限id 找不到是返回 -1
+     * @param string $module
+     * @param string $controller
+     * @param string $action
+     * @return int
+     */
+    public static function getAuthId(string $module, string $controller,string $action): int
+    {
+        return self::where("module",$module)->where("controller",$controller)->where("action",$action)->field('id') ?: -1;
+    }
 }

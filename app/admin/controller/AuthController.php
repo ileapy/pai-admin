@@ -79,6 +79,7 @@ abstract class AuthController extends BaseController
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
         $this->auth = AdminRole::getAuth($this->adminInfo['role_id']);
+        var_dump($this->auth);
         // 鉴权
         $this->checkAuth();
         // 多语言
@@ -96,6 +97,8 @@ abstract class AuthController extends BaseController
         if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
         if (!self::isActive()) return $this->redirect($this->request->domain().'/admin/login/login');
+        // 权限验证
+//        if (in_array("",))
     }
 
     /**
