@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\admin\AdminRole;
 use learn\basic\admin\BaseController;
 use think\facade\App;
 use think\facade\Lang;
@@ -77,6 +78,7 @@ abstract class AuthController extends BaseController
         $this->module = App::getInstance()->http->getName();
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
+        $this->auth = AdminRole::getAuth($this->adminInfo['role_id']);
         // 鉴权
         $this->checkAuth();
         // 多语言
