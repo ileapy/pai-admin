@@ -124,7 +124,6 @@ abstract class AuthController extends BaseController
         // 无需记录日志
         if (in_array($this->action,$this->noNeedLog) || $this->noNeedLog == ['*'] || $this->noNeedLog == "*") return true;
         // 日志记录
-        var_dump($this->adminInfo);
         event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
     }
 }
