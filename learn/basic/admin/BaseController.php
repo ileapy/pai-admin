@@ -107,9 +107,9 @@ abstract class BaseController
      * @return string
      * @throws \Exception
      */
-    protected function view()
+    protected function fetch(string $template = '')
     {
-        return View::fetch();
+        return View::fetch($template);
     }
 
     /**
