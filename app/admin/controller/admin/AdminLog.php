@@ -8,7 +8,7 @@ use app\admin\controller\AuthController;
 
 class AdminLog extends AuthController
 {
-    protected $noNeedLogin = ['*'];
+    protected $noNeedLogin = [];
 
     public function index()
     {
