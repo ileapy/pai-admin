@@ -137,7 +137,8 @@ abstract class AuthController extends SystemBasic
         if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 无需记录日志
         if (in_array($this->action,$this->noNeedLog) || $this->noNeedLog == ['*'] || $this->noNeedLog == "*") return true;
-        // 日志记录
-        event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
+        // 有操作权限，记录日志
+        if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
+        return false;
     }
 }
