@@ -23,7 +23,7 @@ class Index extends AuthController
      */
     public function index()
     {
-        return $this->view();
+        return $this->fetch();
     }
 
     /**
@@ -33,7 +33,7 @@ class Index extends AuthController
      */
     public function console()
     {
-        return $this->view();
+        return $this->fetch();
     }
 
     public function test(Request $request)
