@@ -103,8 +103,6 @@ abstract class AuthController extends SystemBasic
         if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
         if (!self::isActive()) return $this->failedNotice(lang("未登录"),"/admin/login/login");
-        var_dump($this->nowAuthId);
-        var_dump($this->auth);
         // 权限验证
         if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
         exit($this->failed('没有权限访问!'));
