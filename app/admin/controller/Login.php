@@ -24,7 +24,7 @@ class Login extends AuthController
      */
     public function login()
     {
-        return $this->view();
+        return $this->fetch();
     }
 
     /**
@@ -48,7 +48,7 @@ class Login extends AuthController
      */
     public function register()
     {
-        return $this->view();
+        return $this->fetch();
     }
 
     /**
@@ -58,7 +58,7 @@ class Login extends AuthController
      */
     public function forget()
     {
-        return $this->view();
+        return $this->fetch();
     }
 
     /**
