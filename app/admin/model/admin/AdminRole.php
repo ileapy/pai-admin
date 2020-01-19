@@ -20,6 +20,6 @@ class AdminRole extends BaseModel
      */
     public static function getAuth(int $id): string
     {
-        return self::where("id",$id)->field("auth") ?: '';
+        return self::where("id",$id)->getValue("auth") ?: '';
     }
 }
