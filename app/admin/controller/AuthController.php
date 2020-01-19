@@ -43,6 +43,12 @@ abstract class AuthController extends BaseController
     protected $noNeedRight = [];
 
     /**
+     * 无需记录日志
+     * @var array
+     */
+    protected $noNeedLog = [];
+
+    /**
      * 当前模块
      * @var string
      */
@@ -69,8 +75,12 @@ abstract class AuthController extends BaseController
         $this->module = App::getInstance()->http->getName();
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
+        // 鉴权
         $this->checkAuth();
-        $this->loadlang($this->controller);
+        // 多语言
+        $this->loadLang();
+        // 日志
+        $this->createLog();
     }
 
     /**
@@ -86,11 +96,10 @@ abstract class AuthController extends BaseController
 
     /**
      * 加载语言文件
-     * @param string $name
      */
-    protected function loadlang($name)
+    protected function loadLang()
     {
-        Lang::load(App::getRootPath() . 'app/' . $this->module . '/lang/' . Lang::getLangSet() . '/' . $name . '.php');
+        Lang::load(App::getRootPath() . 'app/' . $this->module . '/lang/' . Lang::getLangSet() . '/' . $this->controller . '.php');
     }
 
     /**
@@ -100,5 +109,19 @@ abstract class AuthController extends BaseController
     protected static function isActive()
     {
         return Session::has('adminId') && Session::has('adminInfo');
+    }
+
+    /**
+     * 创建日志
+     * @return bool
+     */
+    protected function createLog()
+    {
+        // 不需要登录不能记录日志
+        if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
+        // 无需记录日志
+        if (in_array($this->action,$this->noNeedLog) || $this->noNeedLog == ['*'] || $this->noNeedLog == "*") return true;
+        // 日志记录
+        event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
     }
 }
