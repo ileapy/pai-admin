@@ -22,6 +22,7 @@ class AdminAuth extends BaseModel
      */
     public static function getAuthId(string $module, string $controller,string $action): int
     {
+        var_dump($module,$controller,$action);
         return self::where("module",$module)->where("controller",$controller)->where("action",$action)->value('id') ?: -1;
     }
 }
