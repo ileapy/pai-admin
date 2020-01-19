@@ -4,9 +4,9 @@
 namespace app\admin\controller\admin;
 
 
-use app\admin\BaseController;
+use app\admin\controller\AuthController;
 
-class AdminLog extends BaseController
+class AdminLog extends AuthController
 {
     public function index()
     {
