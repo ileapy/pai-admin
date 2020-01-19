@@ -11,6 +11,7 @@ return [
         'LogLevel' => [],
         'LogWrite' => [],
         'Test' => [],  // 后台通知测试
+        'AdminLog' => [], // 操作日志记录
     ],
 
     'subscribe' => [
