@@ -32,7 +32,7 @@ class AdminLog extends BaseModel
             'action'        => $action,
             'ip'            => request()->ip(),
             'create_time'   => time(),
-            'useragent'     => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
+            'user_agent'     => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
         ]);
     }
 }
