@@ -32,6 +32,12 @@ abstract class AuthController extends SystemBasic
     protected $auth = [];
 
     /**
+     * 当前权限id
+     * @var int
+     */
+    protected $nowAuthId = 0;
+
+    /**
      * 无需登录的方法,同时也就不需要鉴权了
      * @var array
      */
@@ -76,6 +82,7 @@ abstract class AuthController extends SystemBasic
         $this->adminInfo = Session::get("adminInfo");
         $this->adminId = Session::get("adminId");
         $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id']));
+        $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
         $this->module = App::getInstance()->http->getName();
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
@@ -96,8 +103,10 @@ abstract class AuthController extends SystemBasic
         if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
         if (!self::isActive()) return $this->failedNotice(lang("未登录"),"/admin/login/login");
+        var_dump($this->nowAuthId);
+        var_dump($this->auth);
         // 权限验证
-        if (in_array(AdminAuth::getAuthId($this->module,$this->controller,$this->action),$this->auth)) return true;
+        if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
         exit($this->failed('没有权限访问!'));
     }
 
