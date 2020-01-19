@@ -44,6 +44,7 @@ class Admin extends BaseModel
         Session::set("adminId",$info['id']);
         Session::set("adminInfo",$info->toArray());
         var_dump($info->toArray());
+        var_dump(Session::get("adminInfo"));
         event("AdminLog",[$info->toArray(),"admin","login","login"]);
     }
 
