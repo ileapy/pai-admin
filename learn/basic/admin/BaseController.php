@@ -94,6 +94,15 @@ abstract class BaseController
     }
 
     /**
+     * 视图赋值
+     * @param mixed ...$vars
+     */
+    protected function assign(...$vars)
+    {
+        View::assign(...$vars);
+    }
+
+    /**
      * 返回视图
      * @return string
      * @throws \Exception
