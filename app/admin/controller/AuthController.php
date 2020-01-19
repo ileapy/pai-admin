@@ -77,6 +77,9 @@ abstract class AuthController extends BaseController
         $this->module = App::getInstance()->http->getName();
         $this->controller = $this->request->controller();
         $this->action = $this->request->action();
+        var_dump($this->module);
+        var_dump($this->controller);
+        var_dump($this->action);
         // 鉴权
         $this->checkAuth();
         // 多语言
