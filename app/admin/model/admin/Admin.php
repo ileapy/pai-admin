@@ -25,7 +25,7 @@ class Admin extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function login($name,$pwd)
+    public static function login(string $name,string $pwd): bool
     {
         $info = self::where("name|tel","=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
@@ -60,7 +60,7 @@ class Admin extends BaseModel
      * 是否登录
      * @return bool
      */
-    public static function isActive()
+    public static function isActive(): bool
     {
         return Session::has('adminId') && Session::has('adminInfo');
     }

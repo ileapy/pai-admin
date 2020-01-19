@@ -20,9 +20,9 @@ class AdminLog extends BaseModel
      * @param string $module
      * @param string $controller
      * @param string $action
-     * @return AdminLog|\think\Model
+     * @return bool
      */
-    public static function saveLog(array $adminInfo, string $module, string $controller, string $action)
+    public static function saveLog(array $adminInfo, string $module, string $controller, string $action): bool
     {
         return self::create([
             'admin_id'      => $adminInfo['id'],
