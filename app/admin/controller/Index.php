@@ -40,6 +40,7 @@ class Index extends AuthController
     {
         var_dump($request->param("session"));
         Session::setId($request->param("session"));
+        var_dump(Session::all());
         Session::save();
         var_dump(Session::all());
 
