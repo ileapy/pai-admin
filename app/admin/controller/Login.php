@@ -69,6 +69,7 @@ class Login extends AuthController
     {
         return Admin::clearLoginInfo() ? app("json")->success("操作成功") : app("json")->success("操作失败");
     }
+
     /**
      * 验证码
      * @return \think\Response

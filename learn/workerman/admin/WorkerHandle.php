@@ -26,7 +26,9 @@ class WorkerHandle
             ]);
         }
 
+        // 保存数据
         Session::setId($sessionId);
+        Session::save();
 
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
