@@ -102,6 +102,7 @@ abstract class AuthController extends SystemBasic
         // 不需要登录
         if (in_array($this->action,$this->noNeedLogin) || $this->noNeedLogin == ['*'] || $this->noNeedLogin == "*") return true;
         // 验证登录
+        var_dump(!self::isActive(),11111111111111);
         if (!self::isActive()) return $this->failedNotice(lang("未登录"),"/admin/login/login");
         // 权限验证
         if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
@@ -122,7 +123,6 @@ abstract class AuthController extends SystemBasic
      */
     protected static function isActive()
     {
-        var_dump(Session::has('adminId'));
         return Session::has('adminId') && Session::has('adminInfo');
     }
 
