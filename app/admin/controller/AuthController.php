@@ -122,6 +122,7 @@ abstract class AuthController extends SystemBasic
      */
     protected static function isActive()
     {
+        var_dump(Session::has('adminId'));
         return Session::has('adminId') && Session::has('adminInfo');
     }
 
