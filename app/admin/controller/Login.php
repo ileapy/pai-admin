@@ -5,9 +5,7 @@ namespace app\admin\controller;
 
 use app\admin\model\admin\Admin;
 use app\admin\model\admin\Admin as adminModel;
-use app\Request;
 use learn\services\UtilService as Util;
-use think\facade\Route as Url;
 
 class Login extends AuthController
 {
