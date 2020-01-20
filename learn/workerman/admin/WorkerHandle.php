@@ -25,11 +25,10 @@ class WorkerHandle
                 'msg' => '授权失败!'
             ]);
         }
-        var_dump(Session::all());
-        // 保存数据
+
         Session::setId($sessionId);
-        var_dump(Session::all());
-//        Session::save();
+        Session::init();
+        Session::save();
 
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
