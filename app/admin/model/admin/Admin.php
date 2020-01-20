@@ -54,6 +54,7 @@ class Admin extends BaseModel
         Session::delete("adminId");
         Session::delete("adminInfo");
         Session::clear();
+        return true;
     }
 
     /**
