@@ -41,7 +41,7 @@ class Index extends AuthController
      */
     public function menu()
     {
-        return app("json")->success(AdminAuth::getMenu());
+        return app("json")->success(AdminAuth::getMenu(0,$this->auth));
     }
 
     public function test(Request $request)
