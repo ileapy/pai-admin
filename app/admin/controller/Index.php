@@ -41,7 +41,7 @@ class Index extends AuthController
      */
     public function menu()
     {
-        AdminAuth::getMenu();
+        var_dump(AdminAuth::getMenu());
     }
 
     public function test(Request $request)
