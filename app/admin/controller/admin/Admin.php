@@ -5,7 +5,9 @@ namespace app\admin\controller\admin;
 
 
 use app\admin\controller\AuthController;
-
+use app\admin\model\admin\Admin as aModel;
+use app\Request;
+use learn\services\UtilService as Util;
 /**
  * 账号管理
  * Class Admin
@@ -21,5 +23,13 @@ class Admin extends AuthController
     public function index()
     {
         return $this->fetch();
+    }
+
+    public function lst(Request $request)
+    {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',20],
+        ]);
     }
 }
