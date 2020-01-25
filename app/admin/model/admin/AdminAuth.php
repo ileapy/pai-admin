@@ -38,8 +38,7 @@ class AdminAuth extends BaseModel
         $model = $model->where("is_menu",1);
         $model = $model->where("pid",0);
         $model = $model->field(['name as title','path as href','icon']);
-        $model = $model->order("rank desc");
-        $model = $model->order("id desc");
+        $model = $model->order(["rank desc","id desc"]);
         $data = $model->select()->each(function ($item)
         {
 //            var_dump($item);
