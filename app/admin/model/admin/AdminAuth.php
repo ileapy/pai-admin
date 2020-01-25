@@ -32,16 +32,16 @@ class AdminAuth extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getMenu(): array
+    public static function getMenu(int $pid = 0): array
     {
         $model = new self;
         $model = $model->where("is_menu",1);
-        $model = $model->where("pid",0);
-        $model = $model->field(['name as title','path as href','icon']);
+        $model = $model->where("pid",$pid);
+        $model = $model->field(['name as title','path as href','icon','id']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item)
         {
-//            var_dump($item);
+            $item['$item'] = self::getMenu($item['id']);
         });
         return $data->toArray() ?: [];
     }
