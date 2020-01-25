@@ -38,11 +38,13 @@ class AdminAuth extends BaseModel
         $model = new self;
         $model = $model->where("is_menu",1);
         $model = $model->where("pid",$pid);
-        $model = $model->field(['name as title','path as href','icon','id']);
+        $model = $model->field(['name as title','path as href','icon','id','font_family as fontFamily','is_check as isCheck','spreed']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item)
         {
             $item['children'] = self::getMenu($item['id']);
+            $item['isCheck'] = $item['isCheck'] ? 'true' : 'false';
+            $item['spreed'] = $item['spreed'] ? 'true' : 'false';
         });
         return $data->toArray() ?: [];
     }
