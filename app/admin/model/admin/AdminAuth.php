@@ -27,6 +27,7 @@ class AdminAuth extends BaseModel
 
     /**
      * 获取菜单
+     * @param int $pid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
