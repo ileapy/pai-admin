@@ -24,4 +24,26 @@ class AdminAuth extends BaseModel
     {
         return self::where("module",$module)->where("controller",$controller)->where("action",$action)->value('id') ?: -1;
     }
+
+    /**
+     * 获取菜单
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getMenu(): array
+    {
+        $model = new self;
+        $model = $model->where("is_menu",1);
+        $model = $model->where("pid",0);
+        $model = $model->field(['name as title','path as href','icon']);
+        $model = $model->order("id desc");
+        $model = $model->where("rank desc");
+        $data = $model->select()->each(function ($item)
+        {
+            var_dump($item);
+        });
+        return $data->toArray() ?: [];
+    }
 }
