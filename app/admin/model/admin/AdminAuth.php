@@ -42,7 +42,7 @@ class AdminAuth extends BaseModel
         $model = $model->order("rank desc");
         $data = $model->select()->each(function ($item)
         {
-            var_dump($item);
+//            var_dump($item);
         });
         return $data->toArray() ?: [];
     }
