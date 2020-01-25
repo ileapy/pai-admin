@@ -40,10 +40,9 @@
         okLoading.close($);
         let userTable = table.render({
             elem: '#tableId',
-            url: okMock.api.listUser,
+            url: "/admin/admin/lst",
             limit: 20,
             page: true,
-            toolbar: true,
             toolbar: "#toolbarTpl",
             size: "sm",
             cols: [[
