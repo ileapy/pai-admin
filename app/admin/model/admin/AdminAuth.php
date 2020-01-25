@@ -43,8 +43,8 @@ class AdminAuth extends BaseModel
         $data = $model->select()->each(function ($item)
         {
             $item['children'] = self::getMenu($item['id']);
-            $item['isCheck'] = $item['isCheck'] ? 'true' : 'false';
-            $item['spreed'] = $item['spreed'] ? 'true' : 'false';
+            $item['isCheck'] = $item['isCheck'] ? true : false;
+            $item['spreed'] = $item['spreed'] ? true : false;
         });
         return $data->toArray() ?: [];
     }
