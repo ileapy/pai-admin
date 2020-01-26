@@ -35,4 +35,14 @@ class AdminRole extends BaseModel
         $data = self::where("status",1)->field("id,name")->select();
         return $data ? $data->toArray() : [];
     }
+
+    /**
+     * 获取角色名称
+     * @param int $id
+     * @return string
+     */
+    public static function getAuthNameById(int $id): string
+    {
+        return self::where("id",$id)->value("name") ?: $id;
+    }
 }
