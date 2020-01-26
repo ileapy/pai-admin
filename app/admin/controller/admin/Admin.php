@@ -33,6 +33,6 @@ class Admin extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::success("ok",aModel::systemPage($where));
+        return Json::successlayui("ok",aModel::systemPage($where));
     }
 }

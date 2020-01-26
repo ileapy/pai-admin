@@ -27,13 +27,10 @@
     layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils"], function () {
         let table = layui.table;
         let form = layui.form;
-        let laydate = layui.laydate;
         let okLayer = layui.okLayer;
         let okUtils = layui.okUtils;
         let $ = layui.jquery;
 
-        laydate.render({elem: "#startTime", type: "datetime"});
-        laydate.render({elem: "#endTime", type: "datetime"});
         okLoading.close($);
         let userTable = table.render({
             elem: '#tableId',
