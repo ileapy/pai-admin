@@ -86,6 +86,7 @@ class Admin extends BaseModel
             // 用户信息
             $info = self::getAdminInfoById($item['create_user']);
             $item['create_user'] = $info ? $info['nickname'] : $item['create_user'];
+            $item['role_id'] = AdminRole::getAuthNameById($item['role_id']);
         });
         $data = $data ? $data->toArray() : [];
         return compact("data","count");
