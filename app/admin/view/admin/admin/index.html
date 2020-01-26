@@ -24,12 +24,13 @@
 <!--js逻辑-->
 <script src="__ADMIN_PATH__lib/layui/layui.js"></script>
 <script>
-    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils"], function () {
+    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils","util"], function () {
         let table = layui.table;
         let form = layui.form;
         let okLayer = layui.okLayer;
         let okUtils = layui.okUtils;
         let $ = layui.jquery;
+        let util = layui.util;
 
         okLoading.close($);
         let userTable = table.render({
