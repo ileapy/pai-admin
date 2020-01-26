@@ -30,6 +30,7 @@ class Admin extends AuthController
     public function lst(Request $request)
     {
         $where = Util::postMore([
+            ['name',''],
             ['page',1],
             ['limit',20],
         ]);

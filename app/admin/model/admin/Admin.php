@@ -77,6 +77,7 @@ class Admin extends BaseModel
     public static function systemPage(array $where): array
     {
         $model = new self;
+        if ($where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
         return $data ? $data->toArray() : [];
