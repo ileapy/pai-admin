@@ -47,7 +47,7 @@
                 {field: "nickname", title: "昵称", width: 100},
                 {field: "realname", title: "真实姓名", width: 100},
                 {field: "avatar", title: "头像", width: 100},
-                {field: "role_id", title: "角色", width: 100, templet: "#roleTpl"},
+                {field: "role_id", title: "角色", width: 100},
                 {field: "status", title: "状态", width: 100, templet: "#statusTpl"},
                 {field: "tel", title: "电话", width: 200},
                 {field: "mail", title: "邮箱", width: 200},
@@ -187,16 +187,9 @@
 <!-- 启用|停用模板 -->
 <script type="text/html" id="statusTpl">
     {{#  if(d.status == 0){ }}
-    <span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
+    <span class="layui-btn layui-btn-normal layui-btn-xs">禁用</span>
     {{#  } else if(d.status == 1) { }}
-    <span class="layui-btn layui-btn-warm layui-btn-xs">已停用</span>
-    {{#  } }}
-</script>
-<script type="text/html" id="roleTpl">
-    {{#  if(d.role == 0){ }}
-    <span class="layui-btn layui-btn-normal layui-btn-xs">超级会员</span>
-    {{#  } else if(d.role == 1) { }}
-    <span class="layui-btn layui-btn-warm layui-btn-xs">普通用户</span>
+    <span class="layui-btn layui-btn-warm layui-btn-xs">正常</span>
     {{#  } }}
 </script>
 </body>
