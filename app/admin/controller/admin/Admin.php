@@ -6,6 +6,7 @@ namespace app\admin\controller\admin;
 
 use app\admin\controller\AuthController;
 use app\admin\model\admin\Admin as aModel;
+use app\admin\model\admin\AdminRole as rModel;
 use app\Request;
 use learn\services\UtilService as Util;
 use learn\services\JsonService as Json;
@@ -24,6 +25,7 @@ class Admin extends AuthController
      */
     public function index()
     {
+        $this->assign("auth_ids",rModel::getAuthIdLst());
         return $this->fetch();
     }
 

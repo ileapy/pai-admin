@@ -22,4 +22,17 @@ class AdminRole extends BaseModel
     {
         return self::where("id",$id)->value("auth") ?: '';
     }
+
+    /**
+     * 获取所有角色ids
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getAuthLst(): array
+    {
+        $data = self::where("status",1)->field("id,name")->select();
+        return $data ? $data->toArray() : [];
+    }
 }
