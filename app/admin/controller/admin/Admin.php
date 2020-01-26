@@ -25,7 +25,7 @@ class Admin extends AuthController
      */
     public function index()
     {
-        $this->assign("auth_ids",rModel::getAuthIdLst());
+        $this->assign("auths",rModel::getAuthLst());
         return $this->fetch();
     }
 
