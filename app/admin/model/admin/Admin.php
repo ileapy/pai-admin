@@ -87,7 +87,8 @@ class Admin extends BaseModel
             $info = self::getAdminInfoById($item['create_user']);
             $item['create_user'] = $info ? $info['nickname'] : $item['create_user'];
         });
-        return $data ? $data->toArray() : [];
+        $data = $data ? $data->toArray() : [];
+        return compact("data","count");
     }
 
     /**
