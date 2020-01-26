@@ -31,6 +31,8 @@ class Admin extends AuthController
     {
         $where = Util::postMore([
             ['name',''],
+            ['role_id',''],
+            ['status',''],
             ['page',1],
             ['limit',20],
         ]);
