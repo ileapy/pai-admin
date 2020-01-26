@@ -8,6 +8,8 @@ use app\admin\controller\AuthController;
 use app\admin\model\admin\Admin as aModel;
 use app\Request;
 use learn\services\UtilService as Util;
+use learn\services\JsonService as Json;
+
 /**
  * 账号管理
  * Class Admin
@@ -31,5 +33,6 @@ class Admin extends AuthController
             ['page',1],
             ['limit',20],
         ]);
+        return Json::success("ok",aModel::systemPage($where));
     }
 }

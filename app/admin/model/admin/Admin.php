@@ -65,4 +65,20 @@ class Admin extends BaseModel
     {
         return Session::has('adminId') && Session::has('adminInfo');
     }
+
+    /**
+     * 列表
+     * @param array $where
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function systemPage(array $where): array
+    {
+        $model = new self;
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        $data = $model->select();
+        return $data ? $data->toArray() : [];
+    }
 }
