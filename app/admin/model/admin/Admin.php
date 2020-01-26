@@ -78,6 +78,8 @@ class Admin extends BaseModel
     {
         $model = new self;
         if ($where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
+        if ($where['status'] != '') $model = $model->where("status",$where['name']);
+        if ($where['role_id'] != '') $model = $model->where("role_id",$where['name']);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $count = self::count($model);
         $data = $model->select()->each(function ($item){
