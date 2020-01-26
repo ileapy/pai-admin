@@ -79,8 +79,12 @@ class Admin extends BaseModel
         $model = new self;
         if ($where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
-        var_dump($model);
-        $data = $model->select();
+        $count = self::count($model);
+        $data = $model->select()->each(function ($item){
+            // 用户信息
+            $info = self::getAdminInfoById($item['create_user']);
+            $item['create_user'] = $info ? $info['nickname'] : $item['create_user'];
+        });
         return $data ? $data->toArray() : [];
     }
 
@@ -100,5 +104,15 @@ class Admin extends BaseModel
         $model = $model->field($field);
         $info = $model->find();
         return $info ? $info->toArray() : [];
+    }
+
+    /**
+     * 数据量
+     * @param string|\think\db\Raw $model
+     * @return int
+     */
+    public static function count($model): int
+    {
+        return $model->count();
     }
 }
