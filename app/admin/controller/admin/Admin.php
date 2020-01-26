@@ -27,6 +27,13 @@ class Admin extends AuthController
         return $this->fetch();
     }
 
+    /**
+     * 账号列表
+     * @param Request $request
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function lst(Request $request)
     {
         $where = Util::postMore([
