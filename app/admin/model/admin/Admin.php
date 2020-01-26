@@ -79,7 +79,26 @@ class Admin extends BaseModel
         $model = new self;
         if ($where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
+        var_dump($model);
         $data = $model->select();
         return $data ? $data->toArray() : [];
+    }
+
+    /**
+     * 获取账号信息
+     * @param int $id
+     * @param string $field
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getAdminInfoById(int $id, string $field = '*'): array
+    {
+        $model = new self;
+        $model = $model->where("id",$id);
+        $model = $model->field($field);
+        $info = $model->find();
+        return $info ? $info->toArray() : [];
     }
 }
