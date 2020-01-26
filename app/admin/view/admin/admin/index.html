@@ -12,6 +12,24 @@
     <!--模糊搜索区域-->
     <div class="layui-row">
         <form class="layui-form layui-col-md12 ok-search">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <select name="role" lay-verify="">
+                        <option value="" selected>请选择角色</option>
+                        <option value="0">超级会员</option>
+                        <option value="1">普通用户</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <select name="status" lay-verify="">
+                        <option value="" selected>请选择状态</option>
+                        <option value="0">已启用</option>
+                        <option value="1">已停用</option>
+                    </select>
+                </div>
+            </div>
             <input class="layui-input" placeholder="ID/账号" autocomplete="off" name="name">
             <button class="layui-btn" lay-submit="" lay-filter="search">
                 <i class="layui-icon">&#xe615;</i>
@@ -99,51 +117,6 @@
             }
         });
 
-        function batchEnabled() {
-            okLayer.confirm("确定要批量启用吗？", function (index) {
-                layer.close(index);
-                let idsStr = okUtils.tableBatchCheck(table);
-                if (idsStr) {
-                    okUtils.ajax("/user/normalUser", "put", {idsStr: idsStr}, true).done(function (response) {
-                        console.log(response);
-                        okUtils.tableSuccessMsg(response.msg);
-                    }).fail(function (error) {
-                        console.log(error)
-                    });
-                }
-            });
-        }
-
-        function batchDisabled() {
-            okLayer.confirm("确定要批量停用吗？", function (index) {
-                layer.close(index);
-                let idsStr = okUtils.tableBatchCheck(table);
-                if (idsStr) {
-                    okUtils.ajax("/user/stopUser", "put", {idsStr: idsStr}, true).done(function (response) {
-                        console.log(response);
-                        okUtils.tableSuccessMsg(response.msg);
-                    }).fail(function (error) {
-                        console.log(error)
-                    });
-                }
-            });
-        }
-
-        function batchDel() {
-            okLayer.confirm("确定要批量删除吗？", function (index) {
-                layer.close(index);
-                let idsStr = okUtils.tableBatchCheck(table);
-                if (idsStr) {
-                    okUtils.ajax("/user/deleteUser", "delete", {idsStr: idsStr}, true).done(function (response) {
-                        console.log(response);
-                        okUtils.tableSuccessMsg(response.msg);
-                    }).fail(function (error) {
-                        console.log(error)
-                    });
-                }
-            });
-        }
-
         function add() {
             okLayer.open("添加用户", "user-add.html", "90%", "90%", null, function () {
                 userTable.reload();
@@ -174,9 +147,6 @@
 <!-- 头工具栏模板 -->
 <script type="text/html" id="toolbarTpl">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchEnabled">批量启用</button>
-        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="batchDisabled">批量停用</button>
-        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
         <button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
     </div>
 </script>
