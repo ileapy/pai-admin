@@ -12,28 +12,30 @@
     <!--模糊搜索区域-->
     <div class="layui-row">
         <form class="layui-form layui-col-md12 ok-search">
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <select name="role" lay-verify="">
-                        <option value="" selected>请选择角色</option>
-                        <option value="0">超级会员</option>
-                        <option value="1">普通用户</option>
-                    </select>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <select name="role" lay-verify="">
+                            <option value="" selected>请选择角色</option>
+                            <option value="0">超级会员</option>
+                            <option value="1">普通用户</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <select name="status" lay-verify="">
-                        <option value="" selected>请选择状态</option>
-                        <option value="0">已启用</option>
-                        <option value="1">已停用</option>
-                    </select>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <select name="status" lay-verify="">
+                            <option value="" selected>请选择状态</option>
+                            <option value="0">已启用</option>
+                            <option value="1">已停用</option>
+                        </select>
+                    </div>
                 </div>
+                <input class="layui-input" placeholder="ID/账号" autocomplete="off" name="name">
+                <button class="layui-btn" lay-submit="" lay-filter="search">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
             </div>
-            <input class="layui-input" placeholder="ID/账号" autocomplete="off" name="name">
-            <button class="layui-btn" lay-submit="" lay-filter="search">
-                <i class="layui-icon">&#xe615;</i>
-            </button>
         </form>
     </div>
     <!--数据表格-->
