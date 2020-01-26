@@ -17,8 +17,9 @@
                     <div class="layui-input-inline">
                         <select name="role_id" lay-verify="">
                             <option value="" selected>请选择角色</option>
-                            <option value="0">超级会员</option>
-                            <option value="1">普通用户</option>
+                            {volist name="role_ids" id="vo"}
+                            <option value="{$vo.id}" selected>{$vo.name}</option>
+                            {/volist}
                         </select>
                     </div>
                 </div>
