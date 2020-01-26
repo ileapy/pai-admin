@@ -47,4 +47,13 @@ class Admin extends AuthController
         ]);
         return Json::successlayui(aModel::systemPage($where));
     }
+
+    /**
+     * 添加账号
+     * @param Request $request
+     */
+    public function add(Request $request)
+    {
+
+    }
 }
