@@ -10,8 +10,7 @@ use app\admin\model\admin\AdminRole as rModel;
 use app\Request;
 use learn\services\UtilService as Util;
 use learn\services\JsonService as Json;
-//use learn\services\FormBuilderService as Form;
-use FormBuilder\Form;
+use learn\services\FormBuilderService as Form;
 use learn\services\UrlService as Url;
 
 /**
@@ -54,6 +53,7 @@ class Admin extends AuthController
     /**
      * 添加账号
      * @param Request $request
+     * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function add(Request $request)
     {

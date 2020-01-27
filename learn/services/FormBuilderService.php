@@ -11,8 +11,9 @@ use FormBuilder\Form\IviewForm;
  * Class FormBuilderService
  * @package learn\services
  */
-class FormBuilderService extends Elm
+class FormBuilderService
 {
+    use Elm;
     /**
      * 生成表单返回html
      * @param $rule
