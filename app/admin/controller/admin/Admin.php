@@ -10,8 +10,8 @@ use app\admin\model\admin\AdminRole as rModel;
 use app\Request;
 use learn\services\UtilService as Util;
 use learn\services\JsonService as Json;
+use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use learn\services\UrlService as Url;
 
 /**
  * 账号管理
@@ -57,11 +57,10 @@ class Admin extends AuthController
      */
     public function add(Request $request)
     {
-        var_dump(url('save')->build());
         $f = array();
-        $f[] = Form::input('order_id','订单编号')->disabled(1);
-        $f[] = Form::number('total_price','商品总价')->min(0);
-        $f[] = Form::number('total_postage','原始邮费')->min(0);
-        echo Form::make_post_form($f,url('save'));
+        $f[] = Elm::input('order_id','订单编号')->disabled(1);
+        $f[] = Elm::number('total_price','商品总价')->min(0);
+        $f[] = Elm::number('total_postage','原始邮费')->min(0);
+        echo Form::make_post_form($f,url('save')->build());
     }
 }
