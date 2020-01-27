@@ -20,10 +20,11 @@ layui.define(["layer"], function (exports) {
          * @param endFunction
          */
         open: function (title, content, width, height, successFunction, endFunction) {
+            console.log(content)
             layer.open({
                 title: title,
                 type: 2,
-                maxmin: false,
+                maxmin: true,
                 shade: 0.5,
                 anim: okLayer.animChoose(),
                 area: [width, height],
