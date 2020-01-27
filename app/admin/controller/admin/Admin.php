@@ -57,7 +57,7 @@ class Admin extends AuthController
      */
     public function add(Request $request)
     {
-        var_dump(url('save'));
+        var_dump(url('save')->build());
         $f = array();
         $f[] = Form::input('order_id','订单编号')->disabled(1);
         $f[] = Form::number('total_price','商品总价')->min(0);
