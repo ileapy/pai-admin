@@ -53,14 +53,15 @@ class Admin extends AuthController
     /**
      * 添加账号
      * @param Request $request
+     * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('order_id','订单编号')->label("eweaasdas");
+        $form[] = Elm::input('order_id','订单编号');
         $form[] = Elm::number('total_price','商品总价')->min(0);
         $form[] = Elm::number('total_postage','原始邮费')->min(0);
-        echo Form::make_post_form($form,url('save')->build());
+        return Form::make_post_form($form, url('save')->build());
     }
 }
