@@ -23,7 +23,7 @@ layui.define(["layer"], function (exports) {
             layer.open({
                 title: title,
                 type: 2,
-                maxmin: true,
+                maxmin: false,
                 shade: 0.5,
                 anim: okLayer.animChoose(),
                 area: [width, height],
