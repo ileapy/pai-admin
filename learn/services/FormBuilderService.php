@@ -13,7 +13,6 @@ use FormBuilder\Form\IviewForm;
  */
 class FormBuilderService
 {
-    use Elm;
     /**
      * 生成表单返回html
      * @param $rule
