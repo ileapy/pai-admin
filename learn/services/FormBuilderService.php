@@ -24,6 +24,7 @@ class FormBuilderService
         $form = new IviewForm($url);
         $form->setMethod('POST');
         $form->setRule($rule);
+        $form->formConfig(['width'=>"50%"]);
         return $form->view();
     }
 }
