@@ -38,6 +38,7 @@ class AdminAuth extends BaseModel
     {
         $model = new self;
         $model = $model->where("is_menu",1);
+        $model = $model->where("status",1);
         $model = $model->where("pid",$pid);
         if ($auth != []) $model = $model->where("id",'in',$auth);
         $model = $model->field(['name as title','path as href','icon','id','font_family as fontFamily','is_check as isCheck','spreed']);
