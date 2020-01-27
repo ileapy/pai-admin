@@ -57,10 +57,10 @@ class Admin extends AuthController
      */
     public function add(Request $request)
     {
-        $f = array();
-        $f[] = Elm::input('order_id','订单编号')->disabled(1);
-        $f[] = Elm::number('total_price','商品总价')->min(0);
-        $f[] = Elm::number('total_postage','原始邮费')->min(0);
-        echo Form::make_post_form($f,url('save')->build());
+        $form = array();
+        $form[] = Elm::input('order_id','订单编号')->label("eweaasdas");
+        $form[] = Elm::number('total_price','商品总价')->min(0);
+        $form[] = Elm::number('total_postage','原始邮费')->min(0);
+        echo Form::make_post_form($form,url('save')->build());
     }
 }
