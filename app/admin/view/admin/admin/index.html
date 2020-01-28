@@ -113,6 +113,9 @@
                 case "add":
                     add();
                     break;
+                case "openImage":
+                    console.log(obj);
+                    break;
             }
         });
 
@@ -160,6 +163,10 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
     </div>
+</script>
+<!--图片-->
+<script type="text/html" id="imageTpl">
+    <img src="{{d.avatar}}" lay-event="openImage"/>
 </script>
 <!-- 行工具栏模板 -->
 <script type="text/html" id="operationTpl">
