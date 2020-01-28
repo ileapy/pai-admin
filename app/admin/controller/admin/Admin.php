@@ -59,10 +59,31 @@ class Admin extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('order_id','订单编号')->col(10);
-        $form[] = Elm::number('total_price','商品总价')->min(0);
-        $form[] = Elm::number('total_postage','原始邮费')->min(0);
+        $form[] = Elm::input('name','登录账号')->col(10);
+        $form[] = Elm::input('name','昵称')->col(10);
+        $form[] = Elm::frameImage('name','头像')->col(10);
+        $form[] = Elm::password('name','密码')->col(10);
+        $form[] = Elm::input('name','真实姓名')->col(10);
+        $form[] = Elm::input('name','角色')->col(10);
+        $form[] = Elm::input('name','电话')->col(10);
+        $form[] = Elm::email('name','邮箱')->col(10);
+        $form[] = Elm::radio('name','状态')->options(['0'=>'禁用','1'=>'启用'])->col(10);
         $this->assign("html", Form::make_post_form($form, url('save')->build()));
         return $this->fetch("public/form-builder");
+    }
+
+    public function save($id="")
+    {
+        $data = Util::postMore([
+            ['name',''],
+            ['nickname',''],
+            ['avatar',''],
+            ['pwd',''],
+            ['realname',''],
+            ['role_id',''],
+            ['tel',''],
+            ['mail',''],
+            ['status','']
+        ]);
     }
 }
