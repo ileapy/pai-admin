@@ -134,9 +134,11 @@
         function openImage(avatar) {
             layer.open({
                 type: 1,
+                title: false,
+                closeBtn: 0,
                 skin: 'layui-layer-nobg',
                 shadeClose: true,
-                content: avatar
+                content: "<img src='"+avatar+"'/>"
             });
         }
 
