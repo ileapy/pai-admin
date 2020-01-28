@@ -61,7 +61,7 @@ class Admin extends AuthController
         $form = array();
         $form[] = Elm::input('name','登录账号')->col(10);
         $form[] = Elm::input('name','昵称')->col(10);
-        $form[] = Elm::frameImage('name','头像')->col(10);
+        $form[] = Elm::uploadImage('name','头像')->col(10);
         $form[] = Elm::password('name','密码')->col(10);
         $form[] = Elm::input('name','真实姓名')->col(10);
         $form[] = Elm::input('name','角色')->col(10);
