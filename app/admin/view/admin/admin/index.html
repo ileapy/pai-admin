@@ -129,13 +129,13 @@
         });
 
         function add() {
-            okLayer.open("添加用户", "add", "80%", "80%", null, function () {
+            okLayer.open("添加用户", "add", "50%", "50%", null, function () {
                 userTable.reload();
             })
         }
 
         function edit(data) {
-            okLayer.open("更新用户", "edit", "80%", "80%", function (layero) {
+            okLayer.open("更新用户", "edit", "50%", "50%", function (layero) {
                 let iframeWin = window[layero.find("iframe")[0]["name"]];
                 iframeWin.initForm(data);
             }, function () {
