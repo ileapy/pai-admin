@@ -24,6 +24,7 @@ class FormBuilderService
         $form = new IviewForm($url);
         $form->setMethod('POST');
         $form->setRule($rule);
+        $form->setConfig(['style'=>'padding: 20px;']);
         return $form->view();
     }
 }
