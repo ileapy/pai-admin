@@ -76,7 +76,7 @@
                 {field: "name", title: "账号", width: 100},
                 {field: "nickname", title: "昵称", width: 100},
                 {field: "realname", title: "真实姓名", width: 100},
-                {field: "avatar", title: "头像", width: 100, height:100, templet: "#imageTpl"},
+                {field: "avatar", title: "头像", width: 200, height:200, templet: "#imageTpl"},
                 {field: "role_id", title: "角色", width: 100},
                 {field: "status", title: "状态", width: 100, templet: "#statusTpl"},
                 {field: "tel", title: "电话", width: 200},
@@ -166,7 +166,7 @@
 </script>
 <!--图片-->
 <script type="text/html" id="imageTpl">
-    <img src="{{d.avatar}}" lay-event="openImage"/>
+    <img src="{{d.avatar}}" lay-event="openImage" style="width: 100px;height: 100px;"/>
 </script>
 <!-- 行工具栏模板 -->
 <script type="text/html" id="operationTpl">
