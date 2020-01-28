@@ -126,10 +126,19 @@
                     del(data.id);
                     break;
                 case "openImage":
-                    console.log(obj);
+                    openImage(data.avatar)
                     break;
             }
         });
+
+        function openImage(avatar) {
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-nobg',
+                shadeClose: true,
+                content: avatar
+            });
+        }
 
         function add() {
             okLayer.open("添加用户", "add", "80%", "90%", null, function () {
