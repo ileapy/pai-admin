@@ -60,8 +60,8 @@ class Admin extends AuthController
     {
         $form = array();
         $form[] = Elm::input('order_id','订单编号')->col(10);
-        $form[] = Elm::number('total_price','商品总价')->col(10)->min(0);
-        $form[] = Elm::number('total_postage','原始邮费')->col(10)->min(0);
+        $form[] = Elm::number('total_price','商品总价')->min(0);
+        $form[] = Elm::number('total_postage','原始邮费')->min(0);
 //        return Form::make_post_form($form, url('save')->build());
         $this->assign("html", Form::make_post_form($form, url('save')->build()));
         return $this->fetch("public/form-builder");
