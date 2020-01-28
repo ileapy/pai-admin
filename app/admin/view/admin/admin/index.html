@@ -53,7 +53,7 @@
 <!--js逻辑-->
 <script src="__ADMIN_PATH__lib/layui/layui.js"></script>
 <script>
-    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils","util","layer"], function () {
+    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils","util"], function () {
         let table = layui.table;
         let form = layui.form;
         let okLayer = layui.okLayer;
@@ -134,9 +134,11 @@
         function openImage(avatar) {
             layer.open({
                 type: 1,
+                title: false,
+                closeBtn: 0,
                 skin: 'layui-layer-nobg',
                 shadeClose: true,
-                content: avatar
+                content: "<img src='"+avatar+"'/>"
             });
         }
 
