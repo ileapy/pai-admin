@@ -80,6 +80,37 @@ class Admin extends AuthController
     }
 
     /**
+     * 修改账号
+     * @return string
+     * @throws \FormBuilder\Exception\FormBuilderException
+     */
+    public function edit($id)
+    {
+        if (!$id) return app("json")->fail("账号id不能为空");
+        $ainfo = aModel::get($id);
+        if (!$ainfo) return app("json")->fail("没有该账号");
+        $form = array();
+        $form[] = Elm::input('name','登录账号',$ainfo['name'])->col(10);
+        $form[] = Elm::input('nickname','昵称',$ainfo['nickname'])->col(10);
+        $form[] = Elm::input('avatar','头像',$ainfo['avatar'])->col(10);
+        $form[] = Elm::password('pwd','密码',$ainfo['pwd'])->col(10);
+        $form[] = Elm::input('realname','真实姓名',$ainfo['realname'])->col(10);
+        $form[] = Elm::select('role_id','角色',$ainfo['role_id'])->options(function(){
+            $list = rModel::getAuthLst();
+            $menus=[];
+            foreach ($list as $menu){
+                $menus[] = ['value'=>$menu['id'],'label'=>$menu['name']];//,'disabled'=>$menu['pid']== 0];
+            }
+            return $menus;
+        })->col(10);
+        $form[] = Elm::input('tel','电话',$ainfo['tel'])->col(10);
+        $form[] = Elm::email('mail','邮箱',$ainfo['mail'])->col(10);
+        $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
+        $this->assign("html", Form::make_post_form($form, url('save',['id'=>$id])->build()));
+        return $this->fetch("public/form-builder");
+    }
+
+    /**
      * 保存修改
      * @param string $id
      * @return mixed
@@ -97,6 +128,10 @@ class Admin extends AuthController
             ['mail',''],
             ['status','']
         ]);
+        if ($data['name'] == "") return app("json")->fail("登录账号不能为空");
+        if ($data['pwd'] == "") return app("json")->fail("密码不能为空");
+        if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
+        if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
         if ($id=="")
         {
             $data['ip'] = $this->request->ip();
