@@ -21,7 +21,7 @@ layui.define(["layer"], function (exports) {
          */
         open: function (title, content, width, height, successFunction, endFunction) {
             console.log(content)
-            var index = layer.open({
+            layer.open({
                 title: title,
                 type: 2,
                 maxmin: true,
@@ -31,8 +31,8 @@ layui.define(["layer"], function (exports) {
                 content: content,
                 zIndex: layer.zIndex,
                 skin: okLayer.skinChoose(),
-                success: successFunction(index),
-                end: endFunction(index)
+                success: successFunction,
+                end: endFunction
             });
         },
         /**
