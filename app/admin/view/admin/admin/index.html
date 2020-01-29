@@ -143,7 +143,9 @@
         }
 
         function add() {
-            okLayer.open("添加用户", "add", "80%", "90%", null, function () {
+            okLayer.open("添加用户", "add", "80%", "90%", function (layero) {
+                console.log(layero);
+            }, function () {
                 userTable.reload();
             })
         }
