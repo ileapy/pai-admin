@@ -160,7 +160,7 @@
 
         function del(id) {
             okLayer.confirm("确定要删除吗？", function () {
-                okUtils.ajax("/admin/admin.admin/del", "delete", {idsStr: id}, true).done(function (response) {
+                okUtils.ajax("/admin/admin.admin/del", "post", {id: id}, true).done(function (response) {
                     console.log(response);
                     okUtils.tableSuccessMsg(response.msg);
                 }).fail(function (error) {
