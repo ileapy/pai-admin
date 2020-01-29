@@ -60,14 +60,14 @@ class Admin extends AuthController
     {
         $form = array();
         $form[] = Elm::input('name','登录账号')->col(10);
-        $form[] = Elm::input('name','昵称')->col(10);
-        $form[] = Elm::frameFile('name','头像')->col(10);
-        $form[] = Elm::password('name','密码')->col(10);
-        $form[] = Elm::input('name','真实姓名')->col(10);
-        $form[] = Elm::input('name','角色')->col(10);
-        $form[] = Elm::input('name','电话')->col(10);
-        $form[] = Elm::email('name','邮箱')->col(10);
-        $form[] = Elm::radio('name','状态')->options(['0'=>'禁用','1'=>'启用'])->col(10);
+        $form[] = Elm::input('nickname','昵称')->col(10);
+        $form[] = Elm::input('avatar','头像')->col(10);
+        $form[] = Elm::password('pwd','密码')->col(10);
+        $form[] = Elm::input('realname','真实姓名')->col(10);
+        $form[] = Elm::input('role_id','角色')->col(10);
+        $form[] = Elm::input('tel','电话')->col(10);
+        $form[] = Elm::email('mail','邮箱')->col(10);
+        $form[] = Elm::radio('status','状态')->options(['0'=>'禁用','1'=>'启用'])->col(10);
         $this->assign("html", Form::make_post_form($form, url('save')->build()));
         return $this->fetch("public/form-builder");
     }
