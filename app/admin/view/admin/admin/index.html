@@ -153,7 +153,8 @@
         function edit(data) {
             okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", function (index) {
                 layer.close(index);
-            }, function () {
+            }, function (index) {
+                layer.close(index);
                 userTable.reload();
             })
         }
