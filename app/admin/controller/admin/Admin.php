@@ -79,6 +79,11 @@ class Admin extends AuthController
         return $this->fetch("public/form-builder");
     }
 
+    /**
+     * 保存修改
+     * @param string $id
+     * @return mixed
+     */
     public function save($id="")
     {
         $data = Util::postMore([
@@ -104,7 +109,6 @@ class Admin extends AuthController
             $data['update_time'] = time();
             $res = aModel::update($data,$id);
         }
-
         return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
