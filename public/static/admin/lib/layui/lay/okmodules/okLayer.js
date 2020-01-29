@@ -32,7 +32,7 @@ layui.define(["layer"], function (exports) {
                 zIndex: layer.zIndex,
                 skin: okLayer.skinChoose(),
                 success: successFunction(index),
-                end: endFunction
+                end: endFunction(index)
             });
         },
         /**
