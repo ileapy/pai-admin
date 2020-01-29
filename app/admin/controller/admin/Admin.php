@@ -84,7 +84,7 @@ class Admin extends AuthController
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
-    public function edit($id)
+    public function edit($id="")
     {
         if (!$id) return app("json")->fail("账号id不能为空");
         $ainfo = aModel::get($id);
