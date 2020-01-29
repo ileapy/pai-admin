@@ -37,7 +37,9 @@ class Json
         if (!is_null($data))
             $res['data'] = $data;
 
-        return Response::create($res, 'json', 0);
+        $res['code'] = 0;
+
+        return Response::create($res, 'json', 200);
     }
 
     public function success($msg = 'ok', ?array $data = null): Response
