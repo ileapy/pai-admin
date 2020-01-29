@@ -109,6 +109,16 @@ class Admin extends AuthController
             $data['update_time'] = time();
             $res = aModel::update($data,$id);
         }
-        return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $res ? Json::successlayui("操作成功") : Json::fail("操作失败");
+    }
+
+    /**
+     * 删除账号
+     * @param $id
+     */
+    public function del($id)
+    {
+        if (!$id) return Json::fail("参数有误，Id为空！");
+        return aModel::del($id) ? Json::successlayui("操作成功") : Json::fail("操作失败");
     }
 }
