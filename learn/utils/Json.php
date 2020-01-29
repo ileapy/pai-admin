@@ -29,16 +29,10 @@ class Json
     public function successLayui($msg = 'ok', ?array $data = null): Response
     {
         $res = [];
-        if (is_array($msg)) {
-            $res['data'] = $msg;
-            $res['msg'] = 'ok';
-        }
-
+        $res['msg'] = $msg;
         if (!is_null($data))
             $res['data'] = $data;
-
         $res['code'] = 0;
-
         return Response::create($res, 'json', 200);
     }
 
