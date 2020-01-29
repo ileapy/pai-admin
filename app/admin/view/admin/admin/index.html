@@ -151,8 +151,7 @@
         }
 
         function edit(data) {
-            let url = {url('save',['id'=>data.id])->build()};
-            okLayer.open("更新用户", url, "80%", "90%", function (layero) {
+            okLayer.open("更新用户", "{url('save',['id'=>data.id])->build()}", "80%", "90%", function (layero) {
                 let iframeWin = window[layero.find("iframe")[0]["name"]];
                 iframeWin.initForm(data);
             }, function () {
