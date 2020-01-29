@@ -101,15 +101,6 @@
 
         table.on("toolbar(tableFilter)", function (obj) {
             switch (obj.event) {
-                case "batchEnabled":
-                    batchEnabled();
-                    break;
-                case "batchDisabled":
-                    batchDisabled();
-                    break;
-                case "batchDel":
-                    batchDel();
-                    break;
                 case "add":
                     add();
                     break;
@@ -143,18 +134,13 @@
         }
 
         function add() {
-            okLayer.open("添加用户", "add", "80%", "90%", function (layero) {
-                console.log(layero);
-            }, function () {
+            okLayer.open("添加用户", "add", "80%", "90%", null, function () {
                 userTable.reload();
             })
         }
 
         function edit(data) {
-            okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", function (index) {
-                layer.close(index);
-            }, function (index) {
-                layer.close(index);
+            okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", null, function () {
                 userTable.reload();
             })
         }
