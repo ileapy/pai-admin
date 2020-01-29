@@ -26,6 +26,19 @@ class Json
         return Response::create($res, 'json', $this->code);
     }
 
+    public function successLayui($msg = 'ok', ?array $data = null): Response
+    {
+        if (is_array($msg)) {
+            $res['data'] = $msg;
+            $res['msg'] = 'ok';
+        }
+
+        if (!is_null($data))
+            $res['data'] = $data;
+
+        return Response::create($res, 'json', 0);
+    }
+
     public function success($msg = 'ok', ?array $data = null): Response
     {
         if (is_array($msg)) {
