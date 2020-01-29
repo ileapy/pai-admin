@@ -58,13 +58,13 @@ class JsonService
         return self::result($code,$msg,$data);
     }
 
-    public static function success($msg,$data=[])
+    public static function success($msg,$data=[],$code=200)
     {
         if(true == is_array($msg)){
             $data = $msg;
             $msg = self::$SUCCESSFUL_DEFAULT_MSG;
         }
-        return self::result(200,$msg,$data);
+        return self::result($code,$msg,$data);
     }
 
     /*
