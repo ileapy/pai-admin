@@ -28,6 +28,7 @@ class Json
 
     public function successLayui($msg = 'ok', ?array $data = null): Response
     {
+        $res = [];
         if (is_array($msg)) {
             $res['data'] = $msg;
             $res['msg'] = 'ok';
