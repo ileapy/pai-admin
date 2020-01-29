@@ -64,7 +64,14 @@ class Admin extends AuthController
         $form[] = Elm::input('avatar','头像')->col(10);
         $form[] = Elm::password('pwd','密码')->col(10);
         $form[] = Elm::input('realname','真实姓名')->col(10);
-        $form[] = Elm::input('role_id','角色')->col(10);
+        $form[] = Elm::select('role_id','角色')->options(function(){
+            $list = rModel::getAuthLst();
+            $menus=[];
+            foreach ($list as $menu){
+                $menus[] = ['value'=>$menu['id'],'label'=>$menu['name']];//,'disabled'=>$menu['pid']== 0];
+            }
+            return $menus;
+        })->col(10);
         $form[] = Elm::input('tel','电话')->col(10);
         $form[] = Elm::email('mail','邮箱')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
