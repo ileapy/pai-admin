@@ -140,10 +140,7 @@
         }
 
         function edit(data) {
-            okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", function (layero) {
-                let iframeWin = window[layero.find("iframe")[0]["name"]];
-                iframeWin.initForm(data);
-            }, function () {
+            okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", null, function () {
                 userTable.reload();
             })
         }
