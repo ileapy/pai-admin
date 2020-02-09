@@ -144,7 +144,7 @@ class Admin extends AuthController
             $data['update_time'] = time();
             $res = aModel::update($data,['id'=>$id]);
         }
-        return $res ? app("json")->successLayui("操作成功") : app("json")->fail("操作失败");
+        return ["code"=>0,"msg"=>"111"];
     }
 
     /**
