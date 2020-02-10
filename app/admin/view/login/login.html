@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="form-group">
-          <button class="btn btn-block btn-primary" type="button" onclick="location.href='index.html'">立即登录</button>
+          <button class="btn btn-block btn-primary" type="button" onclick="btnLogin()">立即登录</button>
         </div>
       </form>
       <hr>
@@ -88,6 +88,10 @@
 </div>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript">;</script>
+<script type="text/javascript">
+  function btnLogin() {
+    return false;
+  }
+</script>
 </body>
 </html>
