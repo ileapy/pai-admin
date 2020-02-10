@@ -1,105 +1,93 @@
 <!DOCTYPE html>
-<html lang="en" class="page-fill">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>TP6学习 - 登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="TP6学习">
-    <meta name="description" content="TP6学习">
-    <link rel="shortcut icon" href="__ADMIN_PATH__images/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="__ADMIN_PATH__css/oksub.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>登录页面 - 派后台管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="派后台管理系统">
+<meta name="description" content="派后台管理系统">
+<meta name="author" content="yinqi">
+<link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+<style>
+.lyear-wrapper {
+    position: relative;
+}
+.lyear-login {
+    display: flex !important;
+    min-height: 100vh;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.login-center {
+    background: #fff;
+    min-width: 29.25rem;
+    padding: 2.14286em 3.57143em;
+    border-radius: 5px;
+    margin: 2.85714em;
+}
+.login-header {
+    margin-bottom: 1.5rem !important;
+}
+.login-center .has-feedback.feedback-left .form-control {
+    padding-left: 38px;
+    padding-right: 12px;
+}
+.login-center .has-feedback.feedback-left .form-control-feedback {
+    left: 0;
+    right: auto;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    z-index: 4;
+    color: #dcdcdc;
+}
+.login-center .has-feedback.feedback-left.row .form-control-feedback {
+    left: 15px;
+}
+</style>
 </head>
-<body class="page-fill">
-    <div class="page-fill" id="login">
-        <form class="layui-form">
-            <div class="login_face"><img src="__ADMIN_PATH__images/logo.png"></div>
-            <div class="layui-form-item input-item">
-                <label for="username">用户名</label>
-                <input type="text" lay-verify="required" name="account" placeholder="请输入账号" autocomplete="off" id="username" class="layui-input">
-            </div>
-            <div class="layui-form-item input-item">
-                <label for="password">密码</label>
-                <input type="password" lay-verify="required|password" name="pwd" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input">
-            </div>
-            <div class="layui-form-item input-item captcha-box">
-                <label for="captcha">验证码</label>
-                <input type="text" lay-verify="required|captcha" name="verify" placeholder="请输入验证码" autocomplete="off" id="captcha" maxlength="4" class="layui-input">
-                <div class="captchaImg" style="width: 100px;position: absolute;top: 1px;bottom: 1px;right: 1px;cursor: pointer;"><img src="/admin/login/captcha" class="captchaImage" style="width: 100px;height: 36px;"/></div>
-            </div>
-            <div class="layui-form-item">
-                <button class="layui-btn layui-block" lay-filter="login" lay-submit="/admin/login/verify">登录</button>
-            </div>
-            <div class="login-link">
-                <a href="register.html">注册</a>
-                <a href="forget.html">忘记密码?</a>
-            </div>
-        </form>
+  
+<body>
+<div class="row lyear-wrapper">
+  <div class="lyear-login">
+    <div class="login-center">
+      <div class="login-header text-center">
+        <a href="index.html"> <img alt="light year admin" src="images/logo-sidebar.png"> </a>
+      </div>
+      <form action="#!" method="post">
+        <div class="form-group has-feedback feedback-left">
+          <input type="text" placeholder="请输入您的用户名" class="form-control" name="username" id="username" />
+          <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback feedback-left">
+          <input type="password" placeholder="请输入密码" class="form-control" id="password" name="password" />
+          <span class="mdi mdi-lock form-control-feedback" aria-hidden="true"></span>
+        </div>
+        <div class="form-group has-feedback feedback-left row">
+          <div class="col-xs-7">
+            <input type="text" name="captcha" class="form-control" placeholder="验证码">
+            <span class="mdi mdi-check-all form-control-feedback" aria-hidden="true"></span>
+          </div>
+          <div class="col-xs-5">
+            <img src="images/captcha.png" class="pull-right" id="captcha" style="cursor: pointer;" onclick="this.src=this.src+'?d='+Math.random();" title="点击刷新" alt="captcha">
+          </div>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-block btn-primary" type="button" onclick="location.href='index.html'">立即登录</button>
+        </div>
+      </form>
+      <hr>
+      <footer class="col-sm-12 text-center">
+        <p class="m-b-0">Copyright © 2019 <a href="http://lyear.itshubao.com">IT书包</a>. All right reserved</p>
+      </footer>
     </div>
-    <!--js逻辑-->
-    <script src="__ADMIN_PATH__lib/layui/layui.js"></script>
-    <script>
-        layui.use(["form", "okGVerify", "okUtils", "okLayer"], function () {
-            let form = layui.form;
-            let $ = layui.jquery;
-            let okUtils = layui.okUtils;
-            let okLayer = layui.okLayer;
-
-            /**
-             * 数据校验
-             */
-            form.verify({
-                password: [/^[\S]{6,12}$/, "密码必须6到12位，且不能出现空格"]
-            });
-
-            /**
-             * 表单提交
-             */
-            form.on("submit(login)", function (data) {
-                okUtils.ajax("/admin/login/verify", "post", data.field, true).done(function (response) {
-                    okLayer.greenTickMsg(response.msg, function () {
-                        window.location = "/admin/index/index";
-                    })
-                }).fail(function (error) {
-                    console.log(error)
-                });
-                $(".captchaImage").attr("src", "/admin/login/captcha?"+Math.random());
-                return false;
-            });
-
-            /**
-             * 表单input组件单击时
-             */
-            $("#login .input-item .layui-input").click(function (e) {
-                e.stopPropagation();
-                $(this).addClass("layui-input-focus").find(".layui-input").focus();
-            });
-
-            /**
-             * 表单input组件获取焦点时
-             */
-            $("#login .layui-form-item .layui-input").focus(function () {
-                $(this).parent().addClass("layui-input-focus");
-            });
-
-            /**
-             * 表单input组件失去焦点时
-             */
-            $("#login .layui-form-item .layui-input").blur(function () {
-                $(this).parent().removeClass("layui-input-focus");
-                if ($(this).val() != "") {
-                    $(this).parent().addClass("layui-input-active");
-                } else {
-                    $(this).parent().removeClass("layui-input-active");
-                }
-            });
-
-            /**
-             * 重新加载验证码
-             */
-            $(".captchaImg").click(function () {
-                $(".captchaImage").attr("src", "/admin/login/captcha?"+Math.random())
-            });
-        });
-    </script>
+  </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript">;</script>
 </body>
 </html>
