@@ -28,7 +28,7 @@ class Index extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function console()
+    public function main()
     {
         return $this->fetch();
     }
