@@ -67,7 +67,7 @@
           <span class="mdi mdi-lock form-control-feedback" aria-hidden="true"></span>
         </div>
         <div class="form-group has-feedback feedback-left row">
-          <div class="col-xs-7 has-captcha">
+          <div class="col-xs-7 has-captchas">
             <input type="text" name="captcha" id="captchas" class="form-control" placeholder="验证码">
             <span class="mdi mdi-check-all form-control-feedback" aria-hidden="true"></span>
           </div>
@@ -90,9 +90,13 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript">
   function btnLogin() {
-    if ($("#username").val() == "") $(".has-username").addClass("has-error");
-    if ($("#password").val() == "") $(".has-password").addClass("has-error");
-    if ($("#captchas").val() == "") $(".has-captchas").addClass("has-error");
+    if ($("#username").val() == "") {$(".has-username").addClass("has-error");return false;}
+    if ($("#password").val() == "") {$(".has-password").addClass("has-error");return false;}
+    if ($("#captchas").val() == "") {$(".has-captchas").addClass("has-error");return false;}
+    $.post(url="",data={account:$("#username").val(),pwd:$("#password").val(),verify:$("#captchas").val()},function (res) {
+      if (res.status == 200) window.location = "/admin/index/index";
+      return true;
+    });
     return false;
   }
 </script>
