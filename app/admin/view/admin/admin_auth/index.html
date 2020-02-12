@@ -82,7 +82,10 @@
             },
             {
                 field: 'icon',
-                title: '图标'
+                title: '图标',
+                formatter: function (value, row, index) {
+                    return '<i class="'+value+'"></i>';
+                },
             },
             {
                 field: 'module',
@@ -102,12 +105,12 @@
             },
             {
                 field: 'rank',
-                title: '排序'
+                title: '排序',
+                sortable: true,
             },
             {
                 field: 'status',
                 title: '状态',
-                sortable: true,
                 /*
                  * 可以选择采用开关来处理状态显示
                  * 或者采用上个示例的处理方式
