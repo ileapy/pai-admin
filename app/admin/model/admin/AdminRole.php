@@ -61,10 +61,7 @@ class AdminRole extends BaseModel
         if ($pid != 0) $model = $model->where("pid",$pid);
         $model = $model->field(['id','name','pid','auth','rank','status']);
         $model = $model->order(["rank desc","id"]);
-        $data = $model->select()->each(function ($item)
-        {
-            $item['children'] = self::systemPage($item['id']);
-        });
+        $data = $model->select();
         return $data->toArray() ?: [];
     }
 }
