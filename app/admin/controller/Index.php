@@ -9,7 +9,7 @@ use app\Request;
 class Index extends AuthController
 {
     // 无需登录的
-    protected $noNeedLogin = ['test'];
+    protected $noNeedLogin = ['test','accessauth','pddlogin'];
     // 无需权限的
     protected $noNeedRight = [''];
 
