@@ -82,7 +82,10 @@
             },
             {
                 field: 'icon',
-                title: '图标'
+                title: '图标',
+                formatter: function (value, row, index) {
+                    return '<i class="'+value+'"></i>';
+                },
             },
             {
                 field: 'module',
