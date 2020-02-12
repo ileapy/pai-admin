@@ -9,7 +9,7 @@ use app\Request;
 class Index extends AuthController
 {
     // 无需登录的
-    protected $noNeedLogin = ['test'];
+    protected $noNeedLogin = ['test','accessauth','pddlogin'];
     // 无需权限的
     protected $noNeedRight = [''];
 
@@ -47,5 +47,16 @@ class Index extends AuthController
     public function test(Request $request)
     {
         event("Test",["666"]);
+    }
+
+    public function pddlogin()
+    {
+        return $this->fetch();
+    }
+
+    public function accessauth()
+    {
+        var_dump($this->request->param());
+        file_put_contents("pdd.log",serialize($this->request->param()));
     }
 }
