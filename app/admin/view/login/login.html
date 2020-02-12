@@ -97,6 +97,7 @@
       if (res.status == 200) window.location = "/admin/index/index";
       return true;
     });
+    $("#captcha").attr("src",'/admin/login/captcha?d='+Math.random());
     return false;
   }
 </script>
