@@ -30,6 +30,7 @@ class Index extends AuthController
      */
     public function main()
     {
+        $this->assign("adminInfo",$this->adminInfo);
         return $this->fetch();
     }
 
