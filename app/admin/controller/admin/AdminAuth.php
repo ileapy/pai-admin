@@ -23,21 +23,15 @@ class AdminAuth extends AuthController
     }
 
     /**
-     * 账号列表
+     * 权限列表
      * @param Request $request
+     * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
     public function lst(Request $request)
     {
-        $where = Util::postMore([
-            ['name',''],
-            ['role_id',''],
-            ['status',''],
-            ['page',1],
-            ['limit',20],
-        ]);
-        return Json::successlayui(aModel::systemPage($where));
+        return Json::successlayui(aModel::systemPage(0));
     }
 }
