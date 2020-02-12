@@ -45,4 +45,26 @@ class AdminRole extends BaseModel
     {
         return self::where("id",$id)->value("name") ?: (string)$id;
     }
+
+    /**
+     * 角色列表
+     * @param int $pid
+     * @param array $auth
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function systemPage(int $pid = 0): array
+    {
+        $model = new self;
+        if ($pid != 0) $model = $model->where("pid",$pid);
+        $model = $model->field(['id','name','pid','auth','rank','status']);
+        $model = $model->order(["rank desc","id"]);
+        $data = $model->select()->each(function ($item)
+        {
+            $item['children'] = self::getMenu($item['id']);
+        });
+        return $data->toArray() ?: [];
+    }
 }
