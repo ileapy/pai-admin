@@ -72,7 +72,7 @@ class AdminAuth extends BaseModel
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item) use ($auth)
         {
-            $item['children'] = self::getMenu($item['id'],$auth);
+            $item['children'] = self::systemPage($item['id'],$auth);
         });
         return $data->toArray() ?: [];
     }

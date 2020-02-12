@@ -63,7 +63,7 @@ class AdminRole extends BaseModel
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item)
         {
-            $item['children'] = self::getMenu($item['id']);
+            $item['children'] = self::systemPage($item['id']);
         });
         return $data->toArray() ?: [];
     }
