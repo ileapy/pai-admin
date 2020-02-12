@@ -79,6 +79,30 @@
                 title: '名称'
             },
             {
+                field: 'icon',
+                title: '图标'
+            },
+            {
+                field: 'module',
+                title: '模板名'
+            },
+            {
+                field: 'controller',
+                title: '控制器'
+            },
+            {
+                field: 'action',
+                title: '方法名'
+            },
+            {
+                field: 'is_menu',
+                title: '是否菜单'
+            },
+            {
+                field: 'rank',
+                title: '排序'
+            },
+            {
                 field: 'status',
                 title: '状态',
                 sortable: true,
@@ -95,10 +119,6 @@
                     result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +')"></span></label>';
                     return result;
                 },
-            },
-            {
-                field: 'permissionValue',
-                title: '权限值'
             },
             {
                 field: 'operate',
