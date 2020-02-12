@@ -28,6 +28,9 @@
         
         <nav class="sidebar-main">
           <ul class="nav nav-drawer">
+              {volist name="list" id="vo"}
+              {$vo.id}:{$vo.name}<br/>
+              {/volist}
             <li class="nav-item active"> <a class="multitabs" href="/admin/index/main.html"><i class="mdi mdi-home"></i> <span>控制台</span></a> </li>
             <li class="nav-item nav-item-has-subnav">
               <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> <span>UI 元素</span></a>
