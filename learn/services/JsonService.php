@@ -79,16 +79,4 @@ class JsonService
         return compact('code','msg','data');
     }
 
-    /**
-     * Bootstrap成功返回
-     * @param $code
-     * @param string $msg
-     * @param array $rows
-     * @param int $total
-     */
-    public static function successBootstrap($code,$msg='',$rows=[],$total=0)
-    {
-        $data = compact('rows','total');
-        exit(json_encode(compact('code','msg','data')));
-    }
 }
