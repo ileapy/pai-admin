@@ -110,7 +110,10 @@
             title: '昵称',
         }, {
             field: 'avatar',
-            title: '头像'
+            title: '头像',
+            formatter:function (value,row,index) {
+                return '<img src="'+value+'" style="width: 150px;"/>';
+            },
         }, {
             field: 'role_id',
             title: '角色类型'
@@ -126,7 +129,10 @@
         }
         , {
             field: 'status',
-            title: '状态'
+            title: '状态',
+            formatter:function (value,row,index) {
+                return value === 1 ? '启用' : '冻结';
+            },
         }, {
             field: 'operate',
             title: '操作',
