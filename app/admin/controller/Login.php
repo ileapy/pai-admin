@@ -65,7 +65,7 @@ class Login extends AuthController
      */
     public function logout()
     {
-        return Admin::clearLoginInfo() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return Admin::clearLoginInfo() ? $this->successfulNotice("操作成功","/admin/login/login") : $this->failedNotice("操作失败","/admin/index/index");
     }
 
     /**
