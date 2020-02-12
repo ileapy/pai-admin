@@ -47,7 +47,8 @@ class Admin extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(aModel::systemPage($where));
+        $data = aModel::systemPage($where);
+        return Json::successBootstrap(0,"ok",$data['data'],$data['count']);
     }
 
     /**
