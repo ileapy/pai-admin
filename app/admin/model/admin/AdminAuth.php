@@ -64,16 +64,9 @@ class AdminAuth extends BaseModel
     public static function systemPage(int $pid = 0, array $auth = []): array
     {
         $model = new self;
-        $model = $model->where("is_menu",1);
-        $model = $model->where("status",1);
-        if ($pid != 0) $model = $model->where("pid",$pid);
-        if ($auth != []) $model = $model->where("id",'in',$auth);
         $model = $model->field(['id','name','icon','pid','module','controller','action','params','is_menu','path','rank','status']);
         $model = $model->order(["rank desc","id"]);
-        $data = $model->select()->each(function ($item) use ($auth)
-        {
-            $item['children'] = self::systemPage($item['id'],$auth);
-        });
+        $data = $model->select();
         return $data->toArray() ?: [];
     }
 }
