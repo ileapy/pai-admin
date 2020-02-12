@@ -28,84 +28,20 @@
         
         <nav class="sidebar-main">
           <ul class="nav nav-drawer">
-              {volist name="list" id="vo"}
-              {$vo.id}:{$vo.name}<br/>
-              {/volist}
-            <li class="nav-item active"> <a class="multitabs" href="/admin/index/main.html"><i class="mdi mdi-home"></i> <span>控制台</span></a> </li>
-            <li class="nav-item nav-item-has-subnav">
-              <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> <span>UI 元素</span></a>
-              <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="lyear_ui_buttons.html">按钮</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_cards.html">卡片</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_grid.html">格栅</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_icons.html">图标</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_tables.html">表格</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_modals.html">模态框</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_tooltips_popover.html">提示 / 弹出框</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_alerts.html">警告框</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_pagination.html">分页</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_progress.html">进度条</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_tabs.html">标签页</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_typography.html">排版</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_step.html">步骤</a> </li>
-                <li> <a class="multitabs" href="lyear_ui_other.html">其他</a> </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-item-has-subnav">
-              <a href="javascript:void(0)"><i class="mdi mdi-format-align-justify"></i> <span>表单</span></a>
-              <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="lyear_forms_elements.html">基本元素</a> </li>
-                <li> <a class="multitabs" href="lyear_forms_radio.html">单选框</a> </li>
-                <li> <a class="multitabs" href="lyear_forms_checkbox.html">复选框</a> </li>
-                <li> <a class="multitabs" href="lyear_forms_switch.html">开关</a> </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-item-has-subnav">
-              <a href="javascript:void(0)"><i class="mdi mdi-file-outline"></i> <span>示例页面</span></a>
-              <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="lyear_pages_doc.html">文档列表</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_gallery.html">图库列表</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_config.html">网站配置</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_rabc.html">设置权限</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_add_doc.html">新增文档</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_guide.html">表单向导</a> </li>
-                <li> <a class="multitabs" href="lyear_pages_data_table.html">表格插件</a> </li>
-                <li> <a href="lyear_pages_login.html" target="_blank">登录页面</a> </li>
-                <li> <a href="lyear_pages_error.html" target="_blank">错误页面</a> </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-item-has-subnav">
-              <a href="javascript:void(0)"><i class="mdi mdi-language-javascript"></i> <span>JS 插件</span></a>
-              <ul class="nav nav-subnav">
-                <li> <a class="multitabs" href="lyear_js_datepicker.html">日期选取器</a> </li>
-                <li> <a class="multitabs" href="lyear_js_sliders.html">滑块</a> </li>
-                <li> <a class="multitabs" href="lyear_js_colorpicker.html">选色器</a> </li>
-                <li> <a class="multitabs" href="lyear_js_chartjs.html">Chart.js</a> </li>
-                <li> <a class="multitabs" href="lyear_js_jconfirm.html">对话框</a> </li>
-                <li> <a class="multitabs" href="lyear_js_tags_input.html">标签插件</a> </li>
-                <li> <a class="multitabs" href="lyear_js_notify.html">通知消息</a> </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-item-has-subnav">
-              <a href="javascript:void(0)"><i class="mdi mdi-menu"></i> <span>多级菜单</span></a>
-              <ul class="nav nav-subnav">
-                <li> <a href="#!">一级菜单</a> </li>
-                <li class="nav-item nav-item-has-subnav"> 
-                  <a href="#!">一级菜单</a>
+              {volist name="menu" id="vo"}
+              {if $vo['children'] != {} && $vo['children'] != ""}
+              <li class="nav-item nav-item-has-subnav">
+                  <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> <span>{$vo.name}</span></a>
                   <ul class="nav nav-subnav">
-                    <li> <a href="#!">二级菜单</a> </li>
-                    <li class="nav-item nav-item-has-subnav"> 
-                      <a href="#!">二级菜单</a>
-                      <ul class="nav nav-subnav">
-                        <li> <a href="#!">三级菜单</a> </li>
-                        <li> <a href="#!">三级菜单</a> </li>
-                      </ul>
-                    </li>
+                      {foreach $vo['children'] as $key=>$val}
+                      <li><a class="multitabs" href="{$val.path}">{$val.name}</a> </li>
+                      {/foreach}
                   </ul>
-                </li>
-                <li> <a href="#!">一级菜单</a> </li>
-              </ul>
-            </li>
+              </li>
+              {else /}
+              <li class="nav-item"> <a class="multitabs" href="{$vo.path}"><i class="{$vo.icon}"></i> <span>{$vo.name}</span></a> </li>
+              {/if}
+              {/volist}
           </ul>
         </nav>
         
