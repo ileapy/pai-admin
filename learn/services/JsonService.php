@@ -88,7 +88,7 @@ class JsonService
      */
     public static function successBootstrap($code,$msg='',$rows=[],$total=0)
     {
-        $data = compact($rows,$total);
+        $data = compact('rows','total');
         exit(json_encode(compact('code','msg','data')));
     }
 }
