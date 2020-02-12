@@ -29,7 +29,10 @@
         <nav class="sidebar-main">
           <ul class="nav nav-drawer">
               {volist name="menu" id="vo"}
+              {if $vo['children'] != {} || $vo['children'] != ""}
 
+              <li class="nav-item"> <a class="multitabs" href="{$vo.path}"><i class="{$vo.icon}"></i> <span>{$vo.name}</span></a> </li>
+              {/if}
               {/volist}
           </ul>
         </nav>
