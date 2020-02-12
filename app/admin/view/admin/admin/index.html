@@ -58,9 +58,9 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: 'http://www.bixiaguangnian.com/index/test/getExampleJson',
+        url: '/admin/admin/lst',
         method: 'get',
-        dataType : 'jsonp',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
@@ -84,8 +84,8 @@
         },                                   // 传递参数
         sidePagination: "server",            // 分页方式：client客户端分页，server服务端分页
         pageNumber: 1,                       // 初始化加载第一页，默认第一页
-        pageSize: 10,                        // 每页的记录行数
-        pageList: [10, 25, 50, 100],         // 可供选择的每页的行数
+        pageSize: 20,                        // 每页的记录行数
+        pageList: [20, 50, 100],         // 可供选择的每页的行数
         //search: true,                      // 是否显示表格搜索，此搜索是客户端搜索
 
         //showExport: true,        // 是否显示导出按钮, 导出功能需要导出插件支持(tableexport.min.js)
@@ -98,57 +98,30 @@
             title: 'ID',
             sortable: true    // 是否排序
         }, {
-            field: 'author',
-            title: '作者'
+            field: 'name',
+            title: '账号'
         }, {
-            field: 'dynasty',
-            title: '朝代',
+            field: 'nickname',
+            title: '昵称',
         }, {
-            field: 'nationality',
-            title: '国籍'
+            field: 'avatar',
+            title: '头像'
         }, {
-            field: 'opus',
-            title: '作品'
+            field: 'role_id',
+            title: '角色类型'
         }, {
-            field: 'category',
-            title: '分类'
+            field: 'tel',
+            title: '电话'
         }, {
+            field: 'mail',
+            title: '邮箱'
+        }, {
+            field: 'create_time',
+            title: '创建时间'
+        }
+        , {
             field: 'status',
-            title: '状态',
-            editable: {
-                type: 'select',
-                title: "状态",
-                pk: 1,
-                source: [
-                    { value: 0, text: '禁用'},
-                    { value: 1, text: '正常'}
-                ],
-                noeditFormatter: function (value, row, index) {
-                    var result;
-                    if (value == '0' || value == '禁用') {
-                        result = { filed: "status", value: "禁用", class: "label label-danger" };
-                    } else if (value == '1' || value == '正常') {
-                        result = { filed: "status", value: "正常", class: "label label-success" };
-                    }
-
-                    return result; // 这里对bootstrap-table-editable.min.js做了一些修改，让其能接收class
-                },
-                // 可以按列分开做保存，也可以用后面的onEditableSave
-                url: 'http://www.bixiaguangnian.com/index/test/testEditJson',
-                ajaxOptions: {
-                    type: 'get',
-                    dataType: 'jsonp'
-                }, // 默认是post方式提交,这里因为跨域,改成get
-                success: function(response, newValue) {
-                    if (response.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单元格更新
-                        $('#tb_departments').bootstrapTable('updateCellById', {id: response.id, field: 'status', value: newValue});
-                    } else {
-                        return response.msg;
-                    }
-                },
-                highlight: false
-            }
+            title: '状态'
         }, {
             field: 'operate',
             title: '操作',
