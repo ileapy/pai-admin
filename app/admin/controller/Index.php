@@ -48,4 +48,15 @@ class Index extends AuthController
     {
         event("Test",["666"]);
     }
+
+    public function pddlogin()
+    {
+        return $this->fetch();
+    }
+
+    public function accessauth()
+    {
+        var_dump($this->request->param());
+        file_put_contents("pdd.log",serialize($this->request->param()));
+    }
 }
