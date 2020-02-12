@@ -66,7 +66,7 @@ class AdminAuth extends BaseModel
         $model = new self;
         $model = $model->where("is_menu",1);
         $model = $model->where("status",1);
-        $model = $model->where("pid",$pid);
+        if ($pid != 0) $model = $model->where("pid",$pid);
         if ($auth != []) $model = $model->where("id",'in',$auth);
         $model = $model->field(['id','name','icon','pid','module','controller','action','params','is_menu','path','rank','status']);
         $model = $model->order(["rank desc","id"]);
