@@ -29,8 +29,16 @@
         <nav class="sidebar-main">
           <ul class="nav nav-drawer">
               {volist name="menu" id="vo"}
-              {if $vo['children'] != {} || $vo['children'] != ""}
-
+              {if !empty($vo['children'])}
+              <li class="nav-item nav-item-has-subnav">
+                  <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> <span>{$vo.name}</span></a>
+                  <ul class="nav nav-subnav">
+                      {foreach $vo['children'] as $key=>$val}
+                      <li><a class="multitabs" href="{$val.path}">{$val.name}</a> </li>
+                      {/foreach}
+                  </ul>
+              </li>
+              {else /}
               <li class="nav-item"> <a class="multitabs" href="{$vo.path}"><i class="{$vo.icon}"></i> <span>{$vo.name}</span></a> </li>
               {/if}
               {/volist}
