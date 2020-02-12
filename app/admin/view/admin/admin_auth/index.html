@@ -60,6 +60,11 @@
     var $treeTable = $('.tree-table');
     $treeTable.bootstrapTable({
         url: '/admin/admin.adminAuth/lst',
+        responseHandler: function (res) {
+            return {
+                "data": res.data,
+            };
+        },
         idField: 'id',
         uniqueId: 'id',
         dataType: 'json',
