@@ -67,7 +67,7 @@
         //clickToSelect: true,     // 是否启用点击选中行
         showColumns: true,         // 是否显示所有的列
         showRefresh: true,         // 是否显示刷新按钮
-
+        load:'',
         //showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
 
         pagination: true,                    // 是否显示分页
@@ -160,6 +160,7 @@
             $("[data-toggle='tooltip']").tooltip();
         }
     });
+    $('#tb_departments').bootstrapTable('load', res.data);
 
     // 操作按钮
     function btnGroup ()
