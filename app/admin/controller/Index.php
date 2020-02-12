@@ -22,7 +22,6 @@ class Index extends AuthController
     {
         $this->assign("adminInfo",$this->adminInfo);
         $this->assign("menu",AdminAuth::getMenu(0,$this->auth));
-        var_dump(AdminAuth::getMenu(0,$this->auth));
         return $this->fetch();
     }
 
