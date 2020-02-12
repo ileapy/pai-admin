@@ -1,183 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>用户列表</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="__ADMIN_PATH__css/oksub.css">
-    <script type="text/javascript" src="__ADMIN_PATH__lib/loading/okLoading.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>bootstrap-table - 光年(Light Year Admin)后台管理系统模板</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+    <meta name="author" content="yinqi">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/animate.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
 </head>
+
 <body>
-<div class="ok-body">
-    <!--模糊搜索区域-->
-    <div class="layui-row">
-        <form class="layui-form ok-search-form">
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <select name="role_id" lay-verify="">
-                            <option value="" selected>请选择角色</option>
-                            {volist name="auths" id="vo"}
-                            <option value="{$vo.id}">{$vo.name}</option>
-                            {/volist}
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <select name="status" lay-verify="">
-                            <option value="" selected>请选择状态</option>
-                            <option value="1">正常</option>
-                            <option value="0">冻结</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <input type="text" class="layui-input" placeholder="账号/ID" autocomplete="off" name="name">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-input-inline">
-                        <button class="layui-btn" lay-submit="" lay-filter="search">
-                            <i class="layui-icon">&#xe615;</i>
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>用户管理</h4></div>
+                <div class="card-body">
+                    <div id="toolbar" class="toolbar-btn-action">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5">
+                            <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+                        </button>
+                        <button id="btn_edit" type="button" class="btn btn-success m-r-5">
+                            <span class="mdi mdi-check" aria-hidden="true"></span>启用
+                        </button>
+                        <button id="btn_disable" type="button" class="btn btn-warning m-r-5">
+                            <span class="mdi mdi-block-helper" aria-hidden="true"></span>禁用
+                        </button>
+                        <button id="btn_delete" type="button" class="btn btn-danger">
+                            <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
                         </button>
                     </div>
+                    <table id="tb_departments"></table>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
-    <!--数据表格-->
-    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
 </div>
-<!--js逻辑-->
-<script src="__ADMIN_PATH__lib/layui/layui.js"></script>
-<script>
-    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils","util"], function () {
-        let table = layui.table;
-        let form = layui.form;
-        let okLayer = layui.okLayer;
-        let okUtils = layui.okUtils;
-        let $ = layui.jquery;
-        let util = layui.util;
 
-        okLoading.close($);
-        let userTable = table.render({
-            elem: '#tableId',
-            url: "/admin/admin.admin/lst",
-            method: "post",
-            limit: 20,
-            page: true,
-            toolbar: "#toolbarTpl",
-            // size: "lg",
-            cols: [[
-                {type: "checkbox", fixed: "left"},
-                {field: "id", title: "ID", width: 100, sort: true},
-                {field: "name", title: "账号", width: 100},
-                {field: "nickname", title: "昵称", width: 100},
-                {field: "realname", title: "真实姓名", width: 100},
-                {field: "avatar", title: "头像", width: 150, height:150, templet: "#imageTpl"},
-                {field: "role_id", title: "角色", width: 100},
-                {field: "status", title: "状态", width: 100, templet: "#statusTpl"},
-                {field: "tel", title: "电话", width: 200},
-                {field: "mail", title: "邮箱", width: 200},
-                {field: "ip", title: "注册IP", width: 200},
-                {field: "create_user", title: "创建人", width: 150},
-                {field: "create_time", title: "创建时间", width: 200,templet:function(d){return util.toDateString(d.create_time*1000, "yyyy-MM-dd HH:mm:ss");}},
-                {title: "操作", width: 100, align: "center", fixed: "right", templet: "#operationTpl"}
-            ]],
-            done: function (res, curr, count) {
-                console.info(res, curr, count);
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
+
+<!--行内编辑插件-->
+<link href="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.min.css" rel="stylesheet">
+<script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+
+<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script type="text/javascript">
+    $('#tb_departments').bootstrapTable({
+        classes: 'table table-bordered table-hover table-striped',
+        url: 'http://www.bixiaguangnian.com/index/test/getExampleJson',
+        method: 'get',
+        dataType : 'jsonp',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        uniqueId: 'id',
+        idField: 'id',             // 每行的唯一标识字段
+        toolbar: '#toolbar',       // 工具按钮容器
+        //clickToSelect: true,     // 是否启用点击选中行
+        showColumns: true,         // 是否显示所有的列
+        showRefresh: true,         // 是否显示刷新按钮
+
+        //showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
+
+        pagination: true,                    // 是否显示分页
+        sortOrder: "asc",                    // 排序方式
+        queryParams: function(params) {
+            var temp = {
+                limit: params.limit,         // 每页数据量
+                offset: params.offset,       // sql语句起始索引
+                page: (params.offset / params.limit) + 1,
+                sort: params.sort,           // 排序的列名
+                sortOrder: params.order      // 排序方式'asc' 'desc'
+            };
+            return temp;
+        },                                   // 传递参数
+        sidePagination: "server",            // 分页方式：client客户端分页，server服务端分页
+        pageNumber: 1,                       // 初始化加载第一页，默认第一页
+        pageSize: 10,                        // 每页的记录行数
+        pageList: [10, 25, 50, 100],         // 可供选择的每页的行数
+        //search: true,                      // 是否显示表格搜索，此搜索是客户端搜索
+
+        //showExport: true,        // 是否显示导出按钮, 导出功能需要导出插件支持(tableexport.min.js)
+        //exportDataType: "basic", // 导出数据类型, 'basic':当前页, 'all':所有数据, 'selected':选中的数据
+
+        columns: [{
+            checkbox: true    // 是否显示复选框
+        }, {
+            field: 'id',
+            title: 'ID',
+            sortable: true    // 是否排序
+        }, {
+            field: 'author',
+            title: '作者'
+        }, {
+            field: 'dynasty',
+            title: '朝代',
+        }, {
+            field: 'nationality',
+            title: '国籍'
+        }, {
+            field: 'opus',
+            title: '作品'
+        }, {
+            field: 'category',
+            title: '分类'
+        }, {
+            field: 'status',
+            title: '状态',
+            editable: {
+                type: 'select',
+                title: "状态",
+                pk: 1,
+                source: [
+                    { value: 0, text: '禁用'},
+                    { value: 1, text: '正常'}
+                ],
+                noeditFormatter: function (value, row, index) {
+                    var result;
+                    if (value == '0' || value == '禁用') {
+                        result = { filed: "status", value: "禁用", class: "label label-danger" };
+                    } else if (value == '1' || value == '正常') {
+                        result = { filed: "status", value: "正常", class: "label label-success" };
+                    }
+
+                    return result; // 这里对bootstrap-table-editable.min.js做了一些修改，让其能接收class
+                },
+                // 可以按列分开做保存，也可以用后面的onEditableSave
+                url: 'http://www.bixiaguangnian.com/index/test/testEditJson',
+                ajaxOptions: {
+                    type: 'get',
+                    dataType: 'jsonp'
+                }, // 默认是post方式提交,这里因为跨域,改成get
+                success: function(response, newValue) {
+                    if (response.code == '200') {
+                        // 这里的状态显示有自定义样式区分，做单元格更新
+                        $('#tb_departments').bootstrapTable('updateCellById', {id: response.id, field: 'status', value: newValue});
+                    } else {
+                        return response.msg;
+                    }
+                },
+                highlight: false
             }
-        });
+        }, {
+            field: 'operate',
+            title: '操作',
+            formatter: btnGroup,  // 自定义方法
+            events: {
+                'click .edit-btn': function (event, value, row, index) {
+                    editUser(row.id);
+                },
+                'click .del-btn': function (event, value, row, index) {
+                    delUser(row.id);
+                }
+            }
+        }],
 
-        form.on("submit(search)", function (data) {
-            userTable.reload({
-                where: data.field,
-                page: {curr: 1}
+        onEditableSave: function (field, row, oldValue, $el) {
+            $.ajax({
+                type: "get",
+                url: "http://www.bixiaguangnian.com/index/test/testEditTwo",
+                data: row,
+                dataType: 'jsonp',
+                success: function (data, status) {
+                    if (data.code == '200') {
+                        // 这里的状态显示有自定义样式区分，做单行的更新
+                        $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                error: function () {
+                    alert('修改失败，请稍后再试');
+                }
             });
-            return false;
-        });
+        },
 
-        table.on("toolbar(tableFilter)", function (obj) {
-            switch (obj.event) {
-                case "add":
-                    add();
-                    break;
-            }
-        });
-
-        table.on("tool(tableFilter)", function (obj) {
-            let data = obj.data;
-            switch (obj.event) {
-                case "edit":
-                    edit(data);
-                    break;
-                case "del":
-                    del(data.id);
-                    break;
-                case "openImage":
-                    openImage(data.avatar)
-                    break;
-            }
-        });
-
-        function openImage(avatar) {
-            layer.open({
-                type: 1,
-                title: false,
-                closeBtn: 0,
-                skin: 'layui-layer-nobg',
-                shadeClose: true,
-                content: "<img src='"+avatar+"'/>"
-            });
+        onLoadSuccess: function(data){
+            $("[data-toggle='tooltip']").tooltip();
         }
+    });
 
-        function add() {
-            okLayer.open("添加用户", "add", "80%", "90%", null, function () {
-                userTable.reload();
-            })
-        }
+    // 操作按钮
+    function btnGroup ()
+    {
+        let html =
+            '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
+            '<a href="#!" class="btn btn-xs btn-default del-btn" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
+        return html;
+    }
 
-        function edit(data) {
-            okLayer.open("更新用户", "edit?id="+data.id, "80%", "90%", null, function () {
-                userTable.reload();
-            })
-        }
-
-        function del(id) {
-            okLayer.confirm("确定要删除吗？", function () {
-                okUtils.ajax("/admin/admin.admin/del", "post", {id: id}, true).done(function (response) {
-                    okUtils.tableSuccessMsg(response.msg);
-                }).fail(function (error) {
-                    console.log(error)
-                });
-            })
-        }
-    })
-</script>
-<!-- 头工具栏模板 -->
-<script type="text/html" id="toolbarTpl">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
-    </div>
-</script>
-<!--图片-->
-<script type="text/html" id="imageTpl">
-    <img src="{{d.avatar}}" lay-event="openImage" style="width: 100px;height: 100px;"/>
-</script>
-<!-- 行工具栏模板 -->
-<script type="text/html" id="operationTpl">
-    <a href="javascript:" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
-    <a href="javascript:" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
-</script>
-<!-- 启用|停用模板 -->
-<script type="text/html" id="statusTpl">
-    {{#  if(d.status == 0){ }}
-    <span class="layui-btn layui-btn-normal layui-btn-xs">禁用</span>
-    {{#  } else if(d.status == 1) { }}
-    <span class="layui-btn layui-btn-warm layui-btn-xs">正常</span>
-    {{#  } }}
+    // 操作方法 - 编辑
+    function editUser()
+    {
+        alert('编辑信息跳转');
+    }
+    // 操作方法 - 删除
+    function delUser()
+    {
+        alert('信息删除成功');
+    }
 </script>
 </body>
 </html>
