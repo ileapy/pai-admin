@@ -21,6 +21,8 @@ class Index extends AuthController
     public function index()
     {
         $this->assign("adminInfo",$this->adminInfo);
+        $this->assign("menu",AdminAuth::getMenu(0,$this->auth));
+        var_dump(AdminAuth::getMenu(0,$this->auth));
         return $this->fetch();
     }
 
