@@ -31,7 +31,7 @@
               {volist name="menu" id="vo"}
               {if !empty($vo['children'])}
               <li class="nav-item nav-item-has-subnav">
-                  <a href="javascript:void(0)"><i class="mdi mdi-palette"></i> <span>{$vo.title}</span></a>
+                  <a href="javascript:void(0)"><i class="{$vo.icon}"></i> <span>{$vo.title}</span></a>
                   <ul class="nav nav-subnav">
                       {foreach $vo['children'] as $key=>$val}
                       <li><a class="multitabs" href="{$val.href}">{$val.title}</a> </li>
