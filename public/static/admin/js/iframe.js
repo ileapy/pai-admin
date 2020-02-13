@@ -13,11 +13,11 @@ var iframe = function(){
             '                <h4 class="modal-title" id="exampleModalLabel">'+$title+'</h4>\n' +
             '            </div>\n' +
             '            <div class="modal-body">\n' +
-            loadData($url,$type,$data)+'\n' +
             '            </div>\n' +
             '        </div>\n' +
             '    </div>\n' +
             '</div>');
+        $(".modal-body").append(loadData($url,$type,$data));
         $("#modelClick").click();
     };
 
