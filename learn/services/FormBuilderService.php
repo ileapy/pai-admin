@@ -24,15 +24,15 @@ class FormBuilderService
         $form = new IviewForm($url);
         $form->setMethod('POST');
         $form->setRule($rule);
-//        $form->setDependScript([
-//            '<script src="/static/admin/js/formbuilder/jquery.min.js"></script>',
-//            '<script src="/static/admin/js/formbuilder/vue.min.js"></script>',
-//            '<link href="/static/admin/js/formbuilder/iview.css" rel="stylesheet">',
-//            '<script src="/static/admin/js/formbuilder/iview.min.js"></script>',
-//            '<script src="/static/admin/js/formbuilder/form-create.min.js"></script>',
-//            '<script src="/static/admin/js/formbuilder/province_city.js"></script>',
-//            '<script src="/static/admin/js/formbuilder/province_city_area.js"></script>'
-//        ]);
+        $form->setDependScript([
+            '<script src="/static/admin/js/formbuilder/jquery.min.js"></script>',
+            '<script src="/static/admin/js/formbuilder/vue.min.js"></script>',
+            '<link href="/static/admin/js/formbuilder/iview.css" rel="stylesheet">',
+            '<script src="/static/admin/js/formbuilder/iview.min.js"></script>',
+            '<script src="/static/admin/js/formbuilder/form-create.min.js"></script>',
+            '<script src="/static/admin/js/formbuilder/province_city.js"></script>',
+            '<script src="/static/admin/js/formbuilder/province_city_area.js"></script>'
+        ]);
         return $form->view();
     }
 }
