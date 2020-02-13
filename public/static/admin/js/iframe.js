@@ -13,7 +13,7 @@ var iframe = function(){
             '                <h4 class="modal-title" id="exampleModalLabel">'+$title+'</h4>\n' +
             '            </div>\n' +
             '            <div class="modal-body">\n' +
-            '              <iframe src="'+$url+'"></iframe>'+
+            '              <iframe src="'+$url+'" style="width: 100%;border: 0px;height: auto;"></iframe>'+
             '            </div>\n' +
             '        </div>\n' +
             '    </div>\n' +
