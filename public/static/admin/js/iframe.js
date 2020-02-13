@@ -4,7 +4,7 @@ var iframe = function(){
      * 页面loading
      */
     var pageLoader = function($title,$url,$type,$data) {
-        jQuery('body').prepend('<div class="modal show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">\n' +
+        jQuery('body').prepend('<div class="modal fade in" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">\n' +
             '    <div class="modal-dialog modal-lg" role="document">\n' +
             '        <div class="modal-content">\n' +
             '            <div class="modal-header">\n' +
