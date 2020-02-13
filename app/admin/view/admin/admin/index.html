@@ -23,7 +23,7 @@
                 <div class="card-header"><h4>用户管理</h4></div>
                 <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <button id="btn_edit" type="button" class="btn btn-success m-r-5">
@@ -42,7 +42,32 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">新消息</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">收件人：</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="control-label">消息内容：</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">发送消息</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
