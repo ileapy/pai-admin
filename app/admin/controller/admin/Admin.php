@@ -91,7 +91,7 @@ class Admin extends AuthController
         $form = array();
         $form[] = Elm::input('name','登录账号',$ainfo['name'])->col(10);
         $form[] = Elm::input('nickname','昵称',$ainfo['nickname'])->col(10);
-        $form[] = Elm::uploadImage('avatar','头像',url('/admin/widget.files/image'),$ainfo['avatar'])->col(10);
+        $form[] = Elm::uploadImage('avatar','头像',url('/admin/widget.files/image'),$ainfo['avatar'])->limit(1)->col(10);
         $form[] = Elm::password('pwd','密码',$ainfo['pwd'])->col(10);
         $form[] = Elm::input('realname','真实姓名',$ainfo['realname'])->col(10);
         $form[] = Elm::select('role_id','角色',$ainfo['role_id'])->options(function(){
@@ -130,6 +130,7 @@ class Admin extends AuthController
         if ($data['pwd'] == "") return app("json")->fail("密码不能为空");
         if ($data['tel'] == "") return app("json")->fail("手机号不能为空");
         if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
+        if (is_array($data['avatar'])) $data['avatar'] = $data['avatar'][0];
         if ($id=="")
         {
             $data['pwd'] = md5(md5($data['pwd']));
