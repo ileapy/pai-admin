@@ -95,6 +95,7 @@
     if ($("#captchas").val() == "") {$(".has-captchas").addClass("has-error");return false;}
     $.post(url="/admin/login/verify",data={account:$("#username").val(),pwd:$("#password").val(),verify:$("#captchas").val()},function (res) {
       if (res.status == 200) window.location = "/admin/index/index";
+      else alert(res.msg);
       return true;
     });
     $("#captcha").attr("src",'/admin/login/captcha?d='+Math.random());
