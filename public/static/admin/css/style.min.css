@@ -2741,9 +2741,9 @@ dd, dt {
     border-radius: 50%;
 }
 .img-avatar-48 {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
 }
 .edit-avatar {
     display: -ms-flexbox;
