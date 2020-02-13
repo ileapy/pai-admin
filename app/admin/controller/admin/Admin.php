@@ -132,6 +132,7 @@ class Admin extends AuthController
         if ($data['mail'] == "") return app("json")->fail("邮箱不能为空");
         if ($id=="")
         {
+            $data['pwd'] = md5(md5($data['pwd']));
             $data['ip'] = $this->request->ip();
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
