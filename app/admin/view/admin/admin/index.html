@@ -140,7 +140,7 @@
             formatter: btnGroup,  // 自定义方法
             events: {
                 'click .edit-btn': function (event, value, row, index) {
-                    editUser(row.id);
+                    iframe.createIframe('修改用户','/admin/admin.admin/edit?id='+row.id)
                 },
                 'click .del-btn': function (event, value, row, index) {
                     $.alert({
