@@ -64,7 +64,7 @@ class JsonService
             $data = $msg;
             $msg = self::$SUCCESSFUL_DEFAULT_MSG;
         }
-        return self::result(0,$msg,$data);
+        return self::result(200,$msg,$data);
     }
 
     /*
