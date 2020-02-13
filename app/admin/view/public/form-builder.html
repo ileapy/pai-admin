@@ -1,9 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-</head>
-<body style="padding: 20px;">
 {$html|raw}
-</body>
-</html>
+<script>
+	formCreate.formSuccess = function(form,$r){
+	<?=$form->getSuccessScript()?>
+		//刷新父级页面
+//        parent.$(".J_iframe:visible")[0].contentWindow.location.reload();
+		//关闭当前窗口
+//        var index = parent.layer.getFrameIndex(window.name);
+//        parent.layer.close(index);
+		//提交成功后按钮恢复
+		$r.btn.loading(false);
+	};
+</script>
