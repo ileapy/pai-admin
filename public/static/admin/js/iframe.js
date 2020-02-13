@@ -15,6 +15,9 @@ var iframe = function(){
             '            <div class="modal-body">\n' +
             '              <iframe src="'+$url+'" style="width: 100%;border: 0px;height: 500px;"></iframe>'+
             '            </div>\n' +
+            '                <div class="modal-footer">\n' +
+            '                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\n' +
+            '                </div>'+
             '        </div>\n' +
             '    </div>\n' +
             '</div>');
