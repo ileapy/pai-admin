@@ -8,7 +8,7 @@ use app\admin\controller\AuthController;
 use app\Request;
 use think\facade\Filesystem;
 
-class files extends AuthController
+class Files extends AuthController
 {
     /**
      * 单个图片上传
