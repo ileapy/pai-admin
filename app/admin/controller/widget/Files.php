@@ -16,6 +16,6 @@ class Files extends AuthController
     public function image()
     {
         $savename = \think\facade\Filesystem::putFile( 'image', request()->file('file'));
-        return $savename ? json_encode(['code'=>200,'msg'=>'上传成功','filePath'=>$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+        return $savename ? json_encode(['code'=>200,'msg'=>'上传成功','filePath'=>$savename,"name"=>$savename,'data'=>['filePath'=>$savename,"name"=>$savename]]) : app("json")->fail("上传失败");
     }
 }
