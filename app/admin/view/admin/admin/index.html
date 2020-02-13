@@ -53,7 +53,7 @@
 <link href="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.min.css" rel="stylesheet">
 <script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
-<script src="js/jconfirm/jquery-confirm.min.js"></script>
+<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
@@ -197,17 +197,6 @@
             '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
             '<a href="#!" class="btn btn-xs btn-default del-btn" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
         return html;
-    }
-
-    // 操作方法 - 编辑
-    function editUser()
-    {
-        alert('编辑信息跳转');
-    }
-    // 操作方法 - 删除
-    function delUser()
-    {
-        alert('信息删除成功');
     }
 </script>
 </body>
