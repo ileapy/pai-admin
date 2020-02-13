@@ -1,13 +1,6 @@
 {$html|raw}
 <script>
 	create.formSuccess = function(form,$r){
-	<?=$html->getSuccessScript()?>
-		//刷新父级页面
-//        parent.$(".J_iframe:visible")[0].contentWindow.location.reload();
-		//关闭当前窗口
-//        var index = parent.layer.getFrameIndex(window.name);
-//        parent.layer.close(index);
-		//提交成功后按钮恢复
-		$r.btn.loading(false);
+	    alert(1)
 	};
 </script>
