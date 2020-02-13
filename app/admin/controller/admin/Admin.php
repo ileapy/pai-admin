@@ -106,8 +106,9 @@ class Admin extends AuthController
         $form[] = Elm::input('tel','电话',$ainfo['tel'])->col(10);
         $form[] = Elm::email('mail','邮箱',$ainfo['mail'])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
-        $this->assign("html", Form::make_post_form($form, url('save',['id'=>$id])->build()));
-        return $this->fetch("public/form-builder");
+//        $this->assign("html", Form::make_post_form($form, url('save',['id'=>$id])->build()));
+//        return $this->fetch("public/form-builder");
+        return Form::make_post_form($form, url('save',['id'=>$id])->build());
     }
 
     /**
