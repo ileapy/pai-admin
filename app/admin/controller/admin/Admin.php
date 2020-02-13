@@ -140,7 +140,7 @@ class Admin extends AuthController
         }else
         {
             $ainfo = aModel::get($id);
-            if ($ainfo != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
+            if ($ainfo['pwd'] != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
             $res = aModel::update($data,['id'=>$id]);
