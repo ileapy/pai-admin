@@ -49,7 +49,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::tree('auth','选择权限')->data([(new TreeData(11,'leaf 1-1-1'))->getOption()])
+        $form[] = Elm::tree('auth','选择权限')->data([(new TreeData(11,'leaf 1-1-1'))->getOption(),(new TreeData(22,'leaf 1-2-2'))->getOption()])
             ->highlightCurrent(true)
             ->checkOnClickNode(true)
             ->type("checked")
