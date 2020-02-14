@@ -214,16 +214,7 @@
         }
     }
 
-    function add(id) {
-        alert("add 方法 , id = " + id);
-    }
-    function del(id) {
-        alert("del 方法 , id = " + id);
-    }
-    function update(id) {
-        alert("update 方法 , id = " + id);
-    }
-    function updateStatus(id, state) {
+    function updateStatus(id, value, field) {
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
