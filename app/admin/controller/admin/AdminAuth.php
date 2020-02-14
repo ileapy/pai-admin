@@ -117,15 +117,11 @@ class AdminAuth extends AuthController
         $data['path'] = '/'.$data['module'].'/'.$data['controller'].'/'.$data['action'];
         if ($id=="")
         {
-            $data['pwd'] = md5(md5($data['pwd']));
-            $data['ip'] = $this->request->ip();
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
             $res = aModel::insert($data);
         }else
         {
-            $ainfo = aModel::get($id);
-            if ($ainfo['pwd'] != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
             $res = aModel::update($data,['id'=>$id]);
