@@ -49,7 +49,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::tree('auth','选择权限')->data([(new TreeData(11,'leaf 1-1-1'))->children([new TreeData(13,'leaf 1-1-3')])->getOption(),(new TreeData(22,'leaf 1-2-2'))->getOption()])
+        $form[] = Elm::tree('auth','选择权限')->data(rModel::returnData($this->auth,[]))
             ->highlightCurrent(true)
             ->checkOnClickNode(true)
             ->type("checked")
@@ -76,7 +76,11 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称',$rinfo['name'])->col(18);
-        $form[] = Elm::input('auth','选择权限',$rinfo['auth'])->col(18);
+        $form[] = Elm::tree('auth','选择权限')->data(rModel::returnData($this->auth,$rinfo['auth']))
+            ->highlightCurrent(true)
+            ->checkOnClickNode(true)
+            ->type("checked")
+            ->showCheckbox(true)->col(18);
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
         $form[] = Elm::radio('status','状态',$rinfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save',['id'=>$id])->build());
@@ -98,6 +102,7 @@ class AdminRole extends AuthController
         if ($data['name'] == "") return app("json")->fail("角色名称不能为空");
         if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
         if ($data['auth'] == "") return app("json")->fail("权限不能为空");
+        $data['auth'] = implode(",",$data['auth']);
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;

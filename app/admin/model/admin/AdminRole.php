@@ -6,6 +6,7 @@ namespace app\admin\model\admin;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use FormBuilder\UI\Elm\Components\TreeData;
 
 /**
  * 操作角色
@@ -137,5 +138,40 @@ class AdminRole extends BaseModel
             if ($i==0) $str .= "|--";
             else $str .= "--";
         return $str." ";
+    }
+
+    /**
+     * 生成单个节点
+     * @param $id
+     * @param $title
+     * @param bool $checked
+     * @return TreeData
+     */
+    public static function buildTreeData($id,$title,$checked = false): TreeData
+    {
+        return (new TreeData($id,$title))->checked($checked)->getOption();
+    }
+
+    /**
+     * 生成节点数
+     * @param array $allAuth
+     * @param array $checkedAuth
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function returnData(array $allAuth, array $checkedAuth): array
+    {
+        $list = [];
+        $data = self::lst(0,$allAuth);
+        foreach ($data as $k=>$v)
+        {
+            $tmp = self::buildTreeData($v['id'],$v['name']);
+            if (is_array($v['children']) && !empty($v['children'])) $tmp = $tmp->children();
+            if (in_array($v['id'])) $tmp = $tmp->checked(true);
+            $list[] = $tmp;
+        }
+        return $list;
     }
 }
