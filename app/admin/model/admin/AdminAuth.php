@@ -122,9 +122,8 @@ class AdminAuth extends BaseModel
     public static function returnOptions(): array
     {
         $list = [];
-        $num = 0;
         $list[] = ['value'=>0,'label'=>'总后台'];
-        self::myOptions(self::lst(),$list, $num, true);
+        self::myOptions(self::lst(),$list, 1, true);
         return $list;
     }
 
