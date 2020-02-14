@@ -104,7 +104,16 @@
             },
             {
                 field: 'is_menu',
-                title: '是否菜单'
+                title: '是否菜单',
+                formatter: function (value, row, index) {
+                    if (value == 0) {
+                        is_checked = '';
+                    } else if (value == 1){
+                        is_checked = 'checked="checked"';
+                    }
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \"is_menu\"'+')"></span></label>';
+                    return result;
+                },
             },
             {
                 field: 'rank',
@@ -114,17 +123,13 @@
             {
                 field: 'status',
                 title: '状态',
-                /*
-                 * 可以选择采用开关来处理状态显示
-                 * 或者采用上个示例的处理方式
-                 */
                 formatter: function (value, row, index) {
                     if (value == 0) {
                         is_checked = '';
                     } else if (value == 1){
                         is_checked = 'checked="checked"';
                     }
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +')"></span></label>';
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \"status\"'+')"></span></label>';
                     return result;
                 },
             },
@@ -146,7 +151,7 @@
                                     btnClass: 'btn-primary',
                                     action: function(){
                                         $.post(url="/admin/admin.admin_auth/del",data={"id":row.id},function (res) {
-                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tree-table").bootstrapTable('refresh');}
+                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
                                             else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                         });
                                     }
@@ -233,20 +238,16 @@
         }
     }
 
-    function updateStatus(id, state) {
-        var newstate = (state == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
+    function updateStatus(id, value,field) {
+        var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
-            type: "get",
-            url: "http://www.bixiaguangnian.com/index/test/testGridJson",
-            data: {id: id, state: newstate},
-            dataType: 'jsonp',
+            type: "post",
+            url: "/admin/admin.admin_auth/field?id="+id,
+            data: {field: field, value: value},
+            dataType: 'json',
             success: function (data, status) {
-                if (data.code == '200') {
-                    $treeTable.bootstrapTable('updateCellById', {id: id, field: 'status', value: newstate});
-                } else {
-                    alert(data.msg);
-                    $treeTable.bootstrapTable('updateCellById', {id: id, field: 'status', value: state}); // 因开关点击后样式是变的，失败也重置下
-                }
+                if (res.status == 200) {parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
+                else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             },
             error: function () {
                 alert('修改失败，请稍后再试');
