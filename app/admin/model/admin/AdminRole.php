@@ -120,8 +120,7 @@ class AdminRole extends BaseModel
     {
         $list = [];
         $list[] = ['label'=>'总后台','value'=>0];
-        $num = 0;
-        self::myOptions(self::lst(),$list, $num, true);
+        self::myOptions(self::lst(),$list, 1, true);
         return $list;
     }
 
