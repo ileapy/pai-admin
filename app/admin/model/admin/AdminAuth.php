@@ -139,6 +139,6 @@ class AdminAuth extends BaseModel
         elseif ($num > 1) for($i=0;$i<$num;$i++)
             if ($i==0) $str .= "|--";
             else $str .= "--";
-        return $str;
+        return $str." ";
     }
 }
