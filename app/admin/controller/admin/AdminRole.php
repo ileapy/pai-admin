@@ -6,6 +6,7 @@ namespace app\admin\controller\admin;
 
 use app\admin\controller\AuthController;
 use app\admin\model\admin\AdminRole as rModel;
+use app\admin\model\admin\AdminAuth as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
 use learn\services\JsonService as Json;
@@ -47,7 +48,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(10);
         $form[] = Elm::input('name','角色名称')->col(10);
-        $form[] = Elm::input('auth','选择权限')->col(10);
+        $form[] = Elm::tree('auth','选择权限')->data(aModel::lst())->col(10);
         $form[] = Elm::number('rank','排序')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
         return Form::make_post_form($form, url('save')->build());
