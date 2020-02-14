@@ -149,13 +149,21 @@ class AdminRole extends BaseModel
      */
     public static function buildTreeData($id,$title,$checked = false,$children=[]): array
     {
-        var_dump($children);
         $tree = new TreeData($id,$title);
         if ($checked) $tree = $tree->checked($checked);
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
 
+    /**
+     * @param int $pid
+     * @param array $auth
+     * @param array $checkedAuth
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public static function returnData(int $pid = 0, array $auth = [], array $checkedAuth = [])
     {
         $list = [];
