@@ -145,9 +145,9 @@ class AdminRole extends BaseModel
      * @param $id
      * @param $title
      * @param bool $checked
-     * @return TreeData
+     * @return array
      */
-    public static function buildTreeData($id,$title,$checked = false): TreeData
+    public static function buildTreeData($id,$title,$checked = false): array
     {
         return (new TreeData($id,$title))->checked($checked)->getOption();
     }
