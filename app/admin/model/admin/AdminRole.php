@@ -6,7 +6,7 @@ namespace app\admin\model\admin;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
-use FormBuilder\UI\Iview\Components\TreeData;
+use FormBuilder\UI\Elm\Components\TreeData;
 
 /**
  * 操作角色
