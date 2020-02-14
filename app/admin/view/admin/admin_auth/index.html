@@ -137,10 +137,28 @@
                         iframe.createIframe('添加权限','/admin/admin.admin_auth/add?id='+row.id);
                     },
                     'click .role-delete': function (e, value, row, index) {
-                        del(row.id);
+                        $.alert({
+                            title: '系统提示',
+                            content: '删除提醒',
+                            buttons: {
+                                confirm: {
+                                    text: '确认',
+                                    btnClass: 'btn-primary',
+                                    action: function(){
+                                        $.post(url="/admin/admin.admin_auth/del",data={"id":row.id},function (res) {
+                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
+                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                        });
+                                    }
+                                },
+                                cancel: {
+                                    text: '取消'
+                                }
+                            }
+                        });
                     },
                     'click .role-edit': function (e, value, row, index) {
-                        update(row.id);
+                        iframe.createIframe('修改用户','/admin/admin.admin_auth/edit?id='+row.id)
                     }
                 },
                 formatter: operateFormatter
@@ -215,15 +233,6 @@
         }
     }
 
-    function add(id) {
-        alert("add 方法 , id = " + id);
-    }
-    function del(id) {
-        alert("del 方法 , id = " + id);
-    }
-    function update(id) {
-        alert("update 方法 , id = " + id);
-    }
     function updateStatus(id, state) {
         var newstate = (state == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
