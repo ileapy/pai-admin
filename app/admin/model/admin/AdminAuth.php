@@ -54,14 +54,12 @@ class AdminAuth extends BaseModel
 
     /**
      * 权限列表
-     * @param int $pid
-     * @param array $auth
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function systemPage(int $pid = 0, array $auth = []): array
+    public static function systemPage(): array
     {
         $model = new self;
         $model = $model->field(['id','name','icon','pid','module','controller','action','params','is_menu','path','rank','status']);
@@ -91,5 +89,35 @@ class AdminAuth extends BaseModel
             $item['children'] = self::lst($item['id'],$auth);
         });
         return $data->toArray() ?: [];
+    }
+
+    /**
+     * 遍历选择项
+     * @param array $data
+     * @param $list
+     * @param bool $clear
+     * @return array
+     */
+    public static function myOptions(array $data, &$list, $clear=true): array
+    {
+        foreach ($data as $k=>$v)
+        {
+            if (is_array($v['children']) && !empty($v['children'])) self::myOptions($v['children'],$list,false);
+            else $list[] = ['value'=>$v['id'],'label'=>$v['name']];
+        }
+    }
+
+    /**
+     * 返回选择项
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function returnOptions(): array
+    {
+        $list = [];
+        self::myOptions(self::lst(),$list,true);
+        return $list;
     }
 }
