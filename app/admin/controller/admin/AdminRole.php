@@ -69,6 +69,7 @@ class AdminRole extends AuthController
     {
         if (!$id) return app("json")->fail("权限id不能为空");
         $rinfo = rModel::get($id);
+        var_dump(explode(",",$rinfo['auth']));
         if (!$rinfo) return app("json")->fail("没有该权限");
         $form = array();
         $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->col(18);
