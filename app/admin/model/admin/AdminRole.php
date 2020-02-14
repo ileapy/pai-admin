@@ -119,7 +119,7 @@ class AdminRole extends BaseModel
     public static function returnOptions(): array
     {
         $list = [];
-        $list = ['label'=>'总后台','value'=>0];
+        $list[] = ['label'=>'总后台','value'=>0];
         $num = 0;
         self::myOptions(self::lst(),$list, $num, true);
         return $list;
