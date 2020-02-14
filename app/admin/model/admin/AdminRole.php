@@ -164,7 +164,7 @@ class AdminRole extends BaseModel
     public static function returnData(array $allAuth, array $checkedAuth): array
     {
         $list = [];
-        $data = self::lst(0,$allAuth);
+        $data = AdminAuth::lst(0,$allAuth);
         foreach ($data as $k=>$v)
         {
             $tmp = self::buildTreeData($v['id'],$v['name']);
