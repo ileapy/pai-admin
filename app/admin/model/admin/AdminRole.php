@@ -152,6 +152,7 @@ class AdminRole extends BaseModel
         $tree = new TreeData($id,$title);
         $tree = $tree->checked($checked);
         if (!empty($children)) $tree = $tree->children($children);
+        var_dump($tree->getOption());
         return $tree->getOption();
     }
 }
