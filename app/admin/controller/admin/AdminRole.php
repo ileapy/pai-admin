@@ -11,7 +11,7 @@ use app\Request;
 use FormBuilder\Exception\FormBuilderException;
 use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
-use FormBuilder\Factory\Elm;
+use FormBuilder\Factory\Iview;
 use learn\services\FormBuilderService as Form;
 
 class AdminRole extends AuthController
@@ -46,13 +46,13 @@ class AdminRole extends AuthController
     public function add($pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
-        $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::tree('auth','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds(),[]))
+        $form[] = Iview::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
+        $form[] = Iview::input('name','角色名称')->col(18);
+        $form[] = Iview::tree('auth','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds(),[]))
             ->type("checked")
             ->showCheckbox(true)->col(18);
-        $form[] = Elm::number('rank','排序')->col(18);
-        $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
+        $form[] = Iview::number('rank','排序')->col(18);
+        $form[] = Iview::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save')->build());
     }
 
