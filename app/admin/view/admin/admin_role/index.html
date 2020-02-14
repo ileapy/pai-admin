@@ -22,11 +22,11 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>权限管理</h4>
+                    <h4>角色管理</h4>
                 </div>
                 <div class="card-body">
                     <div id="toolbar2" class="toolbar-btn-action">
-                        <button type="button" class="btn btn-primary m-r-5" onclick="test()">返回选中行</button>
+                        <button type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加角色','/admin/admin.admin_auth/add')">返回选中行</button>
                     </div>
                     <table class="tree-table"></table>
                 </div>
@@ -59,7 +59,7 @@
     // tree-grid使用
     var $treeTable = $('.tree-table');
     $treeTable.bootstrapTable({
-        url: '/admin/admin.adminRole/lst',
+        url: '/admin/admin.admin_role/lst',
         responseHandler: function (res) {
             return {
                 "rows": res.data,
@@ -96,17 +96,14 @@
             {
                 field: 'status',
                 title: '状态',
-                /*
-                 * 可以选择采用开关来处理状态显示
-                 * 或者采用上个示例的处理方式
-                 */
                 formatter: function (value, row, index) {
                     if (value == 0) {
                         is_checked = '';
                     } else if (value == 1){
                         is_checked = 'checked="checked"';
                     }
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +')"></span></label>';
+                    var field = "status";
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
                     return result;
                 },
             },
@@ -116,13 +113,31 @@
                 align: 'center',
                 events : {
                     'click .role-add': function (e, value, row, index) {
-                        add(row.id);
+                        iframe.createIframe('添加权限','/admin/admin.admin_role/add?pid='+row.id);
                     },
                     'click .role-delete': function (e, value, row, index) {
-                        del(row.id);
+                        $.alert({
+                            title: '系统提示',
+                            content: '删除提醒',
+                            buttons: {
+                                confirm: {
+                                    text: '确认',
+                                    btnClass: 'btn-primary',
+                                    action: function(){
+                                        $.post(url="/admin/admin.admin_role/del",data={"id":row.id},function (res) {
+                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
+                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                        });
+                                    }
+                                },
+                                cancel: {
+                                    text: '取消'
+                                }
+                            }
+                        });
                     },
                     'click .role-edit': function (e, value, row, index) {
-                        update(row.id);
+                        iframe.createIframe('修改权限','/admin/admin.admin_role/edit?id='+row.id)
                     }
                 },
                 formatter: operateFormatter
@@ -207,22 +222,18 @@
         alert("update 方法 , id = " + id);
     }
     function updateStatus(id, state) {
-        var newstate = (state == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
+        var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
-            type: "get",
-            url: "http://www.bixiaguangnian.com/index/test/testGridJson",
-            data: {id: id, state: newstate},
-            dataType: 'jsonp',
-            success: function (data, status) {
-                if (data.code == '200') {
-                    $treeTable.bootstrapTable('updateCellById', {id: id, field: 'status', value: newstate});
-                } else {
-                    alert(data.msg);
-                    $treeTable.bootstrapTable('updateCellById', {id: id, field: 'status', value: state}); // 因开关点击后样式是变的，失败也重置下
-                }
+            type: "post",
+            url: "/admin/admin.admin_role/field?id="+id,
+            data: {field: field, value: newstate},
+            dataType: 'json',
+            success: function (res) {
+                if (res.status == 200) {parent.lightyear.notify('修改成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
+                else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             },
             error: function () {
-                alert('修改失败，请稍后再试');
+                parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             }
         });
     }
