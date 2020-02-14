@@ -133,10 +133,10 @@ class AdminAuth extends BaseModel
     public static function cross(int $num=0): string
     {
         $str = "";
-        if ($num == 0) return $str;
-        elseif ($num == 1) return $str .= "|--";
+        if ($num == 1) $str .= "|--";
         elseif ($num > 1) for($i=0;$i<$num;$i++)
             if ($i==0) $str .= "|--";
             else $str .= "--";
+        return $str;
     }
 }
