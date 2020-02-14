@@ -13,7 +13,6 @@ use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use FormBuilder\UI\Elm\Components\TreeData;
 
 class AdminRole extends AuthController
 {

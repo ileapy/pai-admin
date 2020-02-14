@@ -6,7 +6,7 @@ namespace app\admin\model\admin;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
-use FormBuilder\UI\Elm\Components\TreeData;
+use FormBuilder\UI\Iview\Components\TreeData;
 
 /**
  * 操作角色
@@ -152,7 +152,6 @@ class AdminRole extends BaseModel
         $tree = new TreeData($id,$title);
         $tree = $tree->checked($checked);
         if (!empty($children)) $tree = $tree->children($children);
-        var_dump($tree->getOption());
         return $tree->getOption();
     }
 }
