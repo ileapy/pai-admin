@@ -45,7 +45,7 @@ class AdminRole extends AuthController
     public function add($pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::systemPage(0))->col(10);
+        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(10);
         $form[] = Elm::input('name','角色名称')->col(10);
         $form[] = Elm::input('auth','选择权限')->col(10);
         $form[] = Elm::number('rank','排序')->col(10);
@@ -69,7 +69,7 @@ class AdminRole extends AuthController
         $rinfo = rModel::get($id);
         if (!$rinfo) return app("json")->fail("没有该权限");
         $form = array();
-        $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::systemPage(0))->col(10);
+        $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->col(10);
         $form[] = Elm::input('name','角色名称',$rinfo['name'])->col(10);
         $form[] = Elm::input('auth','选择权限',$rinfo['auth'])->col(10);
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(10);

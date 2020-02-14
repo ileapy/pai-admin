@@ -67,4 +67,75 @@ class AdminRole extends BaseModel
         $data = $model->select();
         return $data->toArray() ?: [];
     }
+
+
+    /**
+     * 获取选择数据
+     * @param int $pid
+     * @param array $auth
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function lst(int $pid = 0, array $auth = []): array
+    {
+        $model = new self;
+        $model = $model->where("pid",$pid);
+        $model = $model->field(['name','id']);
+        $model = $model->order(["rank desc","id"]);
+        $data = $model->select()->each(function ($item) use ($auth)
+        {
+            $item['children'] = self::lst($item['id'],$auth);
+        });
+        return $data->toArray() ?: [];
+    }
+
+    /**
+     * 遍历选择项
+     * @param array $data
+     * @param $list
+     * @param int $num
+     * @param bool $clear
+     */
+    public static function myOptions(array $data, &$list, $num = 0, $clear=true)
+    {
+        foreach ($data as $k=>$v)
+        {
+            $list[] = ['value'=>$v['id'],'label'=>self::cross($num).$v['name']];
+            if (is_array($v['children']) && !empty($v['children'])) {
+                self::myOptions($v['children'],$list,$num+1,false);
+            }
+        }
+    }
+
+    /**
+     * 返回选择项
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function returnOptions(): array
+    {
+        $list = [];
+        $num = 0;
+        self::myOptions(self::lst(),$list, $num, true);
+        return $list;
+    }
+
+    /**
+     * 横线
+     * @param int $num
+     * @return string
+     */
+    public static function cross(int $num=0): string
+    {
+        $str = "";
+        if ($num == 1) $str .= "|--";
+        elseif ($num > 1) for($i=0;$i<$num;$i++)
+            if ($i==0) $str .= "|--";
+            else $str .= "--";
+        return $str;
+    }
 }
