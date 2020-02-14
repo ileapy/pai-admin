@@ -13,6 +13,7 @@ use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
+use FormBuilder\UI\Elm\Components\TreeData;
 
 class AdminRole extends AuthController
 {
@@ -48,7 +49,10 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::tree('auth','选择权限')->data([['id'=>'1','title'=>"权限2"],['id'=>'2','title'=>"权限2","children"=>['id'=>'3','title'=>"权限3"]]])
+        $form[] = Elm::tree('auth','选择权限')->data([[
+           new TreeData(11,'leaf 1-1-1'),
+            new TreeData(12,'leaf 1-1-2')
+        ]])
             ->highlightCurrent(true)
             ->checkOnClickNode(true)
             ->type("checked")
