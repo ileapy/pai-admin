@@ -134,7 +134,7 @@
                 align: 'center',
                 events : {
                     'click .role-add': function (e, value, row, index) {
-                        iframe.createIframe('添加权限','/admin/admin.admin_auth/add?id='+row.id);
+                        iframe.createIframe('添加权限','/admin/admin.admin_auth/add?pid='+row.id);
                     },
                     'click .role-delete': function (e, value, row, index) {
                         $.alert({
