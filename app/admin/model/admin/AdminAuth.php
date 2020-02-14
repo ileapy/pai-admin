@@ -102,7 +102,7 @@ class AdminAuth extends BaseModel
     {
         foreach ($data as $k=>$v)
         {
-            $list[] = ['value'=>$v['id'],'label'=>self::cross($num),$v['name']];
+            $list[] = ['value'=>$v['id'],'label'=>self::cross($num).$v['name']];
             if (is_array($v['children']) && !empty($v['children'])) {
                 $num++;
                 self::myOptions($v['children'],$list,$num,false);
