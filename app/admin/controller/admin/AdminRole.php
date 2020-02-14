@@ -64,6 +64,7 @@ class AdminRole extends AuthController
      */
     public function edit($id = 0)
     {
+        var_dump(rModel::systemPage(0));
         if (!$id) return app("json")->fail("权限id不能为空");
         $rinfo = rModel::get($id);
         if (!$rinfo) return app("json")->fail("没有该权限");
