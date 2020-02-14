@@ -154,4 +154,11 @@ class AdminRole extends BaseModel
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
+
+    public static function returnData(int $pid = 0, array $auth = [], array $checkedAuth = [])
+    {
+        $list = [];
+        AdminAuth::selectAndBuildTree($pid,$auth,$checkedAuth,$list);
+        return $list;
+    }
 }
