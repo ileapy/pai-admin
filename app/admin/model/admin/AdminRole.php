@@ -86,7 +86,7 @@ class AdminRole extends BaseModel
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item) use ($auth)
         {
-            $item['children'] = self::lst($item['id'],$auth);
+            $item['child'] = self::lst($item['id'],$auth);
         });
         return $data->toArray() ?: [];
     }
