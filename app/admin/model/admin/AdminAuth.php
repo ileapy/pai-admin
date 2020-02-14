@@ -148,6 +148,7 @@ class AdminAuth extends BaseModel
      * @param array $auth
      * @param array $checkedAuth
      * @param array $list
+     * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -157,6 +158,7 @@ class AdminAuth extends BaseModel
         $model = new self;
         $model = $model->where("pid",$pid);
         if ($auth != []) $model = $model->where("id",'in',$auth);
+        $model = $model->where("status",1);
         $model = $model->field(['name','id']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select();
@@ -165,5 +167,14 @@ class AdminAuth extends BaseModel
             $list[] = AdminRole::buildTreeData($v['id'],$v['name'],in_array($v['id'],$checkedAuth),self::selectAndBuildTree($v['id'],$auth,$checkedAuth));
         }
         return $list;
+    }
+
+    /**
+     * 获取所有权限id
+     * @return array
+     */
+    public static function getIds():array
+    {
+        return self::where("status",1)->column("id");
     }
 }
