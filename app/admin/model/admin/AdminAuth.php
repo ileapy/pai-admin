@@ -96,9 +96,8 @@ class AdminAuth extends BaseModel
      * @param array $data
      * @param $list
      * @param bool $clear
-     * @return array
      */
-    public static function myOptions(array $data, &$list, $clear=true): array
+    public static function myOptions(array $data, &$list, $clear=true)
     {
         foreach ($data as $k=>$v)
         {

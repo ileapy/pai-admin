@@ -40,9 +40,12 @@ class AdminAuth extends AuthController
 
     /**
      * 添加
-     * @param Request $request
+     * @param int $pid
      * @return string
      * @throws FormBuilderException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function add($pid = 0)
     {
