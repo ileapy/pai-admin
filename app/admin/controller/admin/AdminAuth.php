@@ -49,9 +49,8 @@ class AdminAuth extends AuthController
      */
     public function add($pid = 0)
     {
-        var_dump(aModel::returnOptions());
         $form = array();
-        $form[] = Elm::select('pid','上级权限',$pid)->options(aModel::returnOptions())->col(10);
+        $form[] = Elm::select('pid','上级权限',(int)$pid)->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('name','权限名称')->col(10);
         $form[] = Elm::input('icon','图标')->col(10);
         $form[] = Elm::input('module','模块名')->col(10);
