@@ -147,31 +147,11 @@ class AdminRole extends BaseModel
      * @param bool $checked
      * @return array
      */
-    public static function buildTreeData($id,$title,$checked = false): array
+    public static function buildTreeData($id,$title,$checked = false,$children=[]): array
     {
-        return (new TreeData($id,$title))->checked($checked)->getOption();
-    }
-
-    /**
-     * 生成节点数
-     * @param array $allAuth
-     * @param array $checkedAuth
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public static function returnData(array $allAuth, array $checkedAuth): array
-    {
-        $list = [];
-        $data = AdminAuth::lst(0,$allAuth);
-        foreach ($data as $k=>$v)
-        {
-            $tmp = self::buildTreeData($v['id'],$v['name']);
-            if (is_array($v['children']) && !empty($v['children'])) $tmp = $tmp->children();
-            if (in_array($v['id'],$checkedAuth)) $tmp = $tmp->checked(true);
-            $list[] = $tmp;
-        }
-        return $list;
+        $tree = new TreeData($id,$title);
+        if ($checked) $tree = $tree->checked($checked);
+        if (!empty($children)) $tree = $tree->children($children);
+        return $tree->getOption();
     }
 }
