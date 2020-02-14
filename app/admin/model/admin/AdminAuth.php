@@ -165,7 +165,7 @@ class AdminAuth extends BaseModel
 //            var_dump(AdminRole::buildTreeData($item['id'],$item['name'],in_array($item['id'],$checkedAuth),self::selectAndBuildTree($item['id'],$auth,$checkedAuth)));
             $list[] = AdminRole::buildTreeData($item['id'],$item['name'],in_array($item['id'],$checkedAuth),self::selectAndBuildTree($item['id'],$auth,$checkedAuth));
         });
-//        var_dump($list);
+        var_dump($list);
         return $list;
     }
 }
