@@ -98,14 +98,13 @@ class AdminAuth extends BaseModel
      * @param int $num
      * @param bool $clear
      */
-    public static function myOptions(array $data, &$list, &$num = 0, $clear=true)
+    public static function myOptions(array $data, &$list, $num = 0, $clear=true)
     {
         foreach ($data as $k=>$v)
         {
             $list[] = ['value'=>$v['id'],'label'=>self::cross($num).$v['name']];
             if (is_array($v['children']) && !empty($v['children'])) {
-                $num++;
-                self::myOptions($v['children'],$list,$num,false);
+                self::myOptions($v['children'],$list,$num+1,false);
             }
         }
     }
@@ -121,7 +120,7 @@ class AdminAuth extends BaseModel
     {
         $list = [];
         $num = 0;
-        self::myOptions(self::lst(),$list,$num, true);
+        self::myOptions(self::lst(),$list, $num, true);
         return $list;
     }
 
