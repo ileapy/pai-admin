@@ -74,9 +74,9 @@ class AdminAuth extends AuthController
      */
     public function edit($id = 0)
     {
-        if (!$id) return app("json")->fail("账号id不能为空");
+        if (!$id) return app("json")->fail("权限id不能为空");
         $ainfo = aModel::get($id);
-        if (!$ainfo) return app("json")->fail("没有该账号");
+        if (!$ainfo) return app("json")->fail("没有该权限");
         $form = array();
         $form[] = Elm::select('pid','上级权限',$ainfo['pid'])->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('name','权限名称',$ainfo['name'])->col(10);
