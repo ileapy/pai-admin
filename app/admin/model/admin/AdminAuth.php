@@ -153,7 +153,7 @@ class AdminAuth extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function selectAndBuildTree(int $pid = 0, array $auth = [], array $checkedAuth = [],array $list = [])
+    public static function selectAndBuildTree(int $pid = 0, array $auth = [], array $list = [])
     {
         $model = new self;
         $model = $model->where("pid",$pid);
@@ -164,7 +164,7 @@ class AdminAuth extends BaseModel
         $data = $model->select();
         foreach ($data as $k => $v)
         {
-            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],true,self::selectAndBuildTree($v['id'],$auth,$checkedAuth));
+            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],self::selectAndBuildTree($v['id'],$auth));
         }
         return $list;
     }
