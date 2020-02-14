@@ -111,7 +111,8 @@
                     } else if (value == 1){
                         is_checked = 'checked="checked"';
                     }
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \"is_menu\"'+')"></span></label>';
+                    field = "is_menu";
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', '+ field +')"></span></label>';
                     return result;
                 },
             },
@@ -129,7 +130,8 @@
                     } else if (value == 1){
                         is_checked = 'checked="checked"';
                     }
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \"status\"'+')"></span></label>';
+                    field = "status";
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', '+ field +')"></span></label>';
                     return result;
                 },
             },
