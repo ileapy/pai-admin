@@ -90,4 +90,46 @@ class AdminAuth extends AuthController
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
         return Form::make_post_form($form, url('save')->build());
     }
+
+    /**
+     * 保存
+     * @param $id
+     */
+    public function save($id)
+    {
+        $data = Util::postMore([
+            ['name',''],
+            ['pid',0],
+            ['icon',''],
+            ['module',''],
+            ['controller',''],
+            ['action',''],
+            ['params',''],
+            ['rank',0],
+            ['is_menu',1],
+            ['status',1]
+        ]);
+        if ($data['name'] == "") return app("json")->fail("权限名称不能为空");
+        if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
+        if ($data['module'] == "") return app("json")->fail("模块名不能为空");
+        if ($data['controller'] == "") return app("json")->fail("控制器名不能为空");
+        if ($data['action'] == "") return app("json")->fail("方法名不能为空");
+        $data['path'] = '/'.$data['module'].'/'.$data['controller'].'/'.$data['action'];
+        if ($id=="")
+        {
+            $data['pwd'] = md5(md5($data['pwd']));
+            $data['ip'] = $this->request->ip();
+            $data['create_user'] = $this->adminId;
+            $data['create_time'] = time();
+            $res = aModel::insert($data);
+        }else
+        {
+            $ainfo = aModel::get($id);
+            if ($ainfo['pwd'] != $data['pwd']) $data['pwd'] = md5(md5($data['pwd']));
+            $data['update_user'] = $this->adminId;
+            $data['update_time'] = time();
+            $res = aModel::update($data,['id'=>$id]);
+        }
+        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+    }
 }
