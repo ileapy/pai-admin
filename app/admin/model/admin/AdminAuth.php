@@ -69,4 +69,27 @@ class AdminAuth extends BaseModel
         $data = $model->select();
         return $data->toArray() ?: [];
     }
+
+    /**
+     * 获取选择数据
+     * @param int $pid
+     * @param array $auth
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function lst(int $pid = 0, array $auth = []): array
+    {
+        $model = new self;
+        $model = $model->where("pid",$pid);
+        if ($auth != []) $model = $model->where("id",'in',$auth);
+        $model = $model->field(['name','id']);
+        $model = $model->order(["rank desc","id"]);
+        $data = $model->select()->each(function ($item) use ($auth)
+        {
+            $item['children'] = self::lst($item['id'],$auth);
+        });
+        return $data->toArray() ?: [];
+    }
 }
