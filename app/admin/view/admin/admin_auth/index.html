@@ -131,7 +131,7 @@
                         is_checked = 'checked="checked"';
                     }
                     field = "status";
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', "'+ field +'")"></span></label>';
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', '+ field +')"></span></label>';
                     return result;
                 },
             },
