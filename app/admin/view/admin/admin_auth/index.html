@@ -131,7 +131,7 @@
                         is_checked = 'checked="checked"';
                     }
                     var field = "status";
-                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', '+ field +')"></span></label>';
+                    result = '<label class="lyear-switch switch-primary lyear-status"><input type="checkbox" '+ is_checked +'><span  onClick="updateStatus('+ row.id +', '+ value +', \''+ field +'\')"></span></label>';
                     return result;
                 },
             },
@@ -241,7 +241,6 @@
     }
 
     function updateStatus(id, value,field) {
-        alert(field);
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
             type: "post",
