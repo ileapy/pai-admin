@@ -95,14 +95,18 @@ class AdminAuth extends BaseModel
      * 遍历选择项
      * @param array $data
      * @param $list
+     * @param int $num
      * @param bool $clear
      */
-    public static function myOptions(array $data, &$list, $clear=true)
+    public static function myOptions(array $data, &$list, &$num = 0, $clear=true)
     {
         foreach ($data as $k=>$v)
         {
-            if (is_array($v['children']) && !empty($v['children'])) self::myOptions($v['children'],$list,false);
-            else $list[] = ['value'=>$v['id'],'label'=>$v['name']];
+            $list[] = ['value'=>$v['id'],'label'=>self::cross($num).$v['name']];
+            if (is_array($v['children']) && !empty($v['children'])) {
+                $num++;
+                self::myOptions($v['children'],$list,$num,false);
+            }
         }
     }
 
@@ -116,7 +120,23 @@ class AdminAuth extends BaseModel
     public static function returnOptions(): array
     {
         $list = [];
-        self::myOptions(self::lst(),$list,true);
+        $num = 0;
+        self::myOptions(self::lst(),$list,$num, true);
         return $list;
+    }
+
+    /**
+     * 横线
+     * @param int $num
+     * @return string
+     */
+    public static function cross(int $num=0): string
+    {
+        $str = "";
+        if ($num == 0) return $str;
+        elseif ($num == 1) return $str .= "|--";
+        elseif ($num > 1) for($i=0;$i<$num;$i++)
+            if ($i==0) $str .= "|--";
+            else $str .= "--";
     }
 }
