@@ -5,6 +5,7 @@ namespace app\admin\model\admin;
 
 
 use app\admin\model\BaseModel;
+use app\admin\model\ModelTrait;
 
 /**
  * 操作角色
@@ -13,6 +14,8 @@ use app\admin\model\BaseModel;
  */
 class AdminRole extends BaseModel
 {
+    use ModelTrait;
+
     /**
      * 获取权限
      * @param int $id
@@ -55,10 +58,10 @@ class AdminRole extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function systemPage(int $pid = 0): array
+    public static function systemPage(int $pid = -1): array
     {
         $model = new self;
-        if ($pid != 0) $model = $model->where("pid",$pid);
+        if ($pid != -1) $model = $model->where("pid",$pid);
         $model = $model->field(['id','name','pid','auth','rank','status']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select();

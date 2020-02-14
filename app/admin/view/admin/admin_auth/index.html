@@ -165,7 +165,7 @@
                         });
                     },
                     'click .role-edit': function (e, value, row, index) {
-                        iframe.createIframe('修改用户','/admin/admin.admin_auth/edit?id='+row.id)
+                        iframe.createIframe('修改权限','/admin/admin.admin_auth/edit?id='+row.id)
                     }
                 },
                 formatter: operateFormatter
@@ -252,7 +252,7 @@
                 else parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             },
             error: function () {
-                alert('修改失败，请稍后再试');
+                parent.lightyear.notify('修改失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
             }
         });
     }
