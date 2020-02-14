@@ -149,6 +149,7 @@ class AdminAuth extends AuthController
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         list($field,$value) = Util::postMore([['field',''],['value','']]);
+        var_dump($field,$value);
         if ($field == '' || $value=='') return app("json")->fail("参数有误！");
         return aModel::update([$field=>$value],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
