@@ -46,6 +46,7 @@ class AdminRole extends AuthController
      */
     public function add($pid = 0)
     {
+        var_dump($this->auth);
         var_dump(aModel::selectAndBuildTree(0,$this->auth,[]));
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
