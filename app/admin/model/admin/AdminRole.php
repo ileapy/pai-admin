@@ -169,7 +169,7 @@ class AdminRole extends BaseModel
         {
             $tmp = self::buildTreeData($v['id'],$v['name']);
             if (is_array($v['children']) && !empty($v['children'])) $tmp = $tmp->children();
-            if (in_array($v['id'])) $tmp = $tmp->checked(true);
+            if (in_array($v['id'],$checkedAuth)) $tmp = $tmp->checked(true);
             $list[] = $tmp;
         }
         return $list;
