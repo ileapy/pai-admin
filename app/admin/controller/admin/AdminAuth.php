@@ -7,6 +7,7 @@ namespace app\admin\controller\admin;
 use app\admin\controller\AuthController;
 use app\admin\model\admin\AdminAuth as aModel;
 use app\Request;
+use FormBuilder\Exception\FormBuilderException;
 use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
@@ -41,19 +42,12 @@ class AdminAuth extends AuthController
      * 添加
      * @param Request $request
      * @return string
-     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws FormBuilderException
      */
     public function add($pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','上级权限',$pid)->options(function (){
-            $list = aModel::lst();
-            $menus=[];
-            foreach ($list as $menu){
-                $menus[] = ['value'=>$menu['id'],'label'=>$menu['name']];
-            }
-            return $menus;
-        })->col(10);
+        $form[] = Elm::select('pid','上级权限',$pid)->options(aModel::returnOptions())->col(10);
         $form[] = Elm::input('name','权限名称')->col(10);
         $form[] = Elm::input('icon','图标')->col(10);
         $form[] = Elm::input('module','模块名')->col(10);
