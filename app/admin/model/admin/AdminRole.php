@@ -154,20 +154,4 @@ class AdminRole extends BaseModel
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
-
-    /**
-     * @param int $pid
-     * @param array $auth
-     * @param array $checkedAuth
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public static function returnData(int $pid = 0, array $auth = [], array $checkedAuth = [])
-    {
-        $list = [];
-        AdminAuth::selectAndBuildTree($pid,$auth,$checkedAuth,$list);
-        return $list ?: [];
-    }
 }
