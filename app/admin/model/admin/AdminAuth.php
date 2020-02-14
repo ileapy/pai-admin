@@ -5,6 +5,7 @@ namespace app\admin\model\admin;
 
 
 use app\admin\model\BaseModel;
+use app\admin\model\ModelTrait;
 
 /**
  * 操作权限
@@ -13,6 +14,8 @@ use app\admin\model\BaseModel;
  */
 class AdminAuth extends BaseModel
 {
+    use ModelTrait;
+
     /**
      * 获取权限id 找不到是返回 -1
      * @param string $module
