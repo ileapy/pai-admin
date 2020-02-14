@@ -159,6 +159,6 @@ class AdminRole extends BaseModel
     {
         $list = [];
         AdminAuth::selectAndBuildTree($pid,$auth,$checkedAuth,$list);
-        return $list;
+        return $list ?: [];
     }
 }
