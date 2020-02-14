@@ -159,10 +159,10 @@ class AdminAuth extends BaseModel
         if ($auth != []) $model = $model->where("id",'in',$auth);
         $model = $model->field(['name','id']);
         $model = $model->order(["rank desc","id"]);
-        $model->select()->each(function ($item) use ($auth,$checkedAuth,$list)
+        $data = $model->select();
+        foreach ($data as $k => $v)
         {
-//            var_dump(AdminRole::buildTreeData($item['id'],$item['name'],in_array($item['id'],$checkedAuth),self::selectAndBuildTree($item['id'],$auth,$checkedAuth)));
-            $list[] = AdminRole::buildTreeData($item['id'],$item['name'],in_array($item['id'],$checkedAuth),self::selectAndBuildTree($item['id'],$auth,$checkedAuth));
-        });
+            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],in_array($v['id'],$checkedAuth),self::selectAndBuildTree($v['id'],$auth,$checkedAuth,$list));
+        }
     }
 }
