@@ -147,11 +147,9 @@ class AdminAuth extends AuthController
     /**
      * 修改字段
      * @param $id
-     * @param $field
-     * @param $value
      * @return aModel
      */
-    public function field($id,$field,$value)
+    public function field($id)
     {
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         list($field,$value) = Util::postMore([['field',''],['value','']]);
