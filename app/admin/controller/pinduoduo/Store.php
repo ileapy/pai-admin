@@ -34,7 +34,7 @@ class Store extends AuthController
             {
                 $status = 2;
                 $this->assign(compact("provider"));
-                $this->assign("url","https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/index/accessauth&state=10000");
+                $this->assign("url","https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state=10000");
             }
             else $status = 3;
         }
