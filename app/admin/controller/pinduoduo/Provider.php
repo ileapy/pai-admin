@@ -10,7 +10,7 @@ use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
-use app\admin\model\pinduoduo\Provider as pModel;
+use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 
 /**
  * 供应商信息
