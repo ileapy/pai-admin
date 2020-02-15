@@ -23,7 +23,16 @@
                 <div class="card-header"><h4>我的店铺</h4></div>
                 <div class="card-body">
                     <div class="">
-                        <a class="btn btn-w-md btn-round btn-info" href="">去绑定</a>
+                        {switch User.level}
+                        {case 1}
+                        {/case}
+                        {case 2}
+                        <a class="btn btn-w-md btn-round btn-info" href="{$url}">去绑定</a>
+                        {/case}
+                        {default /}
+
+                        {/switch}
+
                     </div>
                 </div>
             </div>
