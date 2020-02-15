@@ -7,11 +7,11 @@ namespace app\admin\controller\pinduoduo;
 use app\admin\controller\AuthController;
 
 /**
- * 商品信息
- * Class Goods
+ * 店铺信息
+ * Class Store
  * @package app\admin\controller\pinduoduo
  */
-class Goods extends AuthController
+class Store extends AuthController
 {
     public function index()
     {
