@@ -5,6 +5,10 @@ namespace app\admin\controller\pinduoduo;
 
 
 use app\admin\controller\AuthController;
+use learn\services\JsonService as Json;
+use learn\services\UtilService as Util;
+use app\admin\model\pinduoduo\PinduoduoStore as sModel;
+use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 
 /**
  * 店铺信息
@@ -13,8 +17,28 @@ use app\admin\controller\AuthController;
  */
 class Store extends AuthController
 {
+    /**
+     * 店铺详情
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function index()
     {
+        $store = sModel::info($this->adminId);
+        $status = 1;
+        if (empty($store)) {
+            $provider = pModel::getOneEnable();
+            if ($provider)
+            {
+                $status = 2;
+                $this->assign(compact("provider"));
+            }
+            else $status = 3;
+        }
+        else $this->assign(compact("store"));
+        $this->assign(compact("store","status"));
         return $this->fetch();
     }
 }
