@@ -41,4 +41,19 @@ class PinduoduoProvider extends BaseModel
     {
         return $model->count();
     }
+
+    /**
+     * 获取一个可用的供应商
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getOneEnable()
+    {
+        $model = new self;
+        $model->where("status",1);
+        $info = $model->find();
+        return $info ? $info->toArray() : [];
+    }
 }
