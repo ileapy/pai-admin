@@ -63,6 +63,7 @@ class Provider extends AuthController
         $form[] = Elm::input('client_secret','client_secret')->col(10);
         $form[] = Elm::input('developer_name','开发者账号')->col(10);
         $form[] = Elm::input('developer_pwd','开发者密码')->col(10);
+        $form[] = Elm::input('limit_num','限制数量')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
         return Form::make_post_form($form, url('save')->build());
     }
@@ -84,6 +85,7 @@ class Provider extends AuthController
         $form[] = Elm::input('client_secret','client_secret',$pinfo['client_secret'])->col(10);
         $form[] = Elm::input('developer_name','开发者账号',$pinfo['developer_name'])->col(10);
         $form[] = Elm::input('developer_pwd','开发者密码',$pinfo['developer_pwd'])->col(10);
+        $form[] = Elm::input('limit_num','限制数量',$pinfo['limit_num'])->col(10);
         $form[] = Elm::radio('status','状态',$pinfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
         return Form::make_post_form($form, url('save',['id'=>$id])->build());
     }
@@ -102,12 +104,14 @@ class Provider extends AuthController
             ['client_secret',''],
             ['developer_name',''],
             ['developer_pwd',''],
-            ['status',1]
+            ['limit_num',5],
+            ['status',1],
         ]);
         if ($data['developer_id'] == "") return app("json")->fail("开发者id不能为空");
         if ($data['app_name'] == "") return app("json")->fail("应用名称不能为空");
         if ($data['client_id'] == "") return app("json")->fail("client_id不能为空");
         if ($data['client_secret'] == "") return app("json")->fail("client_secret不能为空");
+        if ($data['limit_num'] == "") return app("json")->fail("限制数量不能为空");
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
