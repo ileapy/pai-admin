@@ -30,6 +30,7 @@ class Store extends AuthController
         $status = 1;
         if (empty($store)) {
             $provider = pModel::getOneEnable();
+            var_dump($provider);
             if ($provider)
             {
                 $status = 2;
