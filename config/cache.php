@@ -24,6 +24,27 @@ return [
             // 序列化机制 例如 ['serialize', 'unserialize']
             'serialize'  => [],
         ],
+        // redis缓存
+        'redis'   =>  [
+            // 驱动方式
+            'type'   => 'redis',
+            // 服务器地址
+            'host'   => '127.0.0.1',
+            // 端口号
+            'port'  => 6379,
+            // 密码
+            'password'  => '',
+            // 位置
+            'select'    => 0,
+            // 链接超时
+            'timeout'    => 0,
+            // 有效期
+            'expire'    => 0,
+            // 持久化
+            'persistent' => false,
+            // 前缀
+            'prefix'    => '',
+        ],
         // 更多的缓存连接
     ],
 ];
