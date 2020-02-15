@@ -54,6 +54,7 @@ class PinduoduoProvider extends BaseModel
         $model = new self;
         $model->where("status",1);
         $info = $model->find();
+        var_dump($info);
         return $info ? $info->toArray() : [];
     }
 }
