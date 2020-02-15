@@ -81,6 +81,7 @@ class Curl
      */
     public function post()
     {
+        var_dump($this->params);
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
