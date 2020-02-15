@@ -7,7 +7,7 @@ namespace app\admin\model\pinduoduo;
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
 
-class Provider extends BaseModel
+class PinduoduoProvider extends BaseModel
 {
     use ModelTrait;
 
