@@ -27,7 +27,7 @@ class Authorization extends AuthController
     {
         $data = Util::getMore([['code',''],['state',0]]);
         if ($data['code'] == "" || $data['state'] == 0) return "授权环境异常";
-        var_dump(self::getToken($data['code'],$data['pid']));
+        var_dump(self::getToken($data['code'],$data['state']));
     }
 
     /**
