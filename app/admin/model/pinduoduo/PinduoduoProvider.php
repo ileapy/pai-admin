@@ -52,8 +52,8 @@ class PinduoduoProvider extends BaseModel
     public static function getOneEnable()
     {
         $model = new self;
-        $model->where("status",1);
-        $model->where("use_num","< limit_num");
+        $model = $model->where("status",1);
+        $model = $model->where("use_num","< limit_num");
         $info = $model->find();
         var_dump($info);
         return $info ? $info->toArray() : [];
