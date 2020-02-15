@@ -45,7 +45,6 @@ class Authorization extends AuthController
         $data['client_id'] = $provider['client_id'];
         $data['grant_type'] = "authorization_code";
         $data['client_secret'] = $provider['client_secret'];
-        var_dump($data);
         $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
         $curl->header(['Content-Type'=>"application/json"]);
         $res = $curl->run();
