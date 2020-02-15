@@ -25,9 +25,9 @@ class Authorization extends AuthController
      */
     public function accessauth(Request $request)
     {
-        $data = Util::getMore([['code',''],['state',0],['client_id','']]);
-        if ($data['code'] == "" || $data['state'] == 0 || $data['client_id'] == "") return "授权环境异常";
-        var_dump(self::getToken($data['code'],$data['client_id']));
+        $data = Util::getMore([['code',''],['state',0]]);
+        if ($data['code'] == "" || $data['state'] == 0) return "授权环境异常";
+        var_dump(self::getToken($data['code'],$data['pid']));
     }
 
     /**
@@ -36,10 +36,10 @@ class Authorization extends AuthController
      * @param string $client_id
      * @return bool|string|void
      */
-    public function getToken(string $code, string $client_id)
+    public function getToken(string $code, string $pid)
     {
         if (!$code) return Json::fail("code为空");
-        $provider = pModel::get(['client_id'=>$client_id]);
+        $provider = pModel::get(['id'=>$pid]);
         if (!$provider) return Json::fail("供应商不存在");
         $data['code'] = $code;
         $data['client_id'] = $provider['client_id'];
