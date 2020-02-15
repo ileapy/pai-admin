@@ -104,27 +104,25 @@
             title: 'ID',
             sortable: true    // 是否排序
         }, {
-            field: 'name',
-            title: '账号'
+            field: 'developer_id',
+            title: '开发者id'
         }, {
-            field: 'nickname',
-            title: '昵称',
+            field: 'app_name',
+            title: '应用名称',
         }, {
-            field: 'avatar',
-            title: '头像',
-            formatter:function (value,row,index) {
-                return '<img src="'+value+'" style="width: 64px;"/>';
-            },
+            field: 'client_id',
+            title: 'client_id'
         }, {
-            field: 'role_id',
-            title: '角色类型'
+            field: 'client_secret',
+            title: 'client_secret'
         }, {
-            field: 'tel',
-            title: '电话'
+            field: 'developer_name',
+            title: '开发者账号'
         }, {
-            field: 'mail',
-            title: '邮箱'
-        }, {
+            field: 'developer_pwd',
+            title: '开发者密码'
+        },
+            {
             field: 'create_time',
             title: '创建时间'
         }
@@ -140,7 +138,7 @@
                 formatter: btnGroup,  // 自定义方法
                 events: {
                     'click .edit-btn': function (event, value, row, index) {
-                        iframe.createIframe('修改用户','/admin/pinduoduo.provider/edit?id='+row.id)
+                        iframe.createIframe('修改供应商','/admin/pinduoduo.provider/edit?id='+row.id)
                     },
                     'click .del-btn': function (event, value, row, index) {
                         $.alert({
@@ -171,7 +169,7 @@
                 type: "get",
                 url: "/admin/pinduoduo.provider/lst",
                 data: row,
-                dataType: 'jsonp',
+                dataType: 'json',
                 success: function (data, status) {
                     if (data.code == '200') {
                         // 这里的状态显示有自定义样式区分，做单行的更新
