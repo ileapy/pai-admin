@@ -43,7 +43,7 @@ class Authorization extends AuthController
         if (!$provider) return Json::fail("供应商不存在");
         $data['code'] = $code;
         $data['client_id'] = $provider['client_id'];
-        $data['grant_type'] = $provider['grant_type'];
+        $data['grant_type'] = "application/json";
         $data['client_secret'] = $provider['client_secret'];
         $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
         $curl->header(['Content-Type'=>"application/json"]);
