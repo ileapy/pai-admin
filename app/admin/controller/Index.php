@@ -55,10 +55,4 @@ class Index extends AuthController
     {
         return $this->fetch();
     }
-
-    public function accessauth()
-    {
-        var_dump($this->request->param());
-        file_put_contents("pdd.log",serialize($this->request->param()));
-    }
 }

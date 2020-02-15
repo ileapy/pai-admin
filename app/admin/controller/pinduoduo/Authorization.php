@@ -5,6 +5,7 @@ namespace app\admin\controller\pinduoduo;
 
 
 use app\admin\controller\AuthController;
+use app\Request;
 
 /**
  * 权限
@@ -13,8 +14,12 @@ use app\admin\controller\AuthController;
  */
 class Authorization extends AuthController
 {
-    public function index()
+    /**
+     * 验证返回code
+     * @param Request $request
+     */
+    public function accessauth(Request $request)
     {
-        return $this->fetch();
+        var_dump($request);
     }
 }
