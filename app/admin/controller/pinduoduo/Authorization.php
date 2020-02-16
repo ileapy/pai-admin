@@ -50,4 +50,10 @@ class Authorization extends AuthController
         $res = $curl->run();
         return $res;
     }
+
+
+    public function getStoreInfo()
+    {
+
+    }
 }
