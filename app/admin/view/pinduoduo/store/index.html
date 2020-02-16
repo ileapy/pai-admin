@@ -22,7 +22,7 @@
                     <div class="">
                         {switch status}
                         {case 1}
-                        <div class="row">
+                        <div class="row" style="line-height: 64px;">
                             <div class="col-lg-4">
                                 店铺LOGO：<img src="{$store.logo}" style="width: 64px;border-radius: 10px;">
                             </div>
@@ -31,9 +31,6 @@
                             </div>
                             <div class="col-lg-4">
                                 店铺ID：{$store.mall_id}
-                            </div>
-                            <div class="col-lg-12">
-                                <p>店铺介绍：{$store.mall_desc}</p>
                             </div>
                             <div class="col-lg-4">
                                 店铺账户名：{$store.user_name}
@@ -51,6 +48,9 @@
                                 {case 5}专营店{/case}
                                 {case 6}普通店{/case}
                                 {/switch}
+                            </div>
+                            <div class="col-lg-12">
+                                <p>店铺介绍：{$store.mall_desc}</p>
                             </div>
                         </div>
                         {/case}
