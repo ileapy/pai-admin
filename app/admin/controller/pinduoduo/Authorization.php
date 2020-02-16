@@ -24,6 +24,7 @@ class Authorization extends AuthController
      * 验证返回code
      * @param Request $request
      * @return string
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function accessauth(Request $request)
     {
