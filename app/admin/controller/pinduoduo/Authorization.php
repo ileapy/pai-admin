@@ -10,6 +10,8 @@ use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use learn\utils\Curl;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
+use app\admin\model\pinduoduo\PinduoduoStore as sPmodel;
+use think\facade\Cache;
 
 /**
  * 权限
@@ -27,7 +29,13 @@ class Authorization extends AuthController
     {
         $data = Util::getMore([['code',''],['state',0]]);
         if ($data['code'] == "" || $data['state'] == 0) return "授权环境异常";
-        var_dump(self::getToken($data['code'],$data['state']));
+        $provider = pModel::get(['id'=>$data['state']]);
+        if (!$provider) return "未找到供应商！";
+        $res = self::getToken($data['code'],$data['state'],$provider);
+        // 存储 redis
+        Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
+        // 保存店铺信息
+        self::getStoreInfo($provider, (array)$res);
     }
 
     /**
@@ -36,24 +44,33 @@ class Authorization extends AuthController
      * @param string $client_id
      * @return bool|string|void
      */
-    public function getToken(string $code, string $pid)
+    public function getToken(string $code, string $pid,$provider)
     {
-        if (!$code) return Json::fail("code为空");
-        $provider = pModel::get(['id'=>$pid]);
-        if (!$provider) return Json::fail("供应商不存在");
         $data['code'] = $code;
         $data['client_id'] = $provider['client_id'];
         $data['grant_type'] = "authorization_code";
         $data['client_secret'] = $provider['client_secret'];
         $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
         $curl->header(["Content-Type:application/json"]);
-        $res = $curl->run();
-        return $res;
+        return json_decode($curl->run(),true);
     }
 
-
-    public function getStoreInfo()
+    /**
+     * 保存店铺信息
+     * @param array $provider
+     * @param array $token
+     */
+    public function getStoreInfo(array $provider, array $token)
     {
-
+        $data['type'] = 'pdd.mall.info.get';
+        $data['client_id'] = $provider['client_id'];
+        $data['access_token'] = $token['access_token'];
+        $data['timestamp'] = time();
+        $data['data_type'] = 'JSON';
+        $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
+        $curl->header(["Content-Type:application/json"]);
+        $curl->buildSign($provider['client_secret']);
+        $res = $curl->run();
+        var_dump($res);
     }
 }

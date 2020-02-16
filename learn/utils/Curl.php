@@ -110,4 +110,17 @@ class Curl
                 return $this->post();
         }
     }
+
+    /**
+     * 生成sign
+     * @param string $client_secret
+     */
+    public function buildSign(string $client_secret)
+    {
+        $sign = $client_secret;
+        ksort($this->params);
+        foreach ($this->params as $k=>$v) $sign .=$k.$v;
+        $sign.=$client_secret;
+        $this->params['sign'] = strtoupper(md5($sign));
+    }
 }
