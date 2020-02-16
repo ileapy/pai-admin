@@ -36,13 +36,14 @@ class Authorization extends AuthController
         // 存储 redis
         Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
         // 保存店铺信息
-        self::getStoreInfo(collect($provider)->toArray(), $res);
+        self::getStoreInfo($provider, $res);
     }
 
     /**
      * 获取token
      * @param string $code
-     * @param string $client_id
+     * @param string $pid
+     * @param $provider
      * @return bool|string|void
      */
     public function getToken(string $code, string $pid,$provider)
@@ -58,10 +59,10 @@ class Authorization extends AuthController
 
     /**
      * 保存店铺信息
-     * @param array $provider
+     * @param $provider
      * @param array $token
      */
-    public function getStoreInfo(array $provider, array $token)
+    public function getStoreInfo($provider, array $token)
     {
         $data['type'] = 'pdd.mall.info.get';
         $data['client_id'] = $provider['client_id'];
