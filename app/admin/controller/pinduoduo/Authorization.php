@@ -81,7 +81,7 @@ class Authorization extends AuthController
             $ins['aid'] = $this->adminId;
             $ins['pid'] = $code['state'];
             $ins['mall_id'] = $token['owner_id'];
-            $ins['user_name'] = $token['user_name'];
+            $ins['user_name'] = $token['owner_name'];
             $ins['mall_name'] = $res['mall_info_get_response']['mall_name'];
             $ins['mall_desc'] = $res['mall_info_get_response']['mall_desc'];
             $ins['logo'] = $res['mall_info_get_response']['logo'];
