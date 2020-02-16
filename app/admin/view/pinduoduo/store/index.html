@@ -12,12 +12,9 @@
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
 </head>
-
 <body>
 <div class="container-fluid p-t-15">
-
     <div class="row">
-
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header"><h4>我的店铺</h4></div>
@@ -25,6 +22,37 @@
                     <div class="">
                         {switch status}
                         {case 1}
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="{$store.logo}">
+                            </div>
+                            <div class="col-lg-4">
+                                店铺名称：{$store.mall_name}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺ID：{$store.id}
+                            </div>
+                            <div class="col-lg-12">
+                                店铺介绍：{$store.mall_desc}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺账户名：{$store.user_name}
+                            </div>
+                            <div class="col-lg-4">
+                                供应商ID：{$store.pid}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺类型：
+                                {switch store['merchant_type']}
+                                {case 1}个人{/case}
+                                {case 2}企业{/case}
+                                {case 3}旗舰店{/case}
+                                {case 4}专卖店{/case}
+                                {case 5}专营店{/case}
+                                {case 6}普通店{/case}
+                                {/switch}
+                            </div>
+                        </div>
                         {/case}
                         {case 2}
                         <a class="btn btn-w-md btn-round btn-info" href="{$url}">去绑定</a>
@@ -33,16 +61,12 @@
                         <p>当前没有空闲的供应商账号，不能绑定，请耐心等待！</p>
                         {/case}
                         {/switch}
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
-
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
