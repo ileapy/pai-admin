@@ -25,6 +25,37 @@
                     <div class="">
                         {switch status}
                         {case 1}
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <img src="{$store.logo}">
+                            </div>
+                            <div class="col-lg-4">
+                                店铺名称：{$store.mall_name}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺ID：{$store.id}
+                            </div>
+                            <div class="col-lg-12">
+                                店铺介绍：{$store.mall_desc}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺账户名：{$store.user_name}
+                            </div>
+                            <div class="col-lg-4">
+                                供应商ID：{$store.pid}
+                            </div>
+                            <div class="col-lg-4">
+                                店铺类型：
+                                {switch store['merchant_type']}
+                                {case 1}个人{/case}
+                                {case 2}企业{/case}
+                                {case 3}旗舰店{/case}
+                                {case 4}专卖店{/case}
+                                {case 5}专营店{/case}
+                                {case 6}普通店{/case}
+                                {/switch}
+                            </div>
+                        </div>
                         {/case}
                         {case 2}
                         <a class="btn btn-w-md btn-round btn-info" href="{$url}">去绑定</a>
