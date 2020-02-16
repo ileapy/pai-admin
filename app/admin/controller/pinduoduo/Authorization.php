@@ -69,7 +69,7 @@ class Authorization extends AuthController
         $data['access_token'] = $token['access_token'];
         $data['timestamp'] = time();
         $data['data_type'] = 'JSON';
-        $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
+        $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$data);
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
         $res = $curl->run();
