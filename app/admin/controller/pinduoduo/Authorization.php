@@ -36,7 +36,8 @@ class Authorization extends AuthController
         // 存储 redis
         Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
         // 保存店铺信息
-        self::getStoreInfo($provider, (array)$res);
+        if (self::getStoreInfo($provider, (array)$res, $data)) return $this->redirect("/admin/pinduoduo.store/index");
+        else return "授权出错";
     }
 
     /**
@@ -61,8 +62,10 @@ class Authorization extends AuthController
      * 保存店铺信息
      * @param $provider
      * @param array $token
+     * @param array $code
+     * @return int|string
      */
-    public function getStoreInfo($provider, array $token)
+    public function getStoreInfo($provider, array $token, array $code)
     {
         $data['type'] = 'pdd.mall.info.get';
         $data['client_id'] = $provider['client_id'];
@@ -72,7 +75,21 @@ class Authorization extends AuthController
         $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$data);
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
-        $res = $curl->run();
-        var_dump($res);
+        $res = json_decode($curl->run(),true);
+        if (array_key_exists("mall_info_get_response",$res))
+        {
+            $ins['aid'] = $this->adminId;
+            $ins['pid'] = $code['state'];
+            $ins['mall_id'] = $token['owner_id'];
+            $ins['user_name'] = $token['user_name'];
+            $ins['mall_name'] = $res['mall_info_get_response']['mall_name'];
+            $ins['mall_desc'] = $res['mall_info_get_response']['mall_desc'];
+            $ins['logo'] = $res['mall_info_get_response']['logo'];
+            $ins['merchant_type'] = $res['mall_info_get_response']['merchant_type'];
+            $ins['status'] = 1;
+            $ins['create_user'] = $this->adminId;
+            $ins['create_time'] = time();
+            return sPmodel::insert($ins);
+        }
     }
 }
