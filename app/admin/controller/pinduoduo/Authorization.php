@@ -36,7 +36,7 @@ class Authorization extends AuthController
         // 存储 redis
         Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
         // 保存店铺信息
-        self::getStoreInfo($provider, $res);
+        self::getStoreInfo($provider, (array)$res);
     }
 
     /**
