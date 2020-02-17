@@ -21,7 +21,6 @@ class Goods extends AuthController
         $provider = pModel::getOneEnable();
         Session::set("provider",$provider);
         if (!self::authIsExit()) return $this->redirect("https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state=1000");
-        var_dump(pModel::useNum(1));
         return $this->fetch();
     }
 
@@ -32,6 +31,7 @@ class Goods extends AuthController
      */
     public function authIsExit(): bool
     {
+        var_dump(Cache::store('redis')->get('store_'.$this->adminId));
         return Cache::store('redis')->has('store_'.$this->adminId);
     }
 }
