@@ -31,4 +31,17 @@ class PinduoduoStore extends BaseModel
         $info = $model->find();
         return $info ? $info->toArray() : [];
     }
+
+    /**
+     * 是否绑定店铺
+     * @param $aid
+     * @return array|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function isBingInfo(int $aid)
+    {
+        return self::where("aid",$aid)->find();
+    }
 }
