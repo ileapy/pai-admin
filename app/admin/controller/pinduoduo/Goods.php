@@ -84,6 +84,6 @@ class Goods extends AuthController
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
         $res = json_decode($curl->run(),true);
-        var_dump($res);
+        return Json::successlayui($res['goods_list_get_response']['total_count'],$res['goods_list_get_response']['goods_list']);
     }
 }
