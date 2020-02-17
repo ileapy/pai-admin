@@ -33,10 +33,17 @@ class Goods extends AuthController
             if (!authIsExit($this->adminId))
             {
                 $provider = pModel::get($store['pid']);
-                if (!$provider) return "";
-                Session::set("provider",$provider);
-                return $this->redirect("https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state=2000");
-            }
+                if (!$provider)
+                {
+                    $this->assign("isBind",true);
+                    $this->assign("provider",$provider);
+                }
+                else
+                {
+                    Session::set("provider",$provider);
+                    return $this->redirect("https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state=2000");
+                }
+            }else $this->assign("isBind",true);
         }
         return $this->fetch();
     }
