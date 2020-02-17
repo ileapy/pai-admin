@@ -6,6 +6,7 @@ namespace app\admin\model\pinduoduo;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use think\facade\Db;
 
 /**
  * 店铺
@@ -46,20 +47,12 @@ class PinduoduoStore extends BaseModel
     }
 
     /**
-     * 获取店铺绑定的供应商信息
+     * 获取店铺绑定的供应商id
      * @param int $aid
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @return int
      */
-    public static function getClientByAid(int $aid):array
+    public static function getStoreId(int $aid):int
     {
-        $model = new self;
-        $model = $model->alias("s");
-        $model = $model->where("s.aid",$aid);
-        $model = $model->withJoin("__pinduoduo_provider__","right");
-        $data = $model->find();
-        return $data ? $data->toArray() : [];
+        return self::where("aid",$aid)->value("pid");
     }
 }
