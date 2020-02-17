@@ -65,6 +65,7 @@ class PinduoduoProvider extends BaseModel
      */
     public static function useNum(int $id): bool
     {
-        return  self::where("id",$id)->save(['use_num'=>'use_num+1']);
+        $num = self::where("id",$id)->value("use_num");
+        return  self::where("id",$id)->save(['use_num'=>$num+1]);
     }
 }
