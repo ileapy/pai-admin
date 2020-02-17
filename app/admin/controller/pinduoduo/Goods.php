@@ -76,6 +76,7 @@ class Goods extends AuthController
         $data['access_token'] = $token['access_token'];
         $data['timestamp'] = time();
         $data['data_type'] = 'JSON';
+        var_dump($where);
         $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$where);
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
