@@ -67,8 +67,12 @@ class Goods extends AuthController
             ['goods_name',''],
             ['is_onsale',''],
             ['page',1],
-            ['page_size',20],
+            ['limit',20],
         ]);
+        if ($where['goods_name']) unset($where['goods_name']);
+        if ($where['is_onsale']) unset($where['is_onsale']);
+        $where['page_size'] = $where['limit'];
+        unset($where['limit']);
         $where['type'] = 'pdd.goods.list.get';
         $provider = pModel::get(sModel::getStoreId($this->adminId));
         $token = Cache::store('redis')->get('store_'.$this->adminId);
