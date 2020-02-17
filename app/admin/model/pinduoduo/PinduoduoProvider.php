@@ -53,7 +53,7 @@ class PinduoduoProvider extends BaseModel
     {
         $model = new self;
         $model = $model->where("status",1);
-        $model = $model->where("use_num","<","limit_num");
+        $model = $model->where("use_num","<",5);
         $info = $model->find();
         return $info ? $info->toArray() : [];
     }
