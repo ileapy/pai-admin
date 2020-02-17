@@ -7,7 +7,6 @@ namespace app\admin\controller\pinduoduo;
 use app\admin\controller\AuthController;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 use app\admin\model\pinduoduo\PinduoduoStore as sModel;
-use think\facade\Cache;
 use think\facade\Session;
 
 /**
@@ -31,7 +30,7 @@ class Goods extends AuthController
         if (!$store) $this->assign("isBind",false);
         else
         {
-            if (!self::authIsExit())
+            if (!authIsExit($this->adminId))
             {
                 $provider = pModel::get($store['pid']);
                 if (!$provider) return "";
@@ -42,13 +41,4 @@ class Goods extends AuthController
         return $this->fetch();
     }
 
-    /**
-     * 判断授权信息是否存在
-     * @return bool
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public function authIsExit(): bool
-    {
-        return Cache::store('redis')->has('store_'.$this->adminId);
-    }
 }
