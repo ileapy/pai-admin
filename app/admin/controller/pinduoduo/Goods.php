@@ -70,7 +70,7 @@ class Goods extends AuthController
             ['page_size',20],
         ]);
         $where['type'] = 'pdd.goods.list.get';
-        $provider = pModel::getClientByAid($this->adminId);
+        $provider = sModel::getClientByAid($this->adminId);
         $token = Cache::store('redis')->get('store_'.$this->adminId);
         $data['client_id'] = $provider['client_id'];
         $data['access_token'] = $token['access_token'];
