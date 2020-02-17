@@ -83,7 +83,7 @@ class Goods extends AuthController
         $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$where);
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
-        $res = json_decode($curl->run(),true);
-        var_dump($res);
+        $data = json_decode($curl->run(),true);
+        return Json::successlayui($data['goods_list_get_response']['total_count'],$data['goods_list_get_response']['goods_list']);
     }
 }
