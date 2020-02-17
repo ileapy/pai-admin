@@ -76,11 +76,10 @@ class Goods extends AuthController
         $where['type'] = 'pdd.goods.list.get';
         $provider = pModel::get(sModel::getStoreId($this->adminId));
         $token = Cache::store('redis')->get('store_'.$this->adminId);
-        $data['client_id'] = $provider['client_id'];
-        $data['access_token'] = $token['access_token'];
-        $data['timestamp'] = time();
-        $data['data_type'] = 'JSON';
-        var_dump($where);
+        $where['client_id'] = $provider['client_id'];
+        $where['access_token'] = $token['access_token'];
+        $where['timestamp'] = time();
+        $where['data_type'] = 'JSON';
         $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$where);
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
