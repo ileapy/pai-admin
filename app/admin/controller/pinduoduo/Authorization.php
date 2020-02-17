@@ -36,7 +36,12 @@ class Authorization extends AuthController
         // 存储 redis
         Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
         // 保存店铺信息
-        if (self::getStoreInfo($provider, (array)$res, $data)) return $this->redirect("/admin/pinduoduo.store/index");
+        if (self::getStoreInfo($provider, (array)$res, $data))
+        {
+            // 更新使用次数
+            pModel::useNum($data['state']);
+            return $this->redirect("/admin/pinduoduo.store/index");
+        }
         else return "授权出错";
     }
 
