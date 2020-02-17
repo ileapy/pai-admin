@@ -55,6 +55,7 @@ class PinduoduoProvider extends BaseModel
         $model = $model->where("status",1);
         $model = $model->where("use_num","< limit_num");
         $info = $model->find();
+        var_dump($info);
         return $info ? $info->toArray() : [];
     }
 
