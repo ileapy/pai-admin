@@ -40,5 +40,4 @@ class Goods extends AuthController
         }
         return $this->fetch();
     }
-
 }
