@@ -71,7 +71,7 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/admin.admin/lst',
+        url: '/admin/pinduoduo.goods/lst',
         method: 'post',
         dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -139,78 +139,14 @@
         }, {
             field: 'create_time',
             title: '创建时间'
-        }
-            , {
+        }, {
                 field: 'status',
                 title: '状态',
                 formatter:function (value,row,index) {
                     return value === 1 ? '启用' : '冻结';
                 },
-            }, {
-                field: 'operate',
-                title: '操作',
-                formatter: btnGroup,  // 自定义方法
-                events: {
-                    'click .edit-btn': function (event, value, row, index) {
-                        iframe.createIframe('修改用户','/admin/admin.admin/edit?id='+row.id)
-                    },
-                    'click .del-btn': function (event, value, row, index) {
-                        $.alert({
-                            title: '系统提示',
-                            content: '删除提醒',
-                            buttons: {
-                                confirm: {
-                                    text: '确认',
-                                    btnClass: 'btn-primary',
-                                    action: function(){
-                                        $.post(url="/admin/admin.admin/del",data={"id":row.id},function (res) {
-                                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
-                                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                                        });
-                                    }
-                                },
-                                cancel: {
-                                    text: '取消'
-                                }
-                            }
-                        });
-                    }
-                }
             }],
-
-        onEditableSave: function (field, row, oldValue, $el) {
-            $.ajax({
-                type: "get",
-                url: "/admin/admin.admin/lst",
-                data: row,
-                dataType: 'jsonp',
-                success: function (data, status) {
-                    if (data.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单行的更新
-                        $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
-                    } else {
-                        alert(data.msg);
-                    }
-                },
-                error: function () {
-                    alert('修改失败，请稍后再试');
-                }
-            });
-        },
-
-        onLoadSuccess: function(data){
-            $("[data-toggle='tooltip']").tooltip();
-        }
     });
-
-    // 操作按钮
-    function btnGroup ()
-    {
-        let html =
-            '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
-            '<a href="#!" class="btn btn-xs btn-default del-btn" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
-        return html;
-    }
 </script>
 </body>
 </html>
