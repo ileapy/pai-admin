@@ -68,4 +68,18 @@ class PinduoduoProvider extends BaseModel
         $num = self::where("id",$id)->value("use_num");
         return  self::where("id",$id)->save(['use_num'=>$num+1]);
     }
+
+    /**
+     * 获取店铺绑定的供应商信息
+     * @param int $aid
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getClientByAid(int $aid):array
+    {
+        $data = self::where("aid",$aid)->find();
+        return $data ? $data->toArray() : [];
+    }
 }
