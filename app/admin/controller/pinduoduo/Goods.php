@@ -69,8 +69,8 @@ class Goods extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        if ($where['goods_name']) unset($where['goods_name']);
-        if ($where['is_onsale']) unset($where['is_onsale']);
+        if ($where['goods_name'] == '') unset($where['goods_name']);
+        if ($where['is_onsale'] == '') unset($where['is_onsale']);
         $where['page_size'] = $where['limit'];
         unset($where['limit']);
         $where['type'] = 'pdd.goods.list.get';
