@@ -57,4 +57,14 @@ class PinduoduoProvider extends BaseModel
         $info = $model->find();
         return $info ? $info->toArray() : [];
     }
+
+    /**
+     * 使用次数加一
+     * @param int $id
+     * @return mixed
+     */
+    public static function useNum(int $id): bool
+    {
+        return self::where("id",$id)->serInc("use_num",1);
+    }
 }
