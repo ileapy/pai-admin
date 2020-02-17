@@ -17,6 +17,14 @@ use think\facade\Session;
  */
 class Goods extends AuthController
 {
+    /**
+     * 商品列表
+     * @return string|void
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function index()
     {
         $store = sModel::isBingInfo($this->adminId);
