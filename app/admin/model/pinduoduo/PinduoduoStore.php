@@ -44,4 +44,22 @@ class PinduoduoStore extends BaseModel
     {
         return self::where("aid",$aid)->find();
     }
+
+    /**
+     * 获取店铺绑定的供应商信息
+     * @param int $aid
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getClientByAid(int $aid):array
+    {
+        $model = new self;
+        $model = $model->alias("s");
+        $model = $model->where("s.aid",$aid);
+        $model = $model->withJoin("__pinduoduo_provider__ p","s.pid= p.id");
+        $data = $model->find();
+        return $data ? $data->toArray() : [];
+    }
 }
