@@ -58,7 +58,7 @@ class PinduoduoStore extends BaseModel
         $model = new self;
         $model = $model->alias("s");
         $model = $model->where("s.aid",$aid);
-        $model = $model->withJoin("__pinduoduo_provider__ p","s.pid= p.id");
+        $model = $model->withJoin("__pinduoduo_provider__","right");
         $data = $model->find();
         return $data ? $data->toArray() : [];
     }
