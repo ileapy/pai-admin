@@ -9,6 +9,7 @@ use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use app\admin\model\pinduoduo\PinduoduoStore as sModel;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
+use think\facade\Session;
 
 /**
  * 店铺信息
@@ -33,8 +34,9 @@ class Store extends AuthController
             if ($provider)
             {
                 $status = 2;
+                Session::set("provider",$provider);
                 $this->assign(compact("provider"));
-                $this->assign("url","https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state={$provider['id']}");
+                $this->assign("url","https://mms.pinduoduo.com/open.html?response_type=code&client_id={$provider['client_id']}&redirect_uri=http://learn.leapy.cn/admin/pinduoduo.authorization/accessauth&state=1000");
             }
             else $status = 3;
         }

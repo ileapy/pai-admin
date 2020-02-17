@@ -12,6 +12,7 @@ use learn\utils\Curl;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 use app\admin\model\pinduoduo\PinduoduoStore as sPmodel;
 use think\facade\Cache;
+use think\facade\Session;
 
 /**
  * 权限
@@ -30,19 +31,30 @@ class Authorization extends AuthController
     {
         $data = Util::getMore([['code',''],['state',0]]);
         if ($data['code'] == "" || $data['state'] == 0) return "授权环境异常";
-        $provider = pModel::get(['id'=>$data['state']]);
+        $provider = Session::get("provider");
         if (!$provider) return "未找到供应商！";
         $res = self::getToken($data['code'],$data['state'],$provider);
+        Session::delete("provider");
         // 存储 redis
         Cache::store('redis')->set('store_'.$this->adminId,$res,$res['expires_in']-10);
-        // 保存店铺信息
-        if (self::getStoreInfo($provider, (array)$res, $data))
+        if ($data['state'] == 1000)
         {
-            // 更新使用次数
-            pModel::useNum($data['state']);
-            return $this->redirect("/admin/pinduoduo.store/index");
+            // 保存店铺信息
+            if (self::getStoreInfo($provider, (array)$res, $data))
+            {
+                // 更新使用次数
+                pModel::useNum($data['state']);
+                return $this->redirect("/admin/pinduoduo.store/index");
+            }
+            else return "授权出错";
+        }elseif ($data['state'] == 2000)
+        {
+            return $this->redirect("/admin/pinduoduo.goods/index");
+        }elseif ($data['state'] == 3000)
+        {
+            return $this->redirect("/admin/pinduoduo.order/index");
         }
-        else return "授权出错";
+
     }
 
     /**
