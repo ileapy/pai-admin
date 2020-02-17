@@ -31,7 +31,6 @@ class Goods extends AuthController
      */
     public function authIsExit(): bool
     {
-        var_dump(Cache::store('redis')->get('store_'.$this->adminId));
         return Cache::store('redis')->has('store_'.$this->adminId);
     }
 }
