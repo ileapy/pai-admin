@@ -47,12 +47,24 @@ class PinduoduoStore extends BaseModel
     }
 
     /**
-     * 获取店铺绑定的供应商id
+     * 获取店铺绑定的供应商信息
      * @param int $aid
-     * @return int
+     * @return array|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getStoreId(int $aid):int
+    public static function getProviderInfo(int $aid)
     {
-        return self::where("aid",$aid)->value("pid");
+        return self::with("provider")->where("aid",$aid)->find();
+    }
+
+    /**
+     * 关联
+     * @return \think\model\relation\HasMany
+     */
+    public function provider()
+    {
+        return $this->hasMany(PinduoduoProvider::class,"id","pid");
     }
 }

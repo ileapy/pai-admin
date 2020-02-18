@@ -63,6 +63,8 @@ class Goods extends AuthController
      */
     public function lst(Request $request)
     {
+        var_dump(sModel::getProviderInfo($this->adminId));
+        return;
         $where = Util::postMore([
             ['goods_name',''],
             ['is_onsale',''],
@@ -74,7 +76,7 @@ class Goods extends AuthController
         $where['page_size'] = $where['limit'];
         unset($where['limit']);
         $where['type'] = 'pdd.goods.list.get';
-        $provider = pModel::get(sModel::getStoreId($this->adminId));
+        $provider = pModel::get(sModel::getProviderInfo($this->adminId));
         $token = Cache::store('redis')->get('store_'.$this->adminId);
         $where['client_id'] = $provider['client_id'];
         $where['access_token'] = $token['access_token'];
