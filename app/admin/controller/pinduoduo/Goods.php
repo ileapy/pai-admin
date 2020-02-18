@@ -63,7 +63,8 @@ class Goods extends AuthController
      */
     public function lst(Request $request)
     {
-        var_dump(sModel::getProviderInfo($this->adminId));
+        $provider = sModel::getProviderInfo($this->adminId);
+        var_dump($provider['client_id']);
         return;
         $where = Util::postMore([
             ['goods_name',''],
