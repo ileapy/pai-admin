@@ -54,7 +54,7 @@ class PinduoduoStore extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getStoreId(int $aid)
+    public static function getProviderInfo(int $aid)
     {
         return self::with("provider")->where("aid",$aid)->find();
     }
