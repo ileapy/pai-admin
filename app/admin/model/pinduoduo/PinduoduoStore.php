@@ -65,6 +65,6 @@ class PinduoduoStore extends BaseModel
      */
     public function provider()
     {
-        return $this->hasMany(PinduoduoProvider::class,"id","pid");
+        return $this->hasOne(PinduoduoProvider::class,"id","pid");
     }
 }
