@@ -44,7 +44,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script>
-    $("#changePwd").onsubmit(function () {
+    $("#changePwd").submit(function () {
         if ($("input[name='oldpwd']").val() == '') lightyear.notify('旧密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         if ($("input[name='newpwd']").val() == '') lightyear.notify('新密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         if ($("input[name='confirmpwd']").val() == '') lightyear.notify('重复输入密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
