@@ -153,7 +153,6 @@ class AdminRole extends BaseModel
         $tree = $tree->checked(true);
         $tree = $tree->selected(true);
         $tree = $tree->expand(true);
-        $tree = $tree->disabled(true);
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
