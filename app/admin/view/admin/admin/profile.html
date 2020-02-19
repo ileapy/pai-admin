@@ -98,6 +98,7 @@
                     </div>
                     <hr>
                     <form method="post" action="#!" class="site-form">
+                        <input type="hidden" class="form-control" name="username" id="avatat" value="" disabled="disabled" />
                         <div class="form-group">
                             <label for="username">用户名</label>
                             <input type="text" class="form-control" name="username" id="username" value="lightyear" disabled="disabled" />
@@ -129,7 +130,6 @@
 <div class="modal fade" id="image-modal" aria-hidden="true" aria-labelledby="image-modal-label" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button class="close" data-dismiss="modal" type="button">&times;</button>
                 <h4 class="modal-title" id="image-modal-label">上传图片</h4>
@@ -177,11 +177,11 @@
                                     <span>1:1</span>
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="0.6666666666666666">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio4" value="0.6666666666666666">
                                     <span>2:3</span>
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="NaN" checked>
+                                    <input type="radio" name="aspectRatio" id="aspectRatio5" value="NaN" checked>
                                     <span>自适应</span>
                                 </label>
                             </div>
@@ -342,9 +342,9 @@
                 $loading;
 
             // ajax上传
-            $.ajax("http://example.itshubao.com/index/test/upload_base64", {
+            $.ajax("/admin/widget/baseToImage", {
                 type: 'post',
-                data: {"picdata" : base64Data},
+                data: {"image" : base64Data},
                 dataType: 'json',
                 beforeSend: function() {
                     _this.$uploadBtn.prop('disabled', true);
@@ -355,7 +355,8 @@
                 },
                 success: function(data) {
                     if ($.isPlainObject(data) && data.state === 200) {
-                        _this.$imageText.val(data.picurl);
+                        $("#avatar").val(data.data.src);
+                        _this.$imageText.val(data.data.src);
                         _this.stopCropper();
                     } else {
                         lightyear.notify(data.message, 'danger', 3000);
