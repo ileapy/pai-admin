@@ -112,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label for="tel">电话</label>
-                            <input type="text" class="form-control" name="tel" id="tel" placeholder="输入您的昵称" value="{$info.nickname}">
+                            <input type="text" class="form-control" name="tel" id="tel" placeholder="输入您的昵称" value="{$info.tel}">
                         </div>
                         <div class="form-group">
                             <label for="mail">邮箱</label>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="form-group">
                             <label for="remark">简介</label>
-                            <textarea class="form-control" name="remark" id="remark" rows="3"></textarea>
+                            <textarea class="form-control" name="remark" id="remark" rows="3">{$info.remark|'这家伙很懒，什么都没有。'}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">保存</button>
                     </form>
@@ -215,7 +215,7 @@
         else if ($("input[name='tel']").val() == '') lightyear.notify('电话不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         else if ($("input[name='mail']").val() == '') lightyear.notify('邮箱不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         else
-            $.post(url="/admin/admin.admin/changePwd",{"oldpwd":$("input[name='oldpwd']").val(),"newpwd":$("input[name='newpwd']").val()},function (res) {
+            $.post(url="/admin/admin.admin/changProfile",{"oldpwd":$("input[name='oldpwd']").val(),"newpwd":$("input[name='newpwd']").val()},function (res) {
                 if (res.status === 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                 else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
             });
