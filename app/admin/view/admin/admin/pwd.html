@@ -19,7 +19,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <form method="post" action="#!" class="site-form">
+                    <form class="site-form" id="changePwd">
                         <div class="form-group">
                             <label for="old-password">旧密码</label>
                             <input type="password" class="form-control" name="oldpwd" id="old-password" placeholder="输入账号的原登录密码">
@@ -43,5 +43,14 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script>
+    $("#changePwd").onsubmit(function () {
+        if ($("input[name='oldpwd']").val() == '') lightyear.notify('旧密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if ($("input[name='newpwd']").val() == '') lightyear.notify('新密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if ($("input[name='confirmpwd']").val() == '') lightyear.notify('重复输入密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        if ($("input[name='newpwd']").val() != $("input[name='confirmpwd']").val()) lightyear.notify('两次密码输入不正确', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        return false;
+    })
+</script>
 </body>
 </html>
