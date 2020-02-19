@@ -81,7 +81,6 @@
         }
     </style>
 </head>
-
 <body>
 <div class="container-fluid p-t-15">
     <div class="row">
@@ -89,7 +88,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="edit-avatar">
-                        <img src="__ADMIN_PATH__images/users/avatar.jpg" alt="..." class="img-avatar">
+                        <img src="{$info.avatar}" alt="{$info.name}" class="img-avatar">
                         <div class="avatar-divider"></div>
                         <div class="edit-avatar-content">
                             <button class="btn btn-default trigger-btn">修改头像</button>
@@ -97,19 +96,27 @@
                         </div>
                     </div>
                     <hr>
-                    <form method="post" action="#!" class="site-form">
-                        <input type="hidden" class="form-control" name="username" id="avatar" value=""/>
+                    <form class="site-form">
+                        <input type="hidden" class="form-control" name="username" id="avatar" value="{$info.avatar}"/>
                         <div class="form-group">
-                            <label for="username">用户名</label>
-                            <input type="text" class="form-control" name="username" id="username" value="lightyear" disabled="disabled" />
+                            <label for="name">用户名</label>
+                            <input type="text" class="form-control" name="name" id="name" value="{$info.name}" disabled="disabled" />
+                        </div>
+                        <div class="form-group">
+                            <label for="realname">真实姓名</label>
+                            <input type="text" class="form-control" name="realname" id="realname" value="{$info.realname}" disabled="disabled" />
                         </div>
                         <div class="form-group">
                             <label for="nickname">昵称</label>
-                            <input type="text" class="form-control" name="nickname" id="nickname" placeholder="输入您的昵称" value="笔下光年">
+                            <input type="text" class="form-control" name="nickname" id="nickname" value="{$info.nickname}" />
                         </div>
                         <div class="form-group">
-                            <label for="email">邮箱</label>
-                            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="请输入正确的邮箱地址" value="3331653644@qq.com">
+                            <label for="tel">电话</label>
+                            <input type="text" class="form-control" name="tel" id="tel" placeholder="输入您的昵称" value="{$info.nickname}">
+                        </div>
+                        <div class="form-group">
+                            <label for="mail">邮箱</label>
+                            <input type="email" class="form-control" name="mail" id="mail" aria-describedby="emailHelp" placeholder="请输入正确的邮箱地址" value="{$info.mail}">
                             <small id="emailHelp" class="form-text text-muted">请保证您填写的邮箱地址是正确的。</small>
                         </div>
                         <div class="form-group">
@@ -118,13 +125,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary">保存</button>
                     </form>
-
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
 <!--图片裁剪START-->
 <div class="modal fade" id="image-modal" aria-hidden="true" aria-labelledby="image-modal-label" role="dialog" tabindex="-1">
@@ -204,6 +208,9 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.lyear.loading.js"></script>
 <script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script>
+
+</script>
 <script>
     function cropImage()
     {
