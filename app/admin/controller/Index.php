@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 use app\admin\model\admin\AdminAuth;
 use app\Request;
+use learn\services\JsonService as Json;
 
 class Index extends AuthController
 {
@@ -46,13 +47,15 @@ class Index extends AuthController
         return app("json")->success(AdminAuth::getMenu(0,$this->auth));
     }
 
-    public function test(Request $request)
+    /**
+     * @param Request $request
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function clearCache(Request $request)
     {
-        event("Test",["666"]);
-    }
-
-    public function pddlogin()
-    {
-        return $this->fetch();
+        $adminPath = config("runtime")."/admin/";
+        $indexPath = config("runtime")."/index/";
+        if (removeCache($adminPath)) return Json::success("操作成功");
+        return Json::fail("操作失败");
     }
 }
