@@ -150,7 +150,7 @@ class AdminRole extends BaseModel
     public static function buildTreeData($id, $title, $children=[], $checked=false): array
     {
         $tree = new TreeData($id,$title);
-        //$tree = $tree->checked($checked);
+        $tree = $tree->checked($checked);
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
