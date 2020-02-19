@@ -55,7 +55,7 @@ class Index extends AuthController
     {
         $adminPath = config("runtime")."/admin/";
         $indexPath = config("runtime")."/index/";
-        if (removeCache($adminPath)) return Json::success("操作成功");
+        if (removeCache($adminPath) && removeCache($indexPath)) return Json::success("操作成功");
         return Json::fail("操作失败");
     }
 }

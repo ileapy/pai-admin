@@ -56,7 +56,7 @@ if (!function_exists('removeCache'))
                     $res = true;
                 }
             }
-        }
+        }else $res = true;
         return $res;
     }
 }
