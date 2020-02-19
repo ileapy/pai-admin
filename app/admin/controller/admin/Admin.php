@@ -206,11 +206,13 @@ class Admin extends AuthController
     public function changProfile(Request $request)
     {
         $data = Util::postMore([
-            ['oldpwd',''],
-            ['newpwd','']
+            ['nickname',''],
+            ['avatar',''],
+            ['tel',''],
+            ['mail',''],
+            ['remark','']
         ]);
-        if ($data['oldpwd'] == '' || $data['newpwd'] == '') return app("json")->fail("参数有误，新旧密码为空！");
-        if ($this->adminInfo['pwd'] == md5(md5($data['oldpwd']))) return aModel::update(['pwd'=>md5(md5($data['newpwd']))],['id'=>$this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
-        return app("json")->fail("密码不正确！");
+        if ($data['nickname'] == '' || $data['avatar'] == '' || $data['tel'] == '' || $data['mail'] == '') return app("json")->fail("必选项不能为空！");
+        return aModel::update(['nickname'=>$data['nickname'],'avatar'=>$data['avatar'],'tel'=>$data['tel'],'mail'=>$data['mail'],'remark'=>$data['remark']],['id'=>$this->adminId]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
