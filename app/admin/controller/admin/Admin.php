@@ -194,7 +194,7 @@ class Admin extends AuthController
      */
     public function profile()
     {
-        $this->assign("info",$this->adminInfo);
+        $this->assign("info",aModel::get($this->adminId));
         return $this->fetch();
     }
 
