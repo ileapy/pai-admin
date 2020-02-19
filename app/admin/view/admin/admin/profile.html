@@ -164,7 +164,7 @@
                         </div>
                         <div class="col-md-5 image-btns toggles-btns">
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-primary active">
+                                <label class="btn btn-primary">
                                     <input type="radio" name="aspectRatio" id="aspectRatio1" value="1.7777777777777777">
                                     <span>16:9</span>
                                 </label>
@@ -172,8 +172,8 @@
                                     <input type="radio" name="aspectRatio" id="aspectRatio2" value="1.3333333333333333">
                                     <span>4:3</span>
                                 </label>
-                                <label class="btn btn-primary">
-                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="1">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="1" checked>
                                     <span>1:1</span>
                                 </label>
                                 <label class="btn btn-primary">
@@ -181,7 +181,7 @@
                                     <span>2:3</span>
                                 </label>
                                 <label class="btn btn-primary">
-                                    <input type="radio" name="aspectRatio" id="aspectRatio5" value="NaN" checked>
+                                    <input type="radio" name="aspectRatio" id="aspectRatio5" value="NaN">
                                     <span>自适应</span>
                                 </label>
                             </div>
@@ -220,7 +220,7 @@
         this.$togglesBtns  = this.$imageModal.find('.toggles-btns');       // 比例切换按钮
         this.URL           = window.URL || window.webkitURL;
         this.$options      = {
-            aspectRatio: 16 / 9,
+            aspectRatio: 1 / 1,
             preview: '.image-preview'
         };                                                                 // 配置
         this.init();
