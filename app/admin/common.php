@@ -2,6 +2,7 @@
 
 use think\facade\Cache;
 
+
 if (!function_exists('unCamelize'))
 {
     /**
@@ -26,5 +27,31 @@ if (!function_exists('authIsExit'))
     function authIsExit(int $adminId): bool
     {
         return Cache::store('redis')->has('store_'.$adminId);
+    }
+}
+
+if (!function_exists('removeCache'))
+{
+    /**
+     * 判断授权信息是否存在
+     * @return bool
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    function removeCache(string $path): bool
+    {
+        $res = true;
+        if(is_dir($path)){
+            if ($handle = opendir($path)) {
+                while (false !== ($item = readdir($handle))) {
+                    if ($item != '.' && $item != '..') {
+                        if (is_dir($path . '/' . $item)) removeCache($path . '/' . $item);
+                        else unlink($path . '/' . $item);
+                    }
+                }
+                closedir($handle);
+                if (rmdir($path)) $res = true;
+            }
+        }
+        return $res;
     }
 }
