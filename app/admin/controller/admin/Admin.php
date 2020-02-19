@@ -159,4 +159,15 @@ class Admin extends AuthController
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         return aModel::del($id) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
+
+    /**
+     * 修改密码
+     * @param Request $request
+     * @return string
+     * @throws \Exception
+     */
+    public function pwd(Request $request)
+    {
+        return $this->fetch();
+    }
 }
