@@ -3,7 +3,6 @@
 
 namespace app\admin\controller\pinduoduo;
 
-
 use app\admin\controller\AuthController;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 use app\admin\model\pinduoduo\PinduoduoStore as sModel;
