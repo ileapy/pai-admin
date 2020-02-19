@@ -58,7 +58,7 @@ class AdminRole extends AuthController
 
     /**
      * 添加
-     * @param int $pid
+     * @param int $id
      * @return string
      * @throws FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
