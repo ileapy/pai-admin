@@ -2675,16 +2675,16 @@
         },
         {
             "name": "xaboy/form-builder",
-            "version": "2.0.11",
+            "version": "2.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xaboy/form-builder.git",
-                "reference": "a8a811da96e770d5232911eb323da907c5a92acd"
+                "reference": "a3bb4e4590c96b627cf8a2ea1193eb9e4519b482"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xaboy/form-builder/zipball/a8a811da96e770d5232911eb323da907c5a92acd",
-                "reference": "a8a811da96e770d5232911eb323da907c5a92acd",
+                "url": "https://api.github.com/repos/xaboy/form-builder/zipball/a3bb4e4590c96b627cf8a2ea1193eb9e4519b482",
+                "reference": "a3bb4e4590c96b627cf8a2ea1193eb9e4519b482",
                 "shasum": ""
             },
             "require": {
@@ -2719,7 +2719,7 @@
                 "form-generator",
                 "iview"
             ],
-            "time": "2020-01-16T06:48:04+00:00"
+            "time": "2020-02-12T17:14:49+00:00"
         },
         {
             "name": "yansongda/pay",
