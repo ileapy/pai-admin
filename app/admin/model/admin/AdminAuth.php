@@ -177,7 +177,7 @@ class AdminAuth extends BaseModel
     public static function getIds(array $ids = []):array
     {
         if (empty($ids)) return self::where("status",1)->column("id");
-        $pids = self::where("id",$ids)->column("pid");
+        $pids = self::where("id","in",$ids)->column("pid");
         return array_merge($ids,$pids) ?: [];
     }
 }
