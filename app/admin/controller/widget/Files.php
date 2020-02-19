@@ -30,7 +30,7 @@ class Files extends AuthController
             ['image','']
         ]);
         if ($data['image'] == '') return app("json")->fail("上传失败,没有文件");
-        $path = "/upload/image/".date("Ymd").'/';
+        $path = "upload/image/".date("Ymd").'/';
         var_dump($path);
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $data['image'], $result)){
             $type = $result[2];
