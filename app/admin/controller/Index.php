@@ -5,7 +5,6 @@ namespace app\admin\controller;
 
 use app\admin\model\admin\AdminAuth;
 use app\Request;
-use learn\services\JsonService as Json;
 
 class Index extends AuthController
 {
@@ -56,8 +55,7 @@ class Index extends AuthController
     {
         $adminPath = config("cache.runtime")."/admin/";
         $indexPath = config("cache.runtime")."/index/";
-        var_dump(removeCache($adminPath) && removeCache($indexPath));
-        if (removeCache($adminPath) && removeCache($indexPath)) app("json")->success("操作成功");
+        if (removeCache($adminPath) && removeCache($indexPath)) return app("json")->success("操作成功");
         return app("json")->fail("操作失败");
     }
 }
