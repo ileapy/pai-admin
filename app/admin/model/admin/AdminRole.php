@@ -144,13 +144,11 @@ class AdminRole extends BaseModel
      * 生成单个节点
      * @param $id
      * @param $title
-     * @param bool $checked
      * @return array
      */
-    public static function buildTreeData($id, $title, $children=[], $checked=false): array
+    public static function buildTreeData($id, $title, $children=[]): array
     {
         $tree = new TreeData($id,$title);
-        $tree = $tree->checked($checked);
         if (!empty($children)) $tree = $tree->children($children);
         return $tree->getOption();
     }
