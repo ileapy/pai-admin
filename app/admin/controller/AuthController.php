@@ -105,7 +105,7 @@ abstract class AuthController extends SystemBasic
         if (!self::isActive()) exit($this->failedNotice(lang("未登录"),"/admin/login/login"));
         // 权限验证
         if ($this->nowAuthId == -1 || in_array($this->nowAuthId,$this->auth)) return true;
-        exit($this->failed('没有权限访问!'));
+        exit($this->failed(lang('没有权限访问!')));
     }
 
     /**
