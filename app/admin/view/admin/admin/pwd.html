@@ -51,6 +51,10 @@
         if ($("input[name='newpwd']").val() == '') return lightyear.notify('新密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         if ($("input[name='confirmpwd']").val() == '') return lightyear.notify('重复输入密码为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         if ($("input[name='newpwd']").val() != $("input[name='confirmpwd']").val()) return lightyear.notify('两次密码输入不正确', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.post(url="/admin/admin.admin/changePwd",{"oldpwd":$("input[name='oldpwd']").val(),"newpwd":$("input[name='newpwd']").val()},function (res) {
+            if (res.status === 200) lightyear.notify('清理成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+            else lightyear.notify('清理失败', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        });
         return false;
     })
 </script>
