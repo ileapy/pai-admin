@@ -236,9 +236,8 @@
                     btnClass: 'btn-primary',
                     action: function(){
                         $.post(url="/admin/index/clearCache",[],function (res) {
-                            console.log(res);
-                            if (res.code == 200) {parent.lightyear.notify('清理成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$(".tree-table").bootstrapTable('refresh');}
-                            else parent.lightyear.notify('清理失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            if (res.code === 200) lightyear.notify('清理成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            else lightyear.notify('清理失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                         });
                     }
                 },
