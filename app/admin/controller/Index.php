@@ -49,13 +49,14 @@ class Index extends AuthController
 
     /**
      * @param Request $request
+     * @return
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function clearCache(Request $request)
     {
         $adminPath = config("cache.runtime")."/admin/";
         $indexPath = config("cache.runtime")."/index/";
-        if (removeCache($adminPath) && removeCache($indexPath)) return Json::success("操作成功");
-        return Json::fail("操作失败");
+        if (removeCache($adminPath) && removeCache($indexPath)) app("json")->success("操作成功");
+        return app("json")->fail("操作失败");
     }
 }
