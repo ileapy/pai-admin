@@ -146,7 +146,6 @@ class AdminAuth extends BaseModel
      * 生成treeData
      * @param int $pid
      * @param array $auth
-     * @param array $checkedAuth
      * @param array $list
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -164,7 +163,7 @@ class AdminAuth extends BaseModel
         $data = $model->select();
         foreach ($data as $k => $v)
         {
-            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],self::selectAndBuildTree($v['id'],$auth));
+            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],self::selectAndBuildTree($v['id'],$auth),$v['id']==2);
         }
         return $list;
     }
