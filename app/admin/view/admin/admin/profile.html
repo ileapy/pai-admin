@@ -125,7 +125,78 @@
     </div>
 
 </div>
+<!--图片裁剪START-->
+<div class="modal fade" id="image-modal" aria-hidden="true" aria-labelledby="image-modal-label" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">&times;</button>
+                <h4 class="modal-title" id="image-modal-label">上传图片</h4>
+            </div>
+            <div class="modal-body">
+                <div class="image-body">
+                    <div class="image-upload m-b-15">
+                        <button class="btn btn-primary" type="button" onclick="$('input[id=imageInput]').click();">请选择图片</button>
+                        <span class="image-name"></span>
+                        <input type="file" class="image-input hide" id="imageInput" name="file" accept=".jpg,.jpeg,.png,.gif,.bmp,.tiff">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 m-b-15">
+                            <div class="image-wrapper"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="image-previews clearfix">
+                                <div class="image-preview preview-lg"></div>
+                                <div class="image-preview preview-md"></div>
+                                <div class="image-preview preview-sm"></div>
+                                <div class="image-preview preview-xs"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 image-btns">
+                            <button class="btn btn-primary mdi mdi-rotate-left" data-method="rotate" data-option="-45" type="button" title="向左旋转-45度"></button>
+                            <button class="btn btn-primary mdi mdi-rotate-right" data-method="rotate" data-option="45" type="button" title="向右旋转45度"></button>
+                            <button type="button" class="btn btn-primary mdi mdi-magnify-plus-outline" data-method="zoom" data-option="0.1" title="放大图片"></button>
+                            <button type="button" class="btn btn-primary mdi mdi-magnify-minus-outline" data-method="zoom" data-option="-0.1" title="缩小图片"></button>
+                            <button type="button" class="btn btn-primary mdi mdi-cached" data-method="reset" title="重置图片"></button>
+                        </div>
+                        <div class="col-md-5 image-btns toggles-btns">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-primary active">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio1" value="1.7777777777777777" checked>
+                                    <span>16:9</span>
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio2" value="1.3333333333333333">
+                                    <span>4:3</span>
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="1">
+                                    <span>1:1</span>
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="0.6666666666666666">
+                                    <span>2:3</span>
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input type="radio" name="aspectRatio" id="aspectRatio3" value="NaN">
+                                    <span>自适应</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary btn-block upload-btn mdi mdi-content-save" type="submit">保存修改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--图片裁剪END-->
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
