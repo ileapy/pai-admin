@@ -31,6 +31,7 @@ class Files extends AuthController
         ]);
         if ($data['image'] == '') return app("json")->fail("上传失败,没有文件");
         $path = "/upload/image/".date("Ymd").'/';
+        var_dump($path);
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $data['image'], $result)){
             $type = $result[2];
             if(!file_exists($path)) mkdir($path, 0755,true);
