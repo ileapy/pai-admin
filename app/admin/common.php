@@ -44,17 +44,12 @@ if (!function_exists('removeCache'))
             if ($handle = opendir($path)) {
                 while (false !== ($item = readdir($handle))) {
                     if ($item != '.' && $item != '..') {
-                        if (is_dir($path . '/' . $item)) {
-                            removeCache($path . '/' . $item);
-                        } else {
-                            unlink($path . '/' . $item);
-                        }
+                        if (is_dir($path . '/' . $item)) removeCache($path . '/' . $item);
+                        else unlink($path . '/' . $item);
                     }
                 }
                 closedir($handle);
-                if (rmdir($path)) {
-                    $res = true;
-                }
+                if (rmdir($path)) $res = true;
             }
         }
         return $res;
