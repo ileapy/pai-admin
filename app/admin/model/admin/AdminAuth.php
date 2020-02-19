@@ -163,7 +163,7 @@ class AdminAuth extends BaseModel
         $data = $model->select();
         foreach ($data as $k => $v)
         {
-            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],self::selectAndBuildTree($v['id'],$auth),$v['id']==2);
+            $list[] = AdminRole::buildTreeData($v['id'],$v['name'],self::selectAndBuildTree($v['id'],$auth),true);
         }
         return $list;
     }
