@@ -209,7 +209,18 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.lyear.loading.js"></script>
 <script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script>
-
+    $(".site-form").submit(function () {
+        if ($("input[name='nickname']").val() == '') lightyear.notify('昵称不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        else if ($("input[name='avatar']").val() == '') lightyear.notify('头像不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        else if ($("input[name='tel']").val() == '') lightyear.notify('电话不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        else if ($("input[name='mail']").val() == '') lightyear.notify('邮箱不能为空', 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        else
+            $.post(url="/admin/admin.admin/changePwd",{"oldpwd":$("input[name='oldpwd']").val(),"newpwd":$("input[name='newpwd']").val()},function (res) {
+                if (res.status === 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+            });
+        return false;
+    })
 </script>
 <script>
     function cropImage()
