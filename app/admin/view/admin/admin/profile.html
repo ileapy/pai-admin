@@ -262,7 +262,7 @@
             // 如果已有图片地址，初始化图片预览区域
             this.$imagePreview.empty();
             var url = this.$imageText.val();
-            (url.length > 0) && this.$imagePreview.html('<img src="' + url + '">');
+            if(url != "") (url.length > 0) && this.$imagePreview.html('<img src="' + url + '">');
         },
         change: function() {
             // 选择图片
