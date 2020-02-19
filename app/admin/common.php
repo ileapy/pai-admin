@@ -39,7 +39,7 @@ if (!function_exists('removeCache'))
      */
     function removeCache(string $path): bool
     {
-        $res = false;
+        $res = true;
         if(is_dir($path)){
             if ($handle = opendir($path)) {
                 while (false !== ($item = readdir($handle))) {
@@ -56,7 +56,7 @@ if (!function_exists('removeCache'))
                     $res = true;
                 }
             }
-        }else $res = true;
+        }
         return $res;
     }
 }
