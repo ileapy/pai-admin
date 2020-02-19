@@ -121,7 +121,7 @@
                         </div>
                         <div class="form-group">
                             <label for="remark">简介</label>
-                            <textarea class="form-control" name="remark" id="remark" rows="3">{$info.remark?:'这家伙很懒，什么都没有。'}</textarea>
+                            <textarea class="form-control" name="remark" id="remark" rows="3">{$info.remark|default="这家伙很懒，什么也没留下"}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">保存</button>
                     </form>
