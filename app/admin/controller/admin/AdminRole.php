@@ -97,7 +97,7 @@ class AdminRole extends AuthController
         if ($data['name'] == "") return app("json")->fail("角色名称不能为空");
         if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
         if ($data['auth'] == "") return app("json")->fail("权限不能为空");
-        $data['auth'] = implode(",",$data['auth']);
+        $data['auth'] = aModel::getIds(implode(",",$data['auth']));
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;

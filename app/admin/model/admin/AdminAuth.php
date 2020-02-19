@@ -171,10 +171,13 @@ class AdminAuth extends BaseModel
 
     /**
      * 获取所有权限id
+     * @param array $ids
      * @return array
      */
-    public static function getIds():array
+    public static function getIds(array $ids = []):array
     {
-        return self::where("status",1)->column("id");
+        if (empty($ids)) return self::where("status",1)->column("id");
+        $pids = self::where("id",$ids)->column("pid");
+        return array_merge($ids,$pids) ?: [];
     }
 }
