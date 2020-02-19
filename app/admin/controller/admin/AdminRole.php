@@ -76,7 +76,7 @@ class AdminRole extends AuthController
         $form[] = Elm::tree('auth','选择权限',explode(",",$rinfo['auth']))->data(aModel::selectAndBuildTree(0,aModel::getIds()))
             ->type("checked")
             ->showCheckbox(true)->col(18);
-        var_dump(Elm::tree('auth','选择权限',explode(",",$rinfo['auth']))->data(aModel::selectAndBuildTree(0,aModel::getIds()))
+        var_dump(Elm::tree('auth','选择权限')->data(aModel::selectAndBuildTree(0,aModel::getIds()))
             ->type("checked")
             ->showCheckbox(true)->getValue());
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
