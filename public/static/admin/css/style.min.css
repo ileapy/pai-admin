@@ -4410,6 +4410,7 @@ body[data-theme='translucent'] {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 .notifications-menu > .dropdown-menu > li .menu > li > a:hover {
     background-color: #f9fafb;
