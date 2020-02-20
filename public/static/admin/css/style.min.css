@@ -4399,7 +4399,7 @@ body[data-theme='translucent'] {
     margin: 0;
     padding: 0;
     list-style: none;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 .notifications-menu > .dropdown-menu > li .menu > li > a {
     display: block;
