@@ -27,6 +27,10 @@ class Login extends AuthController
 
     /**
      * 验证登录
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function verify()
     {
@@ -62,6 +66,7 @@ class Login extends AuthController
     /**
      * 退出登陆
      * @return mixed
+     * @throws \Exception
      */
     public function logout()
     {
