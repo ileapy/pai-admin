@@ -4366,3 +4366,55 @@ body[data-theme='translucent'] {
 [data-sidebarbg*='color_'] .nav-drawer > .active > a:active {
     border-color: rgba(255, 255, 255, .35);
 }
+
+.icon-notifications {
+    display: block;
+    height: 68px;
+    line-height: 68px;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0 12px;
+    text-align: center;
+}
+.icon-notifications  > .label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+.notifications-menu > .dropdown-menu {
+    border: none;
+    width: 280px;
+    padding-bottom: 0px;
+}
+.notifications-menu > .dropdown-menu > li.header {
+    padding: 7px 10px;
+    border-bottom: 1px solid #f1f2f3;
+}
+.notifications-menu > .dropdown-menu > li .menu {
+    max-height: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: hidden;
+}
+.notifications-menu > .dropdown-menu > li .menu > li > a {
+    display: block;
+    padding: 10px;
+    border-bottom: 1px solid #f1f2f3;
+    color: #4d5259;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.notifications-menu > .dropdown-menu > li .menu > li > a:hover {
+    background-color: #f9fafb;
+}
+@media screen and (max-width: 500px) {
+    .notifications-menu > .dropdown-menu.dropdown-menu-right {
+        right: -160px!important;
+    }
+}
