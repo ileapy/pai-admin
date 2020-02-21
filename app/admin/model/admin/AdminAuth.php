@@ -179,4 +179,16 @@ class AdminAuth extends BaseModel
         $pids = self::where("id","in",$ids)->column("pid");
         return array_merge($ids,$pids) ?: [];
     }
+
+    /**
+     * 获取操作名
+     * @param string $module
+     * @param string $controller
+     * @param string $action
+     * @return string
+     */
+    public static function getNameByAction(string $module, string $controller, string $action)
+    {
+        return self::where("module",$module)->where("controller",$controller)->where("action",$action)->value("name") ?: '未知操作';
+    }
 }

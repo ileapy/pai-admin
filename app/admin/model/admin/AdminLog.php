@@ -46,6 +46,8 @@ class AdminLog extends BaseModel
     {
         $model = new self;
         $model = $model->order("id desc");
-        return $model->paginate(10);
+        return $model->paginate(10)->each(function ($item){
+            $item['name'] = AdminAuth::getNameByAction($item['module'],$item['controller'],$item['action']);
+        });
     }
 }
