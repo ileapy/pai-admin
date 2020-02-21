@@ -4,7 +4,7 @@
 namespace app\admin\controller;
 
 
-class TemplateTrait
+trait TemplateTrait
 {
 
 }
