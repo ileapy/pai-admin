@@ -149,7 +149,7 @@ class AdminRole extends BaseModel
     public static function buildTreeData($id, $title, $children=[]): array
     {
         $tree = Elm::TreeData($id,$title);
-        if (!empty($children)) $tree = $tree->children($children)->checked(true);
-        return $tree->getOption();
+        if (!empty($children)) $tree = $tree->children($children);
+        return $tree->checked(true)->getOption();
     }
 }
