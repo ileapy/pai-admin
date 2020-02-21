@@ -273,7 +273,7 @@
                     btnClass: 'btn-primary',
                     action: function(){
                         $.post(url="/admin/index/clearCache",[],function (res) {
-                            if (!Array.isArray(res)) res = jQuery.parseJSON(res);
+                            //if (!Array.isArray(res)) res = jQuery.parseJSON(res);
                             if (res.status === 200 || res.code === 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         });
