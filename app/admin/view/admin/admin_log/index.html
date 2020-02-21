@@ -23,9 +23,10 @@
                     <form class="pull-right search-bar" method="get" action="#!" role="form">
                         <div class="input-group">
                             <div class="input-group-btn">
-                                <ul class="dropdown-menu">
-                                    <li> <a tabindex="-1" href="javascript:void(0)" data-field="admin_name">操作人</a> </li>
-                                </ul>
+                                <input type="hidden" name="search_field" id="search-field" value="admin_name">
+                                <button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">
+                                    操作人 <span class="caret"></span>
+                                </button>
                             </div>
                             <input type="text" class="form-control" value="" name="keyword" placeholder="请输入操作人">
                         </div>
