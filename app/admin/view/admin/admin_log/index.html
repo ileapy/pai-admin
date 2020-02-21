@@ -40,7 +40,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -60,43 +59,31 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    <label class="lyear-checkbox checkbox-primary">
-                                        <input type="checkbox" name="ids[]" value="1"><span></span>
-                                    </label>
-                                </td>
-                                <td>1</td>
-                                <td>第01章 天涯思君不可忘</td>
-                                <td>《倚天屠龙记》</td>
-                                <td>金庸</td>
-                                <td>36</td>
-                                <td><font class="text-success">正常</font></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
-                                        <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
+                            <volist name='list' id='item'>
+                                <tr>
+                                    <td>
+                                        <label class="lyear-checkbox checkbox-primary">
+                                            <input type="checkbox" name="ids[]" value="{$item.id}"><span></span>
+                                        </label>
+                                    </td>
+                                    <td>1</td>
+                                    <td>第01章 天涯思君不可忘</td>
+                                    <td>《倚天屠龙记》</td>
+                                    <td>金庸</td>
+                                    <td>36</td>
+                                    <td><font class="text-success">正常</font></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                                            <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
                             </tbody>
                         </table>
                     </div>
-                    <ul class="pagination">
-                        <li class="disabled"><span>«</span></li>
-                        <li class="active"><span>1</span></li>
-                        <li><a href="#1">2</a></li>
-                        <li><a href="#1">3</a></li>
-                        <li><a href="#1">4</a></li>
-                        <li><a href="#1">5</a></li>
-                        <li><a href="#1">6</a></li>
-                        <li><a href="#1">7</a></li>
-                        <li><a href="#1">8</a></li>
-                        <li class="disabled"><span>...</span></li>
-                        <li><a href="#!">14452</a></li>
-                        <li><a href="#!">14453</a></li>
-                        <li><a href="#!">»</a></li>
-                    </ul>
+                    {$list|raw}
                 </div>
             </div>
         </div>

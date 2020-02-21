@@ -35,4 +35,17 @@ class AdminLog extends BaseModel
             'user_agent'     => substr(request()->server('HTTP_USER_AGENT'), 0, 255),
         ]) ? true : false;
     }
+
+    /**
+     * 日志列表
+     * @param $where
+     * @return \think\Paginator
+     * @throws \think\db\exception\DbException
+     */
+    public static function systemPage($where)
+    {
+        $model = new self;
+        $model = $model->order("id desc");
+        return $model->paginate(10);
+    }
 }
