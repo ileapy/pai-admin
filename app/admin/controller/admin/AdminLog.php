@@ -30,6 +30,7 @@ class AdminLog extends AuthController
             ['search_field',''],
             ['keyword','']
         ]);
+        $this->assign("where",$where);
         $this->assign("list",lModel::systemPage($where));
         return $this->fetch();
     }
