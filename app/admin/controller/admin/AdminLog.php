@@ -27,7 +27,8 @@ class AdminLog extends AuthController
     public function index(Request $request)
     {
         $where = Util::postMore([
-            ['page',1]
+            ['search_field',''],
+            ['keyword','']
         ]);
         $this->assign("list",lModel::systemPage($where));
         return $this->fetch();

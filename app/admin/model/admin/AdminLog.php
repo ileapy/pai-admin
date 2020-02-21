@@ -46,6 +46,7 @@ class AdminLog extends BaseModel
     {
         $model = new self;
         $model = $model->order("id desc");
+        if ($where['search_field'] != '' || $where['keyword'] != '') $model = $model->where($where['search_field'],$where['keyword']);
         return $model->paginate(10)->each(function ($item){
             $item['name'] = AdminAuth::getNameByAction($item['module'],$item['controller'],$item['action']);
         });
