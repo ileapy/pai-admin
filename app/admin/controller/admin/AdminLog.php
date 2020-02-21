@@ -31,7 +31,7 @@ class AdminLog extends AuthController
             ['keyword','']
         ]);
         $this->assign("where",$where);
-        $this->assign("list",lModel::systemPage($where));
+        $this->assign("list",lModel::systemPage($where)->appends($where));
         return $this->fetch();
     }
 }
