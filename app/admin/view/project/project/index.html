@@ -101,34 +101,30 @@
             checkbox: true    // 是否显示复选框
         }, {
             field: 'id',
-            title: 'ID',
+            title: '项目ID',
             sortable: true    // 是否排序
         }, {
             field: 'name',
-            title: '账号'
+            title: '项目名称'
         }, {
-            field: 'nickname',
-            title: '昵称',
+            field: 'intro',
+            title: '项目简介',
         }, {
-            field: 'avatar',
-            title: '头像',
-            formatter:function (value,row,index) {
-                return '<img src="'+value+'" style="width: 64px;"/>';
-            },
+            field: 'manager',
+            title: '项目负责人'
         }, {
-            field: 'role_id',
-            title: '角色类型'
+            field: 'start_time',
+            title: '开始时间'
         }, {
-            field: 'tel',
-            title: '电话'
-        }, {
-            field: 'mail',
-            title: '邮箱'
+            field: 'end_time',
+            title: '结束时间'
         }, {
             field: 'create_time',
             title: '创建时间'
-        }
-            , {
+        },{
+            field: 'remark',
+            title: '备注'
+        }, {
                 field: 'status',
                 title: '状态',
                 formatter:function (value,row,index) {
