@@ -125,12 +125,12 @@ class project extends AuthController
         {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
-            $res = aModel::insert($data);
+            $res = pModel::insert($data);
         }else
         {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = aModel::update($data,['id'=>$id]);
+            $res = pModel::update($data,['id'=>$id]);
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }
