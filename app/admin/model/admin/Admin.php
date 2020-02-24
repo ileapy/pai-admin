@@ -81,7 +81,7 @@ class Admin extends BaseModel
         if ($where['status'] != '') $model = $model->where("status",$where['status']);
         if ($where['role_id'] != '') $model = $model->where("role_id",$where['role_id']);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
-        $count = self::count($model);
+        $count = self::counts($model);
         $data = $model->select()->each(function ($item){
             // 用户信息
             $info = self::getAdminInfoById($item['create_user']);
@@ -108,15 +108,5 @@ class Admin extends BaseModel
         $model = $model->field($field);
         $info = $model->find();
         return $info ? $info->toArray() : [];
-    }
-
-    /**
-     * 数据量
-     * @param string|\think\db\Raw $model
-     * @return int
-     */
-    public static function count($model): int
-    {
-        return $model->count();
     }
 }
