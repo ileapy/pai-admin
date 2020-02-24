@@ -4,7 +4,9 @@
 namespace app\admin\controller;
 
 use app\admin\model\admin\AdminAuth;
+use app\admin\model\project\project;
 use app\Request;
+use learn\services\UtilService as Util;
 
 class Index extends AuthController
 {
@@ -32,6 +34,11 @@ class Index extends AuthController
      */
     public function main()
     {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',20],
+        ]);
+        $this->assign("project",project::lst($where));
         return $this->fetch();
     }
 
