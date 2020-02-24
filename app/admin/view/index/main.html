@@ -113,18 +113,28 @@
                 </tr>
               </thead>
               <tbody>
+              {volist name='project' id='vo'}
                 <tr>
-                  <td>1</td>
-                  <td>设计新主题</td>
-                  <td>10/02/2019</td>
-                  <td>12/05/2019</td>
-                  <td><span class="label label-warning">待定</span></td>
+                  <td>{$vo.id}</td>
+                  <td>{$vo.name}</td>
+                  <td>{$vo.start_time|date="Y-m-d H:i:s"}</td>
+                  <td>{$vo.end_time|date="Y-m-d H:i:s"}</td>
+                  {switch $vo.status }
+                  {case 0}未开始{/case}
+                  {case 1}进行中{/case}
+                  {case 2}已完成{/case}
+                  {case 3}维护中{/case}
+                  {case 4}已终止{/case}
+                  {default /}未开始
+                  {/switch}
+                  <td><span class="label label-warning">进度</span></td>
                   <td>
                     <div class="progress progress-striped progress-sm">
-                      <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
+                      <div class="progress-bar progress-bar-success" style="width: 45%;"></div>
                     </div>
                   </td>
                 </tr>
+              {/volist}
               </tbody>
             </table>
           </div>
