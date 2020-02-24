@@ -58,7 +58,7 @@ class project extends AuthController
             return $menus;
         })->col(10);
         $form[] = Elm::textarea('intro','项目简介')->col(24);
-        $form[] = Elm::dateTimeRange('start_time','开始时间')->col(24);
+        $form[] = Elm::dateTimeRange('start_time','开始时间')->col(10);
         $form[] = Elm::input('sql_ip','数据库IP')->col(10);
         $form[] = Elm::input('sql_name','数据库账号')->col(10);
         $form[] = Elm::password('sql_password','数据库密码')->col(10);
@@ -89,7 +89,7 @@ class project extends AuthController
             return $menus;
         })->col(10);
         $form[] = Elm::textarea('intro','项目简介',$info['intro'])->col(24);
-        $form[] = Elm::dateTimeRange('start_time','开始时间',$info['start_time'],$info['end_time'])->col(24);
+        $form[] = Elm::dateTimeRange('start_time','开始时间',$info['start_time'],$info['end_time'])->col(10);
         $form[] = Elm::input('sql_ip','数据库IP',$info['sql_ip'])->col(10);
         $form[] = Elm::input('sql_name','数据库账号',$info['sql_name'])->col(10);
         $form[] = Elm::password('sql_password','数据库密码',$info['sql_password'])->col(10);
