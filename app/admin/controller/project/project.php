@@ -33,6 +33,6 @@ class project extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return app("json")->success(Pmodel::lst($where));
+        return Json::successlayui(Pmodel::lst($where));
     }
 }
