@@ -38,6 +38,7 @@ class Index extends AuthController
             ['page',1],
             ['limit',20],
         ]);
+        var_dump(project::lst($where));
         $this->assign("project",project::lst($where));
         return $this->fetch();
     }
