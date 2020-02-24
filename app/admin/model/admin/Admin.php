@@ -109,4 +109,20 @@ class Admin extends BaseModel
         $info = $model->find();
         return $info ? $info->toArray() : [];
     }
+
+    /**
+     * 人员列表
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function lst()
+    {
+        $model = new self;
+        $model = $model->where("status",1);
+        $model = $model->field("id,realname");
+        $data = $model->select();
+        return $data ? $data->toArray() : [];
+    }
 }
