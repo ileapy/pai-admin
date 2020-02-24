@@ -325,4 +325,14 @@ trait ModelTrait
     {
         return $model == null ? (new self()) : $model;
     }
+
+    /**
+     * 数据个数
+     * @param string|\think\db\Raw $model
+     * @return int
+     */
+    public static function counts($model): int
+    {
+        return $model->count();
+    }
 }
