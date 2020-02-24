@@ -59,10 +59,10 @@ class project extends AuthController
         })->col(10);
         $form[] = Elm::textarea('intro','项目简介')->col(24);
         $form[] = Elm::dateTimeRange('start_time','开始时间')->col(10);
-        $form[] = Elm::textarea('intro','项目备注')->col(24);
         $form[] = Elm::input('sql_ip','数据库IP')->col(10);
         $form[] = Elm::input('sql_name','数据库账号')->col(10);
         $form[] = Elm::password('sql_password','数据库密码')->col(10);
+        $form[] = Elm::textarea('remark','项目备注')->col(24);
         $form[] = Elm::radio('status','状态',0)->options([['label'=>'未开始','value'=>0],['label'=>'进行中','value'=>1],['label'=>'已完成','value'=>2],['label'=>'维护中','value'=>3],['label'=>'以终止','value'=>4]])->col(10);
         return Form::make_post_form($form, url('save')->build());
     }
@@ -90,10 +90,10 @@ class project extends AuthController
         })->col(10);
         $form[] = Elm::textarea('intro','项目简介',$info['intro'])->col(24);
         $form[] = Elm::dateTimeRange('start_time','开始时间',$info['start_time'],$info['end_time'])->col(10);
-        $form[] = Elm::textarea('intro','项目备注',$info['intro'])->col(24);
         $form[] = Elm::input('sql_ip','数据库IP',$info['sql_ip'])->col(10);
         $form[] = Elm::input('sql_name','数据库账号',$info['sql_name'])->col(10);
         $form[] = Elm::password('sql_password','数据库密码',$info['sql_password'])->col(10);
+        $form[] = Elm::textarea('remark','项目备注',$info['intro'])->col(24);
         $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'未开始','value'=>0],['label'=>'进行中','value'=>1],['label'=>'已完成','value'=>2],['label'=>'维护中','value'=>3],['label'=>'以终止','value'=>4]])->col(10);
         return Form::make_post_form($form, url('save')->build());
     }
