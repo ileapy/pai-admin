@@ -97,4 +97,41 @@ class project extends AuthController
         $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'未开始','value'=>0],['label'=>'进行中','value'=>1],['label'=>'已完成','value'=>2],['label'=>'维护中','value'=>3],['label'=>'以终止','value'=>4]])->col(24);
         return Form::make_post_form($form, url('save')->build());
     }
+
+    /**
+     * 保存修改
+     * @param string $id
+     * @return mixed
+     */
+    public function save($id="")
+    {
+        $data = Util::postMore([
+            ['name',''],
+            ['manager',''],
+            ['intro',''],
+            ['start_time',''],
+            ['sql_ip',''],
+            ['sql_name',''],
+            ['sql_password',''],
+            ['remark',''],
+            ['status','']
+        ]);
+        if ($data['name'] == "") return app("json")->fail("项目名称不能为空");
+        if ($data['manager'] == "") return app("json")->fail("项目管理员不能为空");
+        if ($data['start_time'] == "") return app("json")->fail("项目起始时间不能为空");
+        $data['end_time'] = $data['start_time'][1];
+        $data['start_time'] = $data['start_time'][0];
+        if ($id=="")
+        {
+            $data['create_user'] = $this->adminId;
+            $data['create_time'] = time();
+            $res = aModel::insert($data);
+        }else
+        {
+            $data['update_user'] = $this->adminId;
+            $data['update_time'] = time();
+            $res = aModel::update($data,['id'=>$id]);
+        }
+        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+    }
 }
