@@ -95,7 +95,7 @@ class project extends AuthController
         $form[] = Elm::password('sql_password','数据库密码',$info['sql_password'])->col(10);
         $form[] = Elm::textarea('remark','项目备注',$info['remark'])->col(24);
         $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'未开始','value'=>0],['label'=>'进行中','value'=>1],['label'=>'已完成','value'=>2],['label'=>'维护中','value'=>3],['label'=>'以终止','value'=>4]])->col(24);
-        return Form::make_post_form($form, url('save')->build());
+        return Form::make_post_form($form, url('save',["id"=>$id])->build());
     }
 
     /**
