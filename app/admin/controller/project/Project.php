@@ -115,6 +115,7 @@ class project extends AuthController
             ['name',''],
             ['manager',''],
             ['intro',''],
+            ['language',''],
             ['start_time',''],
             ['sql_ip',''],
             ['sql_name',''],
