@@ -154,10 +154,8 @@ class AdminAuth extends BaseModel
      */
     public static function selectAndBuildTree(int $pid = 0, array $auth = [], array $list = [])
     {
-        var_dump($auth);
         $model = new self;
         $model = $model->where("pid",$pid);
-        if (!is_array($auth)) $auth = implode(",",$auth);
         if ($auth != []) $model = $model->where("id",'in',$auth);
         $model = $model->where("status",1);
         $model = $model->field(['name','id']);
