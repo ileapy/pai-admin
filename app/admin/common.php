@@ -55,3 +55,25 @@ if (!function_exists('removeCache'))
         return $res;
     }
 }
+
+if (!function_exists('languageOptions'))
+{
+    /**
+     * 判断授权信息是否存在
+     * @return array
+     */
+    function languageOptions(): array
+    {
+        $menus[] = ['value'=>"PHP",'label'=>"PHP"];
+        $menus[] = ['value'=>"PYTHON",'label'=>"PYTHON"];
+        $menus[] = ['value'=>"C#",'label'=>"C#"];
+        $menus[] = ['value'=>"小程序",'label'=>"小程序"];
+        $menus[] = ['value'=>"HTML",'label'=>"HTML"];
+        $menus[] = ['value'=>"JAVASCRIPT",'label'=>"JAVASCRIPT"];
+        $menus[] = ['value'=>"MYSQL",'label'=>"MYSQL"];
+        $menus[] = ['value'=>"JQUERY",'label'=>"JQUERY"];
+        $menus[] = ['value'=>"C语言",'label'=>"C语言"];
+        $menus[] = ['value'=>"C++",'label'=>"C++"];
+        return $menus;
+    }
+}
