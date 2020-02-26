@@ -59,7 +59,7 @@ if (!function_exists('removeCache'))
 if (!function_exists('languageOptions'))
 {
     /**
-     * 判断授权信息是否存在
+     * 获取编程语言列表
      * @return array
      */
     function languageOptions(): array
@@ -74,5 +74,18 @@ if (!function_exists('languageOptions'))
         $menus[] = ['value'=>"C语言",'label'=>"C语言"];
         $menus[] = ['value'=>"C++",'label'=>"C++"];
         return $menus;
+    }
+}
+
+if (!function_exists('toIntArray'))
+{
+    /**
+     * 字符串数组转int数组
+     * @return array
+     */
+    function toIntArray(array $str): array
+    {
+        foreach ($str as $k=>$v) $str[$k] = (int)$v;
+        return $str;
     }
 }
