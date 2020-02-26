@@ -48,7 +48,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::treeChecked('auth','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds()))->col(18);
+        $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds()))->col(18);
         $form[] = Elm::number('rank','排序')->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save')->build());
@@ -71,7 +71,7 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称',$rinfo['name'])->col(18);
-        $form[] = Elm::treeChecked('auth','选择权限',toIntArray(explode(",",$rinfo['auth'])))->data(aModel::selectAndBuildTree(0,aModel::getIds()))->col(18);
+        $form[] = Elm::treeChecked('tree_data','选择权限',toIntArray(explode(",",$rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0,aModel::getIds()))->col(18);
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
         $form[] = Elm::radio('status','状态',$rinfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save',['id'=>$id])->build());
@@ -86,14 +86,15 @@ class AdminRole extends AuthController
         $data = Util::postMore([
             ['name',''],
             ['pid',0],
-            ['auth',''],
+            ['tree_data',''],
             ['rank',0],
             ['status',1]
         ]);
         if ($data['name'] == "") return app("json")->fail("角色名称不能为空");
         if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
-        if ($data['auth'] == "") return app("json")->fail("权限不能为空");
-        $data['auth'] = aModel::getIds($data['auth']);
+        if ($data['tree_data'] == "") return app("json")->fail("权限不能为空");
+        $data['tree_data'] = implode(",",$data['tree_data']);
+        $data['auth'] = aModel::getIds($data['tree_data']);
         $data['auth'] = implode(",",array_diff(array_unique($data['auth']),[0]));
         if ($id=="")
         {
