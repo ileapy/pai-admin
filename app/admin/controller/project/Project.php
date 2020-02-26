@@ -128,7 +128,7 @@ class project extends AuthController
         if ($data['start_time'] == "") return app("json")->fail("项目起始时间不能为空");
         $data['end_time'] = $data['start_time'][1];
         $data['start_time'] = $data['start_time'][0];
-        if (!$data['language']) $data['language'] = implode(",",$data['language']);
+        if (!empty($data['language'])) $data['language'] = implode(",",$data['language']);
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
