@@ -92,7 +92,7 @@ class project extends AuthController
             return $menus;
         })->col(10);
         $form[] = Elm::textarea('intro','项目简介',$info['intro'])->col(24);
-        $form[] = Elm::select('language','编程语言',$info['language'])->options(function (){
+        $form[] = Elm::select('language','编程语言',explode(",",$info['language']))->options(function (){
             return languageOptions();
         })->multiple(true)->col(10);
         $form[] = Elm::dateTimeRange('start_time','开始时间',$info['start_time'],$info['end_time'])->col(10);
@@ -128,6 +128,7 @@ class project extends AuthController
         if ($data['start_time'] == "") return app("json")->fail("项目起始时间不能为空");
         $data['end_time'] = $data['start_time'][1];
         $data['start_time'] = $data['start_time'][0];
+        if (!$data['language']) $data['language'] = implode(",",$data['language']);
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
