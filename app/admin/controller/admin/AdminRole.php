@@ -54,7 +54,7 @@ class AdminRole extends AuthController
         $form[] = Elm::treeChecked('tree','权限',[11,13])->data([
             Elm::treeData(11,'leaf 1-1-1')->children([Elm::treeData(13,'131313'),Elm::treeData(14,'141414')]),
             Elm::treeData(12,'leaf 1-1-2')
-        ])->col(Elm::col(12)->xs(12));
+        ])->col(12);
         $form[] = Elm::number('rank','排序')->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save')->build());
