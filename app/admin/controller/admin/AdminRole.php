@@ -51,8 +51,8 @@ class AdminRole extends AuthController
         var_dump($pid);
         var_dump(explode(",",rModel::get($pid)['auth']));
         var_dump($pid == 0);
-        var_dump($pid == 0 ? explode(",",rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth));
-        $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid == 0 ? explode(",",rModel::get($pid)['auth']) : $this->adminId == 1 ? aModel::getIds() : $this->auth))->col(18);
+        var_dump($pid != 0 ? explode(",",rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth));
+        $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid != 0 ? explode(",",rModel::get($pid)['auth']) : $this->adminId == 1 ? aModel::getIds() : $this->auth))->col(18);
         $form[] = Elm::number('rank','排序')->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save')->build());
