@@ -71,7 +71,6 @@ if (!function_exists('languageOptions'))
         $menus[] = ['value'=>"HTML",'label'=>"HTML"];
         $menus[] = ['value'=>"JAVASCRIPT",'label'=>"JAVASCRIPT"];
         $menus[] = ['value'=>"MYSQL",'label'=>"MYSQL"];
-        $menus[] = ['value'=>"JQUERY",'label'=>"JQUERY"];
         $menus[] = ['value'=>"C语言",'label'=>"C语言"];
         $menus[] = ['value'=>"C++",'label'=>"C++"];
         return $menus;
