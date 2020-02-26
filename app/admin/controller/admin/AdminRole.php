@@ -48,9 +48,13 @@ class AdminRole extends AuthController
         $form = array();
         $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
-        $form[] = Elm::treeChecked('auth','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds()))
-            ->type("checked")
-            ->showCheckbox(true)->col(18);
+//        $form[] = Elm::treeChecked('auth','选择权限')->data(aModel::selectAndBuildTree(0,$pid ? explode(",",rModel::get($pid)['auth']) : aModel::getIds()))
+//            ->type("checked")
+//            ->showCheckbox(true)->col(18);
+        $form[] = Elm::treeChecked('tree','权限',[11,13])->data([
+            Elm::treeData(11,'leaf 1-1-1')->children([Elm::treeData(13,'131313'),Elm::treeData(14,'141414')]),
+            Elm::treeData(12,'leaf 1-1-2')
+        ])->col(Elm::col(12)->xs(12));
         $form[] = Elm::number('rank','排序')->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
         return Form::make_post_form($form, url('save')->build());
