@@ -124,9 +124,17 @@ class SystemConfig extends AuthController
         $info = cModel::get($id);
         if (!$info) return app("json")->fail("没有该项目");
         $form = array();
-        $form[] = Elm::input('name','分类名称',$info['name'])->col(10);
-        $form[] = Elm::number('rank','排序',$info['rank'])->col(24);
-        $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(24);
+        $form[] = Elm::hidden('tab_id',$info['tab_id'])->col(10);
+        $form[] = Elm::select('tag_type','标签类型',$info['tag_type'])->options(tagOptions())->col(10);
+        $form[] = Elm::select('form_type','表单类型',$info['form_type'])->options(typeOptions())->col(10);
+        $form[] = Elm::input('name','标题名称',$info['name'])->col(10);
+        $form[] = Elm::input('form_name','表单名称',$info['form_name'])->col(10);
+        $form[] = Elm::input('value','内容',$info['value'])->col(10);
+        $form[] = Elm::number('rank','排序',$info['rank'])->col(10);
+        $form[] = Elm::textarea('param','参数',$info['param'])->col(20);
+        $form[] = Elm::textarea('remark','字段备注',$info['remark'])->col(20);
+        $form[] = Elm::radio('upload_type','上传配置',$info['upload_type'])->options([['label'=>'单选','value'=>0],['label'=>'多选','value'=>1]])->col(10);
+        $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(10);
         return Form::make_post_form($form, url('save',["id"=>$id])->build());
     }
 
