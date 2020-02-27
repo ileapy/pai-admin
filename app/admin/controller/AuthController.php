@@ -92,6 +92,7 @@ abstract class AuthController extends SystemBasic
         $this->action = $this->request->action();
         $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id'] ?: 0));
         $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
+        var_dump($this->modelPath($this->module,$this->request->controller()));
         $this->model = app($this->modelPath($this->module,$this->request->controller()));
         // 鉴权
         $this->checkAuth();
@@ -147,9 +148,17 @@ abstract class AuthController extends SystemBasic
         return false;
     }
 
-    protected function modelPath()
+    /**
+     * 生成model路径
+     * @param string $module
+     * @param string $controller
+     * @return string
+     */
+    protected function modelPath(string $module, string $controller): string
     {
         $path = explode(".", $this->request->controller());
-        var_dump("app\{$this->module}\model\{$path[0]}\{$path[1]}");
+        $modelPath = "app\\{$this->module}\\model";
+        foreach ($path as $v) $modelPath .= "\\".$v;
+        return $modelPath;
     }
 }
