@@ -27,11 +27,24 @@
                     <div class="tab-pane active">
                         <form action="#!" method="post" name="edit-form" class="edit-form">
                             {volist name="system" id="vo"}
+                            {switch $vo.tag_type}
+                            {case 'textarea'}
                             <div class="form-group">
-                                <label for="web_site_title">{$vo.name}</label>
-                                <input class="form-control" type="text" id="web_site_title" name="{$vo.form_name}" value="{$vo.value}" placeholder="请输入{$vo.name}" >
+                                <label for="web_site_description">{$vo.name}</label>
+                                <textarea class="form-control" id="web_site_description" rows="5" name="{$vo.form_name}" placeholder="请输入{$vo.name}" >{$vo.value}</textarea>
                                 <small class="help-block">{$vo.remark}</small>
                             </div>
+                            {case/}
+                            {case 'select'}
+                            {case/}
+                            {default/}
+                            <div class="form-group">
+                                <label for="web_site_title">{$vo.name}</label>
+                                <input class="form-control" type="{$vo.form_type}" id="web_site_title" name="{$vo.form_name}" value="{$vo.value}" placeholder="请输入{$vo.name}" >
+                                <small class="help-block">{$vo.remark}</small>
+                            </div>
+                            {/switch}
+
                             {/volist}
 <!--                            <div class="form-group">-->
 <!--                                <label for="web_site_logo">LOGO图片</label>-->
