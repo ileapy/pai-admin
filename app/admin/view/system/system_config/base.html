@@ -42,7 +42,7 @@
                                 <label for="web_site_title">{$vo.name}</label>
                                 {switch $vo.form_type}
                                 {case file}
-                                <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
+                                <input type="hidden" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
                                 <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>
                                 {/case}
                                 {/default}
