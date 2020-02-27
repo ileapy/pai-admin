@@ -42,8 +42,10 @@
                                 <label for="web_site_title">{$vo.name}</label>
                                 {switch $vo.form_type}
                                 {case file}
-                                <input type="hidden" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
-                                <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>
+                                <div class="input-group">
+                                    <input type="hidden" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
+                                    <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>
+                                </div>
                                 {/case}
                                 {/default}
                                 <input class="form-control" type="{$vo.form_type}" id="web_site_title" name="{$vo.form_name}" value="{$vo.value}" placeholder="请输入{$vo.name}" >
