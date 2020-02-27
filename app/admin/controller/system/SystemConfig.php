@@ -68,13 +68,27 @@ class SystemConfig extends AuthController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function lst($tab_id = 0)
+    public function lst(Request $request)
     {
-        $this->assign("list",cModel::lst());
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',20],
+            ['tab_id',0]
+        ]);
+        return Json::successlayui(cModel::lst($where));
+    }
+
+    /**
+     * 列表
+     * @param int $tab_id
+     * @return string
+     * @throws \Exception
+     */
+    public function index($tab_id = 0)
+    {
         $this->assign("tab",tModel::get($tab_id));
         return $this->fetch("list");
     }
-
     /**
      * 添加
      * @param Request $request

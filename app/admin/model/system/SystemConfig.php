@@ -24,11 +24,13 @@ class SystemConfig extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function lst(int $tab_id=0): array
+    public static function lst($where): array
     {
         $model = new self;
-        $model = $model->where('tab_id',$tab_id);
+        if ($where['tab_id']) $model = $model->where('tab_id',$where['tab_id']);
+        $count = self::counts($model);
+        if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
-        return $data ? $data->toArray() : [];
+        return compact('data','count');
     }
 }
