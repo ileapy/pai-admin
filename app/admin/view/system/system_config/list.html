@@ -59,7 +59,7 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/system.system_config/lst',
+        url: '/admin/system.system_config/lst?tab_id={$tab.id}',
         method: 'post',
         dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
