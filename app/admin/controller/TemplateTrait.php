@@ -16,8 +16,7 @@ trait TemplateTrait
      */
     public function del($id)
     {
-        var_dump($id);
         if (!$id) return app("json")->fail("参数有误，Id为空！");
-        return self::del($id) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $this->model->del($id) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
