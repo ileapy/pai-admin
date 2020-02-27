@@ -50,4 +50,22 @@ class SystemConfig extends BaseModel
         $info = $model->find();
         return $info ? $info['value'] : '';
     }
+
+    /**
+     * 获取参数
+     * @param int $tab_id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getLstByTabId(int $tab_id = 0): array
+    {
+        $model = new self;
+        $model = $model->where("tab_id",$tab_id);
+        $model = $model->where("status",1);
+        $model = $model->order("rank desc");
+        $info = $model->select();
+        return $info ? $info->toArray() : [];
+    }
 }

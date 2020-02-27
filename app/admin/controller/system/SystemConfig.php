@@ -27,6 +27,7 @@ class SystemConfig extends AuthController
      */
     public function base()
     {
+        $this->assign("system",cModel::getValueByFormName());
         return $this->fetch();
     }
 
