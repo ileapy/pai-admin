@@ -142,15 +142,4 @@ class project extends AuthController
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }
-
-    /**
-     * 删除
-     * @param $id
-     * @return
-     */
-    public function del($id)
-    {
-        if (!$id) return app("json")->fail("参数有误，Id为空！");
-        return pModel::del($id) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
-    }
 }
