@@ -92,9 +92,7 @@ abstract class AuthController extends SystemBasic
         $this->action = $this->request->action();
         $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id'] ?: 0));
         $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
-        $path = explode(".", $this->request->controller());
-        var_dump("app\{$this->module}\model\{$path[0]}\{$path[1]}");
-        $this->model = app("app\{$this->module}\model\{$path[0]}\{$path[1]}");
+        $this->model = app($this->modelPath($this->module,$this->request->controller()));
         // 鉴权
         $this->checkAuth();
         // 多语言
@@ -147,5 +145,11 @@ abstract class AuthController extends SystemBasic
         // 有操作权限，记录日志
         if (in_array($this->nowAuthId,$this->auth)) event("AdminLog",[$this->adminInfo,$this->module,$this->controller,$this->action]);
         return false;
+    }
+
+    protected function modelPath()
+    {
+        $path = explode(".", $this->request->controller());
+        var_dump("app\{$this->module}\model\{$path[0]}\{$path[1]}");
     }
 }
