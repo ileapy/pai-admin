@@ -28,14 +28,14 @@
                         <form action="#!" method="post" name="edit-form" class="edit-form">
                             {volist name="system" id="vo"}
                             {switch $vo.tag_type}
-                            {case 'textarea'}
+                            {case textarea}
                             <div class="form-group">
                                 <label for="web_site_description">{$vo.name}</label>
                                 <textarea class="form-control" id="web_site_description" rows="5" name="{$vo.form_name}" placeholder="请输入{$vo.name}" >{$vo.value}</textarea>
                                 <small class="help-block">{$vo.remark}</small>
                             </div>
                             {case/}
-                            {case 'select'}
+                            {case select}
                             {case/}
                             {default/}
                             <div class="form-group">
