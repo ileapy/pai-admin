@@ -91,7 +91,7 @@ class SystemConfig extends AuthController
         $form[] = Elm::input('form_name','表单名称')->col(10);
         $form[] = Elm::input('value','内容')->col(10);
         $form[] = Elm::number('rank','排序',0)->col(10);
-        $form[] = Elm::textarea('parent','参数')->col(20);
+        $form[] = Elm::textarea('param','参数')->col(20);
         $form[] = Elm::textarea('remark','字段备注')->col(20);
         $form[] = Elm::radio('upload_type','上传配置',0)->options([['label'=>'单选','value'=>0],['label'=>'多选','value'=>1]])->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(10);
@@ -125,10 +125,21 @@ class SystemConfig extends AuthController
     {
         $data = Util::postMore([
             ['name',''],
-            ['rank',0],
+            ['tab_id',0],
+            ['tag_type',''],
+            ['form_type',''],
+            ['form_name',''],
+            ['value',''],
+            ['rank',1],
+            ['remark',''],
+            ['param',''],
+            ['upload_type',0],
             ['status',1]
         ]);
-        if ($data['name'] == "") return app("json")->fail("分类名称不能为空");
+        if ($data['name'] == "") return app("json")->fail("标题名称不能为空");
+        if ($data['tag_type'] == "") return app("json")->fail("标签类型不能为空");
+        if ($data['form_type'] == "") return app("json")->fail("表单类型不能为空");
+        if ($data['form_name'] == "") return app("json")->fail("表单名称不能为空");
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
