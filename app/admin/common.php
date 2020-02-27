@@ -126,3 +126,19 @@ if (!function_exists('typeOptions'))
         return $menus;
     }
 }
+
+if (!function_exists('systemConfig'))
+{
+    /**
+     * 获取系统配置值
+     * @param string $formName
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    function systemConfig(string $formName): string
+    {
+        return \app\admin\model\system\SystemConfig::getValueByFormName($formName);
+    }
+}

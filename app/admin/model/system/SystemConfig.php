@@ -33,4 +33,21 @@ class SystemConfig extends BaseModel
         $data = $model->select();
         return compact('data','count');
     }
+
+    /**
+     * 获取字段值
+     * @param string $formName
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getValueByFormName(string $formName): string
+    {
+        $model = new self;
+        $model = $model->where("form_name",$formName);
+        $model = $model->where("status",1);
+        $info = $model->find();
+        return $info ? $info['value'] : '';
+    }
 }
