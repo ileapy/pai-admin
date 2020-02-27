@@ -27,7 +27,7 @@ class SystemConfig extends AuthController
      */
     public function base()
     {
-        $this->assign("system",cModel::getValueByFormName());
+        $this->assign("system",cModel::getLstByTabId(1));
         return $this->fetch();
     }
 
