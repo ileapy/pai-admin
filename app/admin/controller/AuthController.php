@@ -14,6 +14,12 @@ use think\facade\Session;
 abstract class AuthController extends SystemBasic
 {
     /**
+     * model
+     * @var
+     */
+    protected $model = null;
+
+    /**
      * 当前登陆管理员信息
      * @var
      */
@@ -83,6 +89,7 @@ abstract class AuthController extends SystemBasic
         $this->adminId = Session::get("adminId");
         $this->module = App::getInstance()->http->getName();
         $this->controller = unCamelize($this->request->controller());
+        var_dump($this->request->controller());
         $this->action = $this->request->action();
         $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id'] ?: 0));
         $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
