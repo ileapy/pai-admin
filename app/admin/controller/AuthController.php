@@ -79,6 +79,7 @@ abstract class AuthController extends SystemBasic
      */
     private $action = "";
 
+    use TemplateTrait;
     /**
      * 初始化
      */
