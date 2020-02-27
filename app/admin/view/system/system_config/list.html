@@ -22,10 +22,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header"><h4>表单配置</h4></div>
+                <div class="card-header"><h4>{$tab.name}</h4></div>
                 <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加用户','/admin/system.system_config/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('{$tab.name}-添加字段','/admin/system.system_config/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
                         <button id="btn_edit" type="button" class="btn btn-success m-r-5">
@@ -121,7 +121,7 @@
             formatter: btnGroup,  // 自定义方法
             events: {
                 'click .edit-btn': function (event, value, row, index) {
-                    iframe.createIframe('修改配置','/admin/system.system_config/edit?id='+row.id)
+                    iframe.createIframe('{$tab.name}-修改字段','/admin/system.system_config/edit?id='+row.id)
                 },
                 'click .del-btn': function (event, value, row, index) {
                     $.alert({

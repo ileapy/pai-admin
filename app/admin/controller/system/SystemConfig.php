@@ -6,7 +6,7 @@ namespace app\admin\controller\system;
 
 use app\admin\controller\AuthController;
 use app\admin\model\system\SystemConfig as cModel;
-
+use app\admin\model\system\SystemConfigTab as tModel;
 /**
  * 系统配置
  * Class SystemConfig
@@ -62,9 +62,10 @@ class SystemConfig extends AuthController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function lst($tab_id=0)
+    public function lst($tab_id = 0)
     {
         $this->assign("list",cModel::lst());
+        $this->assign("tab",tModel::get($tab_id));
         return $this->fetch("list");
     }
 }
