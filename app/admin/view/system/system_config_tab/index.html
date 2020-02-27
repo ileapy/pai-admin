@@ -124,7 +124,7 @@
                     iframe.createIframe('修改配置','/admin/system.system_config_tab/edit?id='+row.id)
                 },
                 'click .add-btn': function (event, value, row, index) {
-                    iframe.createIframe('修改配置','/admin/system.system_config_tab/edit?id='+row.id)
+                    window.location.href = "/admin/system.system_config/lst?tab_id="+row.id;
                 },
                 'click .del-btn': function (event, value, row, index) {
                     $.alert({
