@@ -92,7 +92,7 @@ abstract class AuthController extends SystemBasic
         $this->action = $this->request->action();
         $this->auth = explode(",", AdminRole::getAuth($this->adminInfo['role_id'] ?: 0));
         $this->nowAuthId = AdminAuth::getAuthId($this->module,$this->controller,$this->action);
-        //$this->model = $this->buildModel($this->module,$this->request->controller());
+        $this->model = $this->buildModel($this->module,$this->request->controller());
         // 鉴权
         $this->checkAuth();
         // 多语言
