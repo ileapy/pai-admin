@@ -5,6 +5,7 @@ namespace app\admin\controller\system;
 
 
 use app\admin\controller\AuthController;
+use app\admin\model\system\SystemConfig as cModel;
 
 /**
  * 系统配置
@@ -51,5 +52,19 @@ class SystemConfig extends AuthController
     public function email()
     {
         return $this->fetch();
+    }
+
+    /**
+     * 列表
+     * @param int $tab_id
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function lst($tab_id=0)
+    {
+        $this->assign("list",cModel::lst());
+        return $this->fetch("list");
     }
 }
