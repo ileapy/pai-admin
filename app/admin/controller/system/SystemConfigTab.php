@@ -25,7 +25,6 @@ class SystemConfigTab extends AuthController
     /**
      * 列表
      * @param Request $request
-     * @return mixed
      */
     public function lst(Request $request)
     {
