@@ -22,12 +22,16 @@ class SystemConfig extends AuthController
 {
     /**
      * 基础配置
+     * @param int $tab_id
      * @return string
-     * @throws \Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function base()
+    public function base($tab_id = 1)
     {
-        $this->assign("system",cModel::getLstByTabId(1));
+        $this->assign("tab_id",$tab_id);
+        $this->assign("system",cModel::getLstByTabId($tab_id));
         return $this->fetch();
     }
 
