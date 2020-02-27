@@ -84,7 +84,7 @@ class SystemConfig extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::hidden('tab_id','分类名称',$request->param("tab_id"))->col(10);
+        $form[] = Elm::hidden('tab_id',$request->param("tab_id"))->col(10);
         $form[] = Elm::select('tag_type','标签类型')->options(tagOptions())->col(10);
         $form[] = Elm::select('form_type','表单类型')->options(typeOptions())->col(10);
         $form[] = Elm::input('form_name','表单名称')->col(10);
