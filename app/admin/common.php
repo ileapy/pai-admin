@@ -89,3 +89,40 @@ if (!function_exists('toIntArray'))
         return $str;
     }
 }
+
+if (!function_exists('tagOptions'))
+{
+    /**
+     * 获取form标签
+     * @return array
+     */
+    function tagOptions(): array
+    {
+        $menus[] = ['value'=>"input",'label'=>"input"];
+        $menus[] = ['value'=>"textarea",'label'=>"textarea"];
+        $menus[] = ['value'=>"select",'label'=>"select"];
+        return $menus;
+    }
+}
+
+if (!function_exists('typeOptions'))
+{
+    /**
+     * 获取form标签
+     * @return array
+     */
+    function typeOptions(): array
+    {
+        $menus[] = ['value'=>"text",'label'=>"text"];
+        $menus[] = ['value'=>"radio",'label'=>"radio"];
+        $menus[] = ['value'=>"password",'label'=>"password"];
+        $menus[] = ['value'=>"checkbox",'label'=>"checkbox"];
+        $menus[] = ['value'=>"number",'label'=>"number"];
+        $menus[] = ['value'=>"hidden",'label'=>"hidden"];
+        $menus[] = ['value'=>"email",'label'=>"email"];
+        $menus[] = ['value'=>"tel",'label'=>"tel"];
+        $menus[] = ['value'=>"date",'label'=>"date"];
+        $menus[] = ['value'=>"file",'label'=>"file"];
+        return $menus;
+    }
+}
