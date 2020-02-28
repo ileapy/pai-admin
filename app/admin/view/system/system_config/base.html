@@ -99,7 +99,7 @@
     /**
      * 提交表单
      */
-    $("#edit-form").submit(function(){
+    $("#edit-form").onsubmit(function(){
         $.post(
             url = '/admin/system.system_config/ajaxSave',
             data = $("#edit-form").serializeArray(),
