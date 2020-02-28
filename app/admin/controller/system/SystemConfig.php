@@ -180,4 +180,10 @@ class SystemConfig extends AuthController
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }
+
+
+    public function ajaxSave(Request $request)
+    {
+
+    }
 }

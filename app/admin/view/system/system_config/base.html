@@ -25,7 +25,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
-                        <form action="#!" method="post" name="edit-form" class="edit-form">
+                        <form action="#!" method="post" name="edit-form" id="edit-form" class="edit-form" onsubmit="submit()">
                             {volist name="system" id="vo"}
                             {switch $vo.tag_type}
                             {case textarea}
@@ -69,9 +69,17 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script>
+    /**
+     * 选择文件
+     * @param inputName
+     */
     function btnClick(inputName) {
         $("#file"+inputName).click()
     }
+    /**
+     * 异步上传
+     * @param inputName
+     */
     function upload(inputName) {
         var formData = new FormData();
         formData.append("file",$("#file"+inputName)[0].files[0]);
@@ -87,6 +95,20 @@
                 $("#"+inputName).val(res.data.filePath);
             }
         });
+    }
+    /**
+     * 提交表单
+     */
+    function submit() {
+        $.post(
+            url = '/admin/system.system_config/save',
+            data = $("#edit-form").serializeArray(),
+            function (res) {
+                if (!Array.isArray(res)) res = jQuery.parseJSON(res);
+                console.log(res);
+            }
+        )
+        return false;
     }
 </script>
 </body>
