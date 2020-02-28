@@ -94,6 +94,6 @@ class SystemConfigTab extends AuthController
             $data['update_time'] = time();
             $res = tModel::update($data,['id'=>$id]);
         }
-        return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }
 }
