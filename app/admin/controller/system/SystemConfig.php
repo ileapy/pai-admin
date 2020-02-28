@@ -188,7 +188,7 @@ class SystemConfig extends AuthController
     public function ajaxSave(Request $request)
     {
         $res = true;
-        foreach ($request->param() as $v)
-            var_dump($v);
+        foreach ($request->param() as $k => $v)
+            var_dump($k.'-'.$v);
     }
 }
