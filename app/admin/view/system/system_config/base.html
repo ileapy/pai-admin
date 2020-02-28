@@ -57,7 +57,6 @@
                             {/volist}
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary m-r-5">确 定</button>
-                                <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
                             </div>
                         </form>
                     </div>
@@ -71,6 +70,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script>
     function upload(inputName) {
+        console.log(inputName);
         $("#file".inputName).click()
     }
 </script>
