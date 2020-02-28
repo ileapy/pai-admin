@@ -106,9 +106,9 @@
             function (res) {
                 if (!Array.isArray(res)) res = jQuery.parseJSON(res);
                 console.log(res);
+                return false;
             }
-        )
-        return false;
+        );
     });
 </script>
 </body>
