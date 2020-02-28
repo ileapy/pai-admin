@@ -190,6 +190,6 @@ class SystemConfig extends AuthController
         $res = true;
         foreach ($request->param() as $k => $v)
             $res = cModel::editValueByFormName($k,$v);
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
