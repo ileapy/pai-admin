@@ -68,4 +68,17 @@ class SystemConfig extends BaseModel
         $info = $model->select();
         return $info ? $info->toArray() : [];
     }
+
+    /**
+     * 修改value
+     * @param string $form_name
+     * @param $value
+     * @return bool
+     */
+    public static function editValueByFormName(string $form_name, $value)
+    {
+        $model = new self;
+        $model = $model->where("form_name", $form_name);
+        return $model->save(['value'=>$value]);
+    }
 }
