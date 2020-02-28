@@ -44,7 +44,7 @@
                                 {case file}
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
-                                    <div class="input-group-btn"><button class="btn btn-success" type="button">上传图片</button></div>
+                                    <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="upload()">上传图片</button></div>
                                 </div>
                                 {/case}
                                 {default/}
@@ -54,41 +54,6 @@
                             </div>
                             {/switch}
                             {/volist}
-<!--                            <div class="form-group">-->
-<!--                                <label for="web_site_logo">LOGO图片</label>-->
-<!--                                <div class="input-group">-->
-<!--                                    <input type="text" class="form-control" name="web_site_logo" id="web_site_logo" value="/home/images/logo.png" />-->
-<!--                                    <div class="input-group-btn"><button class="btn btn-default" type="button">上传图片</button></div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="web_site_keywords">站点关键词</label>-->
-<!--                                <input class="form-control" type="text" id="web_site_keywords" name="web_site_keywords" value="后台系统模板,LightYear Admin Template,html模板,后台模板,管理系统模板" placeholder="请输入站点关键词" >-->
-<!--                                <small class="help-block">网站搜索引擎关键字</small>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="web_site_description">站点描述</label>-->
-<!--                                <textarea class="form-control" id="web_site_description" rows="5" name="web_site_description" placeholder="请输入站点描述" >光年(Light Year Admin)后台管理系统模板是一个基于基于Bootstrap v3.3.7的纯HTML模板。</textarea>-->
-<!--                                <small class="help-block">网站描述，有利于搜索引擎抓取相关信息</small>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="web_site_copyright">版权信息</label>-->
-<!--                                <input class="form-control" type="text" id="web_site_copyright" name="web_site_copyright" value="" placeholder="请输入版权信息" >-->
-<!--                                <small class="help-block">调用方式：<code>config('web_site_copyright')</code></small>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label for="web_site_icp">备案信息</label>-->
-<!--                                <input class="form-control" type="text" id="web_site_icp" name="web_site_icp" value="" placeholder="请输入备案信息" >-->
-<!--                                <small class="help-block">调用方式：<code>config('web_site_icp')</code></small>-->
-<!--                            </div>-->
-<!--                            <div class="form-group">-->
-<!--                                <label class="btn-block" for="web_site_status">站点开关</label>-->
-<!--                                <label class="lyear-switch switch-solid switch-primary">-->
-<!--                                    <input type="checkbox" checked="">-->
-<!--                                    <span></span>-->
-<!--                                </label>-->
-<!--                                <small class="help-block">站点关闭后将不能访问，后台可正常登录</small>-->
-<!--                            </div>-->
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary m-r-5">确 定</button>
                                 <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
@@ -103,5 +68,10 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script>
+    function upload() {
+        console.log($(this).attr("for-input"))
+    }
+</script>
 </body>
 </html>
