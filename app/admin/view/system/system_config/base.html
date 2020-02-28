@@ -101,7 +101,7 @@
      */
     function submit() {
         $.post(
-            url = '/admin/system.system_config/save',
+            url = '/admin/system.system_config/ajaxSave',
             data = $("#edit-form").serializeArray(),
             function (res) {
                 if (!Array.isArray(res)) res = jQuery.parseJSON(res);
