@@ -73,9 +73,8 @@
         $("#file"+inputName).click()
     }
     function upload(inputName) {
-        var files = document.getElementById(inputName);
         var formData = new FormData();
-        formData.append("image",files[0]);
+        formData.append("image",$(inputName)[0]);
         $.ajax({
             type:'POST',
             url:'/admin/widget.files/image',
