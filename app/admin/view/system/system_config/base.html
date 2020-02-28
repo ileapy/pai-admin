@@ -25,7 +25,7 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
-                        <form name="edit-form" id="edit-form" class="edit-form" onsubmit="submit()">
+                        <form name="edit-form" id="edit-form" class="edit-form" onsubmit="return submit()">
                             {volist name="system" id="vo"}
                             {switch $vo.tag_type}
                             {case textarea}
@@ -99,7 +99,7 @@
     /**
      * 提交表单
      */
-    $("#edit-form").onsubmit(function(){
+    function submit(){
         $.post(
             url = '/admin/system.system_config/ajaxSave',
             data = $("#edit-form").serializeArray(),
@@ -110,7 +110,7 @@
             }
         );
         return false;
-    });
+    }
 </script>
 </body>
 </html>
