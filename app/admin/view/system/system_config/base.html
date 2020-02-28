@@ -99,7 +99,8 @@
     /**
      * 提交表单
      */
-    function submit() {
+    $("#edit-form").submit(function()
+    {
         $.post(
             url = '/admin/system.system_config/ajaxSave',
             data = $("#edit-form").serializeArray(),
@@ -109,7 +110,7 @@
             }
         )
         return false;
-    }
+    });
 </script>
 </body>
 </html>
