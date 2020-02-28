@@ -44,8 +44,8 @@
                                 {case file}
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
-                                    <input type="file" id="file{$vo.form_name}" style="display: none;" />
-                                    <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="upload('{$vo.form_name}')">上传图片</button></div>
+                                    <input type="file" id="file{$vo.form_name}" style="display: none;" onchange="upload('file{$vo.form_name}')"/>
+                                    <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="btnClick('{$vo.form_name}')">上传图片</button></div>
                                 </div>
                                 {/case}
                                 {default/}
@@ -69,9 +69,24 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script>
-    function upload(inputName) {
-        console.log(inputName);
+    function btnClick(inputName) {
         $("#file"+inputName).click()
+    }
+    function upload(inputName) {
+        var files = document.getElementById(inputName);
+        var formData = new FormData();
+        formData.append("image",files[0]);
+        $.ajax({
+            type:'POST',
+            url:'/admin/widget.files/image',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+            }
+        });
     }
 </script>
 </body>
