@@ -178,12 +178,13 @@ class SystemConfig extends AuthController
             $data['update_time'] = time();
             $res = cModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
      * 提交修改
      * @param Request $request
+     * @return
      */
     public function ajaxSave(Request $request)
     {
