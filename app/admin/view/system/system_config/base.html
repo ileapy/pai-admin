@@ -44,7 +44,7 @@
                                 {case file}
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
-                                    <input type="file" id="file{$vo.form_name}" style="display: none;" onchange="upload('file{$vo.form_name}')"/>
+                                    <input type="file" id="file{$vo.form_name}" style="display: none;" onchange="upload('{$vo.form_name}')"/>
                                     <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="btnClick('{$vo.form_name}')">上传图片</button></div>
                                 </div>
                                 {/case}
@@ -74,7 +74,7 @@
     }
     function upload(inputName) {
         var formData = new FormData();
-        formData.append("file",$("#"+inputName)[0].files[0]);
+        formData.append("file",$("#file"+inputName)[0].files[0]);
         $.ajax({
             type:'POST',
             url:'/admin/widget.files/image',
@@ -83,7 +83,7 @@
             processData: false,
             contentType: false,
             success: function (res) {
-                console.log(res);
+                $("#"+inputName).val(res.data.filePath);
             }
         });
     }
