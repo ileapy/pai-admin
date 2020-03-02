@@ -54,10 +54,15 @@ class QCloudSmsService
      */
     public function sendSingleSms(int $templId, array $params, string $sign)
     {
-        $this->smSender = new SmsSingleSender($this->appId,$this->appKey);
-        $res = $this->smSender->sendWithParam("86", $this->phoneNumbers[0], $templId, $params, $sign, "", "");
-        var_dump($res);
-        return true;
+        try {
+            $this->smSender = new SmsSingleSender($this->appId,$this->appKey);
+            $res = json_decode($this->smSender->sendWithParam("86", $this->phoneNumbers[0], $templId, $params, $sign, "", ""),true);
+            return $res['result'] == 0 ? true : false;
+        }catch (\Exception $e)
+        {
+            var_dump($e);
+            return false;
+        }
     }
 
     /**
@@ -69,10 +74,15 @@ class QCloudSmsService
      */
     public function sendMultiSms(int $templId, array $params, string $sign)
     {
-        $this->smSender = new SmsMultiSender($this->appId,$this->appKey);
-        $res = $this->smSender->sendWithParam("86", $this->phoneNumbers, $templId, $params, $sign, "", "");
-        var_dump($res);
-        return true;
+        try {
+            $this->smSender = new SmsMultiSender($this->appId,$this->appKey);
+            $res = json_decode($this->smSender->sendWithParam("86", $this->phoneNumbers, $templId, $params, $sign, "", ""),true);
+            return $res['result'] == 0 ? true : false;
+        }catch (\Exception $e)
+        {
+            var_dump($e);
+            return false;
+        }
     }
 
     /**
@@ -82,10 +92,15 @@ class QCloudSmsService
      */
     public function sendVoiceVerifySms(string $verifyCode)
     {
-        $this->smSender = new SmsVoiceVerifyCodeSender($this->appId,$this->appKey);
-        $res = $this->smSender->send("86", $this->phoneNumbers[0], $verifyCode);
-        var_dump($res);
-        return true;
+        try {
+            $this->smSender = new SmsVoiceVerifyCodeSender($this->appId,$this->appKey);
+            $res = json_decode($this->smSender->send("86", $this->phoneNumbers[0], $verifyCode),true);
+            return $res['result'] == 0 ? true : false;
+        }catch (\Exception $e)
+        {
+            var_dump($e);
+            return false;
+        }
     }
 
     /**
@@ -95,10 +110,15 @@ class QCloudSmsService
      */
     public function sendVoicePromptSms(string $msg)
     {
-        $this->smSender = new SmsVoicePromptSender($this->appId,$this->appKey);
-        $res = $this->smSender->send("86", $this->phoneNumbers[0], 2, $msg);
-        var_dump($res);
-        return true;
+        try {
+            $this->smSender = new SmsVoicePromptSender($this->appId,$this->appKey);
+            $res = json_decode($this->smSender->send("86", $this->phoneNumbers[0], 2, $msg),true);
+            return $res['result'] == 0 ? true : false;
+        }catch (\Exception $e)
+        {
+            var_dump($e);
+            return false;
+        }
     }
 
     /**
