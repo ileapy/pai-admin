@@ -55,8 +55,9 @@
                                     foreach(explode("\n",$vo['param']) as $k=>$v)
                                     {
                                     $tmp = explode("=>",$v);
+                                    $checked = $tmp[0] == $vo["value"] ? 'checked' : '';
                                     echo '<label class="lyear-radio radio-inline radio-primary">
-                                            <input type="radio" name="'.$vo["form_name"].'" value="'.$tmp[0].'"><span>'.$tmp[1].'</span>
+                                            <input type="radio" name="'.$vo["form_name"].'" value="'.$tmp[0].'" '.$checked.'><span>'.$tmp[1].'</span>
                                         </label>';
                                     }
                                     {/php}
