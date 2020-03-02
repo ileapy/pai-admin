@@ -31,9 +31,22 @@
                             {switch $vo.tag_type}
                             {case textarea}
                             <div class="form-group">
-                                <label for="web_site_description">{$vo.name}</label>
-                                <textarea class="form-control" id="web_site_description" rows="5" name="{$vo.form_name}" placeholder="请输入{$vo.name}" >{$vo.value}</textarea>
+                                <label for="{$vo.form_name}">{$vo.name}</label>
+                                <textarea class="form-control" id="{$vo.form_name}" rows="5" name="{$vo.form_name}" placeholder="请输入{$vo.name}" >{$vo.value}</textarea>
                                 <small class="help-block">{$vo.remark}</small>
+                            </div>
+                            {/case}
+                            {case radio}
+                            <div class="form-group">
+                                <label for="{$vo.form_name}">{$vo.name}</label>
+                                <div class="controls-box">
+                                    {php}
+                                    foreach(explode("\n",$vo['param']) as $k=>$v)
+                                    {
+                                        echo $v;
+                                    }
+                                    {/php}
+                                </div>
                             </div>
                             {/case}
                             {case select}
