@@ -95,6 +95,7 @@ class QCloudSmsService
         try {
             $this->smSender = new SmsVoiceVerifyCodeSender($this->appId,$this->appKey);
             $res = json_decode($this->smSender->send("86", $this->phoneNumbers[0], $verifyCode),true);
+            var_dump($res);
             return $res['result'] == 0 ? true : false;
         }catch (\Exception $e)
         {
