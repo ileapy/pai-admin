@@ -21,7 +21,7 @@ class Test extends AuthController
     {
         $sms = new QCloudSmsService(systemConfig("sms_appid"),systemConfig("sms_appkey"));
         $sms->setPhoneNumbers(['18438622618']);
-        var_dump($sms->sendVoiceVerifySms(systemConfig("sms_login"),['123456'],""));
+        var_dump($sms->sendSingleSms(systemConfig("sms_login"),['123456'],""));
     }
 
 }
