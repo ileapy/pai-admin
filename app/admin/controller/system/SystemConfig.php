@@ -184,6 +184,7 @@ class SystemConfig extends AuthController
     /**
      * 提交修改
      * @param Request $request
+     * @return
      */
     public function ajaxSave(Request $request)
     {
