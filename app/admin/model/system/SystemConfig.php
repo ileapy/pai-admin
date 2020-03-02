@@ -64,6 +64,7 @@ class SystemConfig extends BaseModel
         $model = new self;
         $model = $model->where("tab_id",$tab_id);
         $model = $model->where("status",1);
+        $model = $model->where("is_show",1);
         $model = $model->order("rank desc");
         $info = $model->select();
         return $info ? $info->toArray() : [];
