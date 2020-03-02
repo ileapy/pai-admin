@@ -36,19 +36,6 @@
                                 <small class="help-block">{$vo.remark}</small>
                             </div>
                             {/case}
-                            {case radio}
-                            <div class="form-group">
-                                <label for="{$vo.form_name}">{$vo.name}</label>
-                                <div class="controls-box">
-                                    {php}
-                                    foreach(explode("\n",$vo['param']) as $k=>$v)
-                                    {
-                                        echo $v;
-                                    }
-                                    {/php}
-                                </div>
-                            </div>
-                            {/case}
                             {case select}
                             {/case}
                             {default/}
@@ -60,6 +47,16 @@
                                     <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
                                     <input type="file" id="file{$vo.form_name}" style="display: none;" onchange="upload('{$vo.form_name}')"/>
                                     <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="btnClick('{$vo.form_name}')">上传图片</button></div>
+                                </div>
+                                {/case}
+                                {case radio}
+                                <div class="controls-box">
+                                    {php}
+                                    foreach(explode("\n",$vo['param']) as $k=>$v)
+                                    {
+                                    echo $v;
+                                    }
+                                    {/php}
                                 </div>
                                 {/case}
                                 {default/}
