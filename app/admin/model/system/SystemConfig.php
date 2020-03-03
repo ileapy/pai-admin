@@ -52,6 +52,23 @@ class SystemConfig extends BaseModel
     }
 
     /**
+     * 获取字段值
+     * @param string $formNames
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getValuesByFormNames(array $formNames): array
+    {
+        $model = new self;
+        $model = $model->where("form_name",'in', $formNames);
+        $model = $model->where("status",1);
+        $info = $model->select();
+        return $info ? $info->toArray() : [];
+    }
+
+    /**
      * 获取参数
      * @param int $tab_id
      * @return array
