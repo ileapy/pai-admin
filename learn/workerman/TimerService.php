@@ -66,6 +66,7 @@ class TimerService extends Server
      */
     public function onWorkerStart()
     {
+        var_dump(111111);
         $last = time();
         $task = [1 => $last, 6 => $last, 10 => $last, 30 => $last, 60 => $last, 180 => $last, 300 => $last];
         $this->timer = Timer::add($this->interval, function () use (&$task) {
