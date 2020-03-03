@@ -17,11 +17,15 @@ return [
         'LogWrite' => [],
         'Test' => [],  // 后台通知测试
         'AdminLog' => [], // 操作日志记录
+        'MessageBefore' => [], //微信信息前置操作
+        'WechatEventUnsubscribeBefore' => [], //微信取消关注前置操作
+        'WechatEventSubscribeBefore' => [], //微信关注前者操作
     ],
 
     'subscribe' => [
         \learn\subscribes\AdminSubscribe::class, // 操作记录
         \learn\subscribes\SystemSubscribe::class, // 系统通知
         \learn\subscribes\TimerSubscribe::class, // 定时器
+        \learn\subscribes\WechatMessageSubscribe::class, //微信操作
     ],
 ];
