@@ -87,17 +87,17 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
-            event('WechatMessageBefore',[$message]);
+            event('MessageBefore',[$message]);
             file_put_contents("wechat.log",json_encode($message,true));
             switch ($message->MsgType){
                 case 'event':
                     switch (strtolower($message->Event)){
                         case 'subscribe':
                             //$response = WechatReply::reply('subscribe');
-                            event('WechatEventSubscribeBefore',[$message]);
+                            event('EventSubscribeBefore',[$message]);
                             break;
                         case 'unsubscribe':
-                            event('WechatEventUnsubscribeBefore',[$message]);
+                            event('EventUnsubscribeBefore',[$message]);
                             break;
                         case 'scan':
                             $response = WechatReply::reply('subscribe');
