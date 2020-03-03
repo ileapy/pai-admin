@@ -4,6 +4,7 @@
 namespace learn\services;
 
 use EasyWeChat\Factory;
+use EasyWeChat\OfficialAccount\Server\Guard;
 use think\Response;
 
 /**
@@ -78,7 +79,9 @@ class WechatService
 
     /**
      * 监听响应
-     * @param $server
+     * @param Guard $server
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \ReflectionException
      */
     private static function hook($server)
     {
