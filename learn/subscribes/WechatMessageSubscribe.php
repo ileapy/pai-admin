@@ -27,7 +27,7 @@ class WechatMessageSubscribe
      * 用户取消关注公众号前置操作
      * @param $event
      */
-    public function onWechatEventUnsubscribeBefore($event)
+    public function onEventUnsubscribeBefore($event)
     {
         list($message) = $event;
         WechatUser::unSubscribe($message->FromUserName);
@@ -37,7 +37,7 @@ class WechatMessageSubscribe
      * 用户取消关注公众号前置操作
      * @param $event
      */
-    public function onWechatEventSubscribeBefore($event)
+    public function onEventSubscribeBefore($event)
     {
         list($message) = $event;
         WechatUser::subscribe($message->FromUserName);
