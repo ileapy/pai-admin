@@ -87,8 +87,8 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
-            file_put_contents("wechat.log",json_encode($message,true));
             event('WechatMessageBefore',[$message]);
+            file_put_contents("wechat.log",json_encode($message,true));
             switch ($message->MsgType){
                 case 'event':
                     switch (strtolower($message->Event)){
