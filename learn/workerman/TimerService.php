@@ -10,6 +10,24 @@ use Workerman\Worker;
 class TimerService extends Server
 {
     /**
+     * 协议
+     * @var string
+     */
+    protected $protocol = "websocket";
+
+    /**
+     * 监听地址
+     * @var string
+     */
+    protected $host = '0.0.0.0';
+
+    /**
+     * 端口
+     * @var string
+     */
+    protected $port = 1999;
+
+    /**
      * @var int
      */
     protected $timer;
