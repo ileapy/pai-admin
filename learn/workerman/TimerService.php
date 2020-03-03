@@ -74,7 +74,6 @@ class TimerService extends Server
                 foreach ($task as $sec => $time) {
                     if ($now - $time >= $sec) {
                         event('task_' . $sec);
-                        var_dump('task_' . $sec);
                         $task[$sec] = $now;
                     }
                 }
