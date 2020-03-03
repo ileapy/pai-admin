@@ -69,11 +69,11 @@ class TimerService extends Server
         $last = time();
         $task = [1 => $last, 6 => $last, 10 => $last, 30 => $last, 60 => $last, 180 => $last, 300 => $last];
         $this->timer = Timer::add($this->interval, function () use (&$task) {
-            var_dump(111);
             try {
                 $now = time();
                 foreach ($task as $sec => $time) {
                     if ($now - $time >= $sec) {
+                        var_dump($sec);
                         event('task_' . $sec);
                         $task[$sec] = $now;
                     }
