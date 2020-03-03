@@ -3,7 +3,10 @@
 
 namespace learn\subscribes;
 
-
+/**
+ * Class TimerSubscribe
+ * @package learn\subscribes
+ */
 class TimerSubscribe
 {
     /**
