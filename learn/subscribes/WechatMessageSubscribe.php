@@ -19,8 +19,8 @@ class WechatMessageSubscribe
     {
         list($message) = $event;
         $event = $message->MsgType == 'event' ? strtolower($message->Event) : strtolower($message->MsgType);
-        file_put_contents("111111.log",json_encode($message));
-        WechatMessage::saveMessage($message->FromUserName, $event, json_encode($message));
+        file_put_contents("111111.log",json_encode($message,true));
+        WechatMessage::saveMessage($message->FromUserName, $event, json_encode($message,true));
     }
 
     /**
