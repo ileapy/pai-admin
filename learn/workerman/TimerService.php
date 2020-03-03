@@ -13,19 +13,19 @@ class TimerService extends Server
      * 协议
      * @var string
      */
-    protected $socket = null;
+    protected $protocol = "websocket";
 
     /**
      * 监听地址
      * @var string
      */
-    protected $host = '';
+    protected $host = '0.0.0.0';
 
     /**
      * 端口
      * @var string
      */
-    protected $port = "";
+    protected $port = 1999;
 
     /**
      * @var int
