@@ -80,6 +80,6 @@ class SystemConfig extends BaseModel
     {
         $model = new self;
         $model = $model->where("form_name", $form_name);
-        return $model->save(['value'=>$value]);
+        return $model->update(['value'=>$value]);
     }
 }
