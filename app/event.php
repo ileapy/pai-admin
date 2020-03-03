@@ -5,6 +5,11 @@ return [
     ],
 
     'listen'    => [
+        'task_1'=>[],//1秒钟执行的方法
+        'task_5'=>[],//5秒钟执行的方法
+        'task_10'=>[],//10秒钟执行的方法
+        'task_30'=>[],//30秒钟执行的方法
+        'task_60'=>[],//60秒钟执行的方法
         'AppInit'  => [],
         'HttpRun'  => [],
         'HttpEnd'  => [],
@@ -17,5 +22,6 @@ return [
     'subscribe' => [
         \learn\subscribes\AdminSubscribe::class, // 操作记录
         \learn\subscribes\SystemSubscribe::class, // 系统通知
+        \learn\subscribes\TimerSubscribe::class, // 定时器
     ],
 ];
