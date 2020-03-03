@@ -67,6 +67,7 @@ class WechatService
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws \ReflectionException
      */
     public static function serve():Response
     {
@@ -93,25 +94,7 @@ class WechatService
                     switch (strtolower($message->Event)){
                         case 'subscribe':
                             $response = WechatReply::reply('subscribe');
-                            if(isset($message->EventKey)){
-                                if ($message->EventKey && ($qrInfo = QrcodeService::getQrcode($message->Ticket, 'ticket'))) {
-                                    QrcodeService::scanQrcode($message->Ticket, 'ticket');
-                                    if(strtolower($qrInfo['third_type']) == 'spread'){
-                                        try{
-                                            $spreadUid = $qrInfo['third_id'];
-                                            $uid = WechatUser::openidToUid($message->FromUserName, 'openid');
-                                            if($spreadUid == $uid) return '自己不能推荐自己';
-                                            $userInfo = User::getUserInfo($uid);
-                                            if($userInfo['spread_uid']) return '已有推荐人!';
-                                            if(!User::setSpreadUid($userInfo['uid'],$spreadUid)){
-                                                $response = '绑定推荐人失败!';
-                                            }
-                                        }catch (\Exception $e){
-                                            $response = $e->getMessage();
-                                        }
-                                    }
-                                }
-                            }
+                            event('WechatEventSubscribeBefore',[$message]);
                             break;
                         case 'unsubscribe':
                             event('WechatEventUnsubscribeBefore',[$message]);
