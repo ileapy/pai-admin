@@ -3,8 +3,7 @@
 
 namespace learn\services;
 
-use EasyWeChat\Work\Application;
-use EasyWeChat\Work\Server\Guard;
+use EasyWeChat\Factory;
 use think\Response;
 
 /**
@@ -30,47 +29,40 @@ class WechatService
     public static function options()
     {
         $wechat = SystemConfigMore(['wechat_appid','wechat_appsecret','wechat_token','wechat_aeskey','wechat_encry']);
-        //$payment = SystemConfigMore(['pay_weixin_mchid','pay_weixin_client_cert','pay_weixin_client_key','pay_weixin_key','pay_weixin_open']);
         $config = [
             'app_id'=>isset($wechat['wechat_appid']) ? trim($wechat['wechat_appid']) :'',
             'secret'=>isset($wechat['wechat_appsecret']) ? trim($wechat['wechat_appsecret']) :'',
             'token'=>isset($wechat['wechat_token']) ? trim($wechat['wechat_token']) :'',
+            'response_type' => 'array',
             'guzzle' => [
                 'timeout' => 10.0, // 超时时间（秒）
             ],
         ];
         if(isset($wechat['wechat_encry']) && (int)$wechat['wechat_encry']>1 && isset($wechat['wechat_aeskey']) && !empty($wechat['wechat_aeskey']))
             $config['aes_key'] =  $wechat['wechat_aeskey'];
-//        if(isset($payment['pay_weixin_open']) && $payment['pay_weixin_open'] == 1){
-//            $config['payment'] = [
-//                'merchant_id'=>trim($payment['pay_weixin_mchid']),
-//                'key'=>trim($payment['pay_weixin_key']),
-//                'cert_path'=>realpath('.'.$payment['pay_weixin_client_cert']),
-//                'key_path'=>realpath('.'.$payment['pay_weixin_client_key']),
-//                //'notify_url'=>SystemConfigService::get('site_url').Url::buildUrl('wap/Wechat/notify')
-//                'notify_url'=>SystemConfigService::get('site_url') . '/api/wechat/notify'
-//            ];
-//        }
         return $config;
     }
 
     /**
-     * 应用
+     * 应用实例
      * @param bool $cache
-     * @return Application|null
+     * @return \EasyWeChat\OfficialAccount\Application|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
     public static function application($cache = false)
     {
-        (self::$instance === null || $cache === true) && (self::$instance = new Application(self::options()));
+        (self::$instance === null || $cache === true) && (self::$instance = Factory::officialAccount(self::options()));
         return self::$instance;
     }
 
     /**
      * 服务
      * @return Response
+     * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -85,8 +77,8 @@ class WechatService
     }
 
     /**
-     * 监听
-     * @param Guard $server
+     * 监听响应
+     * @param $server
      */
     private static function hook($server)
     {
