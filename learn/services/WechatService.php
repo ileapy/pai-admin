@@ -83,7 +83,8 @@ class WechatService
     private static function hook($server)
     {
         $server->setMessageHandler(function($message){
-            event('WechatMessageBefore',[$message]);
+            file_put_contents("wechat.log",serialize($message));
+            //event('WechatMessageBefore',[$message]);
             switch ($message->MsgType){
                 case 'event':
                     switch (strtolower($message->Event)){
