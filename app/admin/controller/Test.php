@@ -22,6 +22,8 @@ class Test extends AuthController
         $sms = new QCloudSmsService(systemConfig("sms_appid"),systemConfig("sms_appkey"));
         $sms->setPhoneNumbers(['18438622618']);
         //var_dump($sms->sendSingleSms(systemConfig("sms_login"),['123456'],""));
+        $wechat = SystemConfigMore(['wechat_appid','wechat_appsecret','wechat_token','wechat_aeskey','wechat_encry']);
+        var_dump($wechat);
     }
 
 }
