@@ -27,6 +27,7 @@ class WechatMessage extends BaseModel
     {
         $data = compact("openid","type", "message");
         $data['add_time'] = time();
+        file_put_contents("xxx.log",json_encode($data));
         return self::create($data);
     }
 }
