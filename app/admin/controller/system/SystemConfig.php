@@ -206,12 +206,13 @@ class SystemConfig extends AuthController
      */
     public function ajaxSave(Request $request)
     {
-        $res = true;
-        foreach ($request->param() as $k => $v)
+        try {
+            foreach ($request->param() as $k => $v) cModel::editValueByFormName($k,$v);
+            return app("json")->success("操作成功");
+        }catch (\Exception $e)
         {
-            var_dump($k,$v);
-            $res = $res || cModel::editValueByFormName($k,$v);
+            return app("json")->fail("操作失败");
         }
-        return $res ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+
     }
 }
