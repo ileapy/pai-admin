@@ -13,7 +13,7 @@ class TimerService extends Server
      * 协议
      * @var string
      */
-    protected $protocol = "websocket";
+    protected $socket = "";
 
     /**
      * 监听地址
