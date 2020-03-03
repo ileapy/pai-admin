@@ -87,11 +87,11 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
-            file_put_contents("wechat.log",$message->MsgType);
+            file_put_contents("wechat.log",json_encode($message,true));
             event('MessageBefore',[$message]);
-            switch ($message->MsgType){
+            switch ($message['MsgType']){
                 case 'event':
-                    switch (strtolower($message->Event)){
+                    switch (strtolower($message['Event'])){
                         case 'subscribe':
                             //$response = WechatReply::reply('subscribe');
                             event('EventSubscribeBefore',[$message]);
@@ -123,7 +123,7 @@ class WechatService
                             $response = MessageRepositories::wechatEventLocation($message);
                             break;
                         case 'click':
-                            $response = WechatReply::reply($message->EventKey);
+                            $response = WechatReply::reply($message['EventKey']);
                             break;
                         case 'view':
                             $response = MessageRepositories::wechatEventView($message);
@@ -131,7 +131,7 @@ class WechatService
                     }
                     break;
                 case 'text':
-                    $response = WechatReply::reply($message->Content,$message->FromUserName);
+                    $response = WechatReply::reply($message['Content'],$message['FromUserName']);
                     break;
                 case 'image':
                     $response = MessageRepositories::wechatMessageImage($message);
