@@ -79,6 +79,8 @@ class TimerService extends Server
                 }
             } catch (\Exception $e) {
                 var_dump($e);
+                // 出错定时器停止
+                Timer::del($this->timer);
             }
         });
     }
