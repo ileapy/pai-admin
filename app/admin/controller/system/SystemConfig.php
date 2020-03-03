@@ -36,6 +36,21 @@ class SystemConfig extends AuthController
     }
 
     /**
+     * 基础配置
+     * @param int $tab_id
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function wechat($tab_id = 13)
+    {
+        $this->assign("tab_id",$tab_id);
+        $this->assign("system",cModel::getLstByTabId($tab_id));
+        return $this->fetch();
+    }
+
+    /**
      * 上传配置
      * @return string
      * @throws \Exception
