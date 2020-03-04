@@ -103,8 +103,9 @@ class WechatService
                 case 'event':
                     switch (strtolower($message['Event'])){
                         case 'subscribe':
+                            file_put_contents("subscribe.log","subscribe");
                             $response = WechatReply::reply('subscribe');
-                            event('EventSubscribeBefore',[$message]);
+                            //event('EventSubscribeBefore',[$message]);
                             break;
                         case 'unsubscribe':
                             event('EventUnsubscribeBefore',[$message]);
