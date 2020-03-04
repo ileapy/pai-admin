@@ -35,11 +35,11 @@ class User extends BaseModel
     /**
      * 更新用户
      * @param array $data
-     * @param int $uid 用户id
+     * @param int|string $uid 用户id
      * @param int $type 注册类型
      * @return User
      */
-    public static function updateUser(array $data,int $uid, int $type = 0)
+    public static function updateUser(array $data, int $uid, int $type = 0)
     {
         $model = new self;
         $model = $model->where("uid",$uid);
