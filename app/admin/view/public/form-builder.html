@@ -33,7 +33,11 @@
         //提交成功后按钮恢复
         $r.btn.loading(false);
     };
-    <?=$form->formScript()?>
+    (function () {
+        var create = <?=$form->formScript()?>
+        window.$f = create();
+    })()
+
 </script>
 </body>
 </html>
