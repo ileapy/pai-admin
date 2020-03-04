@@ -32,16 +32,16 @@ class WechatReply extends BaseModel
         switch ($res['type'])
         {
             case 'text':
-                return WechatService::textMessage($res['data']);
+                return WechatService::textMessage($res['content']);
                 break;
             case 'image':
-                return WechatService::imageMessage($res['data']);
+                return WechatService::imageMessage($res['content']);
                 break;
             case 'news':
-                return WechatService::newsMessage($res['data']);
+                return WechatService::newsMessage($res['content']);
                 break;
             case 'voice':
-                return WechatService::voiceMessage($res['data']);
+                return WechatService::voiceMessage($res['content']);
                 break;
         }
     }
