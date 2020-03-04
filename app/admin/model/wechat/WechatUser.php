@@ -63,20 +63,14 @@ class WechatUser extends BaseModel
     /**
      * 更新微信用户
      * @param array $data
-     * @return User
+     * @return bool
      */
     public static function updateUser(array $data)
     {
-        try {
-            $uid = self::where("openid",$data['openid'])->field(['uid']);
-            file_put_contents("uid.log",$uid);
-            $res1 = self::update($data,['uid'=>$uid]);
-            $res2 = User::updateUser($data, $uid,1);
-            return $res1 && $res2;
-        }catch (\Exception $e)
-        {
-            file_put_contents("error.log",$e);
-        }
+        $uid = self::where("openid",$data['openid'])->column('uid');
+        $res1 = self::update($data,['uid'=>$uid]);
+        $res2 = User::updateUser($data, (int)$uid,1);
+        return $res1 && $res2;
     }
 
     /**
