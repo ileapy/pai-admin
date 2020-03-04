@@ -103,7 +103,6 @@ class WechatService
                 case 'event':
                     switch (strtolower($message['Event'])){
                         case 'subscribe':
-
                             $response = WechatReply::reply('subscribe');
                             file_put_contents("subscribe.log",json_encode($response));
                             //event('EventSubscribeBefore',[$message]);
@@ -144,6 +143,7 @@ class WechatService
                     break;
                 case 'text':
                     $response = WechatReply::reply($message['Content']);
+                    file_put_contents("text.log",json_encode($response));
                     break;
                 case 'image':
                     $response = MessageRepositories::wechatMessageImage($message);
