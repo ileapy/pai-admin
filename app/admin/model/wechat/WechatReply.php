@@ -29,20 +29,19 @@ class WechatReply extends BaseModel
     {
         $res = self::where('key',$keyword)->where('status','1')->find();
         if(empty($res)) return WechatService::transfer();
-        $res['data'] = json_decode($res['data'],true);
         switch ($res['type'])
         {
             case 'text':
-                return WechatService::textMessage($res['data']['content']);
+                return WechatService::textMessage($res['data']);
                 break;
             case 'image':
-                return WechatService::imageMessage($res['data']['media_id']);
+                return WechatService::imageMessage($res['data']);
                 break;
             case 'news':
                 return WechatService::newsMessage($res['data']);
                 break;
             case 'voice':
-                return WechatService::voiceMessage($res['data']['media_id']);
+                return WechatService::voiceMessage($res['data']);
                 break;
         }
     }
