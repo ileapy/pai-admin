@@ -33,7 +33,7 @@ class WechatMessageSubscribe
     }
 
     /**
-     * 用户取消关注公众号前置操作
+     * 用户关注公众号前置操作
      * @param $event
      */
     public function onEventSubscribeBefore($event)
