@@ -45,20 +45,25 @@ class WechatUser extends BaseModel
             'groupid' => $userInfo['groupid'],
             'tagid_list' => $userInfo['tagid_list'],
         ];
-        return self::be($openId,"openid") ? self::updateUser($data) : self::addUser($data,User::addUser($data));
+        return self::be($openId,"openid") ? self::updateUser($data) : self::addUser($data, User::addUser($data));
     }
 
     /**
      * 添加微信用户
      * @param array $data
-     * @param int $uid
+     * @param int|string $uid
      * @return WechatUser|\think\Model
      */
-    public static function addUser(array $data,int $uid)
+    public static function addUser(array $data, int $uid)
     {
-        $data['uid'] = $uid;
-        file_put_contents("add.log",json_decode($data));
-        return self::create($data);
+        try {
+            $data['uid'] = $uid;
+            file_put_contents("add.log",json_decode($data));
+            return self::create($data);
+        }catch (\Exception $e)
+        {
+            file_put_contents("error.log",$e);
+        }
     }
 
     /**

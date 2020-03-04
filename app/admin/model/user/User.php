@@ -18,25 +18,18 @@ class User extends BaseModel
      */
     public static function addUser(array $data)
     {
-        try {
-            $uid = self::insertGetId([
-                'nickname' => $data['nickname'],
-                'avatar' => $data['avatar'],
-                'sex' => $data['sex'],
-                'register_ip' => request()->ip(),
-                'register_time' => time(),
-                'register_type' => 1,
-                'status'=>1,
-                'level'=>1,
-                'integral'=>0,
-                'money'=>0,
-            ]);
-            file_put_contents("uid.log",$uid);
-            return $uid;
-        }catch (\Exception $e)
-        {
-            file_put_contents("error.log",$e);
-        }
+        return self::insertGetId([
+            'nickname' => $data['nickname'],
+            'avatar' => $data['avatar'],
+            'sex' => $data['sex'],
+            'register_ip' => request()->ip(),
+            'register_time' => time(),
+            'register_type' => 1,
+            'status'=>1,
+            'level'=>1,
+            'integral'=>0,
+            'money'=>0,
+        ]);
     }
 
     /**
