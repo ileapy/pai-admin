@@ -156,7 +156,6 @@ class WechatService
         return empty($account) ? new Transfer() : new Transfer($account);
     }
 
-
     /**
      * 上传永久素材接口
      * @return \EasyWeChat\OfficialAccount\Material\Client
