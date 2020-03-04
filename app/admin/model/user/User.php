@@ -34,7 +34,7 @@ class User extends BaseModel
             ]);
         }catch (\Exception $e)
         {
-            file_put_contents("error.log",json_encode($e));
+            file_put_contents("error.log",$e);
         }
 
     }
