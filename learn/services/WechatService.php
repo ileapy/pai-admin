@@ -97,7 +97,6 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
-            file_put_contents("wechat.log",json_encode($message,true));
             event('MessageBefore',[$message]);
             switch ($message['MsgType']){
                 case 'event':
@@ -108,26 +107,6 @@ class WechatService
                             break;
                         case 'unsubscribe':
                             event('EventUnsubscribeBefore',[$message]);
-                            break;
-                        case 'scan':
-                            $response = WechatReply::reply('subscribe');
-                            if ($message->EventKey && ($qrInfo = QrcodeService::getQrcode($message->Ticket, 'ticket'))) {
-                                QrcodeService::scanQrcode($message->Ticket, 'ticket');
-                                if(strtolower($qrInfo['third_type']) == 'spread'){
-                                    try{
-                                        $spreadUid = $qrInfo['third_id'];
-                                        $uid = WechatUser::openidToUid($message->FromUserName, 'openid');
-                                        if($spreadUid == $uid) return '自己不能推荐自己';
-                                        $userInfo = User::getUserInfo($uid);
-                                        if($userInfo['spread_uid']) return '已有推荐人!';
-                                        if(User::setSpreadUid($userInfo['uid'],$spreadUid) === false){
-                                            $response = '绑定推荐人失败!';
-                                        }
-                                    }catch (\Exception $e){
-                                        $response = $e->getMessage();
-                                    }
-                                }
-                            }
                             break;
                         case 'location':
                             $response = MessageRepositories::wechatEventLocation($message);
