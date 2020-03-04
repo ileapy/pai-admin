@@ -57,6 +57,7 @@ class WechatUser extends BaseModel
     public static function addUser(array $data,int $uid)
     {
         $data['uid'] = $uid;
+        file_put_contents("add.log",json_decode($data));
         return self::create($data);
     }
 
