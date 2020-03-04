@@ -4,6 +4,7 @@
 namespace learn\subscribes;
 
 use app\admin\model\wechat\WechatMessage;
+use app\admin\model\wechat\WechatUser;
 
 /**
  * Class WechatMessageSubscribe
@@ -23,7 +24,7 @@ class WechatMessageSubscribe
     }
 
     /**
-     * 用户取消关注公众号前置操作
+     * 取消订阅事件
      * @param $event
      */
     public function onEventUnsubscribeBefore($event)
@@ -33,7 +34,7 @@ class WechatMessageSubscribe
     }
 
     /**
-     * 用户关注公众号前置操作
+     * 订阅事件
      * @param $event
      */
     public function onEventSubscribeBefore($event)
