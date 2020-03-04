@@ -33,6 +33,6 @@ class FormBuilderService
             '<script src="/static/admin/js/formbuilder/province_city.js"></script>',
             '<script src="/static/admin/js/formbuilder/province_city_area.js"></script>'
         ]);
-        return $form->view();
+        return $form;
     }
 }

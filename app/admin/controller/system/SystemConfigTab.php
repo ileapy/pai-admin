@@ -49,7 +49,9 @@ class SystemConfigTab extends AuthController
         $form[] = Elm::input('name','分类名称')->col(10);
         $form[] = Elm::number('rank','排序',0)->col(24);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(24);
-        return Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('save')->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
     }
 
     /**
