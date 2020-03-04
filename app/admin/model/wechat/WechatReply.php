@@ -29,8 +29,9 @@ class WechatReply extends BaseModel
     {
         file_put_contents("sd.log",$keyword);
         $res = self::where('key',$keyword)->where('status','1')->find();
+        file_put_contents("reply1.log",json_encode($res));
         if(empty($res)) return WechatService::transfer();
-        file_put_contents("reply.log",json_encode($res));
+        file_put_contents("reply2.log",json_encode($res));
         switch ($res['type'])
         {
             case 'text':
