@@ -67,9 +67,14 @@ class WechatUser extends BaseModel
      */
     public static function updateUser(array $data)
     {
-        $uid = self::where("openid",$data['openid'])->field(['uid']);
-        self::update($data,['uid'=>$uid]);
-        return User::updateUser($data, (int)$uid,1);
+        try {
+            $uid = self::where("openid",$data['openid'])->field(['uid']);
+            self::update($data,['uid'=>$uid]);
+            return User::updateUser($data, (int)$uid,1);
+        }catch (\Exception $e)
+        {
+            file_put_contents("error.log",$e);
+        }
     }
 
     /**
