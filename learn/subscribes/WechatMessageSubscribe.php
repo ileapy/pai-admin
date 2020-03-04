@@ -30,16 +30,21 @@ class WechatMessageSubscribe
     public function onEventUnsubscribeBefore($event)
     {
         list($message) = $event;
-        WechatUser::unSubscribe($message->FromUserName);
+        WechatUser::unSubscribe($message['FromUserName']);
     }
 
     /**
      * 订阅事件
      * @param $event
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function onEventSubscribeBefore($event)
     {
         list($message) = $event;
-        WechatUser::subscribe($message->FromUserName);
+        WechatUser::subscribe($message['FromUserName']);
     }
 }
