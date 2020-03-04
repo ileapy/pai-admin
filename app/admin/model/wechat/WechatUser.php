@@ -6,6 +6,7 @@ namespace app\admin\model\wechat;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use app\admin\model\user\User;
 use learn\services\WechatService;
 
 /**
@@ -20,6 +21,7 @@ class WechatUser extends BaseModel
     /**
      * 订阅
      * @param string $openId
+     * @return User|WechatUser|\think\Model
      * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \think\db\exception\DataNotFoundException
@@ -28,23 +30,55 @@ class WechatUser extends BaseModel
      */
     public static function subscribe(string $openId)
     {
-        if (self::be($openId,'openid'))
-        {
+        $userInfo = WechatService::getUserInfo($openId);
+        $data = [
+            'openid' => $userInfo['openid'],
+            'nickname' => $userInfo['nickname'],
+            'avatar' => $userInfo['headimgurl'],
+            'sex' => $userInfo['sex'],
+            'city' => $userInfo['city'],
+            'language' => $userInfo['language'],
+            'province' => $userInfo['province'],
+            'country' => $userInfo['country'],
+            'subscribe' => $userInfo['subscribe'],
+            'subscribe_time' => $userInfo['subscribe_time'],
+            'groupid' => $userInfo['groupid'],
+            'tagid_list' => $userInfo['tagid_list'],
+        ];
+        return self::be($openId,"openid") ? self::updateUser($data) : self::addUser($data,User::addUser($data));
+    }
 
-        }else
-        {
-            $userInfo = WechatService::getUserInfo($openId);
-            file_put_contents("user.log",json_encode($userInfo));
-        }
+    /**
+     * 添加微信用户
+     * @param array $data
+     * @param int $uid
+     * @return WechatUser|\think\Model
+     */
+    public static function addUser(array $data,int $uid)
+    {
+        $data['uid'] = $uid;
+        return self::create($data);
+    }
 
+    /**
+     * 更新微信用户
+     * @param array $data
+     * @return User
+     */
+    public static function updateUser(array $data)
+    {
+        $uid = self::where("openid",$data['openid'])->field(['uid']);
+        self::update($data,['uid'=>$uid]);
+        return User::updateUser($data, (int)$uid,1);
     }
 
     /**
      * 取消订阅
      * @param string $openId
+     * @return WechatUser
      */
     public static function unSubscribe(string $openId)
     {
-
+        return self::update(['subscribe'=>0],['openid'=>$openId]);
     }
 }
