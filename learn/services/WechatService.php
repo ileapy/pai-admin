@@ -142,7 +142,7 @@ class WechatService
                     }
                     break;
                 case 'text':
-                    $response = WechatReply::reply($message['Content'],$message['FromUserName']);
+                    $response = WechatReply::reply($message['Content']);
                     break;
                 case 'image':
                     $response = MessageRepositories::wechatMessageImage($message);

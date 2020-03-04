@@ -29,6 +29,7 @@ class WechatReply extends BaseModel
     {
         $res = self::where('key',$keyword)->where('status','1')->find();
         if(empty($res)) return WechatService::transfer();
+        file_put_contents("reply.log",json_encode($res));
         switch ($res['type'])
         {
             case 'text':
