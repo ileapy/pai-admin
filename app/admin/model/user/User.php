@@ -18,6 +18,7 @@ class User extends BaseModel
      */
     public static function addUser(array $data)
     {
+        file_put_contents("addus.log",json_encode($data));
         return self::insertGetId([
             'nickname' => $data['nickname'],
             'avatar' => $data['avatar'],
