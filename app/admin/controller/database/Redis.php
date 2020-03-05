@@ -17,6 +17,6 @@ class Redis extends AuthController
     public function index()
     {
         $redis = app("redis");
-        var_dump($redis->keys('*'););
+        var_dump($redis->keys('*'));
     }
 }
