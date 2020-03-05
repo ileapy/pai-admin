@@ -33,7 +33,7 @@
                             <a href="javascript:void(0)"><i class="{$vo.icon}"></i> <span>{$vo.title}</span></a>
                             <ul class="nav nav-subnav">
                                 {foreach $vo['children'] as $key=>$val}
-                                {if !empty($vo['children'])}
+                                {if !empty($val['children'])}
                                 <li class="nav-item nav-item-has-subnav">
                                     <a href="javascript:void(0)"><i class="{$val.icon}"></i> <span>{$val.title}</span></a>
                                     <ul class="nav nav-subnav">
