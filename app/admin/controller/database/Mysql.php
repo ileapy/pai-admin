@@ -14,12 +14,14 @@ use think\facade\Db;
  */
 class Mysql extends AuthController
 {
-
+    /**
+     * 数据库列表
+     * @return string
+     * @throws \Exception
+     */
     public function index()
     {
-        var_dump(config("database.connections.mysql.database"));
-        $res = Db::query("SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.tables WHERE table_schema = '".config("database.connections.mysql.database")."';");
-        var_dump($res);
+        $this->assign("tables",Db::query("SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.tables WHERE table_schema = '".config("database.connections.mysql.database")."';"));
         return $this->fetch();
     }
 }
