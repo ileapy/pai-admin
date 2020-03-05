@@ -27,7 +27,7 @@ class WechatMenu extends AuthController
         $menu = WechatService::menuService();
         $buttons = $menu->current()['selfmenu_info']['button'];
         var_dump($buttons);
-        var_dump($menu->create($buttons););
+        var_dump($menu->create($buttons));
         $this->assign("menu",$menu);
         return $this->fetch();
     }
