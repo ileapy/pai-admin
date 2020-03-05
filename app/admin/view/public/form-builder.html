@@ -66,9 +66,9 @@
                 var h = g([])
                     , c = {}
                     , d = {}
-                    , j = <?=$form->getFormContentType()?>
-                    , f = <?=$form->getAction()?>
-                    , a = <?=$form->getMethod()?>
+                    , j = "<?=$form->getFormContentType()?>"
+                    , f = "<?=$form->getAction()?>"
+                    , a = "<?=$form->getMethod()?>"
                     , b = new Vue();
                 if (!b.$Message && b.$message) {
                     Vue.prototype.$Message = b.$message
