@@ -51,7 +51,9 @@ class AdminRole extends AuthController
         $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid != 0 ? explode(",",rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
         $form[] = Elm::number('rank','排序')->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
-        return Form::make_post_form($form, url('save')->build());
+        $form =  Form::make_post_form($form, url('save')->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
     }
 
     /**
@@ -74,7 +76,9 @@ class AdminRole extends AuthController
         $form[] = Elm::treeChecked('tree_data','选择权限',toIntArray(explode(",",$rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0,$rinfo['pid'] == 0 ? aModel::getIds() : explode(",",rModel::get($rinfo['pid'])['auth'])))->col(18);
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
         $form[] = Elm::radio('status','状态',$rinfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(18);
-        return Form::make_post_form($form, url('save',['id'=>$id])->build());
+        $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
     }
 
     /**

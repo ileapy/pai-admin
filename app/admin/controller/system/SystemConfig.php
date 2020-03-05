@@ -130,7 +130,9 @@ class SystemConfig extends AuthController
         $form[] = Elm::radio('is_show','是否显示',1)->options([['label'=>'隐藏','value'=>0],['label'=>'显示','value'=>1]])->col(10);
         $form[] = Elm::radio('upload_type','上传配置',0)->options([['label'=>'单选','value'=>0],['label'=>'多选','value'=>1]])->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(10);
-        return Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('save')->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
     }
 
     /**
@@ -157,7 +159,9 @@ class SystemConfig extends AuthController
         $form[] = Elm::radio('is_show','是否显示',$info['is_show'])->options([['label'=>'隐藏','value'=>0],['label'=>'显示','value'=>1]])->col(10);
         $form[] = Elm::radio('upload_type','上传配置',$info['upload_type'])->options([['label'=>'单选','value'=>0],['label'=>'多选','value'=>1]])->col(10);
         $form[] = Elm::radio('status','状态',$info['status'])->options([['label'=>'禁用','value'=>0],['label'=>'启用','value'=>1]])->col(10);
-        return Form::make_post_form($form, url('save',["id"=>$id])->build());
+        $form = Form::make_post_form($form, url('save',["id"=>$id])->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
     }
 
     /**
