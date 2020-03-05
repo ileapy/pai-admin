@@ -24,4 +24,17 @@ class Mysql extends AuthController
         $this->assign("tables",Db::query("SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.tables WHERE table_schema = '".config("database.connections.mysql.database")."';"));
         return $this->fetch();
     }
+
+    /**
+     * 获取表结构
+     * @param $table_name
+     * @return string
+     * @throws \Exception
+     */
+    public function detail($table_name = "")
+    {
+        if (!$table_name) return;
+        $this->assign("info",Db::query("select COLUMN_NAME,COLUMN_TYPE,COLUMN_COMMENT from information_schema.columns where table_schema = '".config("database.connections.mysql.database")."' and table_name = '".$table_name."';"));
+        return $this->fetch();
+    }
 }
