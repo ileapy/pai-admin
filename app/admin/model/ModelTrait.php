@@ -335,4 +335,19 @@ trait ModelTrait
     {
         return $model->count();
     }
+
+    /**
+     * 横线
+     * @param int $num
+     * @return string
+     */
+    public static function cross(int $num=0): string
+    {
+        $str = "";
+        if ($num == 1) $str .= "|--";
+        elseif ($num > 1) for($i=0;$i<$num;$i++)
+            if ($i==0) $str .= "|--";
+            else $str .= "--";
+        return $str." ";
+    }
 }

@@ -69,7 +69,6 @@ class AdminRole extends BaseModel
         return $data->toArray() ?: [];
     }
 
-
     /**
      * 获取选择数据
      * @param int $pid
@@ -93,12 +92,12 @@ class AdminRole extends BaseModel
     }
 
     /**
-     * 遍历选择项
-     * @param array $data
-     * @param $list
-     * @param int $num
-     * @param bool $clear
-     */
+ * 遍历选择项
+ * @param array $data
+ * @param $list
+ * @param int $num
+ * @param bool $clear
+ */
     public static function myOptions(array $data, &$list, $num = 0, $clear=true)
     {
         foreach ($data as $k=>$v)

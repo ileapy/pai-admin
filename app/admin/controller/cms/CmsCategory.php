@@ -47,7 +47,6 @@ class CmsCategory extends AuthController
      * 添加
      * @param int $pid
      * @return string
-     * @throws FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -72,7 +71,6 @@ class CmsCategory extends AuthController
      * 添加
      * @param int $id
      * @return string
-     * @throws FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
