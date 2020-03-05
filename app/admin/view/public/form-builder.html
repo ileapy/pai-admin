@@ -14,9 +14,11 @@
 <body>
 <script>
     window.$f = null;
+    // 回调
     formCreate.formSuccess = function(res){
         parent.location.reload();
     };
+    // 构建表单
     (function () {
         var create = (function() {
                 var e = function(l, k) {
