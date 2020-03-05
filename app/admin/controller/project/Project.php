@@ -56,11 +56,11 @@ class project extends AuthController
                 $menus[] = ['value'=>$menu['id'],'label'=>$menu['id']." - ".$menu['realname']];//,'disabled'=>$menu['pid']== 0];
             }
             return $menus;
-        })->col(10);
+        })->filterable(true)->col(10);
         $form[] = Elm::textarea('intro','项目简介')->col(24);
         $form[] = Elm::select('language','编程语言')->options(function (){
             return languageOptions();
-        })->multiple(true)->col(10);
+        })->multiple(true)->filterable(true)->col(10);
         $form[] = Elm::dateTimeRange('start_time','开始时间')->col(10);
         $form[] = Elm::input('sql_ip','数据库IP')->col(10);
         $form[] = Elm::input('sql_name','数据库账号')->col(10);
@@ -90,11 +90,11 @@ class project extends AuthController
                 $menus[] = ['value'=>$menu['id'],'label'=>$menu['id']." - ".$menu['realname']];//,'disabled'=>$menu['pid']== 0];
             }
             return $menus;
-        })->col(10);
+        })->filterable(true)->col(10);
         $form[] = Elm::textarea('intro','项目简介',$info['intro'])->col(24);
         $form[] = Elm::select('language','编程语言',explode(",",$info['language']))->options(function (){
             return languageOptions();
-        })->multiple(true)->col(10);
+        })->multiple(true)->filterable(true)->col(10);
         $form[] = Elm::dateTimeRange('start_time','开始时间',$info['start_time'],$info['end_time'])->col(10);
         $form[] = Elm::input('sql_ip','数据库IP',$info['sql_ip'])->col(10);
         $form[] = Elm::input('sql_name','数据库账号',$info['sql_name'])->col(10);

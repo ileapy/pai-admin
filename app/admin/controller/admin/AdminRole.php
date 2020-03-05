@@ -46,7 +46,7 @@ class AdminRole extends AuthController
     public function add($pid = 0)
     {
         $form = array();
-        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->col(18);
+        $form[] = Elm::select('pid','所属上级',(int)$pid)->options(rModel::returnOptions())->filterable(true)->col(18);
         $form[] = Elm::input('name','角色名称')->col(18);
         $form[] = Elm::treeChecked('tree_data','选择权限')->data(aModel::selectAndBuildTree(0,$pid != 0 ? explode(",",rModel::get($pid)['auth']) : ($this->adminId == 1 ? aModel::getIds() : $this->auth)))->col(18);
         $form[] = Elm::number('rank','排序')->col(18);
@@ -69,7 +69,7 @@ class AdminRole extends AuthController
         $rinfo = rModel::get($id);
         if (!$rinfo) return app("json")->fail("没有该权限");
         $form = array();
-        $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->col(18);
+        $form[] = Elm::select('pid','所属上级',$rinfo['pid'])->options(rModel::returnOptions())->filterable(true)->col(18);
         $form[] = Elm::input('name','角色名称',$rinfo['name'])->col(18);
         $form[] = Elm::treeChecked('tree_data','选择权限',toIntArray(explode(",",$rinfo['tree_data'])))->data(aModel::selectAndBuildTree(0,$rinfo['pid'] == 0 ? aModel::getIds() : explode(",",rModel::get($rinfo['pid'])['auth'])))->col(18);
         $form[] = Elm::number('rank','排序',$rinfo['rank'])->col(18);
