@@ -80,7 +80,17 @@
             },
             {
                 field: 'type',
-                title: '栏目类型'
+                title: '栏目类型',
+                formatter: function (value, row, index) {
+                   switch (value) {
+                       case 1:
+                           return "单页";
+                       case 2:
+                           return "列表";
+                       case 3:
+                           return "链接";
+                   }
+                },
             },
             {
                 field: 'link',
