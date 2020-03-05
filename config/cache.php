@@ -35,7 +35,7 @@ return [
             // 密码
             'password'  => '',
             // 位置
-            'select'    => 0,
+            'select'    => 6,
             // 链接超时
             'timeout'    => 0,
             // 有效期
