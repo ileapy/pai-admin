@@ -16,8 +16,11 @@
     window.$f = null;
     // 回调
     formCreate.formSuccess = function(res){
-        parent.location.reload();
+        setTimeout(function (){
+            parent.location.reload();
+        }, 3000);
     };
+
     // 构建表单
     (function () {
         var create = (function() {
