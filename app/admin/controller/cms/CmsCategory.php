@@ -59,7 +59,7 @@ class CmsCategory extends AuthController
         $form[] = Elm::input('name','栏目名称')->col(18);
         $form[] = Elm::radio('type','菜单类型',1)->options([['label'=>'单页','value'=>1],['label'=>'列表','value'=>2],['label'=>'链接','value'=>3]])->col(18);
         $form[] = Elm::input('link','链接')->col(18);
-        $form[] = Elm::number('rank','排序')->col(18);
+        $form[] = Elm::number('rank','排序',0)->col(18);
         $form[] = Elm::radio('is_menu','是否菜单',1)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(18);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(18);
         $form =  Form::make_post_form($form, url('save')->build());
