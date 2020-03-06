@@ -27,4 +27,19 @@ class CmsTag extends BaseModel
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }
+
+    /**
+     * 分页
+     * @param $where
+     * @return array
+     */
+    public static function systemPage($where)
+    {
+        $model = new self;
+        if ($where['name'] != '') $model = $model->where("name","like","%$where[name]%");
+        if ($where['status'] != '') $model = $model->where("status",$where['status']);
+        $count = self::counts($model);
+        $data = $model->page($where['page'],$where['limit']);
+        return compact("data","count");
+    }
 }
