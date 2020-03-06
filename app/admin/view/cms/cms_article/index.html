@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加单页','/admin/cms.cms_page/add')"><i class="mdi mdi-plus"></i> 新增</a>
+                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加文章','/admin/cms.cms_page/add')"><i class="mdi mdi-plus"></i> 新增</a>
                         <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
                         <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
                         <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -36,9 +36,14 @@
                                         <input type="checkbox" id="check-all"><span></span>
                                     </label>
                                 </th>
-                                <th>分类ID</th>
+                                <th>文章名称</th>
                                 <th>分类名称</th>
+                                <th>作者</th>
+                                <th>摘要</th>
                                 <th>发布时间</th>
+                                <th>阅读数</th>
+                                <th>点赞数</th>
+                                <th>排序</th>
                                 <th>状态</th>
                                 <th>操作</th>
                             </tr>
@@ -51,13 +56,18 @@
                                         <input type="checkbox" name="ids[]" value="{$vo.cid}"><span></span>
                                     </label>
                                 </td>
-                                <td>{$vo.cid}</td>
+                                <td>{$vo.name}</td>
                                 <td>{$vo.category.name}</td>
+                                <td>{$vo.author}</td>
+                                <td>{$vo.abstract}</td>
                                 <td>{$vo.show_time|date='Y-m-d H:i:s'}</td>
+                                <th>{$vo.view}</th>
+                                <th>{$vo.like}</th>
+                                <td>{$vo.rank}</td>
                                 <td>{if $vo.status == 1 }正常{else/}禁用{/if}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('编辑单页','/admin/cms.cms_page/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
+                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('编辑文章','/admin/cms.cms_page/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
                                         <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip" onclick="del('{$vo.cid}')"><i class="mdi mdi-window-close"></i></a>
                                     </div>
                                 </td>

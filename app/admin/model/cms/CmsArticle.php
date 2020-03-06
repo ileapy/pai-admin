@@ -3,15 +3,14 @@
 
 namespace app\admin\model\cms;
 
-
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
 
 /**
- * Class CmsPage
+ * Class CmsArticle
  * @package app\admin\model\cms
  */
-class CmsPage extends BaseModel
+class CmsArticle extends BaseModel
 {
     use ModelTrait;
 
@@ -26,9 +25,13 @@ class CmsPage extends BaseModel
     {
         $model = new self;
         $model = $model->with("category");
+        $model = $model->with("record");
         if ($where['name']) $model = $model->where("name","like",$where['name']);
         $model = $model->append($where);
-        return $model->paginate(10);
+        return $model->paginate(10)->each(function ($item){
+            $item['view'] = CmsRecord::where("type",1)->count();
+            $item['like'] = CmsRecord::where("type",2)->count();
+        });;
     }
 
     /**
