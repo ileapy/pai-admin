@@ -86,4 +86,22 @@ class CmsCategory extends BaseModel
         self::myOptions(self::lst(),$list, 1, true);
         return $list;
     }
+
+    /**
+     * 查询分类选择类型
+     * @param int $type
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function selectByType(int $type = 0)
+    {
+        $model = new self;
+        if ($type != 0) $model = $model->where("type",$type);
+        $model = $model->where("status",1);
+        $model = $model->field("id,name");
+        $data = $model->select();
+        return $data ? $data->toArray() : [];
+    }
 }
