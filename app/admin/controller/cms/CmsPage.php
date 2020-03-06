@@ -22,27 +22,17 @@ class CmsPage extends AuthController
      * @return string
      * @throws \Exception
      */
-    public function index()
-    {
-        return $this->fetch();
-    }
-
-    /**
-     * 列表
-     * @param Request $request
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function lst(Request $request)
+    public function index(Request $request)
     {
         $where = Util::postMore([
             ['name'],
             ['page',1],
             ['limit',10]
         ]);
-        return Json::successlayui(PModel::systemPage($where));
+        $this->assign(PModel::systemPage($where));
+        return $this->fetch();
     }
+
 
     public function add(Request $request)
     {

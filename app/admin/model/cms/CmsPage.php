@@ -26,10 +26,7 @@ class CmsPage extends BaseModel
     {
         $model = new self;
         if ($where['name']) $model = $model->where("name","like",$where['name']);
-        $count = self::counts($model);
-        if ($where['page']&&$where['limit']) $model = $model->page($where['page'],$where['limit']);
-        $data = $model->select();
-        if ($data) $data = $data->toArray();
-        return compact("count","data");
+        $model = $model->append($where);
+        return $model->paginate(10);
     }
 }
