@@ -10,6 +10,7 @@
     <meta name="author" content="cfn">
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
 </head>
 <body>
@@ -57,7 +58,7 @@
                                 <td>
                                     <div class="btn-group">
                                         <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('添加权限','/admin/cms.cms_page/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
-                                        <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+                                        <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip" onclick="del('{$vo.cid}')"><i class="mdi mdi-window-close"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -76,6 +77,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
 <script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
+<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript">
     $(function(){
         $('.search-bar .dropdown-menu a').click(function() {
@@ -84,6 +86,27 @@
             $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
         });
     });
+    function del($cid) {
+        $.alert({
+            title: '系统提示',
+            content: '删除提醒',
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function(){
+                        $.post(url="/admin/cms.cms_page/del",data={"cid":$cid},function (res) {
+                            if (res.status == 200) parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消'
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -90,14 +90,16 @@ class CmsCategory extends BaseModel
     /**
      * 查询分类选择类型
      * @param int $type
+     * @param array $ids
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function selectByType(int $type = 0)
+    public static function selectByType(int $type = 0,array $ids = [])
     {
         $model = new self;
+        if (!empty($ids)) $model = $model->where("id","not in", $ids);
         if ($type != 0) $model = $model->where("type",$type);
         $model = $model->where("status",1);
         $model = $model->field("id,name");

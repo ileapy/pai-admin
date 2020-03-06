@@ -45,7 +45,7 @@ class CmsPage extends AuthController
      */
     public function add(Request $request)
     {
-        $this->assign("category",CModel::selectByType(1));
+        $this->assign("category",CModel::selectByType(1,PModel::column("cid")));
         return $this->fetch();
     }
 
@@ -91,5 +91,16 @@ class CmsPage extends AuthController
             $res = PModel::update($data,['cid'=>$id]);
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 删除
+     * @param Request $cid
+     * @return mixed|void
+     */
+    public function del($cid)
+    {
+        if (!is_array($cid)) $cid = [$cid];
+        return $this->model->where("cid","in",$cid)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }
