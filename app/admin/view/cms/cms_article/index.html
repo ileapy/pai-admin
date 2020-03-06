@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-toolbar clearfix">
                     <div class="toolbar-btn-action">
-                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加文章','/admin/cms.cms_page/add')"><i class="mdi mdi-plus"></i> 新增</a>
+                        <a class="btn btn-primary m-r-5" href="#!" onclick="iframe.createIframe('添加文章','/admin/cms.cms_article/add')"><i class="mdi mdi-plus"></i> 新增</a>
                         <a class="btn btn-success m-r-5" href="#!"><i class="mdi mdi-check"></i> 启用</a>
                         <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a>
                         <a class="btn btn-danger" href="#!"><i class="mdi mdi-window-close"></i> 删除</a>
@@ -67,8 +67,8 @@
                                 <td>{if $vo.status == 1 }正常{else/}禁用{/if}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('编辑文章','/admin/cms.cms_page/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
-                                        <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip" onclick="del('{$vo.cid}')"><i class="mdi mdi-window-close"></i></a>
+                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('编辑文章','/admin/cms.cms_article/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
+                                        <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip" onclick="del('{$vo.id}')"><i class="mdi mdi-window-close"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -96,7 +96,7 @@
             $('#search-btn').html($(this).text() + ' <span class="caret"></span>');
         });
     });
-    function del($cid) {
+    function del($id) {
         $.alert({
             title: '系统提示',
             content: '删除提醒',
@@ -105,7 +105,7 @@
                     text: '确认',
                     btnClass: 'btn-primary',
                     action: function(){
-                        $.post(url="/admin/cms.cms_page/del",data={"cid":$cid},function (res) {
+                        $.post(url="/admin/cms.cms_article/del",data={"id":$id},function (res) {
                             if (res.status == 200) parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                             else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                         });

@@ -7,6 +7,7 @@ namespace app\admin\controller\cms;
 use app\admin\controller\AuthController;
 use app\admin\model\cms\CmsCategory as CModel;
 use app\admin\model\cms\CmsArticle as AModel;
+use app\admin\model\cms\CmsTag as TModel;
 use app\Request;
 use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
@@ -41,7 +42,8 @@ class CmsArticle extends AuthController
      */
     public function add(Request $request)
     {
-        $this->assign("category",CModel::selectByType(1));
+        $this->assign("category",CModel::selectByType(2));
+        $this->assign("tag",TModel::lst());
         return $this->fetch();
     }
 
@@ -55,7 +57,8 @@ class CmsArticle extends AuthController
      */
     public function edit(Request $request)
     {
-        $this->assign("category",CModel::selectByType(1));
+        $this->assign("category",CModel::selectByType(2));
+        $this->assign("tag",TModel::lst());
         $this->assign("info",PModel::get($request->param(['cid'])));
         return $this->fetch();
     }
