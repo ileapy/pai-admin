@@ -25,8 +25,19 @@ class CmsPage extends BaseModel
     public static function systemPage(array $where)
     {
         $model = new self;
+        $model = $model->alias("p");
+        $model = $model->with("category");
         if ($where['name']) $model = $model->where("name","like",$where['name']);
         $model = $model->append($where);
         return $model->paginate(10);
+    }
+
+    /**
+     * 关联
+     * @return \think\model\relation\HasMany
+     */
+    public function category()
+    {
+        return $this->hasOne(CmsCategory::class,"id","cid");
     }
 }

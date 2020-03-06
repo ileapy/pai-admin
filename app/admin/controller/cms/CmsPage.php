@@ -66,9 +66,10 @@ class CmsPage extends AuthController
 
     /**
      * 保存
-     * @param Request $request
+     * @param int $id
+     * @return void
      */
-    public function save($cid=0)
+    public function save($id=0)
     {
         $data = Util::postMore([
             ['cid',0],
@@ -78,7 +79,7 @@ class CmsPage extends AuthController
         ]);
         if ($data['show_time']) $data['show_time'] = strtotime($data['show_time']);
         if ($data['content']) $data['content'] = htmlentities($data['content']);
-        if ($cid==0)
+        if ($id==0)
         {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
@@ -87,7 +88,7 @@ class CmsPage extends AuthController
         {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = PModel::update($data,['cid'=>$cid]);
+            $res = PModel::update($data,['cid'=>$id]);
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }

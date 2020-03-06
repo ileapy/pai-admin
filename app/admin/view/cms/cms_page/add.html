@@ -99,7 +99,7 @@
     });
     $("#myForm").submit(function () {
         $cid = $('#cid option:selected').val();
-        $content = $('#content').val();
+        $content = tinymce.get('content').getContent();
         $show_time = $('#show_time').val();
         $status = $('input[name=status]:radio:checked').val();
         if ($cid == 0) {lightyear.notify("栏目分类不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
