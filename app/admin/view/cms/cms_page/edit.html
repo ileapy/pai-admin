@@ -1,10 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>CMS - 派后台管理系统</title>
+    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
+    <meta name="keywords" content="派后台管理系统">
+    <meta name="description" content="派后台管理系统">
+    <meta name="author" content="cfn">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <!--弹出框-->
+    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
+    <!--时间选择插件-->
+    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
 </head>
 <body>
-
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="#!" method="post" class="row" id="myForm">
+                        <div class="form-group col-md-12">
+                            <label for="cid">栏目分类</label>
+                            <div class="form-controls">
+                                <select name="cid" class="form-control" id="cid" disabled>
+                                    <option value="0">请选择</option>
+                                    {volist name="category" id="vo"}
+                                    <option value="{$vo.id}" {if $vo.id == $info.cid}selected{/if} >{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="content">单页内容</label>
+                            <textarea id="content" name="content">{$info.content|html_entity_decode}</textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="show_time">发布时间</label>
+                            <input class="form-control js-datetimepicker" type="text" id="show_time" name="show_time" placeholder="请选择具体时间" value="{$info.show_time|date='Y-m-d H:i:s'}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD HH:mm:ss" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="status">状态</label>
+                            <div class="clearfix">
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="status" value="1" {if $info.status = 1}checked{/if}><span>启用</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="status" value="0" {if $info.status = 0}checked{/if}><span>禁用</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<!--弹出框-->
+<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<!--弹出框架-->
+<script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
+<!--时间选择插件-->
+<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/moment.min.js"></script>
+<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/locale/zh-cn.js"></script>
+<!--富文本输入框-->
+<script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
+<!--通知-->
+<script src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<script>
+    $(document).ready(function(){
+        tinymce.init({
+            selector: '#content',
+            language: 'zh_CN',
+            directionality: 'ltl',
+            browser_spellcheck: true,
+            contextmenu: false,
+            height: 480,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste imagetools wordcount",
+                "code"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
+            images_upload_url: '/admin/widget.files/tinymce',
+        });
+    });
+    $("#myForm").submit(function () {
+        $cid = $('#cid option:selected').val();
+        $content = $('#content').val();
+        $show_time = $('#show_time').val();
+        $status = $('input[name=status]:radio:checked').val();
+        if ($cid == 0) {lightyear.notify("栏目分类不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
+        $.post(url="/admin/cms.cms_page/save?cid={$info.cid}",data={"cid":$cid,"content":$content,"show_time":$show_time,"status":$status,},function (res) {
+            if (!Array.isArray(res)) res = jQuery.parseJSON(res);
+            if (res.status == 200 || res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
+            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+        });
+        return false;
+    })
+</script>
 </body>
 </html>

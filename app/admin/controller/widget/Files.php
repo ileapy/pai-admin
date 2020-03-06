@@ -39,4 +39,14 @@ class Files extends AuthController
             else return app("json")->fail("上传失败，写入文件失败！");
         }else return app("json")->fail("上传失败,图片格式有误！");
     }
+
+    /**
+     * tinymec
+     * @return mixed
+     */
+    public function tinymce()
+    {
+        $savename = \think\facade\Filesystem::putFile( 'image', request()->file('file'));
+        return json_encode(['location'=>"/upload/".$savename]);
+    }
 }

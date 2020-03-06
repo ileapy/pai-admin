@@ -52,11 +52,11 @@
                                 </td>
                                 <td>{$vo.cid}</td>
                                 <td>{$vo.cname}</td>
-                                <td>{$vo.show_time|data='Y-m-d H:i:s'}</td>
+                                <td>{$vo.show_time|date='Y-m-d H:i:s'}</td>
                                 <td>{if $vo.status == 1 }正常{else/}禁用{/if}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+                                        <a class="btn btn-xs btn-default" href="#!" title="编辑" data-toggle="tooltip" onclick="iframe.createIframe('添加权限','/admin/cms.cms_page/edit?cid={$vo.cid}');"><i class="mdi mdi-pencil"></i></a>
                                         <a class="btn btn-xs btn-default" href="#!" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
                                     </div>
                                 </td>
@@ -74,6 +74,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
 <script type="text/javascript">
     $(function(){
