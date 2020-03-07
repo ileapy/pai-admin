@@ -91,14 +91,14 @@ class CmsBanner extends AuthController
         $data = Util::postMore([
             ['name',''],
             ['position',0],
-            ['image	',''],
+            ['image',''],
             ['link',''],
             ['rank',0],
             ['status',1]
         ]);
-        if ($data['name'] == "") return app("json")->fail("列表名称不能为空");
+        if ($data['name'] == "") return app("json")->fail("轮播名称不能为空");
         if ($data['position'] == "") return app("json")->fail("轮播位置不能为空");
-        if ($data['image'] == "") return app("json")->fail("列表图片不能为空");
+        if ($data['image'] == "") return app("json")->fail("图片不能为空");
         if (is_array($data['image'])) $data['image'] = $data['image'][0];
         if ($id=="")
         {
