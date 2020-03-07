@@ -48,14 +48,14 @@
                             <input type="text" class="form-control" id="author" name="author" value="" placeholder="作者" />
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="image">LOGO图片</label>
+                            <label for="image">主图</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="image" id="image" value="" />
                                 <input type="file" id="fileimage" style="display: none;" onchange="upload('image')"/>
-                                <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('image')">上传图片</button></div>
+                                <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('image')">上传</button></div>
                             </div>
                         </div>
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-md-12">
                             <label for="is_recommend">推荐</label>
                             <div class="clearfix">
                                 <label class="lyear-radio radio-inline radio-primary">
@@ -66,7 +66,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-md-12">
                             <label for="is_hot">热门</label>
                             <div class="clearfix">
                                 <label class="lyear-radio radio-inline radio-primary">
@@ -77,7 +77,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-sm-4">
+                        <div class="form-group col-md-12">
                             <label for="is_top">顶置</label>
                             <div class="clearfix">
                                 <label class="lyear-radio radio-inline radio-primary">
@@ -89,18 +89,17 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="content">内容</label>
-                            <textarea name="abstract" class="form-control"></textarea>
+                            <label for="abstract">摘要</label>
+                            <textarea name="abstract" id="abstract" class="form-control"></textarea>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="content">单页内容</label>
+                            <label for="content">文章内容</label>
                             <textarea id="content" name="content"></textarea>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="tag">文章标签</label>
                             <div class="form-controls">
-                                <select name="tag" class="form-control" id="tag">
-                                    <option value="0">请选择</option>
+                                <select name="tag" class="form-control" id="tag" multiple="multiple">
                                     {volist name="tag" id="vo"}
                                     <option value="{$vo.id}">{$vo.name}</option>
                                     {/volist}
@@ -150,6 +149,9 @@
 <script src="__ADMIN_PATH__js/select2.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script>
+    $(function () {
+        $('#tag').select2();
+    });
     $(document).ready(function(){
         tinymce.init({
             selector: '#content',
@@ -167,8 +169,6 @@
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
             images_upload_url: '/admin/widget.files/tinymce',
         });
-        // 默认
-        $('.tag').select2();
     });
     /**
      * 选择文件
@@ -202,19 +202,34 @@
         $content = tinymce.get('content').getContent();
         $show_time = $('#show_time').val();
         $name = $('#name').val();
+        $abstract = $('#abstract').val();
         $author = $('#author').val();
-        $tag = $('#tag option:selected').val();
+        $image = $('#image').val();
+        $is_recommend = $('input[name=is_recommend]:radio:checked').val();
+        $is_hot = $('input[name=is_hot]:radio:checked').val();
+        $is_top = $('input[name=is_top]:radio:checked').val();
+        var $tag = "";
+        $('#tag option:selected').each(function() {
+            $tag += $(this).attr("value")+",";
+        });
         $show_time = $('#show_time').val();
         $status = $('input[name=status]:radio:checked').val();
         if ($cid == 0) {lightyear.notify("栏目分类不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
         if ($name == '') {lightyear.notify("文章名称不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
         if ($author == '') {lightyear.notify("作者不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
-        $.post(url="/admin/cms.cms_page/save",data={
+        $.post(url="/admin/cms.cms_article/save",data={
             "cid":$cid,
             "content":$content,
             "show_time":$show_time,
             "status":$status,
+            "is_recommend":$is_recommend,
+            "is_hot":$is_hot,
+            "is_top":$is_top,
             "name":$name,
+            "image":$image,
+            "tag":$tag,
+            "author":$author,
+            "abstract":$abstract,
         },function (res) {
             if (!Array.isArray(res)) res = jQuery.parseJSON(res);
             if (res.status == 200 || res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}

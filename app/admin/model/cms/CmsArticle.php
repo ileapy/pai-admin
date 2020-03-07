@@ -25,7 +25,6 @@ class CmsArticle extends BaseModel
     {
         $model = new self;
         $model = $model->with("category");
-        $model = $model->with("record");
         if ($where['name']) $model = $model->where("name","like",$where['name']);
         $model = $model->append($where);
         return $model->paginate(10)->each(function ($item){

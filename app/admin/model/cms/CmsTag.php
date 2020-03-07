@@ -39,7 +39,8 @@ class CmsTag extends BaseModel
         if ($where['name'] != '') $model = $model->where("name","like","%$where[name]%");
         if ($where['status'] != '') $model = $model->where("status",$where['status']);
         $count = self::counts($model);
-        $data = $model->page($where['page'],$where['limit']);
+        $model = $model->page($where['page'],$where['limit']);
+        $data = $model->select();
         return compact("data","count");
     }
 }

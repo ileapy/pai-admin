@@ -11,10 +11,15 @@
     <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
     <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <!--select2-->
+    <link href="__ADMIN_PATH__css/select2.min.css" rel="stylesheet">
     <!--弹出框-->
     <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
     <!--时间选择插件-->
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    <style>
+
+    </style>
 </head>
 <body>
 <div class="container-fluid p-t-15">
@@ -24,19 +29,82 @@
                 <div class="card-body">
                     <form action="#!" method="post" class="row" id="myForm">
                         <div class="form-group col-md-12">
+                            <label for="name">文章名称</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{$info.name}" placeholder="文章名称" />
+                        </div>
+                        <div class="form-group col-md-12">
                             <label for="cid">栏目分类</label>
                             <div class="form-controls">
-                                <select name="cid" class="form-control" id="cid" disabled>
+                                <select name="cid" class="form-control" id="cid">
                                     <option value="0">请选择</option>
                                     {volist name="category" id="vo"}
-                                    <option value="{$vo.id}" {if $vo.id == $info.cid}selected{/if} >{$vo.name}</option>
+                                    <option value="{$vo.id}" {if $vo.id == $info.cid}selected{/if}>{$vo.name}</option>
                                     {/volist}
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="content">单页内容</label>
+                            <label for="author">作者</label>
+                            <input type="text" class="form-control" id="author" name="author" value="{$info.author}" placeholder="作者" />
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="image">主图</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="image" id="image" value="{$info.image}" />
+                                <input type="file" id="fileimage" style="display: none;" onchange="upload('image')"/>
+                                <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('image')">上传</button></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="is_recommend">推荐</label>
+                            <div class="clearfix">
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_recommend" value="1" {if $info.is_recommend = 1}checked{/if}><span>是</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_recommend" value="0" {if $info.is_recommend = 0}checked{/if}><span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="is_hot">热门</label>
+                            <div class="clearfix">
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_hot" value="1" {if $info.is_hot = 1}checked{/if}><span>是</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_hot" value="0" {if $info.is_hot = 0}checked{/if}><span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="is_top">顶置</label>
+                            <div class="clearfix">
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_top" value="1" {if $info.is_top = 1}checked{/if}><span>是</span>
+                                </label>
+                                <label class="lyear-radio radio-inline radio-primary">
+                                    <input type="radio" name="is_top" value="0" {if $info.is_top = 0}checked{/if}><span>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="abstract">摘要</label>
+                            <textarea name="abstract" id="abstract" class="form-control">{$info.abstract}</textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="content">文章内容</label>
                             <textarea id="content" name="content">{$info.content|html_entity_decode}</textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="tag">文章标签</label>
+                            <div class="form-controls">
+                                <select name="tag" class="form-control" id="tag" multiple="multiple">
+                                    {volist name="tag" id="vo"}
+                                    <option value="{$vo.id}" {in name="$vo.id" value="$info.tag"}selected{/in}>{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="show_time">发布时间</label>
@@ -46,10 +114,10 @@
                             <label for="status">状态</label>
                             <div class="clearfix">
                                 <label class="lyear-radio radio-inline radio-primary">
-                                    <input type="radio" name="status" value="1" {if $info.status = 1}checked{/if}><span>启用</span>
+                                    <input type="radio" name="status" value="1" checked><span>启用</span>
                                 </label>
                                 <label class="lyear-radio radio-inline radio-primary">
-                                    <input type="radio" name="status" value="0" {if $info.status = 0}checked{/if}><span>禁用</span>
+                                    <input type="radio" name="status" value="0"><span>禁用</span>
                                 </label>
                             </div>
                         </div>
@@ -77,8 +145,13 @@
 <script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
 <!--通知-->
 <script src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+<!--select2-->
+<script src="__ADMIN_PATH__js/select2.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script>
+    $(function () {
+        $('#tag').select2();
+    });
     $(document).ready(function(){
         tinymce.init({
             selector: '#content',
@@ -97,13 +170,67 @@
             images_upload_url: '/admin/widget.files/tinymce',
         });
     });
+    /**
+     * 选择文件
+     * @param inputName
+     */
+    function btnClick(inputName) {
+        $("#file"+inputName).click()
+    }
+    /**
+     * 异步上传
+     * @param inputName
+     */
+    function upload(inputName) {
+        var formData = new FormData();
+        formData.append("file",$("#file"+inputName)[0].files[0]);
+        $.ajax({
+            type:'POST',
+            url:'/admin/widget.files/image',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (!Array.isArray(res)) res = jQuery.parseJSON(res);
+                $("#"+inputName).val(res.data.filePath);
+            }
+        });
+    }
     $("#myForm").submit(function () {
         $cid = $('#cid option:selected').val();
         $content = tinymce.get('content').getContent();
         $show_time = $('#show_time').val();
+        $name = $('#name').val();
+        $abstract = $('#abstract').val();
+        $author = $('#author').val();
+        $image = $('#image').val();
+        $is_recommend = $('input[name=is_recommend]:radio:checked').val();
+        $is_hot = $('input[name=is_hot]:radio:checked').val();
+        $is_top = $('input[name=is_top]:radio:checked').val();
+        var $tag = "";
+        $('#tag option:selected').each(function() {
+            $tag += $(this).attr("value")+",";
+        });
+        $show_time = $('#show_time').val();
         $status = $('input[name=status]:radio:checked').val();
         if ($cid == 0) {lightyear.notify("栏目分类不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
-        $.post(url="/admin/cms.cms_page/save?id={$info.cid}",data={"cid":$cid,"content":$content,"show_time":$show_time,"status":$status,},function (res) {
+        if ($name == '') {lightyear.notify("文章名称不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
+        if ($author == '') {lightyear.notify("作者不能为空", 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');return false;}
+        $.post(url="/admin/cms.cms_article/save?id={$info.id}",data={
+            "cid":$cid,
+            "content":$content,
+            "show_time":$show_time,
+            "status":$status,
+            "is_recommend":$is_recommend,
+            "is_hot":$is_hot,
+            "is_top":$is_top,
+            "name":$name,
+            "image":$image,
+            "tag":$tag,
+            "author":$author,
+            "abstract":$abstract,
+        },function (res) {
             if (!Array.isArray(res)) res = jQuery.parseJSON(res);
             if (res.status == 200 || res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');

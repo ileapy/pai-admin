@@ -96,7 +96,7 @@
                     btnClass: 'btn-primary',
                     action: function(){
                         $.post(url="/admin/cms.cms_page/del",data={"cid":$cid},function (res) {
-                            if (res.status == 200) parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload()}
                             else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                         });
                     }
