@@ -97,6 +97,7 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
+            file_put_contents("message.log",json_encode($message));
             event('MessageBefore',[$message]);
             switch ($message['MsgType']){
                 case 'event':
@@ -104,9 +105,24 @@ class WechatService
                         case 'subscribe':
                             $response = WechatReply::reply('subscribe');
                             event('EventSubscribeBefore',[$message]);
+                            if (!empty($message['EventKey'])) event('EventScanBefore',[$message]);
                             break;
                         case 'unsubscribe':
                             event('EventUnsubscribeBefore',[$message]);
+                            break;
+                        case 'scan':
+                            //event('EventScanBefore',[$message]);
+                            if (!empty($message['EventKey']) && $event = paramToArray($message['EventKey']))
+                            {
+                                switch ($event['type'])
+                                {
+                                    case "login":
+                                        // 登录操作
+                                        $response = "登录成功";
+                                        break;
+                                }
+                            }
+
                             break;
                         case 'location':
                             $response = MessageRepositories::wechatEventLocation($message);

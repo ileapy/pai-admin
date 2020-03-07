@@ -28,7 +28,7 @@ class WechatReply extends BaseModel
     public static function reply(string $keyword)
     {
         $res = self::where('keyword',$keyword)->where('status','1')->find();
-        if(empty($res)) return WechatService::transfer();
+        if(empty($res)) return WechatService::textMessage(self::where('keyword','default')->value("content"));
         switch ($res['type'])
         {
             case 'text':

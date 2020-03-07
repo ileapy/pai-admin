@@ -47,4 +47,17 @@ class WechatMessageSubscribe
         list($message) = $event;
         WechatUser::subscribe($message['FromUserName']);
     }
+
+    /**
+     * 用户扫码事件
+     * @param $event
+     */
+    public function onEventScanBefore($event)
+    {
+        list($message) = $event;
+        if ($message && $message['EventKey'])
+        {
+
+        }
+    }
 }

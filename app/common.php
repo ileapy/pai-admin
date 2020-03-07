@@ -19,3 +19,22 @@ if (!function_exists('systemConfigMore'))
         return $data;
     }
 }
+
+if (!function_exists('paramToArray'))
+{
+    /**
+     * 参数分割成数组
+     * @param string $param
+     * @param string $delimiter
+     * @return array
+     */
+    function paramToArray(string $param, string $delimiter = "&"): array
+    {
+        $arr = [];
+        foreach (explode($delimiter,$param) as $value)
+        {
+            $tmp = explode("=",$value);
+            $arr[$tmp[0]] = $tmp[1];
+        }
+    }
+}
