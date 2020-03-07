@@ -50,8 +50,8 @@ class CmsBanner extends AuthController
         $form[] = Elm::input('name','轮播标题')->col(10);
         $form[] = Elm::number('position','位置')->col(10);
         $form[] = Elm::uploadImage('image','图片',url('/admin/widget.files/image'))->limit(1)->multiple(false)->col(10);
-        $form[] = Elm::input('link','链接')->col(10);
-        $form[] = Elm::input('rank','排序')->col(10);
+        $form[] = Elm::input('link','链接')->col(20);
+        $form[] = Elm::number('rank','排序')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
@@ -73,8 +73,8 @@ class CmsBanner extends AuthController
         $form[] = Elm::input('name','轮播标题',$ainfo['name'])->col(10);
         $form[] = Elm::number('position','位置',$ainfo['position'])->col(10);
         $form[] = Elm::uploadImage('image','图片',url('/admin/widget.files/image'),$ainfo['image'])->limit(1)->multiple(false)->col(10);
-        $form[] = Elm::input('link','链接',$ainfo['link'])->col(10);
-        $form[] = Elm::input('rank','排序',$ainfo['rank'])->col(10);
+        $form[] = Elm::input('link','链接',$ainfo['link'])->col(20);
+        $form[] = Elm::number('rank','排序',$ainfo['rank'])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
         $this->assign(compact('form'));
@@ -99,6 +99,7 @@ class CmsBanner extends AuthController
         if ($data['name'] == "") return app("json")->fail("列表名称不能为空");
         if ($data['position'] == "") return app("json")->fail("轮播位置不能为空");
         if ($data['image'] == "") return app("json")->fail("列表图片不能为空");
+        if (is_array($data['image'])) $data['image'] = $data['image'][0];
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;

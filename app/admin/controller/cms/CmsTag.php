@@ -54,7 +54,7 @@ class CmsTag extends AuthController
         $form = array();
         $form[] = Elm::input('name','标签名称')->col(10);
         $form[] = Elm::input('icon','图标')->col(10);
-        $form[] = Elm::input('rank','排序')->col(10);
+        $form[] = Elm::number('rank','排序')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
@@ -75,7 +75,7 @@ class CmsTag extends AuthController
         $form = array();
         $form[] = Elm::input('name','标签名称',$ainfo['name'])->col(10);
         $form[] = Elm::input('icon','图标',$ainfo['icon'])->col(10);
-        $form[] = Elm::input('rank','排序',$ainfo['rank'])->col(10);
+        $form[] = Elm::number('rank','排序',$ainfo['rank'])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
         $this->assign(compact('form'));
