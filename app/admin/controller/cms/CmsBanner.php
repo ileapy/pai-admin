@@ -10,14 +10,9 @@ use learn\services\UtilService as Util;
 use learn\services\JsonService as Json;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use app\admin\model\cms\CmsTag as TModel;
+use app\admin\model\cms\CmsBanner as BModel;
 
-/**
- * 文章标签
- * Class CmsTag
- * @package app\admin\controller\cms
- */
-class CmsTag extends AuthController
+class CmsBanner extends AuthController
 {
     /**
      * @return string
@@ -40,11 +35,11 @@ class CmsTag extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(TModel::systemPage($where));
+        return Json::successlayui(BModel::systemPage($where));
     }
 
     /**
-     * 添加账号
+     * 添加
      * @param Request $request
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -52,8 +47,10 @@ class CmsTag extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('name','标签名称')->col(10);
-        $form[] = Elm::input('icon','图标')->col(10);
+        $form[] = Elm::input('name','轮播标题')->col(10);
+        $form[] = Elm::number('position','位置')->col(10);
+        $form[] = Elm::uploadImage('image','图片',url('/admin/widget.files/image'))->limit(1)->multiple(false)->col(10);
+        $form[] = Elm::input('link','链接')->col(10);
         $form[] = Elm::input('rank','排序')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save')->build());
@@ -62,7 +59,7 @@ class CmsTag extends AuthController
     }
 
     /**
-     * 修改账号
+     * 修改
      * @param string $id
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -70,11 +67,13 @@ class CmsTag extends AuthController
     public function edit($id="")
     {
         if (!$id) return app("json")->fail("标签id不能为空");
-        $ainfo = TModel::get($id);
+        $ainfo = BModel::get($id);
         if (!$ainfo) return app("json")->fail("没有该标签");
         $form = array();
-        $form[] = Elm::input('name','标签名称',$ainfo['name'])->col(10);
-        $form[] = Elm::input('icon','图标',$ainfo['icon'])->col(10);
+        $form[] = Elm::input('name','轮播标题',$ainfo['name'])->col(10);
+        $form[] = Elm::number('position','位置',$ainfo['position'])->col(10);
+        $form[] = Elm::uploadImage('image','图片',url('/admin/widget.files/image'),$ainfo['image'])->limit(1)->multiple(false)->col(10);
+        $form[] = Elm::input('link','链接',$ainfo['link'])->col(10);
         $form[] = Elm::input('rank','排序',$ainfo['rank'])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
         $form = Form::make_post_form($form, url('save',['id'=>$id])->build());
@@ -91,21 +90,25 @@ class CmsTag extends AuthController
     {
         $data = Util::postMore([
             ['name',''],
-            ['icon',''],
+            ['position',0],
+            ['image	',''],
+            ['link',''],
             ['rank',0],
             ['status',1]
         ]);
-        if ($data['name'] == "") return app("json")->fail("标签名称不能为空");
+        if ($data['name'] == "") return app("json")->fail("列表名称不能为空");
+        if ($data['position'] == "") return app("json")->fail("轮播位置不能为空");
+        if ($data['image'] == "") return app("json")->fail("列表图片不能为空");
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
-            $res = TModel::insert($data);
+            $res = BModel::insert($data);
         }else
         {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = TModel::update($data,['id'=>$id]);
+            $res = BModel::update($data,['id'=>$id]);
         }
         return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
     }
