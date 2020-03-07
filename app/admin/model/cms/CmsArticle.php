@@ -30,7 +30,7 @@ class CmsArticle extends BaseModel
         return $model->paginate(10)->each(function ($item){
             $item['view'] = CmsRecord::where("type",1)->count();
             $item['like'] = CmsRecord::where("type",2)->count();
-        });;
+        });
     }
 
     /**

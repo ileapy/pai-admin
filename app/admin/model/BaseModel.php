@@ -17,6 +17,7 @@ class BaseModel extends Model
 
     const DEFAULT_ERROR_MSG = '操作失败,请稍候再试!';
 
+    use ModelTrait;
     /**
      * 设置错误信息
      * @param string $errorMsg
