@@ -103,18 +103,29 @@ class WechatService
                 case 'event':
                     switch (strtolower($message['Event'])){
                         case 'subscribe':
-                            $response = WechatReply::reply('subscribe');
                             event('EventSubscribeBefore',[$message]);
-                            if (!empty($message['EventKey'])) event('EventScanBefore',[$message]);
+                            if (!empty($message['EventKey']) && $param = paramToArray(str_replace("qrscene_","",$message['EventKey'])))
+                            {
+                                switch ($param['type'])
+                                {
+                                    case "login":
+                                        // 登录操作
+                                        $response = "登录成功";
+                                        break;
+                                }
+                            }else
+                            {
+                                $response = WechatReply::reply('subscribe');
+                            }
                             break;
                         case 'unsubscribe':
                             event('EventUnsubscribeBefore',[$message]);
                             break;
                         case 'scan':
-                            //event('EventScanBefore',[$message]);
-                            if (!empty($message['EventKey']) && $event = paramToArray($message['EventKey']))
+                            event('EventSubscribeBefore',[$message]);
+                            if (!empty($message['EventKey']) && $param = paramToArray($message['EventKey']))
                             {
-                                switch ($event['type'])
+                                switch ($param['type'])
                                 {
                                     case "login":
                                         // 登录操作
@@ -122,7 +133,6 @@ class WechatService
                                         break;
                                 }
                             }
-
                             break;
                         case 'location':
                             $response = MessageRepositories::wechatEventLocation($message);

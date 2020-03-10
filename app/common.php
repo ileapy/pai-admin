@@ -36,5 +36,6 @@ if (!function_exists('paramToArray'))
             $tmp = explode("=",$value);
             $arr[$tmp[0]] = $tmp[1];
         }
+        return $arr;
     }
 }

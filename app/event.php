@@ -20,7 +20,6 @@ return [
         'MessageBefore' => [], //微信信息前置操作
         'EventUnsubscribeBefore' => [], //微信取消关注前置操作
         'EventSubscribeBefore' => [], //微信关注前者操作
-        'EventScanBefore' => [], //用户扫码事件
     ],
 
     'subscribe' => [
