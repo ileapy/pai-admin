@@ -3,72 +3,110 @@
 
 namespace learn\utils;
 
-
 use think\Response;
 
+/**
+ * Class Json
+ * @package learn\utils
+ */
 class Json
 {
-    private $code = 200;
+    /**
+     * 成功返回码
+     * @var int
+     */
+    private static $SUCCESS_CODE = 200;
 
-    public function code(int $code): self
+    /**
+     * 失败返回状态码
+     * @var int
+     */
+    private static $FAIL_CODE = 400;
+
+    /**
+     * layui返回状态码
+     * @var int
+     */
+    private static $LAYUI_CODE = 0;
+
+    /**
+     * 默认成功返回
+     * @var string
+     */
+    private static $DEFAULT_SUCCESS = 'success';
+
+    /**
+     * 默认失败返回
+     * @var string
+     */
+    private static $DEFAULT_FAIL = 'fail';
+
+    /**
+     * 实例
+     * @param int $status
+     * @param string $msg
+     * @param array|null $data
+     * @return Response
+     */
+    public function instance(int $status, string $msg, ?array $data = null, int $count=0, $type = 'status'): Response
     {
-        $this->code = $code;
-        return $this;
-    }
-
-    public function make(int $status, string $msg, ?array $data = null): Response
-    {
-        $res = compact('status', 'msg');
-
-        if (!is_null($data))
-            $res['data'] = $data;
-
-        return Response::create($res, 'json', $this->code);
-    }
-
-    public function successLayui($msg = 'ok', ?array $data = null): Response
-    {
-        $res = [];
         $res['msg'] = $msg;
-        if (!is_null($data))
-            $res['data'] = $data;
-        $res['code'] = 0;
+        $res[$type] = $status;
+        if ($type == 'code') $res['count'] = $count;
+        if (!empty($data)) $res['data'] = $data;
         return Response::create($res, 'json', 200);
     }
 
-    public function success($msg = 'ok', ?array $data = null): Response
+    /**
+     * 成功返回
+     * @param string $msg
+     * @param array|null $data
+     * @return Response
+     */
+    public function success(string $msg = '', ?array $data = []): Response
     {
-        if (is_array($msg)) {
+        if (is_array($msg))
+        {
             $data = $msg;
-            $msg = 'ok';
+            $msg = self::$DEFAULT_SUCCESS;
         }
-
-        return $this->make(200, $msg, $data);
+        if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
+        return $this->instance(self::$SUCCESS_CODE,$msg,$data);
     }
 
-    public function successful(...$args): Response
+    /**
+     * 失败返回
+     * @param string $msg
+     * @param array|null $data
+     * @return Response
+     */
+    public function fail(string $msg = '', ?array $data = []): Response
     {
-        return $this->success(...$args);
-    }
-
-    public function fail($msg = 'fail', ?array $data = null): Response
-    {
-        if (is_array($msg)) {
+        if (is_array($msg))
+        {
             $data = $msg;
-            $msg = 'ok';
+            $msg = self::$DEFAULT_FAIL;
         }
-
-        return $this->make(400, $msg, $data);
+        if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
+        return $this->instance(self::$FAIL_CODE,$msg,$data);
     }
 
-    public function status($status, $msg, $result = [])
+    /**
+     * layui返回
+     * @param string $msg
+     * @param array|null $data
+     * @return Response
+     */
+    public function layui(string $msg = '', ?array $data = []): Response
     {
-        $status = strtoupper($status);
-        if (is_array($msg)) {
-            $result = $msg;
-            $msg = 'ok';
+        $count = 0;
+        if (is_array($msg))
+        {
+            if (isset($msg['count'])) $count = $msg['count'];
+            if (isset($msg['data'])) $data = $msg['data'];
+            $msg = self::$DEFAULT_SUCCESS;
         }
-        return $this->success($msg, compact('status', 'result'));
+        if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
+        return $this->instance(self::$LAYUI_CODE,$msg,$data,$count,"code");
     }
-
 }
