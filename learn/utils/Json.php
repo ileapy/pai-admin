@@ -42,28 +42,35 @@ class Json
     private static $DEFAULT_FAIL = 'fail';
 
     /**
+     * 返回状态类型
+     * @var string
+     */
+    private $type = 'status';
+
+    /**
      * 实例
      * @param int $status
      * @param string $msg
-     * @param array|null $data
+     * @param array $data
+     * @param int $count
      * @return Response
      */
-    public function instance(int $status, string $msg, ?array $data = null, int $count=0, $type = 'status'): Response
+    public function instance(int $status, string $msg, ?array $data = [], int $count=0): Response
     {
         $res['msg'] = $msg;
-        $res[$type] = $status;
-        if ($type == 'code') $res['count'] = $count;
+        $res[$this->type] = $status;
+        if ($this->type == 'code') $res['count'] = $count;
         if (!empty($data)) $res['data'] = $data;
         return Response::create($res, 'json', 200);
     }
 
     /**
      * 成功返回
-     * @param string $msg
-     * @param array|null $data
+     * @param array|string $msg
+     * @param array|int $data
      * @return Response
      */
-    public function success(string $msg = '', ?array $data = []): Response
+    public function success($msg = '', $data = []): Response
     {
         if (is_array($msg))
         {
@@ -71,16 +78,21 @@ class Json
             $msg = self::$DEFAULT_SUCCESS;
         }
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
+        if (is_bool($data) && $data)
+        {
+            $this->type = 'code';
+            $data = [];
+        }
         return $this->instance(self::$SUCCESS_CODE,$msg,$data);
     }
 
     /**
      * 失败返回
-     * @param string $msg
-     * @param array|null $data
+     * @param array|string $msg
+     * @param array|int $data
      * @return Response
      */
-    public function fail(string $msg = '', ?array $data = []): Response
+    public function fail($msg = '', $data = []): Response
     {
         if (is_array($msg))
         {
@@ -93,20 +105,25 @@ class Json
 
     /**
      * layui返回
-     * @param string $msg
-     * @param array|null $data
+     * @param array|string $msg
+     * @param array $data
      * @return Response
      */
-    public function layui(string $msg = '', ?array $data = []): Response
+    public function layui($msg = '', ?array $data = []): Response
     {
+        $this->type = 'code';
         $count = 0;
         if (is_array($msg))
         {
-            if (isset($msg['count'])) $count = $msg['count'];
-            if (isset($msg['data'])) $data = $msg['data'];
+            if (!isset($msg['count']) && !isset($msg['data'])) $data = $msg;
+            else
+            {
+                if (isset($msg['count'])) $count = $msg['count'];
+                if (isset($msg['data'])) $data = $msg['data'];
+            }
             $msg = self::$DEFAULT_SUCCESS;
         }
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
-        return $this->instance(self::$LAYUI_CODE,$msg,$data,$count,"code");
+        return $this->instance(self::$LAYUI_CODE,$msg,$data,$count);
     }
 }

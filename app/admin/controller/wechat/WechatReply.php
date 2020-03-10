@@ -6,7 +6,6 @@ namespace app\admin\controller\wechat;
 
 use app\admin\controller\AuthController;
 use app\Request;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
@@ -33,7 +32,7 @@ class WechatReply extends AuthController
      */
     public function lst(Request $request)
     {
-        return Json::successlayui(RModel::systemPage());
+        return app("json")->layui(RModel::systemPage());
     }
 
     /**
@@ -88,6 +87,7 @@ class WechatReply extends AuthController
     /**
      * 保存
      * @param $id
+     * @return
      */
     public function save($id="")
     {
@@ -120,6 +120,6 @@ class WechatReply extends AuthController
             $data['update_time'] = time();
             $res = RModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

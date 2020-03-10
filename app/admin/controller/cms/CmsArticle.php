@@ -9,7 +9,6 @@ use app\admin\model\cms\CmsCategory as CModel;
 use app\admin\model\cms\CmsArticle as AModel;
 use app\admin\model\cms\CmsTag as TModel;
 use app\Request;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 
 class CmsArticle extends AuthController
@@ -100,6 +99,6 @@ class CmsArticle extends AuthController
             $data['update_time'] = time();
             $res = AModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

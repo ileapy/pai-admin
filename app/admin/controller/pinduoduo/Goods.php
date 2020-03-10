@@ -10,7 +10,6 @@ use app\Request;
 use learn\utils\Curl;
 use think\facade\Cache;
 use think\facade\Session;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 
 /**
@@ -83,6 +82,8 @@ class Goods extends AuthController
         $curl->header(["Content-Type:application/json"]);
         $curl->buildSign($provider['client_secret']);
         $data = json_decode($curl->run(),true);
-        return Json::successlayui($data['goods_list_get_response']['total_count'],$data['goods_list_get_response']['goods_list']);
+        $res['data'] = $data['goods_list_get_response']['goods_list'];
+        $res['count'] = $data['goods_list_get_response']['total_count'];
+        return app("json")->layui($res);
     }
 }

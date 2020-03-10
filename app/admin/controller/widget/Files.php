@@ -5,7 +5,6 @@ namespace app\admin\controller\widget;
 
 
 use app\admin\controller\AuthController;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 
 class Files extends AuthController
@@ -17,7 +16,7 @@ class Files extends AuthController
     public function image()
     {
         $savename = \think\facade\Filesystem::putFile( 'image', request()->file('file'));
-        return $savename ? Json::success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+        return $savename ? app("json")->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 
     /**

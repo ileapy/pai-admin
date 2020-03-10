@@ -7,7 +7,6 @@ namespace app\admin\controller\cms;
 use app\admin\controller\AuthController;
 use app\Request;
 use learn\services\UtilService as Util;
-use learn\services\JsonService as Json;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use app\admin\model\cms\CmsCategory as CModel;
@@ -30,6 +29,7 @@ class CmsCategory extends AuthController
     /**
      * 列表
      * @param Request $request
+     * @return
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -40,7 +40,7 @@ class CmsCategory extends AuthController
             ['name',''],
             ['status',''],
         ]);
-        return Json::successlayui(0, CModel::systemPage($where));
+        return app("json")->layui(CModel::systemPage($where));
     }
 
     /**
@@ -97,6 +97,7 @@ class CmsCategory extends AuthController
     /**
      * 保存
      * @param $id
+     * @return
      */
     public function save($id="")
     {
@@ -121,6 +122,6 @@ class CmsCategory extends AuthController
             $data['update_time'] = time();
             $res = CModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

@@ -10,7 +10,6 @@ use app\admin\model\system\SystemConfigTab as tModel;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 
 /**
@@ -95,7 +94,7 @@ class SystemConfig extends AuthController
             ['limit',20],
             ['tab_id',0]
         ]);
-        return Json::successlayui(cModel::lst($where));
+        return app("json")->layui(cModel::lst($where));
     }
 
     /**
@@ -200,7 +199,7 @@ class SystemConfig extends AuthController
             $data['update_time'] = time();
             $res = cModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
     /**

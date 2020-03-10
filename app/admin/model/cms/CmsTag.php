@@ -41,6 +41,7 @@ class CmsTag extends BaseModel
         $count = self::counts($model);
         $model = $model->page($where['page'],$where['limit']);
         $data = $model->select();
+        if ($data) $data = $data->toArray();
         return compact("data","count");
     }
 }

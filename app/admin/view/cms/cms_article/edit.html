@@ -231,8 +231,7 @@
             "author":$author,
             "abstract":$abstract,
         },function (res) {
-            if (!Array.isArray(res)) res = jQuery.parseJSON(res);
-            if (res.status == 200 || res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
+            if (res.code == 200) {lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},2000)}
             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
         });
         return false;

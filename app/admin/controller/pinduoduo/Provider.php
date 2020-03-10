@@ -8,7 +8,6 @@ use app\admin\controller\AuthController;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use app\admin\model\pinduoduo\PinduoduoProvider as pModel;
 
@@ -45,7 +44,7 @@ class Provider extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(pModel::systemPage($where));
+        return app("json")->layui(pModel::systemPage($where));
     }
 
     /**
@@ -127,6 +126,6 @@ class Provider extends AuthController
             $data['update_time'] = time();
             $res = pModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

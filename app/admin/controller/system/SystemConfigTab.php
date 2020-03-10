@@ -8,7 +8,6 @@ use app\admin\controller\AuthController;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use app\admin\model\system\SystemConfigTab as tModel;
 
@@ -27,6 +26,7 @@ class SystemConfigTab extends AuthController
     /**
      * 列表
      * @param Request $request
+     * @return
      */
     public function lst(Request $request)
     {
@@ -34,7 +34,7 @@ class SystemConfigTab extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(tModel::lst($where));
+        return app("json")->layui(tModel::lst($where));
     }
 
     /**
@@ -98,6 +98,6 @@ class SystemConfigTab extends AuthController
             $data['update_time'] = time();
             $res = tModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

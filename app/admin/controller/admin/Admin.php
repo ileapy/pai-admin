@@ -9,7 +9,6 @@ use app\admin\model\admin\Admin as aModel;
 use app\admin\model\admin\AdminRole as rModel;
 use app\Request;
 use learn\services\UtilService as Util;
-use learn\services\JsonService as Json;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 
@@ -34,6 +33,7 @@ class Admin extends AuthController
     /**
      * 账号列表
      * @param Request $request
+     * @return
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -47,7 +47,7 @@ class Admin extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(aModel::systemPage($where));
+        return app("json")->layui(aModel::systemPage($where));
     }
 
     /**
@@ -150,7 +150,7 @@ class Admin extends AuthController
             $data['update_time'] = time();
             $res = aModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
     /**

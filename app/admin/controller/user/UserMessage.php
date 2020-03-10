@@ -25,6 +25,7 @@ class UserMessage extends AuthController
     /**
      * 列表
      * @param Request $request
+     * @return
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -43,6 +44,6 @@ class UserMessage extends AuthController
             $where['add_time'][0] = strtotime($where['add_time'][0]);
             $where['add_time'][1] = strtotime($where['add_time'][1]);
         }
-        return Json::successlayui(UModel::systemPage($where));
+        return app("json")->layui(UModel::systemPage($where));
     }
 }

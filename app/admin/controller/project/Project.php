@@ -10,7 +10,6 @@ use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use learn\services\UtilService as Util;
-use learn\services\JsonService as Json;
 use app\admin\model\project\project as pModel;
 
 /**
@@ -36,7 +35,7 @@ class project extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(pModel::lst($where));
+        return app("json")->layui(pModel::lst($where));
     }
 
     /**
@@ -144,6 +143,6 @@ class project extends AuthController
             $data['update_time'] = time();
             $res = pModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

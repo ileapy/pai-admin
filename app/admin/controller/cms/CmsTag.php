@@ -7,7 +7,6 @@ namespace app\admin\controller\cms;
 use app\admin\controller\AuthController;
 use app\Request;
 use learn\services\UtilService as Util;
-use learn\services\JsonService as Json;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use app\admin\model\cms\CmsTag as TModel;
@@ -31,6 +30,7 @@ class CmsTag extends AuthController
     /**
      * 列表
      * @param Request $request
+     * @return
      */
     public function lst(Request $request)
     {
@@ -40,7 +40,7 @@ class CmsTag extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        return Json::successlayui(TModel::systemPage($where));
+        return app("json")->layui(TModel::systemPage($where));
     }
 
     /**
@@ -107,6 +107,6 @@ class CmsTag extends AuthController
             $data['update_time'] = time();
             $res = TModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

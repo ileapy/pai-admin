@@ -7,7 +7,6 @@
 
 namespace app\admin\controller;
 
-use learn\services\JsonService;
 use learn\basic\admin\BaseController;
 
 
@@ -80,7 +79,7 @@ class SystemBasic extends BaseController
     protected function failed($msg = '哎呀…亲…您访问的页面出现错误', $url = 0)
     {
         if($this->request->isAjax()){
-            exit(JsonService::fail($msg,$url)->getContent());
+            exit(app("json")->fail($msg,$url)->getContent());
         }else{
             $this->assign(compact('msg','url'));
             exit($this->fetch('public/error'));
@@ -96,7 +95,7 @@ class SystemBasic extends BaseController
     protected function successful($msg, $url = 0)
     {
         if($this->request->isAjax()){
-            exit(JsonService::successful($msg,$url)->getContent());
+            exit(app("json")->success($msg,$url)->getContent());
         }else{
             $this->assign(compact('msg','url'));
             exit($this->fetch('public/success'));
@@ -121,6 +120,4 @@ class SystemBasic extends BaseController
     {
         exit($this->fetch('public/404'));
     }
-
-
 }

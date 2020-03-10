@@ -9,7 +9,6 @@ use app\admin\model\admin\AdminRole as rModel;
 use app\admin\model\admin\AdminAuth as aModel;
 use app\Request;
 use FormBuilder\Exception\FormBuilderException;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
@@ -31,7 +30,7 @@ class AdminRole extends AuthController
      */
     public function lst(Request $request)
     {
-        return Json::successlayui(0,rModel::systemPage());
+        return app("json")->layui(rModel::systemPage());
     }
 
     /**
@@ -83,7 +82,8 @@ class AdminRole extends AuthController
 
     /**
      * 保存
-     * @param $id
+     * @param string $id
+     * @return mixed
      */
     public function save($id="")
     {
@@ -111,6 +111,6 @@ class AdminRole extends AuthController
             $data['update_time'] = time();
             $res = rModel::update($data,['id'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 }

@@ -6,7 +6,6 @@ namespace app\admin\controller\cms;
 
 use app\admin\controller\AuthController;
 use app\Request;
-use learn\services\JsonService as Json;
 use learn\services\UtilService as Util;
 use app\admin\model\cms\CmsPage as PModel;
 use app\admin\model\cms\CmsCategory as CModel;
@@ -90,7 +89,7 @@ class CmsPage extends AuthController
             $data['update_time'] = time();
             $res = PModel::update($data,['cid'=>$id]);
         }
-        return $res ? Json::success("操作成功") : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
     /**
