@@ -126,4 +126,14 @@ class Json
         if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
         return $this->instance(self::$LAYUI_CODE,$msg,$data,$count);
     }
+
+    /**
+     * 返回code字段
+     * @return $this
+     */
+    public function code():self
+    {
+        $this->type = 'code';
+        return $this;
+    }
 }

@@ -31,6 +31,7 @@ class SystemConfig extends BaseModel
         $count = self::counts($model);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
+        if ($data) $data = $data->toArray();
         return compact('data','count');
     }
 
