@@ -26,7 +26,7 @@ Pai-admin 派后台管理系统
 
 1.创建数据库，倒入数据库文件
 
-数据库文件目录/public/install/crmeb.sql
+数据库文件目录/public/install/learn.sql
 
 2.修改数据库连接文件
 配置文件路径/.env
@@ -84,10 +84,6 @@ php think worker [start|stop|reload|restart|status]
 [Light Year Admin](http://www.itshubao.com/doc-lyear/lyear.html)
 [Workerman](http://doc.workerman.net/)
 [EasyWeChat](https://www.easywechat.com/docs)
-
-## 参与开发
-
-请参阅 [CRMEB](https://github.com/crmeb/CRMEB)。
 
 ## 版权信息
 
