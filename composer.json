@@ -24,7 +24,6 @@
         "topthink/think-view": "^1.0",
         "firebase/php-jwt": "^5.0",
         "overtrue/wechat": "^4.2",
-        "phpoffice/phpexcel": "^1.8",
         "xaboy/form-builder": "^2.0",
         "topthink/think-captcha": "^3.0",
         "workerman/channel": "^1.0",
@@ -54,5 +53,11 @@
             "@php think service:discover",
             "@php think vendor:publish"
         ]
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }
