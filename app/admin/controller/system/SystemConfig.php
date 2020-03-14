@@ -3,7 +3,6 @@
 
 namespace app\admin\controller\system;
 
-
 use app\admin\controller\AuthController;
 use app\admin\model\system\SystemConfig as cModel;
 use app\admin\model\system\SystemConfigTab as tModel;
