@@ -43,6 +43,11 @@ class Login extends AuthController
         return app("json")->success("登录成功！");
     }
 
+    public function wechatLogin()
+    {
+
+    }
+
     /**
      * 注册
      * @return string
