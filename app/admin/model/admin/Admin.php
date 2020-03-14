@@ -5,7 +5,10 @@ namespace app\admin\model\admin;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use app\admin\model\wechat\WechatUser;
+use think\facade\Cache;
 use think\facade\Session;
+use learn\utils\Session as mSession;
 
 /**
  * 管理员管理
@@ -33,6 +36,29 @@ class Admin extends BaseModel
         if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
+    }
+
+    /**
+     * 微信扫码登录后台
+     * @param array $message
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public static function wechatLogin(array $message)
+    {
+        $param = paramToArray(str_replace("qrscene_","",$message['EventKey']));
+        // 查找用户uid
+        $uid = WechatUser::getUidByOpenId($message['FromUserName']);
+        if (!$uid) return ['status'=>101];
+        $adminInfo = self::where("uid",$uid)->find();
+        if (!$adminInfo) return ['status'=>102];
+        mSession::setId($param['token']);
+        self::setLoginInfo($adminInfo);
+        Cache::store("redis")->delete($param['token']);
+        return ['status'=>100];
     }
 
     /**

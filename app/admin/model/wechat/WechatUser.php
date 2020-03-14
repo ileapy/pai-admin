@@ -82,4 +82,14 @@ class WechatUser extends BaseModel
     {
         return self::update(['subscribe'=>0],['openid'=>$openId]);
     }
+
+    /**
+     * 通过openid获取uid
+     * @param string $openId
+     * @return mixed
+     */
+    public static function getUidByOpenId(string $openId)
+    {
+        return self::where("openid",$openId)->value("uid") ?: 0;
+    }
 }

@@ -135,25 +135,29 @@
     if (Array.isArray(name)) return value;
     else return value[name];
   }
-
+  let ws = new WebSocket("ws://182.254.133.82:1996");
   // 打开 ws
   function openws() {
-    let ws = new WebSocket("ws://182.254.133.82:1996");
+
     let time = null,tryNum = 10;
     try {
       ws.send('{"type":"qrcode","token":"'+getCookies("PHPSESSID")+'"}');
     } catch(err) {
       // 重试10次，每次之间间隔3秒
-      if (tryNum > 0) {
-        time = setTimeout(function () {
+      time = setTimeout(function () {
+        if (tryNum > 0) {
           tryNum--;
-          ws.send('{"type":"qrcode","token":"'+getCookies("PHPSESSID")+'"}');
-        }, 100);
-      } else {
-        clearTimeout(time);
-        scand = false;
-        console.error("连接超时.");
-      }
+          if (ws.readyState == 1)
+          {
+            clearTimeout(time);
+            ws.send('{"type":"qrcode","token":"'+getCookies("PHPSESSID")+'"}');
+          }
+        } else {
+          clearTimeout(time);
+          scand = false;
+          console.error("连接超时.");
+        }
+      }, 100);
     }
     ws.onmessage = function(e)
     {
@@ -169,14 +173,27 @@
     switch (type)
     {
       case 'qrcode':
-        t1 = setTimeout(function () {
-          ws.send('{"type":"ping"}');
-        }, 30000);
-        console.log(data);
+        t1 = setInterval(function () {
+          ws.send('{"type":"valid","token":"'+getCookies("PHPSESSID")+'"}');
+        }, 3000);
         $("#qrcode").attr("src",data['src']);
         break;
+      case 'valid':
+        switch (data['status'])
+        {
+          case 200:
+            window.location = "/admin/index/index";
+            break;
+          case 300:
+            break;
+          case 400:
+            clearInterval(t1);
+            scand = false;
+            break;
+        }
+        break;
       case 'timeout':
-        clearTimeout(t1);
+        clearInterval(t1);
         scand = false;
     }
   }

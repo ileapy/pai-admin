@@ -3,6 +3,7 @@
 
 namespace learn\services;
 
+use app\admin\model\admin\Admin;
 use app\admin\model\wechat\WechatReply;
 use EasyWeChat\Factory;
 use EasyWeChat\Kernel\Messages\Article;
@@ -110,7 +111,14 @@ class WechatService
                                 {
                                     case "login":
                                         // 登录操作
-                                        $response = "登录成功";
+                                        if ($param['method'] == 'wechat' && $param['to'] == 'admin')
+                                        {
+                                            $res = Admin::wechatLogin($message);
+                                            if ($res['status'] == 100) $response = "登录成功";
+                                            elseif ($res['status'] == 101) $response = "用户不存在";
+                                            elseif ($res['status'] == 102) $response = "该用户未绑定管理员账号";
+                                            else $response = "未知错误";
+                                        }
                                         break;
                                 }
                             }else
@@ -129,7 +137,14 @@ class WechatService
                                 {
                                     case "login":
                                         // 登录操作
-                                        $response = "登录成功";
+                                        if ($param['method'] == 'wechat' && $param['to'] == 'admin')
+                                        {
+                                            $res = Admin::wechatLogin($message);
+                                            if ($res['status'] == 100) $response = "登录成功";
+                                            elseif ($res['status'] == 101) $response = "用户不存在";
+                                            elseif ($res['status'] == 102) $response = "该用户未绑定管理员账号";
+                                            else $response = "未知错误";
+                                        }
                                         break;
                                 }
                             }

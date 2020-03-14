@@ -3,12 +3,15 @@
 
 namespace learn\workerman\admin;
 
+use app\admin\model\admin\Admin;
 use learn\services\WechatService;
 use learn\workerman\Response;
 use learn\workerman\admin\WorkerService;
+use think\facade\Cache;
 use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 use think\facade\Session;
+use learn\utils\Session as MySession;
 
 /**
  * Class WorkerHandle
@@ -37,15 +40,12 @@ class WorkerHandle
                 'msg' => '授权失败!'
             ]);
         }
-        Session::setId($sessionId);
-        Session::init();
-        Session::save();
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
                 'msg' => '授权失败!'
             ]);
         }
-
+        MySession::setId($sessionId);
         $connection->adminInfo = Session::get('adminInfo');
         $connection->sessionId = $sessionId;
 
@@ -77,9 +77,35 @@ class WorkerHandle
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function qrcode(TcpConnection &$connection, array $res, Response $response)
     {
-        $response->connection($connection)->send('qrcode',['src'=>WechatService::temporary("type=login;method=wechat;token=$res[token]")]);
+        MySession::setId($res['token']);
+        // 保存缓存
+        if (Cache::store("redis")->has($res['token']))
+        {
+            $response->connection($connection)->send('qrcode',['src'=>Cache::store("redis")->get($res['token'])]);
+        }
+        else
+        {
+            $qrcode = WechatService::temporary("type=login&method=wechat&to=admin&token=$res[token]",300);
+            Cache::store("redis")->set($res['token'],$qrcode,300);
+            $response->connection($connection)->send('qrcode',['src'=>$qrcode]);
+        }
+    }
+
+    /**
+     * 验证二维码是否有效
+     * @param TcpConnection $connection
+     * @param array $res
+     * @param Response $response
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function valid(TcpConnection &$connection, array $res, Response $response)
+    {
+        if (Admin::isActive()) $response->connection($connection)->send('valid',['status'=>200]);
+        elseif(Cache::store("redis")->has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
+        else $response->connection($connection)->close('valid',['status'=>400]);
     }
 }

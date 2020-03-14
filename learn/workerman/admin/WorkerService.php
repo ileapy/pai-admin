@@ -138,7 +138,7 @@ class WorkerService extends Server
         });
 
         // 超时关闭
-        Timer::add(30, array($this->handle, 'timeoutClose'), array($worker,$this->response), true);
+        Timer::add(35, array($this->handle, 'timeoutClose'), array($worker,$this->response), true);
     }
 
     /**
