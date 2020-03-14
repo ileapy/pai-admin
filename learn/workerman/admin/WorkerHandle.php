@@ -83,14 +83,14 @@ class WorkerHandle
     {
         MySession::setId($res['token']);
         // 保存缓存
-        if (Cache::store("redis")->has($res['token']))
+        if (Cache::has($res['token']))
         {
-            $response->connection($connection)->send('qrcode',['src'=>Cache::store("redis")->get($res['token'])]);
+            $response->connection($connection)->send('qrcode',['src'=>Cache::get($res['token'])]);
         }
         else
         {
             $qrcode = WechatService::temporary("type=login&method=wechat&to=admin&token=$res[token]",300);
-            Cache::store("redis")->set($res['token'],$qrcode,300);
+            Cache::set($res['token'],$qrcode,300);
             $response->connection($connection)->send('qrcode',['src'=>$qrcode]);
         }
     }
@@ -105,7 +105,7 @@ class WorkerHandle
     public function valid(TcpConnection &$connection, array $res, Response $response)
     {
         if (Admin::isActive()) $response->connection($connection)->send('valid',['status'=>200]);
-        elseif(Cache::store("redis")->has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
+        elseif(Cache::has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
         else $response->connection($connection)->close('valid',['status'=>400]);
     }
 }

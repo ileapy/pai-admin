@@ -57,7 +57,7 @@ class Admin extends BaseModel
         if (!$adminInfo) return ['status'=>102];
         mSession::setId($param['token']);
         self::setLoginInfo($adminInfo);
-        Cache::store("redis")->delete($param['token']);
+        Cache::delete($param['token']);
         return ['status'=>100];
     }
 
