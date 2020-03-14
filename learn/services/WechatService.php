@@ -479,4 +479,19 @@ class WechatService
         return is_array($openid) ? $userService->select($openid) : $userService->get($openid);
     }
 
+    /**
+     * 获取二维码
+     * @param string $param
+     * @param int $expire
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function temporary(string $param, int $expire = 300)
+    {
+        $qrcode = self::qrcodeService();
+        $res = $qrcode->temporary($param,$expire);
+        return $qrcode->url($res['ticket']);
+    }
 }

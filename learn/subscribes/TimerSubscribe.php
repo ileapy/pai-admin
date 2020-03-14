@@ -14,7 +14,6 @@ class TimerSubscribe
      */
     public function onTask_1()
     {
-        var_dump(1);
     }
 
     /**
@@ -22,7 +21,6 @@ class TimerSubscribe
      */
     public function onTask_5()
     {
-        var_dump(5);
     }
 
     /**
@@ -30,7 +28,6 @@ class TimerSubscribe
      */
     public function onTask_10()
     {
-        var_dump(10);
     }
 
     /**
@@ -38,7 +35,6 @@ class TimerSubscribe
      */
     public function onTask_30()
     {
-        var_dump(30);
     }
 
     /**
@@ -46,6 +42,5 @@ class TimerSubscribe
      */
     public function onTask_60()
     {
-        var_dump(60);
     }
 }
