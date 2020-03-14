@@ -122,4 +122,19 @@ class WechatReply extends AuthController
         }
         return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
+
+    public function focus()
+    {
+        return $this->fetch();
+    }
+
+    public function default()
+    {
+        return $this->fetch();
+    }
+
+    public function keyword()
+    {
+        return $this->fetch();
+    }
 }
