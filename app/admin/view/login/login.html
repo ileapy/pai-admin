@@ -65,8 +65,11 @@
         </div>
       </div>
       <div style="height: 212px;width: 350px;display: none;" id="scan">
-        <div style="padding: 10px;text-align: center;">
+        <div style="padding: 10px;text-align: center;position: relative;">
           <img src="__ADMIN_PATH__images/wechat.png" id="qrcode" width="160" height="160" alt="请打开微信扫一扫登录" title="请打开微信扫一扫登录">
+          <div style="position: absolute;top: 0;left: 0;width: 100%;padding: 10px;display: none;" class="lab_qrcode_text">
+            <p style="height: 160px;width: 160px;margin: auto;line-height: 160px;background: rgba(0, 0, 0, 0.6);color: #fff;font-size: 16px;cursor: pointer;" title="点击重新加载" onclick="openws();">二维码已过期</p>
+          </div>
         </div>
         <p style="text-align: center;margin-top: 10px;font-size: 20px;">请打开微信扫一扫登录</p>
       </div>
@@ -138,8 +141,10 @@
   let ws = new WebSocket("ws://182.254.133.82:1996");
   // 打开 ws
   function openws() {
-
     let time = null,tryNum = 10;
+    if (ws.readyState == 3) ws = new WebSocket("ws://182.254.133.82:1996");
+    // 关闭遮罩
+    $(".lab_qrcode_text").hide();
     try {
       ws.send('{"type":"qrcode","token":"'+getCookies("PHPSESSID")+'"}');
     } catch(err) {
@@ -175,7 +180,7 @@
       case 'qrcode':
         t1 = setInterval(function () {
           ws.send('{"type":"valid","token":"'+getCookies("PHPSESSID")+'"}');
-        }, 3000);
+        }, 2000);
         $("#qrcode").attr("src",data['src']);
         break;
       case 'valid':
@@ -189,6 +194,7 @@
           case 400:
             clearInterval(t1);
             scand = false;
+            $(".lab_qrcode_text").show();
             break;
         }
         break;

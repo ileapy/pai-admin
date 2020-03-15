@@ -40,12 +40,15 @@ class WorkerHandle
                 'msg' => '授权失败!'
             ]);
         }
+
+        MySession::setId($sessionId);
+
         if (!Session::has('adminId') || !Session::has('adminInfo')) {
             return $response->close([
                 'msg' => '授权失败!'
             ]);
         }
-        MySession::setId($sessionId);
+
         $connection->adminInfo = Session::get('adminInfo');
         $connection->sessionId = $sessionId;
 
@@ -83,14 +86,14 @@ class WorkerHandle
     {
         MySession::setId($res['token']);
         // 保存缓存
-        if (Cache::has($res['token']))
+        if (Cache::store('redis')->has($res['token']))
         {
-            $response->connection($connection)->send('qrcode',['src'=>Cache::get($res['token'])]);
+            $response->connection($connection)->send('qrcode',['src'=>Cache::store('redis')->get($res['token'])]);
         }
         else
         {
-            $qrcode = WechatService::temporary("type=login&method=wechat&to=admin&token=$res[token]",300);
-            Cache::set($res['token'],$qrcode,300);
+            $qrcode = WechatService::temporary("type=login&method=wechat&to=admin&token=$res[token]",180);
+            Cache::store('redis')->set($res['token'],$qrcode,180);
             $response->connection($connection)->send('qrcode',['src'=>$qrcode]);
         }
     }
@@ -104,8 +107,16 @@ class WorkerHandle
      */
     public function valid(TcpConnection &$connection, array $res, Response $response)
     {
-        if (Admin::isActive()) $response->connection($connection)->send('valid',['status'=>200]);
-        elseif(Cache::has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
+        if (Cache::store('redis')->has("info_".$res['token']))
+        {
+            if (Admin::setLoginInfo(Cache::store('redis')->get("info_".$res['token'])))
+            {
+                $response->connection($connection)->close('valid',['status'=>200]);
+                Cache::store('redis')->delete($res['token']);
+                Cache::store('redis')->delete("info_".$res['token']);
+            }
+        }
+        elseif(Cache::store('redis')->has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
         else $response->connection($connection)->close('valid',['status'=>400]);
     }
 }

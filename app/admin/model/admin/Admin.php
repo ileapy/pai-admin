@@ -55,21 +55,21 @@ class Admin extends BaseModel
         if (!$uid) return ['status'=>101];
         $adminInfo = self::where("uid",$uid)->find();
         if (!$adminInfo) return ['status'=>102];
-        mSession::setId($param['token']);
-        self::setLoginInfo($adminInfo);
-        Cache::delete($param['token']);
+        Cache::store('redis')->set("info_".$param['token'],$adminInfo,60);
         return ['status'=>100];
     }
 
     /**
      * 设置登录信息
      * @param $info
+     * @return bool
      */
     public static function setLoginInfo($info)
     {
         Session::set("adminId",$info['id']);
         Session::set("adminInfo",$info->toArray());
         event("AdminLog",[$info->toArray(),"admin","login","login"]);
+        return true;
     }
 
     /**

@@ -16,6 +16,7 @@ use EasyWeChat\Kernel\Messages\Transfer;
 use EasyWeChat\Kernel\Messages\Video;
 use EasyWeChat\Kernel\Messages\Voice;
 use EasyWeChat\OfficialAccount\Server\Guard;
+use think\facade\Cache;
 use think\Response;
 
 /**
