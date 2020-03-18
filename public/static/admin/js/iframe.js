@@ -13,7 +13,7 @@ var iframe = function(){
             '                <h4 class="modal-title" id="exampleModalLabel">'+$title+'</h4>\n' +
             '            </div>\n' +
             '            <div class="modal-body">\n' +
-            '              <iframe src="'+$url+'" style="width: 100%;border: 0px;height: 500px;"></iframe>'+
+            '              <iframe src="'+$url+'" style="width: 100%;border: 0px;height: 100%;"></iframe>'+
             '            </div>\n' +
             '                <div class="modal-footer">\n' +
             '                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>\n' +
