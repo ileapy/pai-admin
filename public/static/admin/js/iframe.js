@@ -1,11 +1,11 @@
 var iframe = function(){
 
     /**
-     * 页面loading
+     * 页面load
      */
-    var pageLoader = function($title,$url,$type,$data) {
-        jQuery('body').prepend('<button type="button" id="modelClick" class="btn btn-primary" style="display: none;" data-toggle="modal" data-target="#exampleModal"></button>');
-        jQuery('body').prepend('<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">\n' +
+    var build = function($title,$url,$param) {
+        jQuery('body').prepend(
+            '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" data-backdrop="static">\n' +
             '    <div class="modal-dialog modal-lg" role="document">\n' +
             '        <div class="modal-content">\n' +
             '            <div class="modal-header">\n' +
@@ -20,20 +20,19 @@ var iframe = function(){
             '                </div>'+
             '        </div>\n' +
             '    </div>\n' +
-            '</div>');
-        // $(".modal-body").append(loadData($url,$type,$data));
-        $("#modelClick").click();
+            '</div>'
+        );
     };
 
-    var loadData = function ($url,$type,$data) {
-        if ($type == "POST") $.post(url=$url,data=$data,function (res) {return res;});
-        else if($type == "GET") $.get(url=$url,data=$data,function (res) {return res;})
+    var open = function ($title,$url,$param={}) {
+        build($title,$url,$param);
+        $("#myModal").modal("show");
     };
 
     return {
         // 页面加载动画
-        createIframe : function ($title,$url,$type="GET",$data={}) {
-            pageLoader($title,$url,$type,$data);
+        createIframe : function ($title,$url,$param={}) {
+            open($title,$url,$param);
         }
     };
 }();
