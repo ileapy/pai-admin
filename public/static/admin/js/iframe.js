@@ -4,8 +4,8 @@ var iframe = function(){
      * 页面loading
      */
     var pageLoader = function($title,$url,$type,$data) {
-        jQuery('body').prepend('<button type="button" id="modelClick" class="btn btn-primary" style="display: none;" data-toggle="modal" data-target="#exampleModal">点击</button>');
-        jQuery('body').prepend('<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">\n' +
+        jQuery('body').prepend('<button type="button" id="modelClick" class="btn btn-primary" style="display: none;" data-toggle="modal" data-target="#exampleModal"></button>');
+        jQuery('body').prepend('<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">\n' +
             '    <div class="modal-dialog modal-lg" role="document">\n' +
             '        <div class="modal-content">\n' +
             '            <div class="modal-header">\n' +
