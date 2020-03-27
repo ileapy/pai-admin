@@ -4395,7 +4395,7 @@ body[data-theme='translucent'] {
     border-bottom: 1px solid #f1f2f3;
 }
 .notifications-menu > .dropdown-menu > li .menu {
-    max-height: 200px;
+    max-height: 210px;
     margin: 0;
     padding: 0;
     list-style: none;
