@@ -53,6 +53,47 @@
             -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
             transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
+        .btn{
+            padding: 3px 8px;
+        }
+        .cart-item{
+            height: 105px;
+            padding: 5px;
+        }
+        .cart-item-image{
+            width: 100%;
+            max-height:100%;
+            margin: 0 auto;
+        }
+        .btn-round {
+            -webkit-border-radius: 1rem;
+        }
+        .btn-success {
+            background-color: #15c377;
+            border-color: #15c377;
+            color: #fff!important;
+        }
+        .btn-info {
+            background-color: #48b0f7;
+            border-color: #48b0f7;
+            color: #fff!important;
+        }
+        .btn-danger {
+            background-color: #f96868;
+            border-color: #f96868;
+            color: #fff!important;
+        }
+        .pagination > li > a{
+            margin: 0 3px;
+        }
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            background-color: #33cabb;
+            border-color: #33cabb;
+        }
+        .pagination{
+            margin: 5px 0 0 0;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -65,7 +106,76 @@
             </div>
         </div>
         <div class="col-xs-9">
-
+            <div class="card">
+                <div class="card-header">
+                    <a class="btn btn-round btn-success">添加分类</a>
+                    <a class="btn btn-round btn-danger">删除分类</a>
+                    <a class="btn btn-round btn-success">上传图片</a>
+                    <a class="btn btn-round btn-info">移动图片</a>
+                    <a class="btn btn-round btn-danger">删除图片</a>
+                </div>
+                <div class="card-body" style="margin-top: 10px;">
+                    <div class="row">
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
+                        </div>
+                        <div class="col-xs-3 cart-item">
+                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <nav>
+                        <ul class="pagination pagination-sm">
+                            <li class="disabled">
+                                <a href="#!">
+                                    <span><i class="glyphicon glyphicon-chevron-left"></i></span>
+                                </a>
+                            </li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#!">2</a></li>
+                            <li><a href="#!">3</a></li>
+                            <li><a href="#!">4</a></li>
+                            <li><a href="#!">5</a></li>
+                            <li>
+                                <a href="#!">
+                                    <span><i class="glyphicon glyphicon-chevron-right"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -146,6 +256,7 @@
             }
         ];
     }
+    // 初始化菜单
     $('#tree').treeview({
         expandIcon: 'glyphicon glyphicon-chevron-right',
         collapseIcon: 'glyphicon glyphicon-chevron-down',
@@ -156,6 +267,15 @@
         onClick: function(event,node) {
             alert(111)
         }
+    });
+    // 选中节点
+    $('#tree').on('nodeSelected', function(event, data) {
+        console.log(event)
+        console.log(data)
+    });
+    // 选中节点
+    $('#tree').on('nodeUnselected', function(event, data) {
+        console.log($('#tree').treeview('toggleNodeChecked'));
     });
 </script>
 </body>
