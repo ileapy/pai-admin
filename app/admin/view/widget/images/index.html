@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>选择图片 - 派后台管理系统</title>
+    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
+    <meta name="keywords" content="派后台管理系统">
+    <meta name="description" content="派后台管理系统">
+    <meta name="author" content="cfn">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap.min.css">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.css">
+    <style>
+        .list-group-item{
+            border: 0px !important;
+            padding: 5px 10px;
+        }
+        #tree{
+            height: 350px;
+            overflow-y: scroll;
+            border-right: 1px solid #ccc;
+            margin-top: 10px;
+        }
+        #tree::-webkit-scrollbar{
+            width: 4px;
+        }
+        #tree::-webkit-scrollbar-thumb{
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.2);
+        }
+        #tree::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            border-radius: 0;
+            background: rgba(0,0,0,0.1);
+        }
+        .form-control2{
+            display: block;
+            width: 100%;
+            height: 28px;
+            padding: 2px 6px;
+            font-size: 12px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-xs-3">
+            <div id="box-left">
+                <input type="text" class="form-control2" id="search" placeholder="分类名称">
+                <div id="tree"></div>
+            </div>
+        </div>
+        <div class="col-xs-9">
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+<script>
+    function getTree() {
+        // Some logic to retrieve, or generate tree structure
+        return [
+            {
+                text: 'Parent 1',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: 'Child 1',
+                        href: '#child1',
+                        tags: ['2'],
+                    },
+                    {
+                        text: 'Child 2',
+                        href: '#child2',
+                        tags: ['0']
+                    }
+                ]
+            },
+            {
+                text: 'Parent 2',
+                href: '#parent2',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 3',
+                href: '#parent3',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            }
+        ];
+    }
+    $('#tree').treeview({
+        expandIcon: 'glyphicon glyphicon-chevron-right',
+        collapseIcon: 'glyphicon glyphicon-chevron-down',
+        selectedColor: '#ff0000',
+        selectedBackColor: null,
+        onhoverColor: null,
+        data: getTree(),
+        onClick: function(event,node) {
+            alert(111)
+        }
+    });
+</script>
+</body>
+</html>

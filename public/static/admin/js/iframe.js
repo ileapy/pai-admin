@@ -5,7 +5,7 @@ var iframe = function(){
      */
     var build = function($title,$url,$param) {
         $width = $param.hasOwnProperty("width") ? $param['width'] : "100%";
-        $height = $param.hasOwnProperty("height") ? $param['height'] : "500px";
+        $height = $param.hasOwnProperty("height") ? $param['height'] : "600px";
         $footer = $param.hasOwnProperty("footer") ? $param['footer'] : 'block';
         jQuery('body').prepend(
             '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal" data-backdrop="static">\n' +
