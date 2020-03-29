@@ -79,11 +79,16 @@ php think worker [start|stop|reload|restart|status]
 
 ## 文档
 
-[TP6开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
-[FormBuilder](http://php.form-create.com/)
-[Light Year Admin](http://www.itshubao.com/doc-lyear/lyear.html)
-[Workerman](http://doc.workerman.net/)
-[EasyWeChat](https://www.easywechat.com/docs)
+[TP6开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)  
+[FormBuilder](http://php.form-create.com/)  
+[Light Year Admin](http://www.itshubao.com/doc-lyear/lyear.html)  
+[Workerman](http://doc.workerman.net/)  
+[EasyWeChat](https://www.easywechat.com/docs)  
+
+## 后台体验
+后台地址 https://learn.leapy.cn/admin  
+账号 admin  
+密码 123456  
 
 ## 版权信息
 
@@ -91,6 +96,6 @@ Pai-admin遵循Apache2开源协议发布，并提供免费使用。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-版权所有Copyright © 2019-2020 by LEAPY (https://learn.leapy.cn)
+版权所有Copyright © 2019-2020 by LEAPY (https://learn.leapy.cn/admin)
 
 All rights reserved。
