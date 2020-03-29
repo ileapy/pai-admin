@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap.min.css">
     <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.css">
+    <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
     <style>
         .list-group-item{
             border: 0px !important;
@@ -108,11 +109,12 @@
         <div class="col-xs-9">
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-round btn-success">添加分类</a>
-                    <a class="btn btn-round btn-danger">删除分类</a>
-                    <a class="btn btn-round btn-success">上传图片</a>
-                    <a class="btn btn-round btn-info">移动图片</a>
-                    <a class="btn btn-round btn-danger">删除图片</a>
+                    <a class="btn btn-round btn-success" onclick="events('addCategory')">添加分类</a>
+                    <a class="btn btn-round btn-info" onclick="events('editCategory')">修改分类</a>
+                    <a class="btn btn-round btn-danger" onclick="events('delCategory')">删除分类</a>
+                    <a class="btn btn-round btn-success" onclick="events('addCategory')">上传图片</a>
+                    <a class="btn btn-round btn-info" onclick="events('addCategory')">移动图片</a>
+                    <a class="btn btn-round btn-danger" onclick="events('addCategory')">删除图片</a>
                 </div>
                 <div class="card-body" style="margin-top: 10px;">
                     <div class="row">
@@ -181,102 +183,64 @@
 </div>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 <script>
-    function getTree() {
-        // Some logic to retrieve, or generate tree structure
-        return [
-            {
-                text: 'Parent 1',
-                href: '#parent1',
-                tags: ['4'],
-                nodes: [
-                    {
-                        text: 'Child 1',
-                        href: '#child1',
-                        tags: ['2'],
-                    },
-                    {
-                        text: 'Child 2',
-                        href: '#child2',
-                        tags: ['0']
-                    }
-                ]
-            },
-            {
-                text: 'Parent 2',
-                href: '#parent2',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 3',
-                href: '#parent3',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
+    let id=0,pid=0;
+    function tree()
+    {
+        $.post(url = "/admin/widget.images/category", data = {}, function (res) {
+            if (res.status === 200) {
+                $('#tree').treeview({
+                    expandIcon: 'glyphicon glyphicon-chevron-right',
+                    collapseIcon: 'glyphicon glyphicon-chevron-down',
+                    selectedColor: '#ff0000',
+                    selectedBackColor: null,
+                    onhoverColor: null,
+                    data: res.data,
+                    levels:0
+                });
+                // 选中节点
+                $('#tree').on('nodeSelected', function (event, data) {
+                    console.log(data);
+                    id = data.id;
+                    pid = data.pid;
+                });
+                // 取消选中
+                $('#tree').on('nodeUnselected', function (event, data) {
+                    id = 0;
+                    pid = 0;
+                });
             }
-        ];
+        });
     }
-    // 初始化菜单
-    $('#tree').treeview({
-        expandIcon: 'glyphicon glyphicon-chevron-right',
-        collapseIcon: 'glyphicon glyphicon-chevron-down',
-        selectedColor: '#ff0000',
-        selectedBackColor: null,
-        onhoverColor: null,
-        data: getTree(),
-        onClick: function(event,node) {
-            alert(111)
+    $(function () {
+        tree();
+    });
+    function events(type) {
+        switch (type)
+        {
+            case 'addCategory':
+                iframe.createIframe('添加分类','/admin/widget.images/addCategory?id='+id+'&pid='+pid,{height:'215px;'});
+                break;
+            case 'editCategory':
+                if (id == 0) return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                iframe.createIframe('修改分类','/admin/widget.images/editCategory?id='+id+'&pid='+pid,{height:'215px;'});
+                break;
+            case 'delCategory':
+                if (id == 0) return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                $.get(url = "/admin/widget.images/delCategory", data = {id:id}, function (res) {
+                    if (res.status === 200 || res.code === 200) {
+                        lightyear.notify(res.msg, 'success', 1000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                        return tree();
+                    }
+                    else return lightyear.notify(res.msg, 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                });
+                break;
         }
-    });
-    // 选中节点
-    $('#tree').on('nodeSelected', function(event, data) {
-        console.log(event)
-        console.log(data)
-    });
-    // 选中节点
-    $('#tree').on('nodeUnselected', function(event, data) {
-        console.log($('#tree').treeview('toggleNodeChecked'));
-    });
+    }
 </script>
 </body>
 </html>
