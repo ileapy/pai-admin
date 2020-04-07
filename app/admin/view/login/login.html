@@ -108,7 +108,8 @@
 <script>
   let scand = false;
   let type = false;
-  // 切换登录
+  let protocol = location.protocol === 'https:' ? "wss://"+window.location.host+"/wss" : "ws://"+window.location.host+":1996";
+          // 切换登录
   function changeLoginType() {
     $("#loginFrm").toggle();
     $("#scan").toggle();
@@ -138,11 +139,11 @@
     if (Array.isArray(name)) return value;
     else return value[name];
   }
-  let ws = new WebSocket("ws://182.254.133.82:1996");
+  let ws = new WebSocket(protocol);
   // 打开 ws
   function openws() {
     let time = null,tryNum = 10;
-    if (ws.readyState == 3) ws = new WebSocket("ws://182.254.133.82:1996");
+    if (ws.readyState == 3) ws = new WebSocket(protocol);
     // 关闭遮罩
     $(".lab_qrcode_text").hide();
     try {
