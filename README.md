@@ -90,6 +90,10 @@ php think worker [start|stop|reload|restart|status]
 账号 admin  
 密码 123456  
 
+## 联系我
+邮箱：cfn@leapy.cn
+微信：C17896852019（此手机号已不用）
+
 ## 版权信息
 
 Pai-admin遵循Apache2开源协议发布，并提供免费使用。
