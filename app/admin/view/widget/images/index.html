@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap.min.css">
     <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
     <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.css">
+    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-fileinput/css/fileinput.min.css">
     <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
     <style>
         .list-group-item{
@@ -112,9 +113,9 @@
                     <a class="btn btn-round btn-success" onclick="events('addCategory')">添加分类</a>
                     <a class="btn btn-round btn-info" onclick="events('editCategory')">修改分类</a>
                     <a class="btn btn-round btn-danger" onclick="events('delCategory')">删除分类</a>
-                    <a class="btn btn-round btn-success" onclick="events('addCategory')">上传图片</a>
-                    <a class="btn btn-round btn-info" onclick="events('addCategory')">移动图片</a>
-                    <a class="btn btn-round btn-danger" onclick="events('addCategory')">删除图片</a>
+                    <a class="btn btn-round btn-success" onclick="events('uploadImage')">上传图片</a>
+                    <a class="btn btn-round btn-info" onclick="events('moveImage')">移动图片</a>
+                    <a class="btn btn-round btn-danger" onclick="events('delImage')">删除图片</a>
                 </div>
                 <div class="card-body" style="margin-top: 10px;">
                     <div class="row">
@@ -180,6 +181,9 @@
             </div>
         </div>
     </div>
+    <div class="row" style="display: none;">
+        <input id="fileupload" type="file">
+    </div>
 </div>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
@@ -187,6 +191,7 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script>
     let id=0,pid=0;
     function tree()
@@ -238,6 +243,26 @@
                     }
                     else return lightyear.notify(res.msg, 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                 });
+                break;
+            case 'uploadImage':
+                if (id == 0) return lightyear.notify('请选择上传的目录', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                //初始化fileinput控件（第一次初始化）
+                $('#fileupload').fileinput({
+                    language: 'zh', //设置语言
+                    uploadUrl: "/FileUpload/Upload", //上传的地址
+                    allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀,
+                    maxFileCount: 100,
+                    enctype: 'multipart/form-data',
+                    showUpload: true, //是否显示上传按钮
+                    showCaption: false,//是否显示标题
+                    browseClass: "btn btn-primary", //按钮样式
+                    previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                    msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+                });
+                break;
+            case 'moveImage':
+                break;
+            case 'delImage':
                 break;
         }
     }
