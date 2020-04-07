@@ -91,8 +91,8 @@ php think worker [start|stop|reload|restart|status]
 密码 123456  
 
 ## 联系我
-邮箱：cfn@leapy.cn
-微信：C17896852019（此手机号已不用）
+邮箱：cfn@leapy.cn  
+微信：C17896852019（此手机号已不用）  
 
 ## 版权信息
 
