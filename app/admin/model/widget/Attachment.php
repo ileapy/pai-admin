@@ -23,11 +23,21 @@ class Attachment extends BaseModel
      * @param string $type
      * @param string $mime
      * @param float $size
+     * @param int $storage
+     * @return int|string
      */
-    public static function add(int $cid, string $name, string $path, string $type, string $mime, float $size)
+    public static function addAttachment(int $cid, string $name, string $path, string $type, string $mime, float $size, int $storage)
     {
-        // 存储方式
-        $storage = SystemConfig::get("");
-        $upload_time = time();
+        $data = [
+            'cid' => $cid,
+            'name' => $name,
+            'path' => $path,
+            'type' => $type,
+            'mime' => $mime,
+            'size' => $size,
+            'storage' => $storage,
+            'upload_time' => time()
+        ];
+        return self::insert($data);
     }
 }
