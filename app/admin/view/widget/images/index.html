@@ -98,7 +98,7 @@
     </style>
 </head>
 <body>
-<div class="container-fluid p-t-15">
+<div class="container-fluid p-t-15" id="app">
     <div class="row">
         <div class="col-xs-3">
             <div id="box-left">
@@ -109,51 +109,18 @@
         <div class="col-xs-9">
             <div class="card">
                 <div class="card-header">
-                    <a class="btn btn-round btn-success" onclick="events('addCategory')">添加分类</a>
-                    <a class="btn btn-round btn-info" onclick="events('editCategory')">修改分类</a>
-                    <a class="btn btn-round btn-danger" onclick="events('delCategory')">删除分类</a>
-                    <a class="btn btn-round btn-success" onclick="events('uploadImage')">上传图片</a>
-                    <a class="btn btn-round btn-info" onclick="events('moveImage')">移动图片</a>
-                    <a class="btn btn-round btn-danger" onclick="events('delImage')">删除图片</a>
-                    <a class="btn btn-round btn-info" onclick="events('choice')">确定选择</a>
+                    <a class="btn btn-round btn-success" @click="events('addCategory')">添加分类</a>
+                    <a class="btn btn-round btn-info" @click="events('editCategory')">修改分类</a>
+                    <a class="btn btn-round btn-danger" @click="events('delCategory')">删除分类</a>
+                    <a class="btn btn-round btn-success" @click="events('uploadImage')">上传图片</a>
+                    <a class="btn btn-round btn-info" @click="events('moveImage')">移动图片</a>
+                    <a class="btn btn-round btn-danger" @click="events('delImage')">删除图片</a>
+                    <a class="btn btn-round btn-info" @click="events('choice')">确定选择</a>
                 </div>
                 <div class="card-body" style="margin-top: 10px;">
                     <div class="row">
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/5.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/7.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/2.jpg" class="cart-item-image">
-                        </div>
-                        <div class="col-xs-3 cart-item">
-                            <img src="http://lyear.itshubao.com/images/gallery/9.jpg" class="cart-item-image">
+                        <div class="col-xs-3 cart-item" v-for="image in imageList">
+                            <img :src="image.path" class="cart-item-image">{{image.path}}}
                         </div>
                     </div>
                 </div>
@@ -181,7 +148,7 @@
             </div>
         </div>
     </div>
-    <input id="fileUpload" type="file" name="file" style="display: none;" accept="image/*">
+    <input id="fileUpload" type="file" name="file" style="display: none;" @change="upload" accept="image/*">
 </div>
 <script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
@@ -189,90 +156,116 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-    let id=0,pid=0;
+    let id='',pid=0;
     let parentinputname = '{$Request.param.fodder}';
     let choices = [];
-    function tree()
-    {
-        $.post(url = "/admin/widget.images/category", data = {}, function (res) {
-            if (res.status === 200) {
-                $('#tree').treeview({
-                    expandIcon: 'glyphicon glyphicon-chevron-right',
-                    collapseIcon: 'glyphicon glyphicon-chevron-down',
-                    selectedColor: '#ff0000',
-                    selectedBackColor: null,
-                    onhoverColor: null,
-                    data: res.data,
-                    levels:0
-                });
-                // 选中节点
-                $('#tree').on('nodeSelected', function (event, data) {
-                    console.log(data);
-                    id = data.id;
-                    pid = data.pid;
-                });
-                // 取消选中
-                $('#tree').on('nodeUnselected', function (event, data) {
-                    id = 0;
-                    pid = 0;
-                });
-            }
-        });
-    }
-    $(function () {
-        tree();
-    });
-    function events(type) {
-        switch (type)
-        {
-            case 'addCategory':
-                iframe.createIframe('添加分类','/admin/widget.images/addCategory?id='+id+'&pid='+pid,{height:'215px;'});
-                break;
-            case 'editCategory':
-                if (id == 0) return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                iframe.createIframe('修改分类','/admin/widget.images/editCategory?id='+id+'&pid='+pid,{height:'215px;'});
-                break;
-            case 'delCategory':
-                if (id == 0) return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                $.get(url = "/admin/widget.images/delCategory", data = {id:id}, function (res) {
-                    if (res.status === 200 || res.code === 200) {
-                        lightyear.notify(res.msg, 'success', 1000, 'mdi mdi-emoticon-happy', 'top', 'center');
-                        return tree();
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            page:1,
+            limit:12,
+            imageList:[],
+            count:0,
+        },
+        mounted: function() {
+            this.tree();
+            this.getImageList();
+        },
+        methods:{
+            tree: function ()
+            {
+                $.post(url = "/admin/widget.images/category", data = {}, function (res) {
+                    if (res.status === 200) {
+                        $('#tree').treeview({
+                            expandIcon: 'glyphicon glyphicon-chevron-right',
+                            collapseIcon: 'glyphicon glyphicon-chevron-down',
+                            selectedColor: '#ff0000',
+                            selectedBackColor: null,
+                            onhoverColor: null,
+                            data: res.data,
+                            levels:0
+                        });
+                        // 选中节点
+                        $('#tree').on('nodeSelected', function (event, data) {
+                            console.log(data);
+                            id = data.id;
+                            pid = data.pid;
+                        });
+                        // 取消选中
+                        $('#tree').on('nodeUnselected', function (event, data) {
+                            id = '';
+                            pid = 0;
+                        });
                     }
-                    else return lightyear.notify(res.msg, 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                 });
-                break;
-            case 'uploadImage':
-                if (id == 0) return lightyear.notify('请选择上传的目录', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                $("#fileUpload").click();
-                break;
-            case 'moveImage':
-                break;
-            case 'delImage':
-                break;
-            case 'choice':
-                parent.$f.changeField(parentinputname,choices);
-                parent.$f.closeModal(parentinputname);
-                break;
-        }
-    }
-    $("#fileUpload").change(function () {
-        if (!$("#fileUpload").val()) return;
-        var formData = new FormData();
-        formData.append("file", $("#fileUpload")[0].files[0]);
-        formData.append("cid",id);
-        $.ajax({
-            type: "POST",
-            url: "/admin/widget.files/image",
-            enctype: 'multipart/form-data',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                if (res.code == 200) choices.push(res.data.filePath);
+            },
+            events: function (type)
+            {
+                switch (type)
+                {
+                    case 'addCategory':
+                        iframe.createIframe('添加分类','/admin/widget.images/addCategory?id='+id+'&pid='+pid,{height:'215px;'});
+                        break;
+                    case 'editCategory':
+                        if (id == '') return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        iframe.createIframe('修改分类','/admin/widget.images/editCategory?id='+id+'&pid='+pid,{height:'215px;'});
+                        break;
+                    case 'delCategory':
+                        if (id == '') return lightyear.notify('未选择分类', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.get(url = "/admin/widget.images/delCategory", data = {id:id}, function (res) {
+                            if (res.status === 200 || res.code === 200) {
+                                lightyear.notify(res.msg, 'success', 1000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                return tree();
+                            }
+                            else return lightyear.notify(res.msg, 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        });
+                        break;
+                    case 'uploadImage':
+                        if (id == '') return lightyear.notify('请选择上传的目录', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $("#fileUpload").click();
+                        break;
+                    case 'moveImage':
+                        break;
+                    case 'delImage':
+                        break;
+                    case 'choice':
+                        parent.$f.changeField(parentinputname,choices);
+                        parent.$f.closeModal(parentinputname);
+                        break;
+                }
+            },
+            upload:function ()
+            {
+                if (!$("#fileUpload").val()) return;
+                var formData = new FormData();
+                formData.append("file", $("#fileUpload")[0].files[0]);
+                formData.append("cid",id);
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/widget.files/image",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.code == 200) choices.push(res.data.filePath);
+                    }
+                });
+            },
+            getImageList:function ()
+            {
+                $.post(url="/admin/widget.images/getImageList",data={cid:id,page:this.page,limit:this.limit},function (res) {
+                    if (res.code == 0)
+                    {
+                        vm.imageList = res.data.data;
+                        this.count = res.data.count;
+                        console.log(this.imageList)
+                    }
+                });
             }
-        });
+        }
     });
 </script>
 </body>

@@ -40,4 +40,19 @@ class Attachment extends BaseModel
         ];
         return self::insert($data);
     }
+
+    /**
+     * 分页显示
+     * @param array $where
+     * @return array
+     */
+    public static function pagination(array $where)
+    {
+        $model = self::where("type",$where['type']);
+        if ($where['cid'] != "") $model = $model->where("cid", $where['cid']);
+        $count = self::counts($model);
+        $data = $model->page((int)$where['page'],(int)$where['limit'])->select();
+        if ($data) $data = $data->toArray();
+        return compact("data","count");
+    }
 }

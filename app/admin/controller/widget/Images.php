@@ -128,4 +128,18 @@ class Images extends AuthController
         if (AttachmentCategory::be($id,"pid")) return app("json")->fail("该分类下有子分类不能删除");
         return AttachmentCategory::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
     }
+
+    /**
+     * @return mixed
+     */
+    public function getImageList()
+    {
+        $where = Util::postMore([
+            ['cid',''],
+            ['type',$this->type],
+            ['page',1],
+            ['limit',12]
+        ]);
+        return app("json")->layui(Attachment::pagination($where));
+    }
 }
