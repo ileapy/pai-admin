@@ -62,7 +62,7 @@ class Admin extends AuthController
         $form = array();
         $form[] = Elm::input('name','登录账号')->col(10);
         $form[] = Elm::input('nickname','昵称')->col(10);
-        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/widget.images/index',array('fodder'=>'image')))->icon("ios-image")->spin(false)->width('96%')->height('390px')->col(10);
+        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/widget.images/index',array('fodder'=>'avatar')))->icon("ios-image")->width('96%')->height('390px')->col(10);
         $form[] = Elm::password('pwd','密码')->col(10);
         $form[] = Elm::input('realname','真实姓名')->col(10);
         $form[] = Elm::select('role_id','角色')->options(function(){

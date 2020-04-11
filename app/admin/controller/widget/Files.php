@@ -5,7 +5,9 @@ namespace app\admin\controller\widget;
 
 
 use app\admin\controller\AuthController;
+use app\admin\model\widget\Attachment;
 use learn\services\UtilService as Util;
+use think\facade\Filesystem;
 
 class Files extends AuthController
 {
@@ -15,8 +17,9 @@ class Files extends AuthController
      */
     public function image()
     {
-        $savename = \think\facade\Filesystem::putFile( 'image', request()->file('file'));
-        return $savename ? app("json")->code()->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+        $file = $this->request->file("file");
+        $savename = Filesystem::putFile( 'image', $file);
+        return Attachment::addAttachment($this->request->param("cid"),$savename,"/upload/".$savename,'image',$file->getMime(),$file->getSize(),1) ? app("json")->code()->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 
     /**
@@ -45,7 +48,16 @@ class Files extends AuthController
      */
     public function tinymce()
     {
-        $savename = \think\facade\Filesystem::putFile( 'image', request()->file('file'));
+        $savename = Filesystem::putFile( 'image', request()->file('file'));
         return json_encode(['location'=>"/upload/".$savename]);
+    }
+
+    /**
+     * 上传多图片
+     * @return mixed
+     */
+    public function images()
+    {
+        return Filesystem::putFile( 'image', request()->file('file')) ? app("json")->code()->success("上传成功") : app("json")->fail("上传失败");
     }
 }
