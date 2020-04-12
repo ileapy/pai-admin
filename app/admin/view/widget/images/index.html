@@ -58,11 +58,13 @@
             padding: 3px 8px;
         }
         .cart-item{
-            height: 105px;
+            height: 100px;
             padding: 5px;
+            text-align: center;
+            line-height: 80px;
         }
         .cart-item-image{
-            width: 100%;
+            max-width: 100%;
             max-height:100%;
             margin: 0 auto;
         }
@@ -84,17 +86,68 @@
             border-color: #f96868;
             color: #fff!important;
         }
-        .pagination > li > a{
+        .checkedItem{
+            border: 2px solid #f96868;
+            padding: 5px;
+        }
+        .pageination_align > li > a{
             margin: 0 3px;
         }
-        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        .pageination_align > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
             background-color: #33cabb;
             border-color: #33cabb;
         }
-        .pagination{
-            margin: 5px 0 0 0;
+        .pageination_align{
+            margin: 19px 0 0 0;
             float: right;
         }
+        .pageination_align {
+            text-align: center
+        }
+
+        .pageination {
+            color: #48576a;
+            font-size: 12px;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .pagination_page {
+            padding: 0 4px;
+            border: 1px solid #d1dbe5;
+            border-right: 0;
+            background: #fff;
+            font-size: 13px;
+            min-width: 28px;
+            height: 28px;
+            line-height: 28px;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+            float: left;
+        }
+
+        .pagination_page_right {
+            border-right: 1px solid #d1dbe5;
+        }
+
+        .pagination_page:hover {
+            color: #20a0ff;
+        }
+
+        .disabled {
+            color: #e4e4e4 !important;
+            background-color: #fff;
+            cursor: not-allowed;
+        }
+
+        .pagination_page_active {
+            border-color: #20a0ff;
+            background-color: #20a0ff;
+            color: #fff !important;;
+            cursor: default;
+        }
+
     </style>
 </head>
 <body>
@@ -102,7 +155,7 @@
     <div class="row">
         <div class="col-xs-3">
             <div id="box-left">
-                <input type="text" class="form-control2" id="search" placeholder="分类名称">
+                <input type="text" class="form-control2" id="search" placeholder="一级分类名称" @change="tree()">
                 <div id="tree"></div>
             </div>
         </div>
@@ -117,33 +170,15 @@
                     <a class="btn btn-round btn-danger" @click="events('delImage')">删除图片</a>
                     <a class="btn btn-round btn-info" @click="events('choice')">确定选择</a>
                 </div>
-                <div class="card-body" style="margin-top: 10px;">
+                <div class="card-body" style="margin-top: 10px;height: 300px;">
                     <div class="row">
-                        <div class="col-xs-3 cart-item" v-for="image in imageList">
-                            <img :src="image.path" class="cart-item-image">{{image.path}}}
+                        <div v-for="(image,index) in imageList" class="col-xs-3 cart-item"  :class="image.isSelect ? 'checkedItem': '' ">
+                            <img :src="image.path" class="cart-item-image" @click="changImage(image,index)">
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <nav>
-                        <ul class="pagination pagination-sm">
-                            <li class="disabled">
-                                <a href="#!">
-                                    <span><i class="glyphicon glyphicon-chevron-left"></i></span>
-                                </a>
-                            </li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#!">2</a></li>
-                            <li><a href="#!">3</a></li>
-                            <li><a href="#!">4</a></li>
-                            <li><a href="#!">5</a></li>
-                            <li>
-                                <a href="#!">
-                                    <span><i class="glyphicon glyphicon-chevron-right"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <pageination :total="model.total" :size="model.size" :page="model.page" :changge="pageFn" ></pageination>
                 </div>
             </div>
         </div>
@@ -157,26 +192,44 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-treeview/bootstrap-treeview.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/vue-page/pageination.js"></script>
 <script>
     let id='',pid=0;
     let parentinputname = '{$Request.param.fodder}';
     let choices = [];
-    let vm = new Vue({
+    let limit = '{$Request.param.limit}';
+    var vm = new Vue({
         el: "#app",
-        data: {
-            page:1,
-            limit:12,
-            imageList:[],
-            count:0,
+        data() {
+            return {
+                imageList:[],
+                checkedImage:[],
+                checkedImageId:[],
+                model:{
+                    total:12,
+                    size:12,
+                    page:1,
+                }
+            }
+        },
+        watch:{
+            page:function () {
+                this.getImageList();
+            },
         },
         mounted: function() {
             this.tree();
             this.getImageList();
         },
         methods:{
+            pageFn(val){
+                this.model.page=val;
+                this.getImageList(val);
+            },
             tree: function ()
             {
-                $.post(url = "/admin/widget.images/category", data = {}, function (res) {
+                const that = this;
+                $.post(url = "/admin/widget.images/category", data = {'title':$('#search').val()}, function (res) {
                     if (res.status === 200) {
                         $('#tree').treeview({
                             expandIcon: 'glyphicon glyphicon-chevron-right',
@@ -192,17 +245,23 @@
                             console.log(data);
                             id = data.id;
                             pid = data.pid;
+                            that.getImageList();
+                            that.checkedImageId.length = 0;
+                            that.checkedImage.length = 0;
+                            that.model.page = 1;
                         });
                         // 取消选中
                         $('#tree').on('nodeUnselected', function (event, data) {
                             id = '';
                             pid = 0;
+                            that.getImageList();
                         });
                     }
                 });
             },
             events: function (type)
             {
+                const that = this;
                 switch (type)
                 {
                     case 'addCategory':
@@ -227,17 +286,30 @@
                         $("#fileUpload").click();
                         break;
                     case 'moveImage':
+                        if (this.checkedImageId.length <= 0) return lightyear.notify('未选择图片', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        iframe.createIframe('修改图片分类','/admin/widget.images/editImage?id='+this.checkedImageId[this.checkedImageId.length-1],{height:'215px;'});
                         break;
                     case 'delImage':
+                        if (this.checkedImageId.length <= 0) return lightyear.notify('未选择图片', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        $.get(url = "/admin/widget.images/delImage", data = {id:this.checkedImageId[this.checkedImageId.length-1]}, function (res) {
+                            if (res.status === 200 || res.code === 200) {
+                                lightyear.notify(res.msg, 'success', 1000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                that.checkedImageId.length--;
+                                that.checkedImage.length--;
+                                that.getImageList();
+                            }
+                            else return lightyear.notify(res.msg, 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        });
                         break;
                     case 'choice':
-                        parent.$f.changeField(parentinputname,choices);
+                        parent.$f.changeField(parentinputname,this.checkedImage);
                         parent.$f.closeModal(parentinputname);
                         break;
                 }
             },
             upload:function ()
             {
+                const that = this;
                 if (!$("#fileUpload").val()) return;
                 var formData = new FormData();
                 formData.append("file", $("#fileUpload")[0].files[0]);
@@ -250,23 +322,42 @@
                     processData: false,
                     contentType: false,
                     success: function (res) {
-                        if (res.code == 200) choices.push(res.data.filePath);
+                        if (res.code == 200) that.getImageList();
                     }
                 });
             },
-            getImageList:function ()
+            getImageList:function (page = 1)
             {
-                $.post(url="/admin/widget.images/getImageList",data={cid:id,page:this.page,limit:this.limit},function (res) {
-                    if (res.code == 0)
-                    {
-                        vm.imageList = res.data.data;
-                        this.count = res.data.count;
-                        console.log(this.imageList)
+                const th = this;
+                $.post(url="/admin/widget.images/getImageList",data={cid:id,page:page,limit:th.model.size},function (res) {
+                    if (res.code == 0) {
+                        th.imageList = res.data;
+                        th.model.total = res.count;
                     }
                 });
+            },
+            changImage: function(item,index)
+            {
+                if ($.inArray(item.path,this.checkedImage)>=0)
+                {
+                    this.checkedImageId.remove(item.id)
+                    this.checkedImage.remove(item.path);
+                }else
+                {
+                    if (this.checkedImage.length >= limit) return lightyear.notify('不能再选了，最多只能选'+limit+'个', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');;
+                    this.checkedImageId.push(item.id);
+                    this.checkedImage.push(item.path);
+                }
+                this.$set(this.imageList[index],'isSelect',item.isSelect == undefined ? true : !item.isSelect);
             }
         }
     });
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    }
 </script>
 </body>
 </html>

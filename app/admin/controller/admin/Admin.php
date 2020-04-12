@@ -62,7 +62,7 @@ class Admin extends AuthController
         $form = array();
         $form[] = Elm::input('name','登录账号')->col(10);
         $form[] = Elm::input('nickname','昵称')->col(10);
-        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/widget.images/index',array('fodder'=>'avatar')))->icon("ios-image")->width('96%')->height('390px')->col(10);
+        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/widget.images/index',array('fodder'=>'avatar','limit'=>1)))->icon("ios-image")->width('96%')->height('390px')->col(10);
         $form[] = Elm::password('pwd','密码')->col(10);
         $form[] = Elm::input('realname','真实姓名')->col(10);
         $form[] = Elm::select('role_id','角色')->options(function(){
@@ -94,7 +94,7 @@ class Admin extends AuthController
         $form = array();
         $form[] = Elm::input('name','登录账号',$ainfo['name'])->col(10);
         $form[] = Elm::input('nickname','昵称',$ainfo['nickname'])->col(10);
-        $form[] = Elm::uploadImage('avatar','头像',url('/admin/widget.files/image'),$ainfo['avatar'])->multiple(false)->limit(1)->col(10);
+        $form[] = Elm::frameImage('avatar','头像',Url::buildUrl('admin/widget.images/index',array('fodder'=>'avatar','limit'=>1)),$ainfo['avatar'])->icon("ios-image")->width('96%')->height('390px')->col(10);
         $form[] = Elm::password('pwd','密码',$ainfo['pwd'])->col(10);
         $form[] = Elm::input('realname','真实姓名',$ainfo['realname'])->col(10);
         $form[] = Elm::select('role_id','角色',$ainfo['role_id'])->options(function(){

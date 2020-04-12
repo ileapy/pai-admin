@@ -37,7 +37,7 @@ class Images extends AuthController
      */
     public function category()
     {
-        return app("json")->success(AttachmentCategory::buildNodes("image",0));
+        return app("json")->success(AttachmentCategory::buildNodes("image",0,$this->request->param("title","")));
     }
 
     /**
@@ -141,5 +141,54 @@ class Images extends AuthController
             ['limit',12]
         ]);
         return app("json")->layui(Attachment::pagination($where));
+    }
+
+    /**
+     * @param $id
+     * @return string
+     * @throws \FormBuilder\Exception\FormBuilderException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function editImage($id)
+    {
+        if ($id==0) return app("json")->fail("没有选中图片");
+        $image = Attachment::get($id);
+        $form = array();
+        $form[] = Elm::select('cid','选中分类',(int)$image['cid'])->options(AttachmentCategory::returnOptions())->col(18);
+        $form[] = Elm::hidden('type','image')->col(18);
+        $form = Form::make_post_form($form, Url('saveImage',['id'=>$id])->build());
+        $this->assign(compact('form'));
+        return $this->fetch("public/form-builder");
+    }
+
+    /**
+     * 修改图片分类
+     * @param $id
+     * @return mixed
+     */
+    public function saveImage($id)
+    {
+        return Attachment::update(['cid'=>$this->request->param('cid')],['id'=>$id]) ? app("json")->success("修改成功",true) : app("json")->fail("修改失败");
+    }
+
+    /**
+     * 删除图片
+     * @param $id
+     * @return mixed
+     */
+    public function delImage($id)
+    {
+        if ($id == 0) return app("json")->fail("未选择图片");
+        $image = Attachment::get($id);
+        try {
+            unlink(app()->getRootPath() . 'public'.$image['path']);
+            return Attachment::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
+        }catch (\Exception $e)
+        {
+            return app("json")->fail("删除失败".$e);
+        }
+
     }
 }

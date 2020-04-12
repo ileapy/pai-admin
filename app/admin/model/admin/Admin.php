@@ -8,7 +8,6 @@ use app\admin\model\ModelTrait;
 use app\admin\model\wechat\WechatUser;
 use think\facade\Cache;
 use think\facade\Session;
-use learn\utils\Session as mSession;
 
 /**
  * 管理员管理
