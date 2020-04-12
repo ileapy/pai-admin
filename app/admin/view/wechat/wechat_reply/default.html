@@ -1,10 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>默认回复 - 派后台管理系统</title>
+    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
+    <meta name="keywords" content="派后台管理系统">
+    <meta name="description" content="派后台管理系统">
+    <meta name="author" content="cfn">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <style>
+        .mobile-header{
+            background: url('__ADMIN_PATH__images/wx-header.png') no-repeat;
+            background-size: 100%;
+            height: 64px;
+            width: 360px;
+        }
+        .mobile-footer{
+            background: url('__ADMIN_PATH__images/wx-footer.png') no-repeat;
+            background-size: 100%;
+            height: 50px;
+            width: 360px;
+        }
+        .mobile-body{
+            width: 360px;
+            height: 480px;
+            background: #ededed;
+        }
+        .mobile-content{
+            position: relative;
+            max-width: 60%;
+            min-height: 40px;
+            margin-left: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            word-break: break-all;
+            word-wrap: break-word;
+            line-height: 1.5;
+            border-radius: 5px;
+            float: left;
+            margin-top: 20px;
+        }
+        .mobile-content::before {
+            content: '';
+            position: absolute;
+            left: -13px;
+            top: 11px;
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid #ccc;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .mobile-avatar{
+            padding: 20px 12px;
+            float: left;
+        }
+    </style>
 </head>
 <body>
+<div class="container-fluid p-t-15" id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>默认回复</h4></div>
+                <div class="card-body row">
+                    <div class="col-sm-3" style="min-width: 400px;">
+                        <div class="mobile-header"></div>
+                        <div class="mobile-body">
+                            <div class="mobile-message">
+                                <div class="mobile-avatar">
+                                    <img src="__ADMIN_PATH__images/mobile-avatar.png" style="width: 40px;">
+                                </div>
+                                <div class="mobile-content">欢迎关注！</div>
+                            </div>
+                        </div>
+                        <div class="mobile-footer"></div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="card">
+                            <div class="card-header"><h4>默认回复设置</h4></div>
+                            <div class="card-body">
 
+                                <form class="form-horizontal" action="lyear_forms_elements.html" method="post" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" style="width: 90px;">是否启用</label>
+                                        <div class="col-sm-7">
+                                            <label class="radio-inline" for="status1">
+                                                <input type="radio" id="status1" name="status" value="1" checked>
+                                                启用
+                                            </label>
+                                            <label class="radio-inline" for="status2">
+                                                <input type="radio" id="status2" name="status" value="0">
+                                                禁用
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="example-hf-password" style="width: 90px;">密码</label>
+                                        <div class="col-md-7">
+                                            <input class="form-control" type="password" id="example-hf-password" name="example-hf-password" placeholder="请输入密码..">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <button class="btn btn-primary" type="submit">登录</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/vue/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+
+            }
+        },
+        mounted: function() {
+
+        },
+        methods: {
+
+        },
+    });
+</script>
 </body>
 </html>
