@@ -39,3 +39,18 @@ if (!function_exists('paramToArray'))
         return $arr;
     }
 }
+
+if (!function_exists('getFileType'))
+{
+    /**
+     * 获取文件类型
+     * @param string $mime
+     * @return string
+     */
+    function getFileType(string $mime): string
+    {
+        if (stristr($mime,'image')>=0) return 'image';
+        if (stristr($mime,'video')>=0) return 'video';
+        if (stristr($mime,'audio')>=0) return 'audio';
+    }
+}

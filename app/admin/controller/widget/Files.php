@@ -60,4 +60,17 @@ class Files extends AuthController
     {
         return Filesystem::putFile( 'image', request()->file('file')) ? app("json")->code()->success("上传成功") : app("json")->fail("上传失败");
     }
+
+    /**
+     * 上传文件到cid:0,
+     * 图片 视频 音频
+     * @return mixed
+     */
+    public function file()
+    {
+        $file = $this->request->file("file");
+        $type = getFileType($file->getMime());
+        $savename = Filesystem::putFile($type, $file);
+        return Attachment::addAttachment(0,$savename,"/upload/".$savename,$type,$file->getMime(),$file->getSize(),1) ? app("json")->code()->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+    }
 }
