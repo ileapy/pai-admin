@@ -197,6 +197,7 @@
         el: "#app",
         data() {
             return {
+                keyword:'{$keyword}',
                 type:'text',
                 contentText:'欢迎关注！',
                 contentImage:'',
@@ -271,7 +272,7 @@
                         content = this.contentNews;
                         break;
                 }
-                $.post(url="/admin/wechat.wechat_reply/save",data={type:this.type,content:content},function (res) {
+                $.post(url="/admin/wechat.wechat_reply/save",data={type:this.type,content:content,keyword:this.keyword},function (res) {
                     console.log(res);
                 });
                 return false;

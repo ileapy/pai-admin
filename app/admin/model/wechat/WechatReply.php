@@ -45,4 +45,25 @@ class WechatReply extends BaseModel
                 break;
         }
     }
+
+    /**
+     * 保存数据
+     * @param array $data
+     * @return bool
+     */
+    public static function saveReply(array $data)
+    {
+        switch ($data['type'])
+        {
+            case 'image':
+                break;
+            case 'video':
+                break;
+            case 'news':
+                break;
+            case 'audio':
+                break;
+        }
+        return self::be($data['keyword'],"keyword") ? self::update($data,['keyword'=>$data['keyword']]) : self::insert($data,true);
+    }
 }

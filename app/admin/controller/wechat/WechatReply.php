@@ -92,45 +92,37 @@ class WechatReply extends AuthController
     public function save($id="")
     {
         $data = Util::postMore([
-            ['name',''],
-            ['pid',0],
-            ['icon',''],
-            ['module',''],
-            ['controller',''],
-            ['action',''],
-            ['params',''],
-            ['rank',0],
-            ['is_menu',1],
+            ['keyword',''],
+            ['content',0],
+            ['type',''],
             ['status',1]
         ]);
-        if ($data['name'] == "") return app("json")->fail("权限名称不能为空");
-        if ($data['pid'] == "") return app("json")->fail("上级归属不能为空");
-        if ($data['module'] == "") return app("json")->fail("模块名不能为空");
-        if ($data['controller'] == "") return app("json")->fail("控制器名不能为空");
-        if ($data['action'] == "") return app("json")->fail("方法名不能为空");
-        $data['path'] = '/'.$data['module'].'/'.$data['controller'].'/'.$data['action'];
-        if ($id=="")
+        if ($data['keyword'] == "") return app("json")->fail("关键词不能为空");
+        if ($data['content'] == "") return app("json")->fail("回复内容不能为空");
+        if ($data['type'] == "") return app("json")->fail("类型不能为空");
+        if ($data['status'] == "") return app("json")->fail("状态不能为空");
+        if (RModel::be($data['keyword'],"keyword"))
         {
-            $data['create_user'] = $this->adminId;
-            $data['create_time'] = time();
-            $res = RModel::insert($data);
+            $data['update_time'] = time();
+            $data['update_user'] = $this->adminId;
         }else
         {
-            $data['update_user'] = $this->adminId;
-            $data['update_time'] = time();
-            $res = RModel::update($data,['id'=>$id]);
+            $data['create_time'] = time();
+            $data['create_user'] = $this->adminId;
         }
-        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
+        return RModel::saveReply($data) ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
     public function focus()
     {
-        return $this->fetch();
+        $this->assign("keyword",'focus');
+        return $this->fetch("default");
     }
 
     public function default()
     {
-        return $this->fetch();
+        $this->assign("keyword",'default');
+        return $this->fetch("default");
     }
 
     public function keyword()
