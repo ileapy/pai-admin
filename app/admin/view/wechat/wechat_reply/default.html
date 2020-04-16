@@ -229,6 +229,14 @@
             upload:function (type) {
                 const that = this;
                 if (!$("#u"+type).val()) return;
+                switch (type)
+                {
+                    case "image":
+                    case "audio":
+                        if ($("#u"+type)[0].files[0].size > 1024*2) return false;
+                    case "video":
+                        if ($("#u"+type)[0].files[0].size > 1024*10) return false;
+                }
                 var formData = new FormData();
                 formData.append("file", $("#u"+type)[0].files[0]);
                 $.ajax({

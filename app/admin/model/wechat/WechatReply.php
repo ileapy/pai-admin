@@ -50,18 +50,30 @@ class WechatReply extends BaseModel
      * 保存数据
      * @param array $data
      * @return bool
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public static function saveReply(array $data)
     {
+        // 微信资源文件上传
+        $media = WechatService::mediaService();
         switch ($data['type'])
         {
             case 'image':
+                $res = $media->uploadImage($data['content']);
+                var_dump($res);
                 break;
             case 'video':
-                break;
-            case 'news':
+                $res = $media->uploadVideo($data['content']);
+                var_dump($res);
                 break;
             case 'audio':
+                $res = $media->uploadVoice($data['content']);
+                var_dump($res);
                 break;
         }
         return self::be($data['keyword'],"keyword") ? self::update($data,['keyword'=>$data['keyword']]) : self::insert($data,true);

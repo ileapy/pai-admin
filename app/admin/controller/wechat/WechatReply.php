@@ -17,6 +17,10 @@ use app\admin\model\wechat\WechatReply as RModel;
  */
 class WechatReply extends AuthController
 {
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function index()
     {
         return $this->fetch();
@@ -85,9 +89,12 @@ class WechatReply extends AuthController
     }
 
     /**
-     * 保存
-     * @param $id
+     * 保存关键词
+     * @param string $id
      * @return
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function save($id="")
     {
@@ -113,18 +120,33 @@ class WechatReply extends AuthController
         return RModel::saveReply($data) ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
+    /**
+     * 关注
+     * @return string
+     * @throws \Exception
+     */
     public function focus()
     {
         $this->assign("keyword",'focus');
         return $this->fetch("default");
     }
 
+    /**
+     * 默认回复
+     * @return string
+     * @throws \Exception
+     */
     public function default()
     {
         $this->assign("keyword",'default');
         return $this->fetch("default");
     }
 
+    /**
+     * 关键词回复
+     * @return string
+     * @throws \Exception
+     */
     public function keyword()
     {
         return $this->fetch();
