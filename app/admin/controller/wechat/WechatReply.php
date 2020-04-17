@@ -130,7 +130,10 @@ class WechatReply extends AuthController
      */
     public function focus()
     {
-        $this->assign("keyword",'focus');
+        $this->assign("keyword",'subscribe');
+        $data = RModel::where("keyword",'subscribe')->find();
+        $this->assign("title","关注时回复");
+        $this->assign(self::value($data));
         return $this->fetch("default");
     }
 
@@ -142,29 +145,42 @@ class WechatReply extends AuthController
     public function default()
     {
         $this->assign("keyword",'default');
-        $content = "";
-        $type = "text";
         $data = RModel::where("keyword",'default')->find();
-        if ($data)
-        {
-            switch ($data['type'])
-            {
-                case 'text':
-                    $content = $data['content'];
-                    $type = "text";
-                    break;
-                case 'image':
-                    $content = json_decode($data['content'],true)['path'];
-                    $type = "image";
-                    break;
-                case 'video':
-                    $content = json_decode($data['content'],true)['path'];
-                    $type = "video";
-                    break;
-            }
-        }
-        $this->assign(compact('content','type'));
+        $this->assign("title","默认回复");
+        $this->assign(self::value($data));
         return $this->fetch("default");
+    }
+
+    /**
+     * 获取内容
+     * @param $data
+     * @return array
+     */
+    public function value($data)
+    {
+        switch ($data['type'])
+        {
+            case 'text':
+                $content = $data['content'];
+                $type = "text";
+                break;
+            case 'image':
+                $content = json_decode($data['content'],true)['path'];
+                $type = "image";
+                break;
+            case 'video':
+                $content = json_decode($data['content'],true)['path'];
+                $type = "video";
+                break;
+            case 'audio':
+                $content = json_decode($data['content'],true)['path'];
+                $type = "audio";
+                break;
+            default:
+                $content = "";
+                $type = "text";
+        }
+        return compact("type","content");
     }
 
     /**
