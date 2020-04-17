@@ -120,7 +120,7 @@ class WechatReply extends AuthController
             $data['create_time'] = time();
             $data['create_user'] = $this->adminId;
         }
-        return RModel::saveReply($data) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return RModel::saveReply($data) ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
     }
 
     /**
@@ -156,6 +156,10 @@ class WechatReply extends AuthController
                 case 'image':
                     $content = json_decode($data['content'],true)['path'];
                     $type = "image";
+                    break;
+                case 'video':
+                    $content = json_decode($data['content'],true)['path'];
+                    $type = "video";
                     break;
             }
         }

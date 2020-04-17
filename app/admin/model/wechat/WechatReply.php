@@ -28,21 +28,22 @@ class WechatReply extends BaseModel
     public static function reply(string $keyword)
     {
         $res = self::where('keyword',$keyword)->where('status','1')->find();
-        if(empty($res)) return WechatService::textMessage(self::where('keyword','default')->value("content"));
+        if(empty($res)) $res = self::where('keyword','default')->where('status','1')->find();
         switch ($res['type'])
         {
             case 'text':
                 return WechatService::textMessage($res['content']);
-                break;
             case 'image':
-                return WechatService::imageMessage($res['content']);
-                break;
+                $res['content'] = json_decode($res['content'],true);
+                return WechatService::imageMessage($res['content']['media_id']);
             case 'news':
-                return WechatService::newsMessage($res['content']);
-                break;
+                $res['content'] = json_decode($res['content'],true);
+                return WechatService::newsMessage($res['content']['media_id']);
             case 'voice':
-                return WechatService::voiceMessage($res['content']);
-                break;
+                $res['content'] = json_decode($res['content'],true);
+                return WechatService::voiceMessage($res['content']['media_id']);
+            default:
+                return "xx";
         }
     }
 
@@ -70,11 +71,13 @@ class WechatReply extends BaseModel
                 break;
             case 'video':
                 $res = $media->uploadVideo(app()->getRootPath().'public'.$data['content']);
-                var_dump($res);
+                event("UploadMediaAfter",[$res,$data['content'],0]);
+                $data['content'] = json_encode(['path'=>$data['content'],'media_id'=>$res['media_id']]);
                 break;
             case 'audio':
                 $res = $media->uploadVoice(app()->getRootPath().'public'.$data['content']);
-                var_dump($res);
+                event("UploadMediaAfter",[$res,$data['content'],0]);
+                $data['content'] = json_encode(['path'=>$data['content'],'media_id'=>$res['media_id']]);
                 break;
         }
         return self::be($data['keyword'],"keyword") ? self::update($data,['keyword'=>$data['keyword']]) : self::insert($data,true);

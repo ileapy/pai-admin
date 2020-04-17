@@ -49,8 +49,8 @@ if (!function_exists('getFileType'))
      */
     function getFileType(string $mime): string
     {
-        if (stristr($mime,'image')>=0) return 'image';
-        if (stristr($mime,'video')>=0) return 'video';
-        if (stristr($mime,'audio')>=0) return 'audio';
+        if (stristr($mime,'image')) return 'image';
+        elseif (stristr($mime,'video')) return 'video';
+        elseif (stristr($mime,'audio')) return 'audio';
     }
 }
