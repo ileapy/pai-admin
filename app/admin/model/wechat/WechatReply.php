@@ -42,8 +42,11 @@ class WechatReply extends BaseModel
             case 'voice':
                 $res['content'] = json_decode($res['content'],true);
                 return WechatService::voiceMessage($res['content']['media_id']);
+            case 'video':
+                $res['content'] = json_decode($res['content'],true);
+                return WechatService::videoMessage($res['content']['media_id']);
             default:
-                return "xx";
+                return "没有找到指定内容！";
         }
     }
 
