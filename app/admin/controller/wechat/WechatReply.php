@@ -139,6 +139,20 @@ class WechatReply extends AuthController
     public function default()
     {
         $this->assign("keyword",'default');
+        $content = "";
+        $type = "text";
+        $data = RModel::get('default');
+        if ($data)
+        {
+            switch ($data['type'])
+            {
+                case 'text':
+                    $content = $data['content'];
+                    $type = "text";
+                    break;
+            }
+        }
+        $this->assign(compact('content','type'));
         return $this->fetch("default");
     }
 

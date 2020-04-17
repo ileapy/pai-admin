@@ -198,8 +198,9 @@
         data() {
             return {
                 keyword:'{$keyword}',
-                type:'text',
-                contentText:'欢迎关注！',
+                type:'{$type}',
+                content:'{$content}',
+                contentText:'',
                 contentImage:'',
                 contentVideo:'',
                 contentAudio:'',
@@ -207,7 +208,7 @@
             }
         },
         mounted: function() {
-
+            this.defaultValue();
         },
         methods: {
             typeChange:function () {
