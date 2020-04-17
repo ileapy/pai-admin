@@ -28,5 +28,6 @@ return [
         \learn\subscribes\SystemSubscribe::class, // 系统通知
         \learn\subscribes\TimerSubscribe::class, // 定时器
         \learn\subscribes\WechatMessageSubscribe::class, //微信操作
+        \learn\subscribes\WechatMediaSubscribe::class, // 微信素材
     ],
 ];

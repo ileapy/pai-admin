@@ -19,6 +19,6 @@ class WechatMediaSubscribe
     public function onUploadMediaAfter($event)
     {
         list($res,$path,$temporary) = $event;
-        WechatMedia::insert(['type'=>$res['type'],'media_id'=>$res['media_id'],'create_time'=>$res['created_at'],'path'=>$path,'temporary'=>$temporary]);
+        WechatMedia::saveData(['type'=>$res['type'],'media_id'=>$res['media_id'],'create_time'=>$res['created_at'],'path'=>$path,'temporary'=>$temporary]);
     }
 }

@@ -14,4 +14,14 @@ use app\admin\model\ModelTrait;
 class WechatMedia extends BaseModel
 {
     use ModelTrait;
+
+    /**
+     * 保存素材数据
+     * @param $data
+     * @return int|string
+     */
+    public static function saveData($data)
+    {
+        return self::insert($data);
+    }
 }
