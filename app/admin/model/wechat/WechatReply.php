@@ -39,7 +39,7 @@ class WechatReply extends BaseModel
             case 'news':
                 $res['content'] = json_decode($res['content'],true);
                 return WechatService::newsMessage($res['content']['media_id']);
-            case 'voice':
+            case 'audio':
                 $res['content'] = json_decode($res['content'],true);
                 return WechatService::voiceMessage($res['content']['media_id']);
             case 'video':
