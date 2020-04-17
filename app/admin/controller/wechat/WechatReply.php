@@ -92,6 +92,9 @@ class WechatReply extends AuthController
      * 保存关键词
      * @param string $id
      * @return
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -117,7 +120,7 @@ class WechatReply extends AuthController
             $data['create_time'] = time();
             $data['create_user'] = $this->adminId;
         }
-        return RModel::saveReply($data) ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
+        return RModel::saveReply($data) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -141,7 +144,7 @@ class WechatReply extends AuthController
         $this->assign("keyword",'default');
         $content = "";
         $type = "text";
-        $data = RModel::get('default');
+        $data = RModel::where("keyword",'default')->find();
         if ($data)
         {
             switch ($data['type'])
@@ -149,6 +152,10 @@ class WechatReply extends AuthController
                 case 'text':
                     $content = $data['content'];
                     $type = "text";
+                    break;
+                case 'image':
+                    $content = json_decode($data['content'],true)['path'];
+                    $type = "image";
                     break;
             }
         }

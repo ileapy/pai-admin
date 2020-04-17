@@ -64,15 +64,16 @@ class WechatReply extends BaseModel
         switch ($data['type'])
         {
             case 'image':
-                $res = $media->uploadImage($data['content']);
-                var_dump($res);
+                $res = $media->uploadImage(app()->getRootPath().'public'.$data['content']);
+                event("UploadMediaAfter",[$res,$data['content'],0]);
+                $data['content'] = json_encode(['path'=>$data['content'],'media_id'=>$res['media_id']]);
                 break;
             case 'video':
-                $res = $media->uploadVideo($data['content']);
+                $res = $media->uploadVideo(app()->getRootPath().'public'.$data['content']);
                 var_dump($res);
                 break;
             case 'audio':
-                $res = $media->uploadVoice($data['content']);
+                $res = $media->uploadVoice(app()->getRootPath().'public'.$data['content']);
                 var_dump($res);
                 break;
         }
