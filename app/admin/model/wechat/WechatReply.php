@@ -85,4 +85,21 @@ class WechatReply extends BaseModel
         }
         return self::be($data['keyword'],"keyword") ? self::update($data,['keyword'=>$data['keyword']]) : self::insert($data,true);
     }
+
+    /**
+     * 关键词列表
+     * @param array $where
+     * @return array
+     */
+    public static function systemPage(array $where)
+    {
+        $model = new self;
+        $model = $model->where("keyword","not in", ['subscribe','default']);
+        if ($where['keyword'] != "") $mpdel = $model->where("keyword","like","%$where[keyword]%");
+        $count = self::counts($model);
+        $model = $model->page((int)$where['page'],(int)$where['limit']);
+        $data = $model->select();
+        if ($data) $data = $data->toArray();
+        return compact("data","count");
+    }
 }

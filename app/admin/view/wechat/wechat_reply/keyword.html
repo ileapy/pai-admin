@@ -25,8 +25,8 @@
                 <div class="card-header"><h4>关键词管理</h4></div>
                 <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加关键词','/admin/wechat.wechat_reply/add')">
-                            <span class="mdi mdi-plus" aria-hidden="true"></span>新增
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="location.href='/admin/wechat.wechat_reply/add'">
+                            <span class="mdi mdi-plus" aria-hidden="true"></span> 新增
                         </button>
                     </div>
                     <table id="tb_departments"></table>
@@ -40,7 +40,6 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-
 <!--行内编辑插件-->
 <link href="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.min.css" rel="stylesheet">
 <script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
@@ -56,7 +55,6 @@
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
-        //clickToSelect: true,     // 是否启用点击选中行
         showColumns: true,         // 是否显示所有的列
         showRefresh: true,         // 是否显示刷新按钮
         responseHandler: function (res) {
@@ -65,17 +63,13 @@
                 "rows": res.data,
             };
         },
-        //showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
-
+        showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
         pagination: true,                    // 是否显示分页
-        sortOrder: "asc",                    // 排序方式
         queryParams: function(params) {
             var temp = {
                 limit: params.limit,         // 每页数据量
-                offset: params.offset,       // sql语句起始索引
                 page: (params.offset / params.limit) + 1,
                 sort: params.sort,           // 排序的列名
-                sortOrder: params.order      // 排序方式'asc' 'desc'
             };
             return temp;
         },                                   // 传递参数
@@ -84,54 +78,31 @@
         pageSize: 20,                        // 每页的记录行数
         pageList: [20, 50, 100],         // 可供选择的每页的行数
         //search: true,                      // 是否显示表格搜索，此搜索是客户端搜索
-
-        //showExport: true,        // 是否显示导出按钮, 导出功能需要导出插件支持(tableexport.min.js)
-        //exportDataType: "basic", // 导出数据类型, 'basic':当前页, 'all':所有数据, 'selected':选中的数据
-
-        columns: [{
-            checkbox: true    // 是否显示复选框
-        }, {
-            field: 'id',
-            title: 'ID',
-            sortable: true    // 是否排序
-        }, {
-            field: 'name',
-            title: '账号'
-        }, {
-            field: 'nickname',
-            title: '昵称',
-        }, {
-            field: 'avatar',
-            title: '头像',
-            formatter:function (value,row,index) {
-                return '<img src="'+value+'" style="width: 64px;"/>';
-            },
-        }, {
-            field: 'role_id',
-            title: '角色类型'
-        }, {
-            field: 'tel',
-            title: '电话'
-        }, {
-            field: 'mail',
-            title: '邮箱'
-        }, {
-            field: 'create_time',
-            title: '创建时间'
-        }
-            , {
-                field: 'status',
-                title: '状态',
-                formatter:function (value,row,index) {
-                    return value === 1 ? '启用' : '冻结';
-                },
-            }, {
-                field: 'operate',
-                title: '操作',
-                formatter: btnGroup,  // 自定义方法
+        columns: [{ checkbox: true},
+            {field: 'id',title: '序号',sortable: true},
+            {field: 'keyword',title: '关键词'},
+            {field: 'type',title: '回复类型',formatter:function (value,row,index)
+                {
+                   switch (value) {
+                       case 'text':
+                           return "文本";
+                       case 'image':
+                           return "图片";
+                       case 'news':
+                           return "图文";
+                       case 'video':
+                           return "视频";
+                       case 'audio':
+                           return "声音";
+                   }
+                }},
+            {field: 'status',title: '状态',formatter:function (value,row,index) {return value === 1 ? '启用' : '禁用';}},
+            {field: 'create_time',title: '创建时间'},
+            {field: 'update_time',title: '修改时间'},
+            {field: 'operate',title: '操作',formatter: btnGroup,  // 自定义方法
                 events: {
                     'click .edit-btn': function (event, value, row, index) {
-                        iframe.createIframe('修改用户','/admin/wechat.wechat_reply/edit?id='+row.id)
+                        location.href = '/admin/wechat.wechat_reply/edit?id='+row.id
                     },
                     'click .del-btn': function (event, value, row, index) {
                         $.alert({
@@ -156,27 +127,6 @@
                     }
                 }
             }],
-
-        onEditableSave: function (field, row, oldValue, $el) {
-            $.ajax({
-                type: "get",
-                url: "/admin/wechat.wechat_reply/lst",
-                data: row,
-                dataType: 'jsonp',
-                success: function (data, status) {
-                    if (data.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单行的更新
-                        $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
-                    } else {
-                        alert(data.msg);
-                    }
-                },
-                error: function () {
-                    alert('修改失败，请稍后再试');
-                }
-            });
-        },
-
         onLoadSuccess: function(data){
             $("[data-toggle='tooltip']").tooltip();
         }
