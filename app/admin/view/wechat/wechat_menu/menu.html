@@ -1,10 +1,313 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>菜单管理 - 派后台管理系统</title>
+    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
+    <meta name="keywords" content="派后台管理系统">
+    <meta name="description" content="派后台管理系统">
+    <meta name="author" content="cfn">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <style>
+        .mobile-header{
+            background: url('__ADMIN_PATH__images/wx-header.png') no-repeat;
+            background-size: 100%;
+            height: 64px;
+            width: 360px;
+        }
+        .mobile-footer{
+            background: url('__ADMIN_PATH__images/wx-footer2.png') no-repeat;
+            background-size: 100%;
+            height: 50px;
+            width: 360px;
+        }
+        .mobile-body{
+            width: 360px;
+            height: 480px;
+            background: #ededed;
+        }
+        .mobile-content{
+            position: relative;
+            max-width: 60%;
+            min-height: 40px;
+            margin-left: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            word-break: break-all;
+            word-wrap: break-word;
+            line-height: 1.5;
+            border-radius: 5px;
+            float: left;
+            margin-top: 20px;
+        }
+        .mobile-content::before {
+            content: '';
+            position: absolute;
+            left: -13px;
+            top: 11px;
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid #ccc;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .mobile-content::after {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 11px;
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid #ededed;
+            -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+        .mobile-avatar{
+            padding: 20px 12px;
+            float: left;
+        }
+    </style>
 </head>
 <body>
-
+<div class="container-fluid p-t-15" id="app">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>公众号菜单管理</h4></div>
+                <div class="card-body row">
+                    <div class="col-sm-3" style="min-width: 400px;">
+                        <div class="mobile-header"></div>
+                        <div class="mobile-body">
+                            <div class="mobile-message">
+                                <div class="mobile-avatar">
+                                    <img src="__ADMIN_PATH__images/mobile-avatar.png" style="width: 40px;">
+                                </div>
+                                <div class="mobile-content">
+                                    <span v-if="type=='text'">{{contentText}}</span>
+                                    <span v-if="type=='image' && contentImage != ''"><img :src="contentImage" style="max-width: 100%;"></span>
+                                    <span v-if="type=='video' && contentVideo != ''"><video :src="contentVideo" style="max-width: 100%;" autoplay controls></video></span>
+                                    <span v-if="type=='audio' && contentAudio != ''"><audio :src="contentAudio" style="max-width: 100%;" autoplay controls></audio></span>
+                                    <span v-if="type=='news' && contentNews != ''">{{contentNews}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobile-footer"></div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="card" style="border: 1px solid #ccc; min-height: 600px;max-width: 400px;">
+                            <div class="card-header"><h4>公众号菜单设置</h4></div>
+                            <div class="card-body">
+                                <form class="form-horizontal" @submit.prevent="save">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" style="width: 90px;">是否启用</label>
+                                        <div class="col-sm-9">
+                                            <label class="radio-inline" for="status1">
+                                                <input type="radio" id="status1" name="status" value="1" v-model="status">
+                                                启用
+                                            </label>
+                                            <label class="radio-inline" for="status2">
+                                                <input type="radio" id="status2" name="status" value="0" v-model="status">
+                                                禁用
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="type" style="width: 90px;">消息类型</label>
+                                        <div class="col-md-9">
+                                            <select id="type" name="type" class="form-control" @change="typeChange" v-model="type">
+                                                <option value="text" selected>文字</option>
+                                                <option value="image">图片</option>
+                                                <option value="video">视频</option>
+                                                <option value="audio">声音</option>
+                                                <option value="news">文章</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='text'">
+                                        <label class="col-md-3 control-label" for="content" style="width: 90px;">文字内容</label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" name="content" id="content" placeholder="请输入文字内容" rows="3" v-model="contentText">{{contentText}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='image'">
+                                        <label class="col-md-3 control-label" for="image" style="width: 90px;">图片信息</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="image" name="image" v-model="contentImage" disabled/>
+                                                <input type="file" style="display: none;" id="uimage" accept="image/png,image/jpg,image/jpeg" @change="upload('image')"/>
+                                                <div class="input-group-btn form-inline"><button class="btn btn-success" type="button" for-input="image" @click="btnClick('image')">上传图片</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='video'">
+                                        <label class="col-md-3 control-label" for="video" style="width: 90px;">视频信息</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="video" name="video" v-model="contentVideo" disabled/>
+                                                <input type="file" style="display: none;" id="uvideo" accept="video/mp4" @change="upload('video')"/>
+                                                <div class="input-group-btn form-inline"><button class="btn btn-success" type="button" for-input="video" @click="btnClick('video')">上传视频</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='audio'">
+                                        <label class="col-md-3 control-label" for="audio" style="width: 90px;">音频信息</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="audio" name="audio" v-model="contentAudio" disabled/>
+                                                <input type="file" style="display: none;" id="uaudio" accept="audio/mp3,audio/amr" @change="upload('audio')"/>
+                                                <div class="input-group-btn form-inline"><button class="btn btn-success" type="button" for-input="audio" @click="btnClick('audio')">上传音频</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='news'">
+                                        <label class="col-md-3 control-label" for="news" style="width: 90px;">文章内容</label>
+                                        <div class="col-md-9">
+                                            <input type="button" id="news" value="请选择文章" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <button class="btn btn-primary" type="submit" style="width: 100px;margin-top: 20px;">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/vue/vue.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                status:1,
+                keyword:'text',
+                type:'text',
+                content:'',
+                contentText:'',
+                contentImage:'',
+                contentVideo:'',
+                contentAudio:'',
+                contentNews:'',
+            }
+        },
+        mounted: function() {
+            switch (this.type) {
+                case 'text':
+                    this.contentText = this.content;
+                    break;
+                case 'image':
+                    this.contentImage = this.content;
+                    break;
+                case 'video':
+                    this.contentVideo = this.content;
+                    break;
+                case 'audio':
+                    this.contentAudio = this.content;
+                    break;
+                case 'news':
+                    this.contentNews = this.content;
+                    break;
+            }
+        },
+        methods: {
+            typeChange:function () {
+                this.type = $('#type').val();
+            },
+            btnClick:function (type) {
+                switch (type) {
+                    case 'image':
+                        $("#uimage").click();
+                        break;
+                    case 'audio':
+                        $("#uaudio").click();
+                        break;
+                    case 'video':
+                        $("#uvideo").click();
+                        break;
+                }
+            },
+            upload:function (type) {
+                const that = this;
+                if (!$("#u"+type).val()) return;
+                switch (type)
+                {
+                    case "image":
+                    case "audio":
+                        if ($("#u"+type)[0].files[0].size > 1024*1024*2) return lightyear.notify("图片声音不能大于2M", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                    case "video":
+                        if ($("#u"+type)[0].files[0].size > 1024*1024*10) return lightyear.notify("视频不能大于10M", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                }
+                var formData = new FormData();
+                formData.append("file", $("#u"+type)[0].files[0]);
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/widget.files/file",
+                    enctype: 'multipart/form-data',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        switch (type) {
+                            case 'image':
+                                that.contentImage = res.data.filePath;
+                                break;
+                            case 'audio':
+                                that.contentAudio = res.data.filePath;
+                                break;
+                            case 'video':
+                                that.contentVideo = res.data.filePath;
+                                break;
+                        }
+                    }
+                });
+            },
+            save:function () {
+                let content = "";
+                switch (this.type) {
+                    case 'image':
+                        content = this.contentImage;
+                        break;
+                    case 'audio':
+                        content = this.contentAudio;
+                        break;
+                    case 'video':
+                        content = this.contentVideo;
+                        break;
+                    case 'text':
+                        content = this.contentText;
+                        break;
+                    case 'article':
+                        content = this.contentNews;
+                        break;
+                }
+                $.post(url="/admin/wechat.wechat_reply/save",data={type:this.type,content:content,keyword:this.keyword,status:this.status},function (res) {
+                    if (res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                });
+                return false;
+            }
+        }
+    });
+</script>
 </body>
 </html>
