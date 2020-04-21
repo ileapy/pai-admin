@@ -53,7 +53,6 @@
         .sub-menu {
             position: absolute;
             border-radius: 3px;
-            border: 1px solid #d0d0d0;
             display: block;
             bottom: 60px;
             width: 100%;
@@ -80,7 +79,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header"><h4>公众号菜单管理</h4></div>
+                <div class="card-header">
+                    <h4 style="line-height: 38px;">公众号菜单管理</h4>
+                    <button class="btn btn-primary" @click="saveMenu()" style="width: 100px;margin-left: 145px;">保存发布</button>
+                </div>
                 <div class="card-body row">
                     <div class="col-sm-3" style="min-width: 400px;">
                         <div class="mobile-header"></div>
@@ -89,11 +91,11 @@
                         <div class="mobile-footer">
                             <ul class="menu-ul">
                                 <li v-for="(menu,index) in menus" class="menu-li">
-                                    <span @click="activeMenu(menu,index,null)">{{menu.name}}</span>
+                                    <span @click="activeMenu(menu,index,null)">{{menu.name || '一级菜单'}}</span>
                                     <div class="sub-menu">
                                         <ul>
-                                            <li v-for="(child, cindex) in menu.sub_button.list" >
-                                                <span @click="activeMenu(child,index,cindex)">{{child.name || '二级菜单' }}</span>
+                                            <li v-for="(child, cindex) in menu.sub_button.list" @click="activeMenu(child,cindex,index)">
+                                                <span>{{child.name || '二级菜单' }}</span>
                                             </li>
                                             <li v-if="menu.sub_button.list.length < 5" @click="addChild(menu,index)"><span class="mdi mdi-plus"></span></li>
                                         </ul>
@@ -105,47 +107,50 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="card" style="border: 1px solid #ccc; min-height: 600px;max-width: 400px;">
-                            <div class="card-header"><h4>公众号菜单设置</h4></div>
-                            <div class="card-body" v-if="curMenu != ''">
+                            <div class="card-header">
+                                <h4>公众号菜单设置</h4>
+                                <a @click="delMenu()" style="float: right;">删除</a>
+                            </div>
+                            <div class="card-body" v-if="curMenuId != null">
                                 <form class="form-horizontal" onsubmit="return false;">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label" style="width: 90px;">菜单名称</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="name" id="name" v-model="name" placeholder="请输入文字内容"/>
+                                            <input type="text" class="form-control" name="name" id="name" v-model="curMenu.name" placeholder="请输入文字内容"/>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type">
+                                    <div class="form-group">
                                         <label class="col-md-3 control-label" for="type" style="width: 90px;">菜单类型</label>
                                         <div class="col-md-9">
-                                            <select id="type" name="type" class="form-control" @change="typeChange" v-model="type">
+                                            <select id="type" name="type" class="form-control" @change="typeChange" v-model="curMenu.type">
                                                 <option value="click" selected>关键字</option>
                                                 <option value="view">跳转网页</option>
                                                 <option value="miniprogram">小程序</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type=='click'">
+                                    <div class="form-group" v-if="curMenu.type=='click'">
                                         <label class="col-md-3 control-label" for="key" style="width: 90px;">关键字</label>
                                         <div class="col-sm-9">
-                                            <input class="form-control" name="key" id="key" placeholder="请输入关键字" v-model="key"/>
+                                            <input class="form-control" name="key" id="key" placeholder="请输入关键字" v-model="curMenu.key"/>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type=='view'">
+                                    <div class="form-group" v-if="curMenu.type=='view'">
                                         <label class="col-md-3 control-label" for="url" style="width: 90px;">链接</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="url" name="url" v-model="url"/>
+                                            <input type="text" class="form-control" id="url" name="url" v-model="curMenu.url"/>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type=='miniprogram'">
+                                    <div class="form-group" v-if="curMenu.type=='miniprogram'">
                                         <label class="col-md-3 control-label" for="appid" style="width: 90px;">APPID</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="appid" name="appid" v-model="appid"/>
+                                            <input type="text" class="form-control" id="appid" name="appid" v-model="curMenu.appid"/>
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="type=='miniprogram'">
+                                    <div class="form-group" v-if="curMenu.type=='miniprogram'">
                                         <label class="col-md-3 control-label" for="pagepath" style="width: 90px;">页面路径</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="pagepath" name="pagepath" v-model="pagepath"/>
+                                            <input type="text" class="form-control" id="pagepath" name="pagepath" v-model="curMenu.pagepath"/>
                                         </div>
                                     </div>
                                 </form>
@@ -153,7 +158,6 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit" style="width: 100px;">保存发布</button>
             </div>
         </div>
     </div>
@@ -170,77 +174,97 @@
         data() {
             return {
                 menus:{$menus|raw},
-                type:'click',
-                name:'',
-                key:'',
-                url:'',
-                appid:'',
-                pagepath:'',
-                curMenu:'',
+                curMenu:{
+                    type:'click',
+                    name:'',
+                },
+                curParentMenuId:null,
+                curMenuId:null,
             }
         },
-        mounted: function() {
-            console.log(this.menus)
-        },
         methods: {
-            addChild:function(){
-
+            defaultMenusData:function(){
+                return {
+                    type:'click',
+                    name:'',
+                    sub_button:{
+                        list:[]
+                    }
+                };
             },
-            delMenu:function (index) {
-                this.menus.splice(index,1);
+            defaultChildData:function(){
+                return {
+                    type:'click',
+                    name:''
+                };
+            },
+            addChild:function(menu,index){
+                if (!this.canSave()) return;
+                var data = this.defaultChildData(),id = menu.sub_button.length;
+                menu.sub_button.list.push(data);
+                this.curMenu = data;
+                this.curParentMenuId = id;
+                this.curMenuId = index;
             },
             addMenu:function () {
-
+                if (!this.canSave()) return;
+                var data = this.defaultMenusData(),id = this.menus.length;
+                this.menus.push(data);
+                this.curMenu = data;
+                this.curMenuId = id;
+                this.curParentMenuId = null;
+            },
+            delMenu:function (index) {
+                this.curParentMenuId === null ?
+                    this.menus.splice(this.curMenuId,1) : this.menus[this.curParentMenuId].sub_button.list.splice(this.curMenuId,1);
+                this.curParentMenuId = null;
+                this.curMenu = {};
+                this.curMenuId = null;
             },
             typeChange:function () {
                 this.type =  $('#type').val();
             },
-            activeMenu:function (menu,index,cindex) {
-                if (this.curMenu != '' && !this.canSave()) return;
-                this.curMenu = menu;
-                this.name = menu.name;
-                this.type = menu.type;
-                switch (menu.type) {
-                    case 'click':
-                        this.key = menu.key;
-                        break;
-                    case 'view':
-                        this.url = menu.url;
-                        break;
-                    case 'miniprogram':
-                        this.appid = menu.appid;
-                        this.pagepath = menu.pagepath;
-                        break;
-                }
+            activeMenu:function (menu,index,pindex) {
+                if (!this.canSave()) return;
+                pindex === null ? (this.curMenu = menu) : (this.curMenu = this.menus[pindex].sub_button.list[index],this.curParentMenuId = pindex);
+                this.curMenuId = index;
+            },
+            saveMenu:function()
+            {
+                $.post(url="/admin/wechat.wechat_menu/send",data={menus:this.menus},function (res) {
+                    if (res.code == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                    else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                });
             },
             canSave:function () {
-                if (this.name == "")
+                if(this.curMenuId === null) return true;
+                if (this.curMenu.name == "")
                 {
                     lightyear.notify("菜单名称不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                     return false;
                 }
-                switch (this.type) {
+                switch (this.curMenu.type) {
                     case 'click':
-                        if (this.key == "")
+                        if (!this.curMenu.key)
                         {
                             lightyear.notify("关键字不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             return false;
                         }
                         break;
                     case 'view':
-                        if (this.url == "")
+                        if (!this.curMenu.url)
                         {
                             lightyear.notify("链接不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             return false;
                         }
                         break;
                     case 'miniprogram':
-                        if (this.appid == "")
+                        if (!this.curMenu.appid)
                         {
                             lightyear.notify("APPID不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             return false;
                         }
-                        if (this.pagepath == "")
+                        if (!this.curMenu.pagepath)
                         {
                             lightyear.notify("小程序路径不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                             return false;
@@ -249,14 +273,6 @@
                 }
                 return true;
             },
-            clearMenu:function () {
-                this.name = "";
-                this.type = "click";
-                this.key = "";
-                this.url = "";
-                this.appid = "";
-                this.pagepath = "";
-            }
         }
     });
 </script>

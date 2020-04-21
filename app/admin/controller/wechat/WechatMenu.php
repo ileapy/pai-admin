@@ -6,6 +6,7 @@ namespace app\admin\controller\wechat;
 
 use app\admin\controller\AuthController;
 use app\Request;
+use learn\services\UtilService as Util;
 use learn\services\WechatService;
 
 /**
@@ -36,9 +37,28 @@ class WechatMenu extends AuthController
     /**
      * 发布菜单
      * @param Request $request
+     * @return
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function send(Request $request)
     {
-
+        try {
+            $menus = $request->param('menus','');
+            if ($menus == '') return app("json")->fail("菜单不能为空");
+            foreach ($menus as $k=>$v)
+            {
+                if (isset($menus[$k]['sub_button']) && isset($menus[$k]['sub_button']['list']))
+                {
+                    $menus[$k]['sub_button'] = $v['sub_button']['list'];
+                    unset($menus[$k]['sub_button']['list']);
+                }
+            }
+            $menu = WechatService::menuService();
+            $menu->create($menus);
+            return app("json")->success("菜单发布成功",true);
+        }catch (\Exception $e)
+        {
+            return app("json")->fail("菜单发布失败");
+        }
     }
 }
