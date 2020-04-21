@@ -670,6 +670,16 @@
                 "sftp",
                 "storage"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-08T18:53:20+00:00"
         },
         {
@@ -937,6 +947,12 @@
                 "wechat",
                 "weibo"
             ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/overtrue",
+                    "type": "patreon"
+                }
+            ],
             "time": "2020-03-04T15:22:25+00:00"
         },
         {
@@ -1009,6 +1025,20 @@
                 "wechat",
                 "weixin",
                 "weixin-sdk"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.easywechat.com/img/pay/wechat.jpg",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/overtrue",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/overtrue",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-03-05T01:31:41+00:00"
         },
@@ -1874,6 +1904,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-22T20:09:08+00:00"
         },
         {
@@ -1999,6 +2043,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-13T19:40:01+00:00"
         },
         {
@@ -2066,6 +2124,20 @@
             "keywords": [
                 "mime",
                 "mime-type"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-02-04T09:41:09+00:00"
         },
@@ -2460,6 +2532,20 @@
                 "hydrate",
                 "instantiate",
                 "serialize"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-02-04T09:47:34+00:00"
         },
@@ -3005,16 +3091,16 @@
         },
         {
             "name": "xaboy/form-builder",
-            "version": "2.0.13",
+            "version": "2.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xaboy/form-builder.git",
-                "reference": "ba937d922878856c9f2a1d5ea650327615ae6868"
+                "reference": "20cf96927c7aed273dd0db5b2c7c83f56e535bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xaboy/form-builder/zipball/ba937d922878856c9f2a1d5ea650327615ae6868",
-                "reference": "ba937d922878856c9f2a1d5ea650327615ae6868",
+                "url": "https://api.github.com/repos/xaboy/form-builder/zipball/20cf96927c7aed273dd0db5b2c7c83f56e535bf1",
+                "reference": "20cf96927c7aed273dd0db5b2c7c83f56e535bf1",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -3055,7 +3141,7 @@
                 "form-generator",
                 "iview"
             ],
-            "time": "2020-03-02T12:36:10+00:00"
+            "time": "2020-04-15T09:57:04+00:00"
         },
         {
             "name": "yansongda/pay",
@@ -3260,6 +3346,20 @@
                 "debug",
                 "dump"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-24T13:10:00+00:00"
         }
     ],
@@ -3271,5 +3371,6 @@
     "platform": {
         "php": ">=7.1.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
