@@ -50,6 +50,29 @@
             padding-left: 0px;
             display: flex;
         }
+        .sub-menu {
+            position: absolute;
+            border-radius: 3px;
+            border: 1px solid #d0d0d0;
+            display: block;
+            bottom: 60px;
+            width: 100%;
+            background-color: #fafafa;
+        }
+        .sub-menu ul{
+            margin-left: 0px;
+            padding-left: 0px;
+        }
+        .sub-menu li{
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            cursor: pointer;
+            flex: 1 1 auto;
+            position: relative;
+            list-style: none;
+            border: 1px solid #e7e7eb;
+        }
     </style>
 </head>
 <body>
@@ -65,19 +88,72 @@
                         </div>
                         <div class="mobile-footer">
                             <ul class="menu-ul">
-                                <li v-for="item in menus" class="menu-li">{{item.name}}</li>
-                                <li v-if="menus.lenth < 3">+</li>
+                                <li v-for="(menu,index) in menus" class="menu-li">
+                                    <span @click="activeMenu(menu,index,null)">{{menu.name}}</span>
+                                    <div class="sub-menu">
+                                        <ul>
+                                            <li v-for="(child, cindex) in menu.sub_button.list" >
+                                                <span @click="activeMenu(child,index,cindex)">{{child.name || '二级菜单' }}</span>
+                                            </li>
+                                            <li v-if="menu.sub_button.list.length < 5" @click="addChild(menu,index)"><span class="mdi mdi-plus"></span></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li v-if="menus.length < 3" class="menu-li" @click="addMenu()"><span class="mdi mdi-plus"></span></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <div class="card" style="border: 1px solid #ccc; min-height: 600px;max-width: 400px;">
                             <div class="card-header"><h4>公众号菜单设置</h4></div>
-                            <div class="card-body">
+                            <div class="card-body" v-if="curMenu != ''">
+                                <form class="form-horizontal" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label" style="width: 90px;">菜单名称</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="name" id="name" v-model="name" placeholder="请输入文字内容"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type">
+                                        <label class="col-md-3 control-label" for="type" style="width: 90px;">菜单类型</label>
+                                        <div class="col-md-9">
+                                            <select id="type" name="type" class="form-control" @change="typeChange" v-model="type">
+                                                <option value="click" selected>关键字</option>
+                                                <option value="view">跳转网页</option>
+                                                <option value="miniprogram">小程序</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='click'">
+                                        <label class="col-md-3 control-label" for="key" style="width: 90px;">关键字</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="key" id="key" placeholder="请输入关键字" v-model="key"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='view'">
+                                        <label class="col-md-3 control-label" for="url" style="width: 90px;">链接</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="url" name="url" v-model="url"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='miniprogram'">
+                                        <label class="col-md-3 control-label" for="appid" style="width: 90px;">APPID</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="appid" name="appid" v-model="appid"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" v-if="type=='miniprogram'">
+                                        <label class="col-md-3 control-label" for="pagepath" style="width: 90px;">页面路径</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="pagepath" name="pagepath" v-model="pagepath"/>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <button class="btn btn-primary" type="submit" style="width: 100px;">保存发布</button>
             </div>
         </div>
     </div>
@@ -93,14 +169,94 @@
         el: "#app",
         data() {
             return {
-                menus:<?=$menus?>,
+                menus:{$menus|raw},
+                type:'click',
+                name:'',
+                key:'',
+                url:'',
+                appid:'',
+                pagepath:'',
+                curMenu:'',
             }
         },
         mounted: function() {
             console.log(this.menus)
         },
         methods: {
+            addChild:function(){
 
+            },
+            delMenu:function (index) {
+                this.menus.splice(index,1);
+            },
+            addMenu:function () {
+
+            },
+            typeChange:function () {
+                this.type =  $('#type').val();
+            },
+            activeMenu:function (menu,index,cindex) {
+                if (this.curMenu != '' && !this.canSave()) return;
+                this.curMenu = menu;
+                this.name = menu.name;
+                this.type = menu.type;
+                switch (menu.type) {
+                    case 'click':
+                        this.key = menu.key;
+                        break;
+                    case 'view':
+                        this.url = menu.url;
+                        break;
+                    case 'miniprogram':
+                        this.appid = menu.appid;
+                        this.pagepath = menu.pagepath;
+                        break;
+                }
+            },
+            canSave:function () {
+                if (this.name == "")
+                {
+                    lightyear.notify("菜单名称不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                    return false;
+                }
+                switch (this.type) {
+                    case 'click':
+                        if (this.key == "")
+                        {
+                            lightyear.notify("关键字不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            return false;
+                        }
+                        break;
+                    case 'view':
+                        if (this.url == "")
+                        {
+                            lightyear.notify("链接不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            return false;
+                        }
+                        break;
+                    case 'miniprogram':
+                        if (this.appid == "")
+                        {
+                            lightyear.notify("APPID不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            return false;
+                        }
+                        if (this.pagepath == "")
+                        {
+                            lightyear.notify("小程序路径不能为空！", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            return false;
+                        }
+                        break;
+                }
+                return true;
+            },
+            clearMenu:function () {
+                this.name = "";
+                this.type = "click";
+                this.key = "";
+                this.url = "";
+                this.appid = "";
+                this.pagepath = "";
+            }
         }
     });
 </script>

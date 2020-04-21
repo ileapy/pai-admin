@@ -3,7 +3,6 @@
 
 namespace app\admin\controller\admin;
 
-
 use app\admin\controller\AuthController;
 use app\admin\model\admin\Admin as aModel;
 use app\admin\model\admin\AdminRole as rModel;

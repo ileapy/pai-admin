@@ -189,6 +189,5 @@ class Images extends AuthController
         {
             return app("json")->fail("删除失败".$e);
         }
-
     }
 }
