@@ -43,6 +43,7 @@ class WechatMenu extends AuthController
     public function send(Request $request)
     {
         try {
+            $menu = WechatService::menuService();
             $menus = $request->param('menus','');
             if ($menus == '') return app("json")->fail("菜单不能为空");
             foreach ($menus as $k=>$v)
@@ -53,7 +54,6 @@ class WechatMenu extends AuthController
                     unset($menus[$k]['sub_button']['list']);
                 }
             }
-            $menu = WechatService::menuService();
             $menu->create($menus);
             return app("json")->success("菜单发布成功",true);
         }catch (\Exception $e)
