@@ -60,7 +60,7 @@ class Json
         $res['msg'] = $msg;
         $res[$this->type] = $status;
         if ($this->type == 'code') $res['count'] = $count;
-        if (!empty($data)) $res['data'] = $data;
+        $res['data'] = $data;
         return Response::create($res, 'json', 200);
     }
 
@@ -113,6 +113,7 @@ class Json
     {
         $this->type = 'code';
         $count = 0;
+        $data=[];
         if (is_array($msg))
         {
             if (!isset($msg['count']) && !isset($msg['data'])) $data = $msg;

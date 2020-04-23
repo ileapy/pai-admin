@@ -39,7 +39,10 @@ class WechatReply extends AuthController
         $where = Util::postMore([
             ['keyword',''],
             ['page',1],
-            ['limit',20]
+            ['limit',20],
+            ['end_time',''],
+            ['start_time',''],
+            ['type',''],
         ]);
         return app("json")->layui(RModel::systemPage($where));
     }
