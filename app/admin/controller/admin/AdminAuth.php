@@ -35,7 +35,7 @@ class AdminAuth extends AuthController
      */
     public function lst(Request $request)
     {
-        return app("json")->layui(0,aModel::systemPage());
+        return app("json")->layui(aModel::systemPage());
     }
 
     /**

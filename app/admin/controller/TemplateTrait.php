@@ -21,7 +21,7 @@ trait TemplateTrait
     {
         $ids = $request->param("id",0);
         if ($ids == 0) return app("json")->fail("参数有误，Id为空！");
-        if (!is_array($ids)) $ids = [$ids];
+        if (!is_array($ids)) $ids = explode(",",$ids);
         return $this->model->where("id","in",$ids)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 

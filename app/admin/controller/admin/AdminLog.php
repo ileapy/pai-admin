@@ -16,7 +16,7 @@ use learn\services\UtilService as Util;
  */
 class AdminLog extends AuthController
 {
-    protected $noNeedLogin = [];
+    protected $noNeedLogin = ['index'];
 
     /**
      * 分页
@@ -27,11 +27,23 @@ class AdminLog extends AuthController
     public function index(Request $request)
     {
         $where = Util::postMore([
-            ['search_field',''],
-            ['keyword','']
+            ['name',''],
+            ['ip',''],
+            ['start_time',''],
+            ['end_time',''],
         ]);
         $this->assign("where",$where);
         $this->assign("list",lModel::systemPage($where)->appends($where));
         return $this->fetch();
+    }
+
+    /**
+     * 清空日志
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function empty(Request $request)
+    {
+        lModel::where("1=1")->delete();
     }
 }

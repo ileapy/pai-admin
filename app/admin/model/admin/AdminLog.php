@@ -46,7 +46,10 @@ class AdminLog extends BaseModel
     {
         $model = new self;
         $model = $model->order("id desc");
-        if ($where['search_field'] != '' || $where['keyword'] != '') $model = $model->where($where['search_field'],$where['keyword']);
+        if ($where['name'] != '') $model = $model->where('admin_name|id',"like","%$where[name]%");
+        if ($where['ip'] != '') $model = $model->where('ip',"like","%$where[ip]%");
+        if ($where['start_time'] != '') $model = $model->where('create_time','>',strtotime($where['start_time']." 00:00:00"));
+        if ($where['end_time'] != '') $model = $model->where('create_time','<', strtotime($where['start_time']." 23:59:59"));
         return $model->paginate(10)->each(function ($item){
             $item['name'] = AdminAuth::getNameByAction($item['module'],$item['controller'],$item['action']);
         });

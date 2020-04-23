@@ -98,7 +98,7 @@ class WechatReply extends BaseModel
         if ($where['keyword'] != "") $model = $model->where("keyword","like","%$where[keyword]%");
         if ($where['type'] != "") $model = $model->where("type",$where["type"]);
         if ($where['start_time']!="") $model = $model->where("create_time",">",strtotime($where['start_time']." 00:00:00"));
-        if ($where['end_time']!="") $model = $model->where("create_time","<",strtotime($where['end_time']." 00:00:00"));
+        if ($where['end_time']!="") $model = $model->where("create_time","<",strtotime($where['end_time']." 23:59:59"));
         $count = self::counts($model);
         $model = $model->page((int)$where['page'],(int)$where['limit']);
         $data = $model->select();
