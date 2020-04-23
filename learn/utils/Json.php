@@ -77,12 +77,12 @@ class Json
             $data = $msg;
             $msg = self::$DEFAULT_SUCCESS;
         }
-        if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
-        if (is_bool($data) && $data)
+        elseif (!empty($data) && is_string($data))
         {
-            $this->type = 'code';
+            $this->type = $data;
             $data = [];
         }
+        if ($msg == '') $msg = self::$DEFAULT_SUCCESS;
         return $this->instance(self::$SUCCESS_CODE,$msg,$data);
     }
 
