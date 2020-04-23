@@ -145,14 +145,6 @@
     $("#search").click(function () {
         $('#tb_departments').bootstrapTable('refresh', {
             url: '/admin/wechat.wechat_reply/lst',
-            queryParams: function(params) {
-                var temp = {
-                    limit: params.limit,
-                    page: (params.offset / params.limit) + 1,
-                    sort: params.sort,
-                };
-                return temp;
-            },
         });
     });
     // 操作按钮

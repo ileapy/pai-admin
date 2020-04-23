@@ -165,9 +165,8 @@
                     btnClass: 'btn-danger',
                     action: function () {
                         $.post("/admin/admin.admin_log/del",data={id:checkID},function (res) {
-                            if (res.status == 200) lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            if (res.status == 200) { lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
-                            location.reload();
                         })
                     }
                 },

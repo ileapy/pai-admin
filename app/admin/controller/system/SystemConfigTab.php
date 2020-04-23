@@ -10,6 +10,7 @@ use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use learn\services\UtilService as Util;
 use app\admin\model\system\SystemConfigTab as tModel;
+use app\admin\model\system\SystemConfig as cModel;
 
 /**
  * 管理员配置
@@ -33,6 +34,8 @@ class SystemConfigTab extends AuthController
         $where = Util::postMore([
             ['page',1],
             ['limit',20],
+            ['name',''],
+            ['status',''],
         ]);
         return app("json")->layui(tModel::lst($where));
     }
@@ -99,5 +102,22 @@ class SystemConfigTab extends AuthController
             $res = tModel::update($data,['id'=>$id]);
         }
         return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 重写删除
+     * @param Request $request
+     * @return mixed|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function del(Request $request)
+    {
+        $ids = $request->param("id",0);
+        if ($ids == 0) return app("json")->fail("参数有误，Id为空！");
+        if (!is_array($ids)) $ids = array_filter(explode(",",$ids));
+        if (cModel::where("tab_id","in",$ids)->count()>0) return app("json")->fail("该配置项下有配置数据，不能删除！");
+        return parent::del($request);
     }
 }
