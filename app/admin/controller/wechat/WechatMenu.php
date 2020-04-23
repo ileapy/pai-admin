@@ -55,7 +55,7 @@ class WechatMenu extends AuthController
                 }
             }
             $menu->create($menus);
-            return app("json")->success("菜单发布成功",true);
+            return app("json")->success("菜单发布成功",'code');
         }catch (\Exception $e)
         {
             return app("json")->fail("菜单发布失败");

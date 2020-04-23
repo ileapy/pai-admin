@@ -113,7 +113,7 @@ class Images extends AuthController
             $data['update_time'] = time();
             $res = AttachmentCategory::update($data,['id'=>$id]);
         }
-        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 
     /**
@@ -170,7 +170,7 @@ class Images extends AuthController
      */
     public function saveImage($id)
     {
-        return Attachment::update(['cid'=>$this->request->param('cid')],['id'=>$id]) ? app("json")->success("修改成功",true) : app("json")->fail("修改失败");
+        return Attachment::update(['cid'=>$this->request->param('cid')],['id'=>$id]) ? app("json")->success("修改成功",'code') : app("json")->fail("修改失败");
     }
 
     /**

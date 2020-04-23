@@ -107,6 +107,6 @@ class CmsTag extends AuthController
             $data['update_time'] = time();
             $res = TModel::update($data,['id'=>$id]);
         }
-        return $res ? app("json")->success("操作成功",true) : app("json")->fail("操作失败");
+        return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
 }
