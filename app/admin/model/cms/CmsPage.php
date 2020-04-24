@@ -15,6 +15,8 @@ class CmsPage extends BaseModel
 {
     use ModelTrait;
 
+    protected $pk = "cid";
+
     /**
      * @param array $where
      * @return array
@@ -25,15 +27,16 @@ class CmsPage extends BaseModel
     public static function systemPage(array $where)
     {
         $model = new self;
-        $model = $model->with("category");
-        if ($where['name']) $model = $model->where("name","like",$where['name']);
+        $model = $model->withJoin("category");
+        if ($where['name'] != "") $model = $model->where("category.name","like","%$where[name]%");
+        if ($where['status'] != "") $model = $model->where("cms_page.status",$where['status']);
         $model = $model->append($where);
         return $model->paginate(10);
     }
 
     /**
      * 关联
-     * @return \think\model\relation\HasMany
+     * @return \think\model\relation\HasOne
      */
     public function category()
     {

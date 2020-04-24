@@ -22,7 +22,7 @@ trait TemplateTrait
         $ids = $request->param("id",0);
         if ($ids == 0) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",",$ids);
-        return $this->model->where("id","in",$ids)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $this->model->where($this->model->getPk(),"in",$ids)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -35,7 +35,7 @@ trait TemplateTrait
         $ids = $request->param("id",0);
         if (empty($ids) || !$ids) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",",$ids);
-        return $this->model->where("id","in",$ids)->update(['status'=>1]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $this->model->where($this->model->getPk(),"in",$ids)->update(['status'=>1]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -48,7 +48,7 @@ trait TemplateTrait
         $ids = $request->param("id",0);
         if (empty($ids) || !$ids) return app("json")->fail("参数有误，Id为空！");
         if (!is_array($ids)) $ids = explode(",",$ids);
-        return $this->model->where("id","in",$ids)->update(['status'=>0]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $this->model->where($this->model->getPk(),"in",$ids)->update(['status'=>0]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 
     /**
@@ -61,6 +61,6 @@ trait TemplateTrait
         if (!$id) return app("json")->fail("参数有误，Id为空！");
         $where = Util::postMore([['field',''],['value','']]);
         if ($where['field'] == '' || $where['value'] =='') return app("json")->fail("参数有误！");
-        return $this->model::update([$where['field']=>$where['value']],['id'=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+        return $this->model::update([$where['field']=>$where['value']],[$this->model->getPk()=>$id]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

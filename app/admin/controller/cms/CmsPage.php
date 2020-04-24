@@ -28,8 +28,9 @@ class CmsPage extends AuthController
     {
         $where = Util::postMore([
             ['name',""],
-            ['page',1]
+            ['status',""],
         ]);
+        $this->assign("where",$where);
         $this->assign("list",PModel::systemPage($where));
         return $this->fetch();
     }
@@ -90,16 +91,5 @@ class CmsPage extends AuthController
             $res = PModel::update($data,['cid'=>$id]);
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
-    }
-
-    /**
-     * 删除
-     * @param Request $cid
-     * @return mixed|void
-     */
-    public function del($cid)
-    {
-        if (!is_array($cid)) $cid = [$cid];
-        return $this->model->where("cid","in",$cid)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

@@ -26,8 +26,9 @@ class CmsCategory extends BaseModel
     public static function systemPage($where)
     {
         $model = new self;
-        if ($where['name']) $model = $model->where("name","like", $where['name']);
-        if ($where['status']) $model = $model->where("status", $where['status']);
+        if ($where['name'] != '') $model = $model->where("name|id","like", "%$where[name]%");
+        if ($where['status'] != '') $model = $model->where("status", $where['status']);
+        if ($where['type'] != '') $model = $model->where("type", $where['type']);
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }

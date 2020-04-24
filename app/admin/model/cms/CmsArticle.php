@@ -16,16 +16,15 @@ class CmsArticle extends BaseModel
 
     /**
      * @param array $where
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
+     * @return \think\Paginator
      * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public static function systemPage(array $where)
     {
         $model = new self;
         $model = $model->with("category");
-        if ($where['name']) $model = $model->where("name","like",$where['name']);
+        if ($where['name']!="") $model = $model->where("name|id","like","%$where[name]%");
+        if ($where['status']!="") $model = $model->where("status",$where['status']);
         $model = $model->append($where);
         return $model->paginate(10)->each(function ($item){
             $item['view'] = CmsRecord::where("type",1)->count();
@@ -35,7 +34,7 @@ class CmsArticle extends BaseModel
 
     /**
      * 关联
-     * @return \think\model\relation\HasMany
+     * @return \think\model\relation\HasOne
      */
     public function category()
     {

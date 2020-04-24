@@ -25,8 +25,9 @@ class CmsArticle extends AuthController
     {
         $where = Util::postMore([
             ['name',""],
-            ['page',1]
+            ['status',""],
         ]);
+        $this->assign("where",$where);
         $this->assign("list",AModel::systemPage($where));
         return $this->fetch();
     }

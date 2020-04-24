@@ -39,6 +39,7 @@ class CmsCategory extends AuthController
         $where = Util::postMore([
             ['name',''],
             ['status',''],
+            ['type',''],
         ]);
         return app("json")->layui(CModel::systemPage($where));
     }
