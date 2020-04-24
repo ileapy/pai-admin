@@ -18,7 +18,7 @@
             padding: 5px 10px;
         }
         #tree{
-            height: 350px;
+            height: 390px;
             overflow-y: scroll;
             border-right: 1px solid #ccc;
             margin-top: 10px;
@@ -58,7 +58,7 @@
             padding: 3px 8px;
         }
         .cart-item{
-            height: 100px;
+            height: 110px;
             padding: 5px;
             text-align: center;
             line-height: 80px;
@@ -170,7 +170,7 @@
                     <a class="btn btn-round btn-danger" @click="events('delImage')">删除图片</a>
                     <a class="btn btn-round btn-info" @click="events('choice')">确定选择</a>
                 </div>
-                <div class="card-body" style="margin-top: 10px;height: 300px;">
+                <div class="card-body" style="margin-top: 10px;height: 350px;">
                     <div class="row">
                         <div v-for="(image,index) in imageList" class="col-xs-3 cart-item"  :class="image.isSelect ? 'checkedItem': '' ">
                             <img :src="image.path" class="cart-item-image" @click="changImage(image,index)">
