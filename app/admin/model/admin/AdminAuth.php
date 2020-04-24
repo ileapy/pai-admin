@@ -57,14 +57,17 @@ class AdminAuth extends BaseModel
 
     /**
      * 权限列表
+     * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function systemPage(): array
+    public static function systemPage($where): array
     {
         $model = new self;
+        if (isset($where['status']) && $where['status'] != '') $model = $model->where("status",$where['status']);
+        if (isset($where['name']) && $where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
         $model = $model->field(['id','name','icon','pid','module','controller','action','params','is_menu','path','rank','status']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select();

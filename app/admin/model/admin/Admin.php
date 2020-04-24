@@ -102,7 +102,10 @@ class Admin extends BaseModel
     public static function systemPage(array $where): array
     {
         $model = new self;
-        if ($where['name'] != '') $model = $model->where("name|id","like","%$where[name]%");
+        if ($where['name'] != '') $model = $model->where("name|id|nickname","like","%$where[name]%");
+        if ($where['start_time'] != '') $model = $model->where("create_time",">",strtotime($where['start_time']." 00:00:00"));
+        if ($where['end_time'] != '') $model = $model->where("create_time","<", strtotime($where['end_time']." 23:59:59"));
+        if ($where['tel'] != '') $model = $model->where("tel|mail", "like","%$where[tel]%");
         if ($where['status'] != '') $model = $model->where("status",$where['status']);
         if ($where['role_id'] != '') $model = $model->where("role_id",$where['role_id']);
         if ($where['page'] && $where['limit']) $model = $model->page((int)$where['page'],(int)$where['limit']);
