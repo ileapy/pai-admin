@@ -10,6 +10,7 @@ use learn\services\UtilService as Util;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
 use app\admin\model\cms\CmsBanner as BModel;
+use think\facade\Route as Url;
 
 class CmsBanner extends AuthController
 {
@@ -49,7 +50,7 @@ class CmsBanner extends AuthController
         $form = array();
         $form[] = Elm::input('name','轮播标题')->col(10);
         $form[] = Elm::number('position','位置')->col(10);
-        $form[] = Elm::uploadImage('image','图片',url('/admin/widget.files/image'))->limit(1)->multiple(false)->col(10);
+        $form[] = Elm::frameImage('image','图片',Url::buildUrl('admin/widget.images/index',array('fodder'=>'image','limit'=>1)))->icon("ios-image")->width('96%')->height('390px')->col(10);
         $form[] = Elm::input('link','链接')->col(20);
         $form[] = Elm::number('rank','排序')->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);

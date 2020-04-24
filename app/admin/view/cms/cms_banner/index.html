@@ -1,25 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>登录页面 - 派后台管理系统</title>
-    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
-    <meta name="keywords" content="派后台管理系统">
-    <meta name="description" content="派后台管理系统">
-    <meta name="author" content="cfn">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/animate.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
-    <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
+    <title>CMS轮播 - 派后台管理系统</title>
+    {include file="public/header" /}
 </head>
 
 <body>
 <div class="container-fluid p-t-15">
     <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>搜索</h4></div>
+                <div class="card-body">
+                    <form class="form-inline searchForm" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="name">轮播名称</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" value="" name="name" placeholder="请输入轮播名称或者ID">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">状态</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">所有</option>
+                                <option value="1">启用</option>
+                                <option value="0">禁用</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header"><h4>轮播管理</h4></div>
@@ -28,13 +42,13 @@
                         <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加轮播','/admin/cms.cms_banner/add')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
                         </button>
-                        <button id="btn_edit" type="button" class="btn btn-success m-r-5">
+                        <button id="btn_edit" type="button" class="btn btn-success m-r-5" onclick="isEnable('enable')">
                             <span class="mdi mdi-check" aria-hidden="true"></span>启用
                         </button>
-                        <button id="btn_disable" type="button" class="btn btn-warning m-r-5">
+                        <button id="btn_disable" type="button" class="btn btn-warning m-r-5" onclick="isEnable('disable')">
                             <span class="mdi mdi-block-helper" aria-hidden="true"></span>禁用
                         </button>
-                        <button id="btn_delete" type="button" class="btn btn-danger">
+                        <button id="btn_delete" type="button" class="btn btn-danger" onclick="del()">
                             <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
                         </button>
                     </div>
@@ -44,56 +58,37 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-
-<!--行内编辑插件-->
-<link href="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.min.css" rel="stylesheet">
-<script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
-<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+{include file="public/footer"/}
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
         url: '/admin/cms.cms_banner/lst',
         method: 'post',
-        dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
+        dataType : 'json',
         uniqueId: 'id',
-        idField: 'id',             // 每行的唯一标识字段
-        toolbar: '#toolbar',       // 工具按钮容器
-        //clickToSelect: true,     // 是否启用点击选中行
-        showColumns: true,         // 是否显示所有的列
-        showRefresh: true,         // 是否显示刷新按钮
+        idField: 'id',
+        toolbar: '#toolbar',
+        showColumns: true,
+        showRefresh: true,
         responseHandler: function (res) {
             return {
                 "total": res.count,
                 "rows": res.data,
             };
         },
-        //showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
-
-        pagination: true,                    // 是否显示分页
-        sortOrder: "asc",                    // 排序方式
+        pagination: true,
         queryParams: function(params) {
-            var temp = {
-                limit: params.limit,         // 每页数据量
-                offset: params.offset,       // sql语句起始索引
-                page: (params.offset / params.limit) + 1,
-                sort: params.sort,           // 排序的列名
-                sortOrder: params.order      // 排序方式'asc' 'desc'
-            };
+            var temp = toArrayList($(".searchForm").serializeArray());
+            temp['limit'] = params.limit;
+            temp['page'] = (params.offset / params.limit) + 1;
             return temp;
-        },                                   // 传递参数
-        sidePagination: "server",            // 分页方式：client客户端分页，server服务端分页
-        pageNumber: 1,                       // 初始化加载第一页，默认第一页
-        pageSize: 20,                        // 每页的记录行数
-        pageList: [20, 50, 100],         // 可供选择的每页的行数
+        },
+        sidePagination: "server",
+        pageNumber: 1,
+        pageSize: 20,
+        pageList: [20, 50, 100],
         columns: [{
-            checkbox: true    // 是否显示复选框
+            checkbox: true
         }, {
             field: 'id',
             title: '轮播ID',
@@ -103,7 +98,13 @@
             title: '轮播名称'
         }, {
             field: 'position',
-            title: '位置'
+            title: '位置',
+            editable: {
+                type:'text',
+                validate: function (value) {
+                    if (!$.trim(value)) return '不能为空';
+                },
+            }
         }, {
             field: 'image',
             title: '图片',
@@ -157,20 +158,17 @@
 
         onEditableSave: function (field, row, oldValue, $el) {
             $.ajax({
-                type: "get",
-                url: "/admin/cms.cms_banner/lst",
-                data: row,
-                dataType: 'jsonp',
-                success: function (data, status) {
-                    if (data.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单行的更新
+                type: "post",
+                url: "/admin/cms.cms_banner/field?id="+row.id,
+                data: {field:field,value:row[field]},
+                dataType: 'json',
+                success: function (res) {
+                    if (res.status == 200)
+                    {
+                        parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                         $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
-                    } else {
-                        alert(data.msg);
                     }
-                },
-                error: function () {
-                    alert('修改失败，请稍后再试');
+                    else parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                 }
             });
         },
@@ -187,6 +185,87 @@
             '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
             '<a href="#!" class="btn btn-xs btn-default del-btn" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
         return html;
+    }
+
+    $("#search").click(function () {
+        $('#tb_departments').bootstrapTable('refresh', {});
+    });
+
+    // 删除
+    function del() {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
+        if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0 ; i<  selectedItem.length; i++)
+        {
+            checkID += selectedItem[i]['id']+",";
+        }
+        if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: '选中项将全部被删除，请谨慎操作!' ,
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        $.post("/admin/cms.cms_banner/del",data={id:checkID},function (res) {
+                            if (res.status == 200){ lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
+                            else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        })
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
+    }
+
+    // 批量启用或者禁用
+    function isEnable(type) {
+        var checkID = "";
+        var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
+        if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        for (var i = 0; i < selectedItem.length; i++) {
+            checkID += selectedItem[i]['id'] + ",";
+        }
+        if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+        $.confirm({
+            title: '重要提醒!',
+            content: type == 'enable' ? '选中项将全部启用，请谨慎操作!' : '选中项将全部禁用，请谨慎操作!',
+            backgroundDismiss: true,
+            buttons: {
+                ok: {
+                    text: '确认',
+                    btnClass: 'btn-danger',
+                    action: function () {
+                        if (type == 'enable') {
+                            $.post("/admin/cms.cms_banner/enabled", data = {id: checkID}, function (res) {
+                                if (res.status == 200) {
+                                    lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                    location.reload();
+                                } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+
+                            })
+                        } else {
+                            $.post("/admin/cms.cms_banner/disabled", data = {id: checkID}, function (res) {
+                                if (res.status == 200) {
+                                    lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                                    location.reload();
+                                } else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                            })
+                        }
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    btnClass: 'btn-primary'
+                }
+            }
+        });
     }
 </script>
 </body>
