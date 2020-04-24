@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>登录页面 - 派后台管理系统</title>
-    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
-    <meta name="keywords" content="派后台管理系统">
-    <meta name="description" content="派后台管理系统">
-    <meta name="author" content="cfn">
-    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/animate.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
-    <link href="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.css">
-    <script type="text/javascript" src="__ADMIN_PATH__js/iframe.js"></script>
-    <!--时间选择插件-->
-    <link rel="stylesheet" href="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+    {include file="public/header" /}
 </head>
-
 <body>
 <div class="container-fluid p-t-15">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header"><h4>用户留言</h4></div>
+                <div class="card-header"><h4>搜索</h4></div>
                 <div class="card-body">
-                    <form class="form-inline" style="margin-bottom: 20px;" id="search">
+                    <form class="form-inline searchForm" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="add_time">留言时间</label>
+                            <div class="input-group">
+                                <input class="form-control js-datetimepicker" type="text" id="add_time" name="add_time" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <span class="input-group-addon">~</span>
+                                <input class="form-control js-datetimepicker" type="text" name="add_time" value="" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="type">来源</label>
-                            <select name="type" class="form-control" id="type">
-                                <option value="">全部</option>
+                            <select name="type" id="type" class="form-control">
+                                <option value="">所有</option>
                                 <option value="1">CMS留言</option>
                             </select>
                         </div>
@@ -42,18 +35,15 @@
                                 <option value="1">已读</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="add_time">时间</label>
-                            <div class="input-group">
-                                <input class="form-control js-datepicker" type="text" name="add_time" value="" placeholder="开始时间" data-date-format="yyyy-mm-dd">
-                                <span class="input-group-addon">~</span>
-                                <input class="form-control js-datepicker" type="text" name="add_time" value="" placeholder="结束时间" data-date-format="yyyy-mm-dd">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                        </div>
-                        <button type="submit" class="btn btn-default">查询</button>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>用户留言</h4></div>
+                <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
                         <button id="btn_delete" type="button" class="btn btn-danger">
                             <span class="mdi mdi-window-close" aria-hidden="true"></span>删除
@@ -65,21 +55,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/bootstrap-table-zh-CN.min.js"></script>
-<!--时间选择插件-->
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/moment.min.js"></script>
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="__ADMIN_PATH__js/bootstrap-datetimepicker/locale/zh-cn.js"></script>
-<!--行内编辑插件-->
-<link href="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.min.css" rel="stylesheet">
-<script type="text/javascript" src="__ADMIN_PATH__js/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
-<script src="__ADMIN_PATH__js/jconfirm/jquery-confirm.min.js"></script>
-<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+{include file="public/footer" /}
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
@@ -89,7 +65,6 @@
         uniqueId: 'id',
         idField: 'id',             // 每行的唯一标识字段
         toolbar: '#toolbar',       // 工具按钮容器
-        //clickToSelect: true,     // 是否启用点击选中行
         showColumns: true,         // 是否显示所有的列
         showRefresh: true,         // 是否显示刷新按钮
         responseHandler: function (res) {
@@ -98,8 +73,6 @@
                 "rows": res.data,
             };
         },
-        //showToggle: true,        // 是否显示详细视图和列表视图的切换按钮(clickToSelect同时设置为true时点击会报错)
-
         pagination: true,                    // 是否显示分页
         sortOrder: "asc",                    // 排序方式
         queryParams: function(params) {
@@ -112,10 +85,7 @@
                 type: $('#type option:selected').val(),
                 add_time: add_time,
                 limit: params.limit,         // 每页数据量
-                offset: params.offset,       // sql语句起始索引
                 page: (params.offset / params.limit) + 1,
-                sort: params.sort,           // 排序的列名
-                sortOrder: params.order      // 排序方式'asc' 'desc'
             };
             return temp;
         },                                   // 传递参数
@@ -209,11 +179,11 @@
         return html;
     }
 
-    $("#search").submit(function () {
-        $("#tb_departments").bootstrapTable('refresh');
-        return false;
+    $("#search").click(function () {
+        $('#tb_departments').bootstrapTable('refresh', {
+            url: '/admin/user.user_message/lst',
+        });
     });
-
     function updateStatus(id, value, field) {
         var newstate = (value == 1) ? 0 : 1; // 发送参数值跟当前参数值相反
         $.ajax({
