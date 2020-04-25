@@ -1,21 +1,154 @@
 /**index.wxss**/
-.userinfo {
+.search{  
+  background-color: #eeeeee;
+  border-radius: 20rpx;
+  height: 60rpx;
+  width: 95%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 58rpx;
+  color: #555555;
+}
+.search-img{
+  width: 28rpx;
+  height: 28rpx;  
+  padding-right: 10rpx;
+}
+.swiper{
+  margin: 25rpx 0;
+  overflow: hidden;
+  height: 210px;
+  background-color: #e8e8e8;
+}
+.item-image-view{
+  height: 175px;
+  overflow: hidden;
+}
+.swiper-item{
+  text-align: left;
+  line-height: 32px;
+  padding:0 10rpx;
+}
+.swiper-item-title{
+  float: left;
+  font-size: 30rpx;
+}
+.swiper-item-time{
+  float: right;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+}
+.item-image{
+  width: 100%;
+}
+.like{
+  padding:0 25rpx;
+  position: relative;
+}
+.like-ico{
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 5rpx;
+  line-height: 40rpx;  
+}
+.like-title{
+  margin-left: 50rpx;
+}
+.scroll-like{
+  height: 300rpx;
+}
+.scroll-like{
+  margin: 25rpx 0 10rpx 0;
+  flex-direction:row;
+  zoom:1;
+  white-space: nowrap;
+}
+.scroll-like-title{
+  font-size: 16px;
+}
+.scroll-like-img{
+  width: 100%;
+  height: 200rpx;
+  
+}
+.scroll-like-item{
+  width: 46%;
+  display: inline-block;
+  margin-right: 20rpx;
+  overflow: hidden;
+}
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.scroll-like-desc{
+  color: #888888;
+  font-size: 24rpx;
+}
+.scroll-like-notice{
+  position: relative;
+  float: right;
+  margin-top: -22px;
+  font-size: 22rpx;
+  color: #ffffff;
+  margin-right: 10rpx;  
+}
+.movie{
+  padding:0 25rpx;
+  position: relative;
+}
+.movie-ico{
+  width: 40rpx;
+  height: 40rpx;
+  top: 5rpx;
+  line-height: 40rpx;
+  position: absolute;
+}
+.movie-title{
+  margin-left: 50rpx;
+}
+.movie-item{
+  width: 48.5%;
+  height: 170px;
+  overflow: hidden;
+}
+.movie-img{
+  width: 100%;
+  height: 120px;
+}
+.movie-body{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  flex-wrap:wrap;
+  margin:25rpx 0 0 0;
 }
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.movie-item-notice{
+  position: relative;
+  float: right;
+  margin-top: -22px;
+  font-size: 22rpx;
+  color: #ffffff;
+  margin-right: 10rpx;  
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.movie-item-title{
+  font-size: 16px;
 }
-
-.usermotto {
-  margin-top: 200px;
+.movie-item-desc{
+  color: #888888;
+  font-size: 24rpx;
+}
+.page-footer{
+  text-align: center;
+  margin: 50rpx 0;
+  font-size: 12px;
+  color: #cccccc;
+}
+.page-footer-line{
+  height: 0px;
+  border: 0.5px dashed #a7a8a8;
+  line-height: 30px;
+  margin: 30px 0 0 0;
+  text-align: center;  
 }

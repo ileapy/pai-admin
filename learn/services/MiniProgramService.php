@@ -6,6 +6,11 @@ namespace learn\services;
 
 use EasyWeChat\Factory;
 
+/**
+ * 小程序
+ * Class MiniProgramService
+ * @package learn\services
+ */
 class MiniProgramService
 {
     /**
@@ -23,15 +28,12 @@ class MiniProgramService
      */
     public static function options()
     {
-        $wechat = SystemConfigMore(['site_url','routine_appId','routine_appsecret']);
-        $config = [];
-        $config['mini_program'] = [
-            'app_id'=>isset($wechat['routine_appId']) ? trim($wechat['routine_appId']):'',
-            'secret'=>isset($wechat['routine_appsecret']) ? trim($wechat['routine_appsecret']):'',
-            'token'=>isset($wechat['wechat_token']) ? trim($wechat['wechat_token']):'',
-            'aes_key'=> isset($wechat['wechat_encodingaeskey']) ? trim($wechat['wechat_encodingaeskey']):''
+        $wechat = SystemConfigMore(['miniprogram_appid','miniprogram_appsecret']);
+        return [
+            'app_id'=>isset($wechat['miniprogram_appid']) ? trim($wechat['miniprogram_appid']):'',
+            'secret'=>isset($wechat['miniprogram_appsecret']) ? trim($wechat['miniprogram_appsecret']):'',
+            'response_type' => 'array',
         ];
-        return $config;
     }
 
     /**
@@ -57,40 +59,33 @@ class MiniProgramService
      */
     public static function miniProgram()
     {
-        return self::application()->customer_service;
+        return self::application();
     }
 
     /**
-     * @param $code
-     * @return mixed
+     * auth
+     * @return \EasyWeChat\MiniProgram\Auth\Client
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getUserInfo($code)
+    public static function auth()
     {
-        $userInfo = self::miniProgram()-custo;
-        return $userInfo;
+        return self::miniProgram()->auth;
     }
 
     /**
-     * 加密数据解密
-     * @param $sessionKey
-     * @param $iv
-     * @param $encryptData
-     * @return $userInfo
+     * session
+     * @param string $code
+     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function encryptor($sessionKey, $iv, $encryptData){
-        return self::miniProgram()->encryptor->decryptData($sessionKey, $iv, $encryptData);
-    }
-
-    /**
-     * 上传临时素材接口
-     * @return \EasyWeChat\Material\Temporary
-     */
-    public static function materialTemporaryService()
+    public static function session(string $code)
     {
-        return self::miniprogram()->material_temporary;
+        return self::auth()->session($code);
     }
 
     /**
@@ -106,71 +101,67 @@ class MiniProgramService
     }
 
     /**
-     * 微信小程序二维码生成接口
-     * @return mixed
+     * 加密数据解密
+     * @param $sessionKey
+     * @param $iv
+     * @param $encryptData
+     * @return array
+     * @throws \EasyWeChat\Kernel\Exceptions\DecryptException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function qrcodeService()
+    public static function encryptor($sessionKey, $iv, $encryptData){
+        return self::miniProgram()->encryptor->decryptData($sessionKey, $iv, $encryptData);
+    }
+
+    /**
+     * 微信小程序二维码生成接口
+     * @return \EasyWeChat\MiniProgram\AppCode\Client
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function qrCodeService()
     {
         return self::miniProgram()->app_code;
     }
 
-    /**微信小程序二维码生成接口不限量永久
-     * @param $scene
-     * @param null $page
-     * @param null $width
-     * @param null $autoColor
-     * @param array $lineColor
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public static function appCodeUnlimitService($scene, $page = null, $width = 430, $autoColor = false, $lineColor = ['r' => 0, 'g' => 0, 'b' => 0])
-    {
-        return self::qrcodeService()->appCodeUnlimit($scene,$page,$width,$autoColor,$lineColor);
-    }
-
-
     /**
      * 模板消息接口
-     * @return \EasyWeChat\Notice\Notice
+     * @return \EasyWeChat\MiniProgram\TemplateMessage\Client
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function noticeService()
+    public static function templateMessageService()
     {
-        return self::miniprogram()->notice;
+        return self::miniProgram()->template_message;
     }
 
-    /**发送小程序模版消息
+    /**
+     * 发送小程序模版消息
      * @param $openid
      * @param $templateId
      * @param array $data
+     * @param $form_id
      * @param null $url
-     * @param null $defaultColor
-     * @return mixed
+     * @return array|\EasyWeChat\Kernel\Support\Collection|object|\Psr\Http\Message\ResponseInterface|string
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function sendTemplate($openid,$templateId,array $data,$form_id,$link = null,$defaultColor = null)
+    public static function sendTemplate($openid,$templateId,array $data,$form_id,$url = null)
     {
-        $notice = self::noticeService()->to($openid)->template($templateId)->formId($form_id)->andData($data);
-        $message = [];
-        if($link !== null) $message = ['page'=>$link];
-        if($defaultColor !== null) $notice->defaultColor($defaultColor);
-        return $notice->send($message);
+        return self::templateMessageService()->send([
+            'touser' => $openid,
+            'template_id' => $templateId,
+            'page' => $url,
+            'form_id' => $form_id,
+            'data' => $data
+        ]);
     }
-
-
-    /**
-     * 作为客服消息发送
-     * @param $to
-     * @param $message
-     * @return bool
-     */
-    public static function staffTo($to, $message)
-    {
-        $staff = self::staffService();
-        $staff = is_callable($message) ? $staff->message($message()) : $staff->message($message);
-        $res = $staff->to($to)->send();
-        HookService::afterListen('wechat_staff_to',compact('to','message'),$res);
-        return $res;
-    }
-
 }

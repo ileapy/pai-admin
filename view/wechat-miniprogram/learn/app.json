@@ -1,15 +1,49 @@
 {
   "pages":[
-    "pages/play/play",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/record/record",
+    "pages/mine/mine",
+    "pages/category/category",
+    "pages/play/play",
+    "pages/collect/collect"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "我家视频",
+    "navigationBarTitleText": "我要看视频",
     "navigationBarTextStyle":"black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#fa5200",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "selectedIconPath":"utils/images/find2.png",
+        "iconPath":"utils/images/find.png",
+        "pagePath": "pages/index/index",
+        "text": "发现"
+      }, 
+      {
+        "selectedIconPath":"utils/images/category2.png",
+        "iconPath":"utils/images/category.png",
+        "pagePath": "pages/category/category",
+        "text": "分类"
+      }, 
+      {
+        "selectedIconPath":"utils/images/collect2.png",
+        "iconPath":"utils/images/collect.png",
+        "pagePath": "pages/collect/collect",
+        "text": "收藏"
+      }, 
+      {
+        "selectedIconPath":"utils/images/mine2.png",
+        "iconPath":"utils/images/mine.png",
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+  ]
+  }
 }

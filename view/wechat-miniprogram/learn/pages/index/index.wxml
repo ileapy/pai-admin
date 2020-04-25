@@ -1,13 +1,142 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+  <view class="search"><image src="/utils/images/search.png" class="search-img"/>周星驰喜剧电影</view>
+  <view>
+    <swiper class="swiper" autoplay="true">
+      <swiper-item>
+         <view class="item-image-view"><image src="/utils/images/1.jpg" class="item-image"/></view>
+         <view class="swiper-item"><view class="swiper-item-title">【创造营】创造营2020</view><view class="swiper-item-time">最新更新</view></view>
+      </swiper-item>
+      <swiper-item>
+         <view class="item-image-view"><image src="/utils/images/2.jpg" class="item-image"/></view>
+        <view class="swiper-item"><view class="swiper-item-title">【王牌】王牌对王牌</view><view class="swiper-item-time">2020-04</view></view>
+      </swiper-item>
+      <swiper-item>
+        <view class="item-image-view"><image src="/utils/images/3.jpg" class="item-image"/></view>
+        <view class="swiper-item"><view class="swiper-item-title">【喜剧人】欢乐喜剧人第六季</view><view class="swiper-item-time">共12期</view></view>
+      </swiper-item>
+    </swiper>
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+  <view class="like">
+    <view>
+      <image src="/utils/images/like.png" class="like-ico"/>
+      <view class="like-title">猜你喜欢</view>
+    </view>
+    <scroll-view scroll-x="true" class="scroll-like flex-wrp" bindscroll="scroll" style="width: 100%">
+      <view class="scroll-like-item flex-item">
+        <image src="/utils/images/like1.jpg" class="scroll-like-img"/>
+        <view class="scroll-like-notice">更新至28集</view>
+        <view class="scroll-like-title">龙岭迷窟</view>
+        <view class="scroll-like-desc">改编自鬼吹灯 潘粤明迷窟探险</view>
+      </view>
+      <view class="scroll-like-item flex-item">
+        <image src="/utils/images/like2.jpg" class="scroll-like-img"/>
+        <view class="scroll-like-notice">已完结</view>
+        <view class="scroll-like-title">清平乐</view>
+        <view class="scroll-like-desc">王凯江疏影共谱大宋盛世繁华</view>
+      </view>
+      <view class="scroll-like-item flex-item">
+        <image src="/utils/images/like3.jpg" class="scroll-like-img"/>
+        <view class="scroll-like-notice">更新至50集</view>
+        <view class="scroll-like-title">九州天空城2</view>
+        <view class="scroll-like-desc">霸道女皇倒追冷面夫子</view>
+      </view>
+        <view class="scroll-like-item flex-item">
+        <image src="/utils/images/like4.jpg" class="scroll-like-img"/>
+        <view class="scroll-like-notice">大结局</view>
+        <view class="scroll-like-title">长安少年行</view>
+        <view class="scroll-like-desc">市井厨娘顶替身份乱入学院</view>
+      </view>
+    </scroll-view>
   </view>
+    <view class="movie">
+    <view>
+      <image src="/utils/images/tv.png" class="movie-ico"/>
+      <view class="movie-title">电视剧</view>
+    </view>
+    <view class="movie-body">
+      <view class="movie-item">
+        <image src="/utils/images/movie.jpg" class="movie-img"/>
+        <view class="movie-item-notice">02-10</view>
+        <view class="movie-item-title">奇门遁甲·东方玄幻</view>
+        <view class="movie-item-desc">最火老板娘春春在线撩人</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie2.jpg" class="movie-img"/>
+        <view class="movie-item-notice">01-31</view>
+        <view class="movie-item-title">终结者：黑暗命运</view>
+        <view class="movie-item-desc">火爆！新终结者遭子弹洗脸</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie3.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-10</view>
+        <view class="movie-item-title">斗战苍穹·热血仙侠</view>
+        <view class="movie-item-desc">吓尿！双头虎蛟活吞胖婶？</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie4.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-11</view>
+        <view class="movie-item-title">九州天空城·番外电影</view>
+        <view class="movie-item-desc">王玉雯遭负心人暗杀坠崖</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie5.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-12</view>
+        <view class="movie-item-title">一路不消停·爆笑</view>
+        <view class="movie-item-desc">刘能坑得老铁跑肚拉稀</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie6.jpg" class="movie-img"/>
+        <view class="movie-item-notice">04-20</view>
+        <view class="movie-item-title">大神猴1降妖篇·首播</view>
+        <view class="movie-item-desc">谢苗化身神猴，大圣归来</view>
+      </view>
+    </view>
+  </view>
+  <view class="movie">
+    <view>
+      <image src="/utils/images/movie.png" class="movie-ico"/>
+      <view class="movie-title">电影</view>
+    </view>
+    <view class="movie-body">
+      <view class="movie-item">
+        <image src="/utils/images/movie.jpg" class="movie-img"/>
+        <view class="movie-item-notice">02-10</view>
+        <view class="movie-item-title">奇门遁甲·东方玄幻</view>
+        <view class="movie-item-desc">最火老板娘春春在线撩人</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie2.jpg" class="movie-img"/>
+        <view class="movie-item-notice">01-31</view>
+        <view class="movie-item-title">终结者：黑暗命运</view>
+        <view class="movie-item-desc">火爆！新终结者遭子弹洗脸</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie3.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-10</view>
+        <view class="movie-item-title">斗战苍穹·热血仙侠</view>
+        <view class="movie-item-desc">吓尿！双头虎蛟活吞胖婶？</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie4.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-11</view>
+        <view class="movie-item-title">九州天空城·番外电影</view>
+        <view class="movie-item-desc">王玉雯遭负心人暗杀坠崖</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie5.jpg" class="movie-img"/>
+        <view class="movie-item-notice">2019-12</view>
+        <view class="movie-item-title">一路不消停·爆笑</view>
+        <view class="movie-item-desc">刘能坑得老铁跑肚拉稀</view>
+      </view>
+      <view class="movie-item">
+        <image src="/utils/images/movie6.jpg" class="movie-img"/>
+        <view class="movie-item-notice">04-20</view>
+        <view class="movie-item-title">大神猴1降妖篇·首播</view>
+        <view class="movie-item-desc">谢苗化身神猴，大圣归来</view>
+      </view>
+    </view>
+  </view>
+  <view class="page-footer-line"></view>
+  <view class="page-footer">别翻了，我也是有底线的</view>
 </view>
