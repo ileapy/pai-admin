@@ -84,7 +84,7 @@ class QQService
     /**
      * 每集信息
      */
-    const ITEM_MATCH = "/<a href=\"([^<>]+)\" target=\"_blank\"itemprop=\"url\"><span itemprop=\"episodeNumber\">([^<>]+)<\/span>(.*?)<\/a>/";
+    const ITEM_MATCH = "/<a href=\"([^<>]+)\" target=\"_blank\"itemprop=\"url\"><span itemprop=\"episodeNumber\">([^<>]+)<\/span>(.*?)/";
 
     /**
      * QQService constructor.

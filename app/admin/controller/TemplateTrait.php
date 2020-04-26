@@ -12,9 +12,14 @@ use learn\services\UtilService as Util;
  */
 trait TemplateTrait
 {
+    public function index()
+    {
+        return $this->fetch();
+    }
+
     /**
      * 删除操作
-     * @param $id
+     * @param Request $request
      * @return mixed
      */
     public function del(Request $request)
@@ -27,7 +32,7 @@ trait TemplateTrait
 
     /**
      * 启用
-     * @param int $ids
+     * @param Request $request
      * @return
      */
     public function enabled(Request $request)
@@ -40,7 +45,7 @@ trait TemplateTrait
 
     /**
      * 禁用
-     * @param int $ids
+     * @param Request $request
      * @return
      */
     public function disabled(Request $request)

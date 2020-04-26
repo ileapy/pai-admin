@@ -25,7 +25,7 @@ class Test extends AuthController
 //        $wechat = SystemConfigMore(['wechat_appid','wechat_appsecret','wechat_token','wechat_aeskey','wechat_encry']);
 //        Cache::store('redis')->set('abc','1234567890xsaxazczxc',3600);
 //        var_dump($wechat);
-        echo json_encode(QQService::app("79npj83isb0ylvq","t")->message());
+        echo json_encode(QQService::app("mzc00200xvthvzj","t")->message());
     }
 
 }

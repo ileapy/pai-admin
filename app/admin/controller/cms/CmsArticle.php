@@ -20,8 +20,9 @@ class CmsArticle extends AuthController
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     * @throws \Exception
      */
-    public function index(Request $request)
+    public function index(Request $request = null)
     {
         $where = Util::postMore([
             ['name',""],
