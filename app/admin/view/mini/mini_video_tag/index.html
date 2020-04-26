@@ -105,10 +105,11 @@
             field: 'name',
             title: '标签名称'
         }, {
-            field: 'icon',
-            title: '图标',
+            field: 'type',
+            title: '标签类型',
             formatter: function (value, row, index) {
-                return '<i class="'+value+'"></i>';
+                if (value == "movie") return "电影";
+                else if (value == "tv") return "电视剧";
             },
         }, {
             field: 'rank',

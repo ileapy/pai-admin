@@ -34,7 +34,7 @@ class QQService
      * 视频类型
      * @var null
      */
-    public $type = "m";
+    public $type = "movie";
 
     /**
      * html
@@ -134,9 +134,9 @@ class QQService
             $actor = self::actor();
             switch ($this->type)
             {
-                case "m":
+                case "movie":
                     return compact("title","desc","time","cover","tag","actor");
-                case "t":
+                case "tv":
                     $num = self::num();
                     $item = self::item();
                     $now_num = count($item);
@@ -144,7 +144,7 @@ class QQService
             }
         }catch (\Exception $e)
         {
-            return $e;
+
         }
     }
 
@@ -174,7 +174,7 @@ class QQService
      */
     public function time()
     {
-        preg_match( $this->type === "m" ? self::TIME_MATCH : self::mTIME_MATCH, $this->html,$time);
+        preg_match( $this->type === "movie" ? self::TIME_MATCH : self::mTIME_MATCH, $this->html,$time);
         return $time[count($time)-1];
     }
 
@@ -206,7 +206,7 @@ class QQService
     {
         preg_match_all(self::ACTOR_MATCH,$this->html,$actor);
         $tmp = [];
-        foreach ($actor as $key => $value) $tmp[] = [$actor[4][$key],$actor[2][$key]];
+        foreach ($actor[2] as $key => $value) $tmp[] = [$actor[4][$key],$actor[2][$key]];
         return json_encode($tmp,true);
     }
 
