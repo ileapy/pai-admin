@@ -9,41 +9,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header"><h4>搜索</h4></div>
-                <div class="card-body">
-                    <form class="form-inline searchForm" onsubmit="return false;">
-                        <div class="form-group">
-                            <label for="title">视频名称</label>
-                            <div class="input-group">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="title" value="" name="title" placeholder="请输入视频名称或者ID">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="type">视频类型</label>
-                            <select name="type" id="type" class="form-control">
-                                <option value="">所有</option>
-                                <option value="movie">视频</option>
-                                <option value="tv">电视剧</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">状态</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="">所有</option>
-                                <option value="1">启用</option>
-                                <option value="0">禁用</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header"><h4>视频列表</h4></div>
+                <div class="card-header"><h4>剧集列表</h4></div>
                 <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
                         <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加视频','/admin/mini.mini_video/add')">

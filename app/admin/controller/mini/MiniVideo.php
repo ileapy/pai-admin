@@ -5,6 +5,7 @@ namespace app\admin\controller\mini;
 
 use app\admin\controller\AuthController;
 use app\admin\model\mini\MiniVideo as videoModel;
+use app\admin\model\mini\MiniVideoItem;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
@@ -74,6 +75,21 @@ class MiniVideo extends AuthController
         $form = Form::make_post_form($form, url('save')->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
+    }
+
+    /**
+     * 电视剧剧集列表
+     * @param $vid
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function item($vid)
+    {
+        if (!videoModel::be($vid,"vid")) return app("json")->fail("视频不存在");
+        $this->assign(MiniVideoItem::lst($vid));
+        return $this->fetch();
     }
 
     /**
