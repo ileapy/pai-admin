@@ -142,7 +142,10 @@
             formatter: btnGroup,  // 自定义方法
             events: {
                 'click .edit-btn': function (event, value, row, index) {
-                    iframe.createIframe('修改标签','/admin/mini.mini_video/edit?id='+row.id)
+                    iframe.createIframe('修改标签','/admin/mini.mini_video/edit?id='+row.vid)
+                },
+                'click .btn-list': function (event, value, row, index) {
+                    location.href = '/admin/mini.mini_video/item?id='+row.vid;
                 },
                 'click .del-btn': function (event, value, row, index) {
                     $.alert({
@@ -198,7 +201,9 @@
     {
         let html =
             '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
-            '<a href="#!" class="btn btn-xs btn-default del-btn" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
+            '<a href="#!" class="btn btn-xs btn-default del-btn m-r-5" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>'+
+            '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-list" title="列表" data-toggle="tooltip"><i class="mdi mdi-format-list-bulleted"></i></a>';
+
         return html;
     }
 
