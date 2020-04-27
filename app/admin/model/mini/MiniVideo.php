@@ -127,21 +127,33 @@ class MiniVideo extends BaseModel
                             'now_num' => $data['now_num'],
                             'update_time'=>time(),
                             'update_user' => $adminId
-                        ]) && MiniVideoTV::where("vid",$vid)->delete() && MiniVideoItem::where("vid",$vid)->delete();
+                        ]) && MiniVideoTV::where("vid",$vid)->delete();
                     $res3 = true;
                     foreach ($data['item'] as $k => $v)
                     {
                         preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html/', $v, $xid);
                         $xid = $xid[2];
-                        $res3 = $res3 && MiniVideoItem::insert([
-                                'xid' =>$xid,
-                                'vid' => $vid,
-                                'name' => $k,
-                                'rank' => 0,
-                                'status' => 1,
-                                'update_time'=>time(),
-                                'update_user' => $adminId
-                            ]);
+                        if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->find())
+                        {
+                            $res3 = $res3 && MiniVideoItem::update([
+                                    'name' => $k,
+                                    'rank' => 0,
+                                    'status' => 1,
+                                    'update_time'=>time(),
+                                    'update_user' => $adminId
+                                ],['xid' =>$xid,'vid' => $vid]);
+                        }else
+                        {
+                            $res3 = $res3 && MiniVideoItem::insert([
+                                    'xid' =>$xid,
+                                    'vid' => $vid,
+                                    'name' => $k,
+                                    'rank' => 0,
+                                    'status' => 1,
+                                    'update_time'=>time(),
+                                    'update_user' => $adminId
+                                ]);
+                        }
                     }
                 }else
                 {
