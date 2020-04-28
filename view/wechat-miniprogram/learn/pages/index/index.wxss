@@ -69,8 +69,13 @@
 }
 .scroll-like-img{
   width: 100%;
-  height: 200rpx;
+  height: 100%;
   
+}
+.scroll-like-image-view{
+  width: 100%;
+  height: 200rpx;
+  overflow: hidden;
 }
 .scroll-like-item{
   width: 46%;
@@ -116,7 +121,7 @@
 }
 .movie-img{
   width: 100%;
-  height: 120px;
+  height: 110px;
 }
 .movie-body{
   display: flex;

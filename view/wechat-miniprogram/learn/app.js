@@ -5,15 +5,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res.code);
-        wx.request({
-          url: this.globalData.api_url+'/mini_program/openid',
-          method:"POST",
-          data:{'code':res.code},
-          success (data){
-            console.log(data);
-          }
-        });
+
       }
     })
     // 获取用户信息

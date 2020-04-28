@@ -14,7 +14,7 @@ Route::group(function () {
     // 通过openid 和 用户信息 来交换 token
     Route::post('mini_program/login', 'wechat.MiniProgramController/login');
     // 获取轮播信息
-    Route::get('index/swipe', 'index/swipe');
+    Route::get('index/banner', 'index/banner');
     // 获取 首页推荐视频 电视剧和列表
     Route::get('index/index', 'index/index');
 });

@@ -14,6 +14,27 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const request = function(url,type="GET",data={},isLogin=true)
+{
+  return new Promise(function(resolve, reject) 
+  {
+    wx.request({
+      url: url,
+      type: type,
+      data:data,
+      success:(res) => {
+        if(res.data.status === 200) resolve(res.data);
+        else reject(res)
+      },
+      fail(res)
+      {
+        reject(res)
+      }
+    })
+  })
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  request:request
 }
