@@ -4,6 +4,7 @@
 namespace learn\middleware;
 
 
+use app\api\model\user\User;
 use app\Request;
 use learn\exceptions\AuthException;
 use learn\interfaces\MiddlewareInterface;
@@ -27,7 +28,7 @@ class AuthTokenMiddleware implements MiddlewareInterface
         $token = trim(ltrim($request->header('Authori-zation'), 'Bearer'));
         if(!$token)  $token = trim(ltrim($request->header('Authorization'), 'Bearer'));
         try {
-            $authInfo = UserRepository::parseToken($token);
+            $authInfo = User::parseToken($token);
         } catch (AuthException $e) {
             if ($force)
                 return app('json')->make($e->getCode(), $e->getMessage());
