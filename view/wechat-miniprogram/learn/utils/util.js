@@ -20,11 +20,11 @@ const request = function(url,type="GET",data={},isLogin=true)
   {
     wx.request({
       url: url,
-      type: type,
+      method: type,
       data:data,
       success:(res) => {
-        if(res.data.status === 200) resolve(res.data);
-        else reject(res)
+        if(res.statusCode === 200) resolve(res.data);
+        else resolve(res)
       },
       fail(res)
       {

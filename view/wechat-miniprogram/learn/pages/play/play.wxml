@@ -1,2 +1,2 @@
 <!--pages/play/play.wxml-->
-<video  src="https://apd-vliveachy.apdcdn.tc.qq.com/vqq/varietyts.tc.qq.com/uwMROfz2r5zAoaQXGdGnDGdf64_zxOYkWt7fFL4J9_ME5Sty/Q_adrVu6MWHxbwhv2Q8lke9cTfVwSo698eEd-3bLiD-fEymeYaaxm2kFEClYvD_L_va_H3Gi5FcvS04AcXzzoHbaZJoXf_mMCKTivuYAcUlb1s3lYLm7TNFLQ3i-Zbzq3TaNS9wFkUVzt-EGgdvdQbTIJypQS_VuFV5Qyi1jFq8/k0033selq9a.321003.ts.m3u8?ver=4" enable-auto-rotation="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true"></video>
+<video  src="{{video_url}}" enable-auto-rotation="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true"></video>

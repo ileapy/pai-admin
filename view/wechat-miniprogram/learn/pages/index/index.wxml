@@ -3,7 +3,7 @@
   <view class="search"><image src="/utils/images/search.png" class="search-img"/>周星驰喜剧电影</view>
   <view>
     <swiper class="swiper" autoplay="true">
-    <block wx:for="{{banner}}">
+    <block wx:for="{{banner}}" wx:key="index">
       <swiper-item bindtap="goto_page" data-link="{{item.link}}">
          <view class="item-image-view"><image src="{{url}}{{item.image}}" class="item-image"/></view>
          <view class="swiper-item"><view class="swiper-item-title">{{item.name}}</view><view class="swiper-item-time">{{item.tinyname}}</view></view>
@@ -11,39 +11,23 @@
     </block>
     </swiper>
   </view>
-  <view class="like">
+  <view class="like" wx:if="{{like.length > 0}}">
     <view>
       <image src="/utils/images/like.png" class="like-ico"/>
       <view class="like-title">猜你喜欢</view>
     </view>
-    <scroll-view scroll-x="true" class="scroll-like flex-wrp" bindscroll="scroll" style="width: 100%">
-      <view class="scroll-like-item flex-item">
-        <view class="scroll-like-image-view"><image src="/utils/images/like1.jpg" class="scroll-like-img"/></view>
+    <scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
+    <block wx:for="{{like}}" wx:key="index">
+      <view class="scroll-like-item flex-item" bindtap="play" data-vid="{{item.vid}}">
+        <view class="scroll-like-image-view"><image src="{{item.image}}" class="scroll-like-img"/></view>
         <view class="scroll-like-notice">更新至28集</view>
-        <view class="scroll-like-title">龙岭迷窟</view>
-        <view class="scroll-like-desc">改编自鬼吹灯 潘粤明迷窟探险</view>
+        <view class="scroll-like-title">{{item.title}}</view>
+        <view class="scroll-like-desc">{{item.tinyname}}</view>
       </view>
-      <view class="scroll-like-item flex-item">
-        <view class="scroll-like-image-view"><image src="/utils/images/like2.jpg" class="scroll-like-img"/></view>
-        <view class="scroll-like-notice">已完结</view>
-        <view class="scroll-like-title">清平乐</view>
-        <view class="scroll-like-desc">王凯江疏影共谱大宋盛世繁华</view>
-      </view>
-      <view class="scroll-like-item flex-item">
-        <view class="scroll-like-image-view"><image src="/utils/images/like3.jpg" class="scroll-like-img"/></view>
-        <view class="scroll-like-notice">更新至50集</view>
-        <view class="scroll-like-title">九州天空城2</view>
-        <view class="scroll-like-desc">霸道女皇倒追冷面夫子</view>
-      </view>
-        <view class="scroll-like-item flex-item">
-        <view class="scroll-like-image-view"><image src="/utils/images/like4.jpg" class="scroll-like-img"/></view>
-        <view class="scroll-like-notice">大结局</view>
-        <view class="scroll-like-title">长安少年行</view>
-        <view class="scroll-like-desc">市井厨娘顶替身份乱入学院</view>
-      </view>
+    </block>
     </scroll-view>
   </view>
-    <view class="movie">
+    <view class="movie" wx:if="{{movie.length > 0}}">
     <view>
       <image src="/utils/images/tv.png" class="movie-ico"/>
       <view class="movie-title">电视剧</view>
@@ -87,7 +71,7 @@
       </view>
     </view>
   </view>
-  <view class="movie">
+  <view class="movie"  wx:if="{{tv.length > 0}}">
     <view>
       <image src="/utils/images/movie.png" class="movie-ico"/>
       <view class="movie-title">电影</view>

@@ -7,19 +7,39 @@ Page({
   data: {
     banner:{},
     url:app.globalData.url,
+    like:{},
+    movie:{},
+    tv:{}
   },
 
   onLoad: function () {
     this.GetBanner()
+    this.GetVideo()
   },
   GetBanner()
   {
     var that = this;
     util.request(app.globalData.api_url+"/index/banner")
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       that.setData({
         banner:res.data
+      });
+    })
+    .catch(res => {
+      console.log(res)
+    })
+  },
+  GetVideo()
+  {
+    var that = this;
+    util.request(app.globalData.api_url+"/index/index")
+    .then(res => {
+      // console.log(res.data);
+      that.setData({
+        movie:res.data.movie,
+        tv:res.data.tv,
+        like:res.data.recommend
       });
     })
     .catch(res => {
@@ -30,6 +50,12 @@ Page({
   {
     wx.navigateTo({
       url: e.currentTarget.dataset.link,
+    })
+  },
+  play(e)
+  {
+    wx.navigateTo({
+      url:"/pages/play/play?vid="+e.currentTarget.dataset.vid
     })
   }
 })
