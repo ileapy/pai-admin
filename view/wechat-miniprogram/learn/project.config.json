@@ -9,22 +9,14 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"coverView": true,
 		"autoAudits": false,
+		"coverView": true,
 		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		}
+		"scopeDataCheck": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.11.0",
-	"appid": "wx56f4059322a0dd6c",
+	"appid": "wxe37eb9fc00f03a58",
 	"projectname": "learn",
 	"debugOptions": {
 		"hidedInDevtools": []
