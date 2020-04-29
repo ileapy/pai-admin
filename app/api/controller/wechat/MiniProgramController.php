@@ -3,9 +3,12 @@
 
 namespace app\api\controller\wechat;
 
+use app\api\model\wechat\WechatUser;
 use app\Request;
 use learn\services\MiniProgramService;
 use learn\services\UtilService as Util;
+use learn\utils\Jwt;
+use think\facade\Cache;
 
 /**
  * 小程序
@@ -30,5 +33,31 @@ class MiniProgramController
         if ($where['code'] == "") return app("json")->fail("参数有误！code为空！");
         $data = MiniProgramService::session($where['code']);
         return empty($data) ? app("json")->fail("获取失败") : app("json")->success("ok",$data);
+    }
+
+    /**
+     * @param Request $request
+     * @return
+     * @throws \EasyWeChat\Kernel\Exceptions\DecryptException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function login(Request $request)
+    {
+        $data = Util::getMore([
+            ['session_key',''],
+            ['iv',''],
+            ['encryptedData',''],
+        ]);
+        if (!$data['session_key'] || !$data['iv'] || !$data['encryptedData']) return app("json")->fail("参数有误！");
+        $userInfo = MiniProgramService::encryptor($data['session_key'],$data['iv'],$data['encryptedData']); // 解析用户信息
+        WechatUser::setUser($userInfo); //更新或者添加用户
+        if ($token = Cache::store("redis")->get($userInfo['openId'])) return app("json")->success(['token'=>$token]);
+        $token = Jwt::signToken($userInfo);
+        if (!$token) return app("json")->fail("登录失败！token生成失败！");
+        Cache::store("redis")->set($userInfo['openId'],$token);
+        return app("json")->success(['token'=>$token]);
     }
 }
