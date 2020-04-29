@@ -7,6 +7,7 @@ namespace app\api\model\mini;
 use app\api\model\BaseModel;
 use app\api\model\ModelTrait;
 use learn\utils\Curl;
+use think\facade\Cache;
 
 /**
  * Class MiniVideo
@@ -76,10 +77,20 @@ class MiniVideo extends BaseModel
         $info = self::where("vid",$vid)->where("status",1)->find();
         if ($info && $info['type'] == 'movie')
         {
-            $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$info['vid'].".html");
-            $res = json_decode($curl->run(),true);
-            if ($res['code'] == 200) return $res['url'];
-            else return "";
+            if ($url =  Cache::store('redis')->get($info['vid'])) return $url;
+            $i = 0;
+            while ($i<3)
+            {
+                $i++;
+                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$info['vid'].".html");
+                $res = json_decode($curl->run(),true);
+                if ($res['code'] == 200)
+                {
+                    Cache::store('redis')->set($info['vid'],$res['url'],60*60*4);
+                    return $res['url'];
+                }
+            }
+            return "";
         }
         return "";
     }

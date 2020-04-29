@@ -23,6 +23,9 @@ Component({
    */
   methods: {
     onLoad: function (options) {
+      wx.showLoading({
+        title: '加载中',
+      })
       this.info(options.vid)
     },
     info:function(vid)
@@ -32,8 +35,28 @@ Component({
         console.log(res);
         if(res.status == 200)
         {
+          wx.hideLoading()
           that.setData({
             video_url:res.data.url
+          });
+        }else
+        {
+          wx.hideLoading()
+          wx.showModal({
+            title:"获取视频地址失败",
+            content:"没有获取到视频数据，请刷新重试，点击取消返回上一页面。",
+            cancelText:"取消",
+            confirmText:"刷新",
+            success(res){
+              if (res.confirm) {
+                that.onLoad({vid:vid});
+              } else if (res.cancel) {
+                wx.navigateBack({
+                  delta: 1,
+                })
+              }
+              
+            }
           });
         }
       })

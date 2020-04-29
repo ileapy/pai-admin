@@ -1,2 +1,2 @@
 <!--pages/play/play.wxml-->
-<video  src="{{video_url}}" enable-auto-rotation="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true"></video>
+<video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0"></video>
