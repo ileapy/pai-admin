@@ -39,6 +39,7 @@ Page({
         if (res.status === 200) {
           app.globalData.isLogin = true;
           app.globalData.token = res.data.token
+          wx.setStorageSync('token', res.data.token)
           var pages = getCurrentPages();
           if (pages.length > 1) {
             var beforePage = pages[pages.length - 2];//获取上一个页面实例对象

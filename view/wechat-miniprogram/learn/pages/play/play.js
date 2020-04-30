@@ -49,7 +49,7 @@ Component({
     info:function(vid)
     {
       var that = this;
-      util.request(app.globalData.api_url+"/video/url","POST",{vid:vid}).then((res) => {
+      util.request(app.globalData.api_url+"/video/info","POST",{vid:vid},true).then((res) => {
         console.log(res);
         if(res.status == 200)
         {

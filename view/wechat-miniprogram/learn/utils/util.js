@@ -14,16 +14,25 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-const request = function(url,type="GET",data={},isLogin=true)
+const request = function(url,type="GET",data={},isLogin=false)
 {
   return new Promise(function(resolve, reject) 
   {
+    var header = {};
+    if (isLogin) header = {"Authori-zation":wx.getStorageSync('token')}
     wx.request({
       url: url,
       method: type,
       data:data,
+      header:header,
       success:(res) => {
-        if(res.statusCode === 200) resolve(res.data);
+        if(res.statusCode === 200)
+        {
+          if (res.data.status === 410000) wx.navigateTo({
+            url: '/pages/login/login',
+          });
+          else resolve(res.data);
+        }
         else resolve(res)
       },
       fail(res)

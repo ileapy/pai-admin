@@ -20,7 +20,9 @@
     <block wx:for="{{like}}" wx:key="index">
       <view class="scroll-like-item flex-item" bindtap="play" data-vid="{{item.vid}}">
         <view class="scroll-like-image-view"><image src="{{item.image}}" class="scroll-like-img"/></view>
-        <view class="scroll-like-notice">更新至28集</view>
+        <view class="scroll-like-notice" wx:if="{{item.type == 'movie'}}">{{item.time}}</view>
+        <view class="scroll-like-notice" wx:elif="{{item.type == 'tv' && item.num > item.now_num}}">更新至{{item.now_num}}集</view>
+        <view class="scroll-like-notice" wx:elif="{{item.type == 'tv' && item.num <= item.now_num}}">{{item.now_num}}集已完结</view>
         <view class="scroll-like-title">{{item.title}}</view>
         <view class="scroll-like-desc">{{item.tinyname}}</view>
       </view>
@@ -33,86 +35,31 @@
       <view class="movie-title">电视剧</view>
     </view>
     <view class="movie-body">
-      <view class="movie-item">
-        <image src="/utils/images/movie.jpg" class="movie-img"/>
-        <view class="movie-item-notice">02-10</view>
-        <view class="movie-item-title">奇门遁甲·东方玄幻</view>
-        <view class="movie-item-desc">最火老板娘春春在线撩人</view>
+    <block wx:for="{{tv}}">
+      <view class="movie-item" bindtap="play" data-vid="{{item.vid}}">
+        <image src="{{item.image||item.cover}}" class="movie-img"/>
+        <view class="movie-item-notice" wx:if="{{item.now_num >= item.num}}">{{item.now_num}}集已完结</view>
+        <view class="movie-item-notice" wx:else>更新至{{item.now_num}}集</view>
+        <view class="movie-item-title">{{item.title}}</view>
+        <view class="movie-item-desc">{{item.tinyname}}</view>
       </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie2.jpg" class="movie-img"/>
-        <view class="movie-item-notice">01-31</view>
-        <view class="movie-item-title">终结者：黑暗命运</view>
-        <view class="movie-item-desc">火爆！新终结者遭子弹洗脸</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie3.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-10</view>
-        <view class="movie-item-title">斗战苍穹·热血仙侠</view>
-        <view class="movie-item-desc">吓尿！双头虎蛟活吞胖婶？</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie4.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-11</view>
-        <view class="movie-item-title">九州天空城·番外电影</view>
-        <view class="movie-item-desc">王玉雯遭负心人暗杀坠崖</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie5.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-12</view>
-        <view class="movie-item-title">一路不消停·爆笑</view>
-        <view class="movie-item-desc">刘能坑得老铁跑肚拉稀</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie6.jpg" class="movie-img"/>
-        <view class="movie-item-notice">04-20</view>
-        <view class="movie-item-title">大神猴1降妖篇·首播</view>
-        <view class="movie-item-desc">谢苗化身神猴，大圣归来</view>
-      </view>
+    </block>
     </view>
   </view>
-  <view class="movie"  wx:if="{{tv.length > 0}}">
+  <view class="movie" wx:if="{{tv.length > 0}}">
     <view>
       <image src="/utils/images/movie.png" class="movie-ico"/>
       <view class="movie-title">电影</view>
     </view>
     <view class="movie-body">
-      <view class="movie-item">
-        <image src="/utils/images/movie.jpg" class="movie-img"/>
-        <view class="movie-item-notice">02-10</view>
-        <view class="movie-item-title">奇门遁甲·东方玄幻</view>
-        <view class="movie-item-desc">最火老板娘春春在线撩人</view>
+    <block wx:for="{{movie}}">
+      <view class="movie-item" bindtap="play" data-vid="{{item.vid}}">
+        <image src="{{item.image||item.cover}}" class="movie-img"/>
+        <view class="movie-item-notice">{{item.time}}</view>
+        <view class="movie-item-title">{{item.title}}</view>
+        <view class="movie-item-desc">{{item.tinyname}}</view>
       </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie2.jpg" class="movie-img"/>
-        <view class="movie-item-notice">01-31</view>
-        <view class="movie-item-title">终结者：黑暗命运</view>
-        <view class="movie-item-desc">火爆！新终结者遭子弹洗脸</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie3.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-10</view>
-        <view class="movie-item-title">斗战苍穹·热血仙侠</view>
-        <view class="movie-item-desc">吓尿！双头虎蛟活吞胖婶？</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie4.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-11</view>
-        <view class="movie-item-title">九州天空城·番外电影</view>
-        <view class="movie-item-desc">王玉雯遭负心人暗杀坠崖</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie5.jpg" class="movie-img"/>
-        <view class="movie-item-notice">2019-12</view>
-        <view class="movie-item-title">一路不消停·爆笑</view>
-        <view class="movie-item-desc">刘能坑得老铁跑肚拉稀</view>
-      </view>
-      <view class="movie-item">
-        <image src="/utils/images/movie6.jpg" class="movie-img"/>
-        <view class="movie-item-notice">04-20</view>
-        <view class="movie-item-title">大神猴1降妖篇·首播</view>
-        <view class="movie-item-desc">谢苗化身神猴，大圣归来</view>
-      </view>
+    </block>
     </view>
   </view>
   <view class="page-footer-line"></view>

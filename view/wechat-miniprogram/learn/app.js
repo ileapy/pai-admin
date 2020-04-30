@@ -37,6 +37,7 @@ App({
                         {
                           this.globalData.isLogin = true;
                           this.globalData.token = res.data.token
+                          wx.setStorageSync('token', res.data.token)
                         }
                       });
                       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
