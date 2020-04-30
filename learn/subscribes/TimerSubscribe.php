@@ -3,6 +3,8 @@
 
 namespace learn\subscribes;
 
+use app\admin\model\mini\MiniVideo;
+
 /**
  * Class TimerSubscribe
  * @package learn\subscribes
@@ -42,5 +44,16 @@ class TimerSubscribe
      */
     public function onTask_60()
     {
+    }
+
+    /**
+     * 每隔4小时执行的任务
+     */
+    public function onTask_14400()
+    {
+        /**
+         * 更新电视剧
+         */
+        MiniVideo::UpdateTimer();
     }
 }

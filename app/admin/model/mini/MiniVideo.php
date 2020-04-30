@@ -207,4 +207,20 @@ class MiniVideo extends BaseModel
         }
     }
 
+    /**
+     * 更新电视剧
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function UpdateTimer()
+    {
+        $model = new self;
+        $model = $model->where("status",1);
+        $model = $model->where("type","tv");
+        $model = $model->where("num > now_num");
+        $model->select()->each(function ($item){
+            self::saveData($item['vid'],$item['type'],$item['source'],0);
+        });
+    }
 }

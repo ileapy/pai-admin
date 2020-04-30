@@ -44,7 +44,7 @@ class User extends BaseModel
      * @param int $type
      * @return int|string
      */
-    public static function addUser(array $data,int $type = 1)
+    public static function addUser(array $data,int $type = 2)
     {
         return self::insertGetId([
             'nickname' => $data['nickname'],
@@ -67,7 +67,7 @@ class User extends BaseModel
      * @param int $type 注册类型
      * @return User
      */
-    public static function updateUser(array $data, int $uid, int $type = 0)
+    public static function updateUser(array $data, int $uid, int $type = 2)
     {
         $model = new self;
         $model = $model->where("uid",$uid);
@@ -80,43 +80,14 @@ class User extends BaseModel
     }
 
     /**
-     * 添加用户
-     * @param array $data
-     * @param int $type
-     * @return int|string
+     * @param int $uid
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function addUser(array $data,int $type = 1)
+    public static function getUserInfoByUid(int $uid)
     {
-        return self::insertGetId([
-            'nickname' => $data['nickname'],
-            'avatar' => $data['avatar'],
-            'sex' => $data['sex'],
-            'register_ip' => request()->ip(),
-            'register_time' => time(),
-            'register_type' => $type,
-            'status'=>1,
-            'level'=>1,
-            'integral'=>0,
-            'money'=>0,
-        ]);
-    }
-
-    /**
-     * 更新用户
-     * @param array $data
-     * @param int|string $uid 用户id
-     * @param int $type 注册类型
-     * @return User
-     */
-    public static function updateUser(array $data, int $uid, int $type = 0)
-    {
-        $model = new self;
-        $model = $model->where("uid",$uid);
-        return $model->update([
-            'nickname' => $data['nickname'],
-            'avatar' => $data['avatar'],
-            'sex' => $data['sex'],
-            'register_type' => $type
-        ]);
+        return self::where("uid",$uid)->find()->toArray();
     }
 }

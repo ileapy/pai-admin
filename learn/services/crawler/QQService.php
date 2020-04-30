@@ -229,7 +229,7 @@ class QQService
         $tmp = [];
         foreach ($item[2] as $key => $value)
         {
-            $tmp[$value] = $item[1][$key];
+            if (!strpos($item[3][$key],"预告")) $tmp[$value] = $item[1][$key];
             if (strpos($item[3][$key],"视频包月only-VIP"))
             {
                 $tmp[$value]= $item[1][$key];

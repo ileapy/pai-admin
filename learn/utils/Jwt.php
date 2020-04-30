@@ -38,7 +38,7 @@ class Jwt
     {
         $salt = '!@$@#%^%&^%*'.app()->request->ip().app()->request->domain();
         try {
-            $data = jt::decode(trim(ltrim($token, 'Bearer')), $salt, array("HS256"));
+            $data = jt::decode(trim(ltrim($token, 'Bearer')), $salt, ["HS256"]);
             $data = (array)$data;
             return (array)$data['data'];
         }catch(\Firebase\JWT\SignatureInvalidException $e) {

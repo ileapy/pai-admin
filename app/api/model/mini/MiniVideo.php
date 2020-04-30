@@ -38,7 +38,7 @@ class MiniVideo extends BaseModel
         $model = $model->order("rank desc");
         $model = $model->order("vid desc");
         $model = $model->limit($num);
-        $model = $model->field(['title','time','image','tinyname','vid','type','num','now_num']);
+        $model = $model->field(['title','time','image','tinyname','vid','type','num','now_num','cover']);
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }
@@ -59,7 +59,7 @@ class MiniVideo extends BaseModel
         $model = $model->order("rank desc");
         $model = $model->order("vid desc");
         $model = $model->limit($num);
-        $model = $model->field(['title','time','image','tinyname','vid','type','num','now_num']);
+        $model = $model->field(['title','time','image','tinyname','vid','type','num','now_num','cover']);
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }
@@ -72,26 +72,62 @@ class MiniVideo extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getUrlByVid(string $vid):string
+    public static function getUrlByVid(string $vid,string $xid = ""):string
     {
-        $info = self::where("vid",$vid)->where("status",1)->find();
-        if ($info && $info['type'] == 'movie')
+        if ($xid == "")
         {
-            if ($url =  Cache::store('redis')->get($info['vid'])) return $url;
+            if ($url =  Cache::store('redis')->get($vid)) return $url;
             $i = 0;
             while ($i<3)
             {
                 $i++;
-                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$info['vid'].".html");
+                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html");
                 $res = json_decode($curl->run(),true);
                 if ($res['code'] == 200)
                 {
-                    Cache::store('redis')->set($info['vid'],$res['url'],60*60*4);
+                    Cache::store('redis')->set($vid,$res['url'],30*60);
+                    return $res['url'];
+                }
+            }
+            return "";
+        }else
+        {
+            if ($url =  Cache::store('redis')->get($vid.$xid)) return $url;
+            $i = 0;
+            while ($i<3)
+            {
+                $i++;
+                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html");
+                $res = json_decode($curl->run(),true);
+                if ($res['code'] == 200)
+                {
+                    Cache::store('redis')->set($vid.$xid,$res['url'],30*60);
                     return $res['url'];
                 }
             }
             return "";
         }
         return "";
+    }
+
+    /**
+     * 获取电视剧信息
+     * @param string $vid
+     * @return array|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getVideoInfo(string $vid)
+    {
+        $model = new self;
+        $model = $model->where("vid",$vid);
+        $model = $model->where("status",1);
+        $data = $model->find();
+        if ($data) {
+            $data = $data->toArray();
+            if ($data['type'] == "ty") $data['list'] = MiniVideoItem::getListByVid($vid);
+        }
+        return $data ?: [];
     }
 }

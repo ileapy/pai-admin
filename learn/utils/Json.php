@@ -65,6 +65,20 @@ class Json
     }
 
     /**
+     * @param int $status
+     * @param string $msg
+     * @param array|null $data
+     * @return Response
+     */
+    public function make(int $status, string $msg, ?array $data = null): Response
+    {
+        $res = compact('status', 'msg');
+        if (!is_null($data))
+            $res['data'] = $data;
+        return Response::create($res, 'json', 200);
+    }
+
+    /**
      * 成功返回
      * @param array|string $msg
      * @param array|int $data

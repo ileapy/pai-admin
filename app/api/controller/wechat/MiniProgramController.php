@@ -3,6 +3,7 @@
 
 namespace app\api\controller\wechat;
 
+use app\api\model\user\User;
 use app\api\model\wechat\WechatUser;
 use app\Request;
 use learn\services\MiniProgramService;
@@ -55,7 +56,7 @@ class MiniProgramController
         $userInfo = MiniProgramService::encryptor($data['session_key'],$data['iv'],$data['encryptedData']); // 解析用户信息
         WechatUser::setUser($userInfo); //更新或者添加用户
         if ($token = Cache::store("redis")->get($userInfo['openId'])) return app("json")->success(['token'=>$token]);
-        $token = Jwt::signToken($userInfo);
+        $token = Jwt::signToken(User::getUserInfoByUid(WechatUser::getUidByOpenid($userInfo['openId'])));
         if (!$token) return app("json")->fail("登录失败！token生成失败！");
         Cache::store("redis")->set($userInfo['openId'],$token);
         return app("json")->success(['token'=>$token]);
