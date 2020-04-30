@@ -17,6 +17,8 @@ Route::group(function () {
     Route::get('index/banner', 'index/banner');
     // 获取 首页推荐视频 电视剧和列表
     Route::get('index/index', 'index/index');
+    // 小程序基础信息
+    Route::get('index/base', 'index/base');
     // 测试获取视频地址
     Route::post('video/url', 'mini.mini_video/url');
 });
