@@ -1,2 +1,27 @@
 <!--pages/mine/mine.wxml-->
-<text>pages/mine/mine.wxml</text>
+<!-- <text>pages/mine/mine.wxml</text> -->
+<view>
+  <view class="head">
+    <view><image src="{{avatar}}" class="avatar"/></view>
+    <view><text class="nickname">{{nickname}}</text></view>
+  </view>
+  <view class="body">
+    <view>
+      <view class="view-line"><text class="left">观看历史</text><image src="/utils/images/right.png" class="right"/></view>
+      <scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
+        <block wx:for="{{like}}" wx:key="index">
+          <view class="scroll-like-item flex-item" bindtap="play" data-vid="{{item.vid}}">
+            <view class="scroll-like-image-view"><image src="{{item.image}}" class="scroll-like-img"/></view>
+            <view class="scroll-like-notice">{{item.time}}</view>
+            <view class="scroll-like-title">{{item.title}}</view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="view-line"><text class="left">我的视频</text><image src="/utils/images/right.png" class="right"/></view>
+    <view class="view-line"><text class="left">收藏记录</text><image src="/utils/images/right.png"  class="right"/></view>
+    <view class="view-line"><text class="left">充值记录</text><image src="/utils/images/right.png"  class="right"/></view>
+    <view class="view-line"><text class="left">我想要看</text><image src="/utils/images/right.png"  class="right"/></view>
+    <view class="view-line"><text class="left">我的客服</text><image src="/utils/images/right.png"  class="right"/></view>
+  </view>
+</view>

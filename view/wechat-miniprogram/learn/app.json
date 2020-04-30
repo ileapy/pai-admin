@@ -1,12 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/login/login",
+    "pages/collect/collect",
     "pages/record/record",
     "pages/mine/mine",
+    "pages/login/login",
     "pages/category/category",
-    "pages/play/play",
-    "pages/collect/collect"
+    "pages/play/play"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

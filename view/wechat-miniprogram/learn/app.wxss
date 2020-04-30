@@ -8,3 +8,9 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }  */
+
+.page-line{
+  height: 1px;
+  background-color:#E6E3E3;
+  text-align: center;  
+}

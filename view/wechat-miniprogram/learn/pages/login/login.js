@@ -29,7 +29,6 @@ Page({
       title: '重要提示',
       content: '用户取消登录',
     })
-    console.log(e)
     util.request(app.globalData.api_url + "/mini_program/login", "POST",
       {
         session_key: app.globalData.session.session_key,
