@@ -29,7 +29,6 @@ Component({
       this.info(options.vid)
       video = wx.createVideoContext('video')
     },
-
     play:function(e)
     {
       // if(!app.globalData.isLogin) wx.reLaunch({
@@ -41,6 +40,9 @@ Component({
         wx.navigateTo({
           url: '/pages/login/login',
         })
+      }else
+      {
+        video.play();
       }
     },
 

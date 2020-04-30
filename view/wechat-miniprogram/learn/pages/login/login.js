@@ -17,21 +17,45 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const that = this;
-    util.request(app.globalData.api_url+"/index/base").then((res)=>{
-      if(res.status==200)
-      {
-        that.setData({
-          icon:res.data.icon,
-          name:res.data.name
-        });
-      }
+    this.setData({
+      icon: app.globalData.base.icon,
+      name: app.globalData.base.name
     });
   },
 
-  getUserInfo:function(e)
+  bindGetUserInfo:function(e)
   {
+    if (!e.detail.userInfo) return wx.showModal({
+      title: '重要提示',
+      content: '用户取消登录',
+    })
     console.log(e)
+    util.request(app.globalData.api_url + "/mini_program/login", "POST",
+      {
+        session_key: app.globalData.session.session_key,
+        encryptedData: e.detail.encryptedData,
+        iv: e.detail.iv
+      }).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          app.globalData.isLogin = true;
+          app.globalData.token = res.data.token
+          var pages = getCurrentPages();
+          if (pages.length > 1) {
+            var beforePage = pages[pages.length - 2];//获取上一个页面实例对象
+            beforePage.play();
+          }
+          wx.navigateBack({
+            delta: 1,
+          })
+        }else
+        {
+          wx.showModal({
+            title: '重要提示',
+            content: '登录失败，请联系管理员',
+          })
+        }
+      });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -6,5 +6,5 @@
 </view>
 
 <view class="btn">
-<button class="btnLogin" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
+<button class="btnLogin" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信登录</button>
 </view>
