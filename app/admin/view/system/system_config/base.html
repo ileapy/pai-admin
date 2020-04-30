@@ -101,6 +101,7 @@
     function upload(inputName) {
         var formData = new FormData();
         formData.append("file",$("#file"+inputName)[0].files[0]);
+        formData.append("cid",0);
         $.ajax({
             type:'POST',
             url:'/admin/widget.files/image',
@@ -109,7 +110,6 @@
             processData: false,
             contentType: false,
             success: function (res) {
-                if (!Array.isArray(res)) res = jQuery.parseJSON(res);
                 $("#"+inputName).val(res.data.filePath);
             }
         });

@@ -58,6 +58,6 @@ class MiniProgramController
         $token = Jwt::signToken($userInfo);
         if (!$token) return app("json")->fail("登录失败！token生成失败！");
         Cache::store("redis")->set($userInfo['openId'],$token);
-        return app("json")->succe
+        return app("json")->success(['token'=>$token]);
     }
 }

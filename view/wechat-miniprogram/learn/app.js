@@ -49,6 +49,7 @@ App({
     userInfo: null,
     session:null,
     api_url:"https://learn.leapy.cn/api",
-    url:"https://learn.leapy.cn"
+    url:"https://learn.leapy.cn",
+    isLogin:false
   }
 })

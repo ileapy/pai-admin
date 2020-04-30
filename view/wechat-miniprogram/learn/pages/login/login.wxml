@@ -1,5 +1,10 @@
 <!--pages/login/login.wxml-->
 <!-- <text>pages/login/login.wxml</text> -->
-<view>
-<button open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
+<view class="sign">
+<view><image src="{{url}}{{icon}}" class="icon"/></view>
+<view><text class="name">{{name}}</text></view>
+</view>
+
+<view class="btn">
+<button class="btnLogin" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信登录</button>
 </view>
