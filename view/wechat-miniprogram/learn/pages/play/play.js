@@ -2,7 +2,7 @@
 //获取应用实例
 const app = getApp()
 var util= require('../../utils/util.js')
-
+var video = null;
 Component({
   /**
    * 组件的属性列表
@@ -27,7 +27,23 @@ Component({
         title: '加载中',
       })
       this.info(options.vid)
+      video = wx.createVideoContext('video')
     },
+
+    play:function(e)
+    {
+      // if(!app.globalData.isLogin) wx.reLaunch({
+      //   url: '/pages/login/login',
+      // })
+
+      if(!app.globalData.isLogin) {
+        video.pause();
+        wx.navigateTo({
+          url: '/pages/login/login',
+        })
+      }
+    },
+
     info:function(vid)
     {
       var that = this;
