@@ -1,2 +1,21 @@
 <!--pages/play/play.wxml-->
+<view class="page">
 <video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" bindplay="play" id="video"></video>
+<view class="title-line">
+<text class="title">{{title}}</text>
+<!-- <view class="desc">简介<image src="/utils/images/right-block.png" class="right"/></view> -->
+</view>
+<view class="tag">{{tag}}</view>
+<view class="line-height"></view>
+<scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
+    <block wx:for="{{actor}}" wx:key="index">
+      <view class="scroll-item flex-item">
+        <view><image src="{{item[1]}}" class="scroll-item-image"/></view>
+        <view>{{item[0]}}</view>
+      </view>
+    </block>
+</scroll-view>
+<view class="line-height"></view>
+<view class="desc-title">简介</view>
+<view style="margin:0 20px 50px 20px;"><text  class="desc">{{desc}}</text></view>
+</view>

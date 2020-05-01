@@ -3,3 +3,63 @@
   width: 100%;
   height: 220px;
 }
+page{
+  background: #191919;
+  color: #fff;
+}
+.title{
+  float: left;
+  font-size: 20px;
+  margin-left: 20px;
+}
+/* .desc{
+  font-size: 15px;
+  float: right;
+  margin-right: 20px;
+} */
+.right{
+  width: 21px;
+  height: 21px;
+  float: right;
+  margin-top: 15px;
+  margin-left: 5px;
+}
+.title-line{
+  height: 50px;
+  line-height: 50px;
+}
+.tag{
+  margin-left: 20px;
+  font-size: 12px;
+  color: #ccc;
+}
+.line-height{
+  height: 0px;
+  border: 1rpx solid rgb(83, 83, 83);
+  margin: 30px 0;
+}
+.desc-title
+{
+  margin-left: 20px;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+.desc{
+  font-size: 14px;
+  color: rgb(128, 128, 128);  
+}
+.scroll-item-image{
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.scroll-like{
+  flex-direction: row;
+  white-space: nowrap;
+}
+.scroll-item{
+  text-align: center;
+  display: inline-block;
+  overflow: hidden;
+  width: 26%;
+}
