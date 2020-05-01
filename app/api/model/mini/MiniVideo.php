@@ -111,7 +111,7 @@ class MiniVideo extends BaseModel
     }
 
     /**
-     * 获取电视剧信息
+     * 获取信息
      * @param string $vid
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -126,7 +126,10 @@ class MiniVideo extends BaseModel
         $data = $model->find();
         if ($data) {
             $data = $data->toArray();
-            if ($data['type'] == "ty") $data['list'] = MiniVideoItem::getListByVid($vid);
+            $tag = MiniVideoTV::tags($vid);
+            if ($tag) $data['tag'] = implode(" ",$tag);
+            if ($data['type'] == "tv") $data['list'] = MiniVideoItem::getListByVid($vid);
+            if ($data['actor']) $data['actor'] = json_decode($data['actor'],true);
         }
         return $data ?: [];
     }

@@ -28,7 +28,7 @@ class MiniVideoItem extends BaseModel
         $model = new self;
         $model = $model->where("vid",$vid);
         $model = $model->where("status",1);
-        $model = $model->order("name desc");
+        $model = $model->order("name");
         $data = $model->select();
         return $data ? $data->toArray() : [];
     }

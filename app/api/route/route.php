@@ -25,5 +25,6 @@ Route::group(function () {
 Route::group(function () {
     // 获取视频信息
     Route::post('video/info', 'mini.mini_video/info');
-
+    // 视频链接
+    Route::post('video/url', 'mini.mini_video/url');
 })->middleware(\learn\middleware\AllowOriginMiddleware::class)->middleware(\learn\middleware\AuthTokenMiddleware::class);
