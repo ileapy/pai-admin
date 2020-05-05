@@ -47,7 +47,7 @@ class User extends BaseModel
     public static function addUser(array $data,int $type = 2)
     {
         return self::insertGetId([
-            'nickname' => $data['nickname'],
+            'nickname' => base64_encode($data['nickname']),
             'avatar' => $data['avatar'],
             'sex' => $data['sex'],
             'register_ip' => request()->ip(),

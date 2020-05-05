@@ -7,6 +7,7 @@ use app\api\model\mini\MiniVideoRecord;
 use app\Request;
 use learn\services\UtilService as Util;
 use app\api\model\mini\MiniVideo as vModel;
+use app\api\model\mini\MiniVideoItem as iModel;
 /**
  * Class MiniVideo
  * @package app\api\controller\mini
@@ -46,6 +47,7 @@ class MiniVideo
         ]);
         if ($where['vid'] == "") return app("json")->fail("视频ID为空！");
         $url = vModel::getUrlByVid($where['vid'],$where['xid']);
-        return $url ? app("json")->success(compact("url")) : app("json")->fail("获取失败");
+        $curNum = $where['xid'] ? iModel::where("vid",$where['vid'])->where("xid",$where['xid'])->where("status",1)->value("name") : 1;
+        return $url ? app("json")->success(compact("url","curNum")) : app("json")->fail("获取失败");
     }
 }

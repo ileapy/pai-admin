@@ -153,6 +153,12 @@
                                             <input type="text" class="form-control" id="pagepath" name="pagepath" v-model="curMenu.pagepath"/>
                                         </div>
                                     </div>
+                                    <div class="form-group" v-if="curMenu.type=='miniprogram'">
+                                        <label class="col-md-3 control-label" for="url" style="width: 90px;">小程序链接</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" id="url" name="url" v-model="curMenu.url"/>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>

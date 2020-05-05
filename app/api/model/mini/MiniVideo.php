@@ -85,7 +85,7 @@ class MiniVideo extends BaseModel
                 $res = json_decode($curl->run(),true);
                 if ($res['code'] == 200)
                 {
-                    Cache::store('redis')->set($vid,$res['url'],30*60);
+                    Cache::store('redis')->set($vid,$res['url'],300);
                     return $res['url'];
                 }
             }
@@ -101,7 +101,7 @@ class MiniVideo extends BaseModel
                 $res = json_decode($curl->run(),true);
                 if ($res['code'] == 200)
                 {
-                    Cache::store('redis')->set($vid.$xid,$res['url'],30*60);
+                    Cache::store('redis')->set($vid.$xid,$res['url'],60);
                     return $res['url'];
                 }
             }
@@ -128,7 +128,13 @@ class MiniVideo extends BaseModel
             $data = $data->toArray();
             $tag = MiniVideoTV::tags($vid);
             if ($tag) $data['tag'] = implode(" ",$tag);
-            if ($data['type'] == "tv") $data['list'] = MiniVideoItem::getListByVid($vid);
+            if ($data['type'] == "tv")
+            {
+                $data['list'] = MiniVideoItem::getListByVid($vid);
+                $names = array_column($data['list'],"name");
+                array_multisort($names,SORT_ASC,$data['list']);
+                $data['curNum'] = '1';
+            }
             if ($data['actor']) $data['actor'] = json_decode($data['actor'],true);
         }
         return $data ?: [];

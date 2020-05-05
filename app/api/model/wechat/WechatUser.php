@@ -23,9 +23,10 @@ class WechatUser extends BaseModel
      */
     public static function setUser(array $userInfo)
     {
+//        return (self::be($userInfo["openId"],"openid") ? self::updateUser($userInfo) : self::addUser($userInfo)) ? self::commitTrans() : self::rollbackTrans();
         self::startTrans();
         try {
-            return (self::be($userInfo["openId"],"openid") ? self::updateUser($userInfo) : self::addUser($userInfo))? self::commitTrans() : self::rollbackTrans();
+            return (self::be($userInfo["openId"],"openid") ? self::updateUser($userInfo) : self::addUser($userInfo)) ? self::commitTrans() : self::rollbackTrans();
         }catch (\Exception $e)
         {
             self::rollbackTrans();

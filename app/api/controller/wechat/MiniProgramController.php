@@ -55,7 +55,6 @@ class MiniProgramController
         if (!$data['session_key'] || !$data['iv'] || !$data['encryptedData']) return app("json")->fail("参数有误！");
         $userInfo = MiniProgramService::encryptor($data['session_key'],$data['iv'],$data['encryptedData']); // 解析用户信息
         WechatUser::setUser($userInfo); //更新或者添加用户
-        if ($token = Cache::store("redis")->get($userInfo['openId'])) return app("json")->success(['token'=>$token]);
         $token = Jwt::signToken(User::getUserInfoByUid(WechatUser::getUidByOpenid($userInfo['openId'])));
         if (!$token) return app("json")->fail("登录失败！token生成失败！");
         Cache::store("redis")->set($userInfo['openId'],$token);
