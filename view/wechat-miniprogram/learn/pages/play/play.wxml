@@ -6,6 +6,16 @@
 <!-- <view class="desc">简介<image src="/utils/images/right-block.png" class="right"/></view> -->
 </view>
 <view class="tag">{{tag}}</view>
+<view class="line-height" wx:if="{{type=='tv'}}"></view>
+<view class="item" wx:if="{{type=='tv'}}">
+<scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="scroll-item scroll-item-list flex-item" bindtap="itemPlay" data-vid="{{item.vid}}" data-name="{{item.name}}" data-xid="{{item.xid}}">
+        <view class="item-list {{item.name == curNum ? 'active' : ''}}">{{item.name}}</view>
+      </view>
+    </block>
+</scroll-view>
+</view>
 <view class="line-height"></view>
 <scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
     <block wx:for="{{actor}}" wx:key="index">
