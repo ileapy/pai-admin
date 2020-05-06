@@ -133,6 +133,8 @@ class MiniVideo extends BaseModel
                     {
                         preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html/', $v, $xid);
                         $xid = $xid[2];
+                        if (MiniVideoItem::where("vid",$vid)->where("name",$k)->count() > 1) MiniVideoItem::where("vid",$vid)->where("name",$k)->delete();
+                        self::commitTrans();
                         if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->find())
                         {
                             $res3 = $res3 && MiniVideoItem::update([
@@ -179,15 +181,29 @@ class MiniVideo extends BaseModel
                     {
                         preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html/', $v, $xid);
                         $xid = $xid[2];
-                        $res3 = $res3 && MiniVideoItem::insert([
-                                'xid' =>$xid,
-                                'vid' => $vid,
-                                'name' => $k,
-                                'rank' => 0,
-                                'status' => 1,
-                                'create_time'=>time(),
-                                'create_user' => $adminId
-                            ]);
+                        if (MiniVideoItem::where("vid",$vid)->where("name",$k)->count() > 1) MiniVideoItem::where("vid",$vid)->where("name",$k)->delete();
+                        self::commitTrans();
+                        if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->count() > 0)
+                        {
+                            $res3 = $res3 && MiniVideoItem::update([
+                                    'name' => $k,
+                                    'rank' => 0,
+                                    'status' => 1,
+                                    'update_time'=>time(),
+                                    'update_user' => $adminId
+                                ],['xid' =>$xid,'vid' => $vid]);
+                        }else
+                        {
+                            $res3 = $res3 && MiniVideoItem::insert([
+                                    'xid' =>$xid,
+                                    'vid' => $vid,
+                                    'name' => $k,
+                                    'rank' => 0,
+                                    'status' => 1,
+                                    'update_time'=>time(),
+                                    'update_user' => $adminId
+                                ]);
+                        }
                     }
                 }
                 // 插入标签
@@ -202,6 +218,7 @@ class MiniVideo extends BaseModel
             return false;
         }catch (\Exception $e)
         {
+            var_dump($e->getMessage());
             self::rollbackTrans();
             return false;
         }

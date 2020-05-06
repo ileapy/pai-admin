@@ -65,15 +65,34 @@ class MiniVideo extends AuthController
     public function add(Request $request)
     {
         $form = array();
-        $form[] = Elm::input('name','标签名称')->col(10);
+        $form[] = Elm::input('vid','视频ID')->col(10);
+        $form[] = Elm::input('title','电影名称')->col(10);
+        $form[] = Elm::input('tinyname','视频简要')->col(10);
         $form[] = Elm::select('type','标签类型')->options(function (){
             $menu[] = ['label'=>"电影",'value'=>"movie"];
             $menu[] = ['label'=>"电视剧",'value'=>"tv"];
             return $menu;
         })->col(10);
+        $form[] = Elm::select('source','视频来源')->options(function (){
+            $menu[] = ['label'=>"腾讯",'value'=>"qq"];
+            $menu[] = ['label'=>"爱奇艺",'value'=>"iqiyi"];
+            $menu[] = ['label'=>"优酷",'value'=>"youku"];
+            return $menu;
+        })->col(10);
+        $form[] = Elm::input('time','上映时间')->col(10);
+        $form[] = Elm::frameImage('image','首页封面',Url::buildUrl('admin/widget.images/index',array('fodder'=>'image','limit'=>1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::frameImage('cover','商品封面',Url::buildUrl('admin/widget.images/index',array('fodder'=>'cover','limit'=>1)))->icon("ios-image")->width('96%')->height('440px')->col(10);
+        $form[] = Elm::number('skip_sec','广告秒数',0)->min(0)->col(10);
+        $form[] = Elm::number('fee','观看费用',0)->min(0)->col(10);
+        $form[] = Elm::number('discount','折扣',0)->min(0)->col(10);
+        $form[] = Elm::radio('recommend','是否推荐',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(10);
+        $form[] = Elm::radio('love','猜你喜欢',0)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(10);
+        $form[] = Elm::textarea('desc','简介')->col(20);
         $form[] = Elm::number('rank','排序',0)->col(10);
+        $form[] = Elm::number('num','总集数',0)->min(0)->col(10);
+        $form[] = Elm::number('now_num','更新至',0)->min(0)->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
-        $form = Form::make_post_form($form, url('save')->build());
+        $form = Form::make_post_form($form, url('save',['is_add'=>1])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
@@ -95,7 +114,7 @@ class MiniVideo extends AuthController
 
     /**
      * 修改
-     * @param string $id
+     * @param string $vid
      * @return string
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -105,7 +124,7 @@ class MiniVideo extends AuthController
         $ainfo = videoModel::get(['vid'=>$vid]);
         if (!$ainfo) return app("json")->fail("没有该视频");
         $form = array();
-        $form[] = Elm::input('vid','视频ID',$ainfo['vid'])->col(10);
+        $form[] = Elm::input('vid','视频ID',$ainfo['vid'])->readonly(true)->col(10);
         $form[] = Elm::input('title','电影名称',$ainfo['title'])->col(10);
         $form[] = Elm::input('tinyname','视频简要',$ainfo['tinyname'])->col(10);
         $form[] = Elm::select('type','标签类型',$ainfo['type'])->options(function (){
@@ -135,17 +154,17 @@ class MiniVideo extends AuthController
             $form[] = Elm::number('now_num','更新至',$ainfo['now_num'])->min(0)->col(10);
         }
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'禁用','value'=>0]])->col(10);
-        $form = Form::make_post_form($form, url('save',['vid'=>$vid])->build());
+        $form = Form::make_post_form($form, url('save',['is_add'=>0])->build());
         $this->assign(compact('form'));
         return $this->fetch("public/form-builder");
     }
 
     /**
      * 保存修改
-     * @param string $vid
+     * @param string $is_add
      * @return mixed
      */
-    public function save($vid="")
+    public function save($is_add = 1)
     {
         $data = Util::postMore([
             ['title',''],
@@ -168,9 +187,10 @@ class MiniVideo extends AuthController
             ['rank',''],
             ['status',0]
         ]);
+        if ($data['vid'] == "") return app("json")->fail("视频Id不能为空");
         if ($data['title'] == "") return app("json")->fail("视频名称不能为空");
         if ($data['type'] == "") return app("json")->fail("视频类型不能为空");
-        if ($vid=="")
+        if ($is_add)
         {
             $data['create_user'] = $this->adminId;
             $data['create_time'] = time();
@@ -179,7 +199,7 @@ class MiniVideo extends AuthController
         {
             $data['update_user'] = $this->adminId;
             $data['update_time'] = time();
-            $res = videoModel::update($data,['vid'=>$vid]);
+            $res = videoModel::update($data,['vid'=>$data['vid']]);
         }
         return $res ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
     }
@@ -198,5 +218,45 @@ class MiniVideo extends AuthController
         if ($data['type'] == "") return app("json")->fail("视频类型为空!");
         if ($data['link'] == "") return app("json")->fail("链接为空!");
         return videoModel::saveByLink($data) ? app("json")->success("操作成功",'code') : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 删除操作
+     * @param Request $request
+     * @return mixed
+     * @throws \Exception
+     */
+    public function del(Request $request)
+    {
+        $ids = $request->param("vid",0);
+        if (empty($ids) || !$ids) return app("json")->fail("参数有误，视频Id为空！");
+        if (!is_array($ids)) $ids = explode(",",$ids);
+        return videoModel::where('vid',"in",$ids)->delete() ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 启用
+     * @param Request $request
+     * @return
+     */
+    public function enabled(Request $request)
+    {
+        $ids = $request->param("vid",0);
+        if (empty($ids) || !$ids) return app("json")->fail("参数有误，视频Id为空！");
+        if (!is_array($ids)) $ids = explode(",",$ids);
+        return videoModel::where('vid',"in",$ids)->update(['status'=>1]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 禁用
+     * @param Request $request
+     * @return
+     */
+    public function disabled(Request $request)
+    {
+        $ids = $request->param("vid",0);
+        if (empty($ids) || !$ids) return app("json")->fail("参数有误，视频Id为空！");
+        if (!is_array($ids)) $ids = explode(",",$ids);
+        return videoModel::where('vid',"in",$ids)->update(['status'=>0]) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
     }
 }

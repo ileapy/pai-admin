@@ -3,6 +3,7 @@
 
 namespace app\api\controller\mini;
 
+use app\api\model\mini\MiniVideoItem;
 use app\api\model\mini\MiniVideoPlan;
 use app\api\model\mini\MiniVideoRecord;
 use app\Request;
@@ -50,7 +51,7 @@ class MiniVideo
         $url = vModel::getUrlByVid($where['vid'],$where['xid']);
         MiniVideoRecord::record($request->uid(),$where['vid'],$where['xid']);
         $curNum = $where['xid'] ? iModel::where("vid",$where['vid'])->where("xid",$where['xid'])->where("status",1)->value("name") : 1;
-        $skip_sec = MiniVideoPlan::where("uid",$request->uid())->where("vid",$where['vid'])->where("xid",$where['xid'])->value("sec") ?: "";
+        $skip_sec = MiniVideoPlan::where("uid",$request->uid())->where("vid",$where['vid'])->where("xid",$where['xid'])->value("sec") ?: MiniVideoItem::where("vid",$where['vid'])->where("xid",$where['xid'])->where("status",1)->value("skip_sec") ?: vModel::where("vid",$where['vid'])->where("status",1)->value("skip_sec");
         return $url ? app("json")->success(compact("url","curNum","skip_sec")) : app("json")->fail("获取失败");
     }
 
