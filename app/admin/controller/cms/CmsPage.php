@@ -24,7 +24,7 @@ class CmsPage extends AuthController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function index(Request $request = null)
+    public function index()
     {
         $where = Util::postMore([
             ['name',""],

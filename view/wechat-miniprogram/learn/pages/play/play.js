@@ -18,6 +18,8 @@ Component({
     vid:"",
     video_url:"",
     isGet:false,
+    skip_sec:0,
+    playTime:0,
   },
 
   /**
@@ -30,6 +32,7 @@ Component({
       this.info(options.vid,options.xid)
       video = wx.createVideoContext('video')
     },
+
     play:function(e)
     {
       // if(!app.globalData.isLogin) wx.reLaunch({
@@ -44,12 +47,24 @@ Component({
         this.info(this.data.vid,this.data.xid);
       }
     },
+
+    timeChange:function(e)
+    {
+      this.data.playTime = e.detail.currentTime.toFixed(2)
+    },
+
+    pause:function(e)
+    {
+      util.request(app.globalData.api_url+"/video/pause","POST",{vid:this.data.vid,xid:this.data.xid,sec:this.data.playTime},true);
+    },
+
     itemPlay:function(e)
     {
       this.getUrl(e.currentTarget.dataset.vid,e.currentTarget.dataset.xid);
       this.setData({
-        curNum:e.currentTarget.dataset.name
+        curNum:e.currentTarget.dataset.name,
       });
+      this.data.skip_sec = e.currentTarget.dataset.sec != null ? parseFloat(e.currentTarget.dataset.sec) :  this.data.skip_sec;
     },
     getUrl:function(vid,xid="")
     {
@@ -59,8 +74,10 @@ Component({
         {
           that.setData({
             video_url:res.data.url,
-            curNum:res.data.curNum
+            curNum:res.data.curNum,
+            skip_sec:res.data.skip_sec != "" ? parseFloat(res.data.skip_sec) : that.data.skip_sec,
           });
+          that.data.xid = xid
         }else
         {
           wx.hideLoading()
@@ -99,14 +116,18 @@ Component({
             desc:res.data.desc,
             list:res.data.list,
             type:res.data.type,
-            curNum:res.data.curNum
+            curNum:res.data.curNum,
+            skip_sec: parseFloat(res.data.skip_sec),
           });
-          this.data.isGet = true;
+          that.data.curNum = res.data.curNum;
+          that.data.xid =  res.data.curXid;
+          that.data.skip_sec = parseFloat(res.data.skip_sec);
+          that.data.isGet = true;
           wx.setNavigationBarTitle({
             title: res.data.title
           });
           if(res.data.type == "movie") this.getUrl(res.data.vid);
-          else if(res.data.type == "tv" && res.data.list.length > 0) this.getUrl(res.data.vid,xid ? xid : res.data.list[0]['xid']);
+          else if(res.data.type == "tv" && res.data.list.length > 0) this.getUrl(res.data.vid,that.data.xid ? that.data.xid : res.data.list[0]['xid']);
         }else
         {
           wx.hideLoading()
@@ -123,7 +144,6 @@ Component({
                   delta: 1,
                 })
               }
-              
             }
           });
         }

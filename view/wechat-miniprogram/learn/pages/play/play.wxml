@@ -1,6 +1,6 @@
 <!--pages/play/play.wxml-->
 <view class="page">
-<video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" bindplay="play" id="video"></video>
+<video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" bindplay="play" danmu-btn="true" bindpause="pause" id="video" initial-time="115" bindtimeupdate="timeChange"></video>
 <view class="title-line">
 <text class="title">{{title}}</text>
 <!-- <view class="desc">简介<image src="/utils/images/right-block.png" class="right"/></view> -->
@@ -8,9 +8,9 @@
 <view class="tag">{{tag}}</view>
 <view class="line-height" wx:if="{{type=='tv'}}"></view>
 <view class="item" wx:if="{{type=='tv'}}">
-<scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
+<scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%" scroll-into-view="v{{curNum}}">
     <block wx:for="{{list}}" wx:key="index">
-      <view class="scroll-item scroll-item-list flex-item" bindtap="itemPlay" data-vid="{{item.vid}}" data-name="{{item.name}}" data-xid="{{item.xid}}">
+      <view class="scroll-item scroll-item-list flex-item" bindtap="itemPlay" data-sec="{{item.skip_sec}}" data-vid="{{item.vid}}" data-name="{{item.name}}" data-xid="{{item.xid}}" id="v{{item.name}}">
         <view class="item-list {{item.name == curNum ? 'active' : ''}}">{{item.name}}</view>
       </view>
     </block>

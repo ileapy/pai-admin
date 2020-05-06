@@ -113,12 +113,13 @@ class MiniVideo extends BaseModel
     /**
      * 获取信息
      * @param string $vid
+     * @param int $uid
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function getVideoInfo(string $vid)
+    public static function getVideoInfo(string $vid,int $uid)
     {
         $model = new self;
         $model = $model->where("vid",$vid);
@@ -133,7 +134,8 @@ class MiniVideo extends BaseModel
                 $data['list'] = MiniVideoItem::getListByVid($vid);
                 $names = array_column($data['list'],"name");
                 array_multisort($names,SORT_ASC,$data['list']);
-                $data['curNum'] = '1';
+                $data['curNum'] = MiniVideoRecord::curNum($vid,$uid);
+                $data['curXid'] = MiniVideoRecord::curXid($vid,$uid);
             }
             if ($data['actor']) $data['actor'] = json_decode($data['actor'],true);
         }

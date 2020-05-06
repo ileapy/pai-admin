@@ -24,7 +24,7 @@ class AdminLog extends AuthController
      * @return string
      * @throws \think\db\exception\DbException
      */
-    public function index(Request $request)
+    public function index()
     {
         $where = Util::postMore([
             ['name',''],

@@ -27,4 +27,6 @@ Route::group(function () {
     Route::post('video/info', 'mini.mini_video/info');
     // 视频链接
     Route::post('video/url', 'mini.mini_video/url');
+    // 播放时间记录
+    Route::post('video/pause', 'mini.mini_video/pause');
 })->middleware(\learn\middleware\AllowOriginMiddleware::class)->middleware(\learn\middleware\AuthTokenMiddleware::class);
