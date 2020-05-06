@@ -24,7 +24,7 @@
                             <label for="type">视频类型</label>
                             <select name="type" id="type" class="form-control">
                                 <option value="">所有</option>
-                                <option value="movie">视频</option>
+                                <option value="movie">电影</option>
                                 <option value="tv">电视剧</option>
                             </select>
                         </div>
@@ -142,9 +142,9 @@
             formatter: btnGroup,  // 自定义方法
             events: {
                 'click .edit-btn': function (event, value, row, index) {
-                    iframe.createIframe('修改标签','/admin/mini.mini_video/edit?vid='+row.vid)
+                    iframe.createIframe('修改视频','/admin/mini.mini_video/edit?vid='+row.vid)
                 },
-                'click .btn-list': function (event, value, row, index) {
+                'click .list-btn': function (event, value, row, index) {
                     if (row.type === "movie") return $.alert("电影没有列表");
                     location.href = '/admin/mini.mini_video/item?vid='+row.vid;
                 },
@@ -157,7 +157,7 @@
                                 text: '确认',
                                 btnClass: 'btn-primary',
                                 action: function(){
-                                    $.post(url="/admin/mini.mini_video/del",data={"vid":row.id},function (res) {
+                                    $.post(url="/admin/mini.mini_video/del",data={"vid":row.vid},function (res) {
                                         if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
                                         else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     });
@@ -172,26 +172,6 @@
             }
         }],
 
-        onEditableSave: function (field, row, oldValue, $el) {
-            $.ajax({
-                type: "get",
-                url: "/admin/mini.mini_video_tag/lst",
-                data: row,
-                dataType: 'jsonp',
-                success: function (data, status) {
-                    if (data.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单行的更新
-                        $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
-                    } else {
-                        alert(data.msg);
-                    }
-                },
-                error: function () {
-                    alert('修改失败，请稍后再试');
-                }
-            });
-        },
-
         onLoadSuccess: function(data){
             $("[data-toggle='tooltip']").tooltip();
         }
@@ -203,7 +183,7 @@
         let html =
             '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
             '<a href="#!" class="btn btn-xs btn-default del-btn m-r-5" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>'+
-            '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-list" title="列表" data-toggle="tooltip"><i class="mdi mdi-format-list-bulleted"></i></a>';
+            '<a href="#!" class="btn btn-xs btn-default m-r-5 list-btn" title="列表" data-toggle="tooltip"><i class="mdi mdi-format-list-bulleted"></i></a>';
 
         return html;
     }
@@ -219,7 +199,7 @@
         if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0 ; i<  selectedItem.length; i++)
         {
-            checkID += selectedItem[i]['id']+",";
+            checkID += selectedItem[i]['vid']+",";
         }
         if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
@@ -231,7 +211,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/mini.mini_video/del",data={id:checkID},function (res) {
+                        $.post("/admin/mini.mini_video/del",data={vid:checkID},function (res) {
                             if (res.status == 200){ lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
@@ -251,7 +231,7 @@
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
         if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0; i < selectedItem.length; i++) {
-            checkID += selectedItem[i]['id'] + ",";
+            checkID += selectedItem[i]['vid'] + ",";
         }
         if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
@@ -264,7 +244,7 @@
                     btnClass: 'btn-danger',
                     action: function () {
                         if (type == 'enable') {
-                            $.post("/admin/mini.mini_video/enabled", data = {id: checkID}, function (res) {
+                            $.post("/admin/mini.mini_video/enabled", data = {vid: checkID}, function (res) {
                                 if (res.status == 200) {
                                     lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     location.reload();
@@ -272,7 +252,7 @@
 
                             })
                         } else {
-                            $.post("/admin/mini.mini_video/disabled", data = {id: checkID}, function (res) {
+                            $.post("/admin/mini.mini_video/disabled", data = {vid: checkID}, function (res) {
                                 if (res.status == 200) {
                                     lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     location.reload();

@@ -9,14 +9,37 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-header"><h4>搜索</h4></div>
+                <div class="card-body">
+                    <form class="form-inline searchForm" onsubmit="return false;">
+                        <div class="form-group">
+                            <label for="name">视频名称</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="name" value="" name="name" placeholder="请输入剧集名称或者ID">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">状态</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="">所有</option>
+                                <option value="1">启用</option>
+                                <option value="0">禁用</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
                 <div class="card-header"><h4>剧集列表</h4></div>
                 <div class="card-body">
                     <div id="toolbar" class="toolbar-btn-action">
-                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加视频','/admin/mini.mini_video/add')">
+                        <button id="btn_add" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('添加视频','/admin/mini.mini_video_item/add?vid={$vid}')">
                             <span class="mdi mdi-plus" aria-hidden="true"></span>新增
-                        </button>
-                        <button id="btn_autoAdd" type="button" class="btn btn-primary m-r-5" onclick="iframe.createIframe('自动添加视频','/admin/mini.mini_video/autoAdd')">
-                            <span class="mdi mdi-plus" aria-hidden="true"></span>自动添加
                         </button>
                         <button id="btn_edit" type="button" class="btn btn-success m-r-5" onclick="isEnable('enable')">
                             <span class="mdi mdi-check" aria-hidden="true"></span>启用
@@ -38,7 +61,7 @@
 <script type="text/javascript">
     $('#tb_departments').bootstrapTable({
         classes: 'table table-bordered table-hover table-striped',
-        url: '/admin/mini.mini_video/lst',
+        url: '/admin/mini.mini_video_item/lst',
         method: 'post',
         dataType : 'json',        // 因为本示例中是跨域的调用,所以涉及到ajax都采用jsonp,
         uniqueId: 'id',
@@ -55,6 +78,7 @@
         pagination: true,                    // 是否显示分页
         queryParams: function(params) {
             var temp = toArrayList($(".searchForm").serializeArray());
+            temp['vid'] = "{$vid}";
             temp['limit'] = params.limit;
             temp['page'] = (params.offset / params.limit) + 1;
             return temp;
@@ -66,36 +90,22 @@
         columns: [{
             checkbox: true
         }, {
-            field: 'vid',
-            title: '视频ID',
+            field: 'xid',
+            title: '剧集ID',
         }, {
-            field: 'title',
-            title: '视频名称'
+            field: 'name',
+            title: '当前集数'
         }, {
-            field: 'time',
-            title: '上映时间'
-        }, {
-            field: 'type',
-            title: '视频类型',
-            formatter: function (value, row, index) {
-                if (value == "movie") return "电影";
-                else if (value == "tv") return "电视剧";
-            },
+            field: 'skip_sec',
+            title: '跳过秒数'
         }, {
             field: 'rank',
             title: '排序',
             sortable: true
         },{
-            field: 'num',
-            title: '总集数',
+            field: 'fee',
+            title: '费用',
             sortable: true
-        } ,{
-            field: 'now_num',
-            title: '更新至',
-            sortable: true
-        }, {
-            field: 'create_time',
-            title: '创建时间',
         }, {
             field: 'status',
             title: '状态',
@@ -108,11 +118,7 @@
             formatter: btnGroup,  // 自定义方法
             events: {
                 'click .edit-btn': function (event, value, row, index) {
-                    iframe.createIframe('修改标签','/admin/mini.mini_video/edit?vid='+row.vid)
-                },
-                'click .btn-list': function (event, value, row, index) {
-                    if (row.type === "movie") return $.alert("电影没有列表");
-                    location.href = '/admin/mini.mini_video/item?vid='+row.vid;
+                    iframe.createIframe('修改剧集','/admin/mini.mini_video_item/edit?xid='+row.xid+'&vid={$vid}')
                 },
                 'click .del-btn': function (event, value, row, index) {
                     $.alert({
@@ -123,7 +129,7 @@
                                 text: '确认',
                                 btnClass: 'btn-primary',
                                 action: function(){
-                                    $.post(url="/admin/mini.mini_video/del",data={"vid":row.id},function (res) {
+                                    $.post(url="/admin/mini.mini_video_item/del",data={"xid":row.xid,'vid':'{$vid}'},function (res) {
                                         if (res.status == 200) {parent.lightyear.notify('删除成功', 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
                                         else parent.lightyear.notify('删除失败', 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     });
@@ -138,26 +144,6 @@
             }
         }],
 
-        onEditableSave: function (field, row, oldValue, $el) {
-            $.ajax({
-                type: "get",
-                url: "/admin/mini.mini_video_tag/lst",
-                data: row,
-                dataType: 'jsonp',
-                success: function (data, status) {
-                    if (data.code == '200') {
-                        // 这里的状态显示有自定义样式区分，做单行的更新
-                        $('.example-table').bootstrapTable('updateRow', {index: row.id, row: row});
-                    } else {
-                        alert(data.msg);
-                    }
-                },
-                error: function () {
-                    alert('修改失败，请稍后再试');
-                }
-            });
-        },
-
         onLoadSuccess: function(data){
             $("[data-toggle='tooltip']").tooltip();
         }
@@ -168,9 +154,7 @@
     {
         let html =
             '<a href="#!" class="btn btn-xs btn-default m-r-5 edit-btn" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>' +
-            '<a href="#!" class="btn btn-xs btn-default del-btn m-r-5" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>'+
-            '<a href="#!" class="btn btn-xs btn-default m-r-5 btn-list" title="列表" data-toggle="tooltip"><i class="mdi mdi-format-list-bulleted"></i></a>';
-
+            '<a href="#!" class="btn btn-xs btn-default del-btn m-r-5" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>';
         return html;
     }
 
@@ -185,7 +169,7 @@
         if (selectedItem=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0 ; i<  selectedItem.length; i++)
         {
-            checkID += selectedItem[i]['id']+",";
+            checkID += selectedItem[i]['xid']+",";
         }
         if (checkID=="") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
@@ -197,7 +181,7 @@
                     text: '确认',
                     btnClass: 'btn-danger',
                     action: function () {
-                        $.post("/admin/mini.mini_video/del",data={id:checkID},function (res) {
+                        $.post("/admin/mini.mini_video_item/del",data={xid:checkID,vid:'{$vid}'},function (res) {
                             if (res.status == 200){ lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');location.reload();}
                             else lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
                         })
@@ -217,7 +201,7 @@
         var selectedItem = $('#tb_departments').bootstrapTable('getAllSelections');
         if (selectedItem == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         for (var i = 0; i < selectedItem.length; i++) {
-            checkID += selectedItem[i]['id'] + ",";
+            checkID += selectedItem[i]['xid'] + ",";
         }
         if (checkID == "") return lightyear.notify("没有选中项", 'danger', 3000, 'mdi mdi-emoticon-neutral', 'top', 'center');
         $.confirm({
@@ -230,7 +214,7 @@
                     btnClass: 'btn-danger',
                     action: function () {
                         if (type == 'enable') {
-                            $.post("/admin/mini.mini_video/enabled", data = {id: checkID}, function (res) {
+                            $.post("/admin/mini.mini_video_item/enabled", data = {xid: checkID,vid:'{$vid}'}, function (res) {
                                 if (res.status == 200) {
                                     lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     location.reload();
@@ -238,7 +222,7 @@
 
                             })
                         } else {
-                            $.post("/admin/mini.mini_video/disabled", data = {id: checkID}, function (res) {
+                            $.post("/admin/mini.mini_video_item/disabled", data = {xid: checkID,vid:'{$vid}'}, function (res) {
                                 if (res.status == 200) {
                                     lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
                                     location.reload();
