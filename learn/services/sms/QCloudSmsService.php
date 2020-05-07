@@ -35,14 +35,47 @@ class QCloudSmsService
     protected $phoneNumbers = [];
 
     /**
-     * QCloudSmsService constructor.
-     * @param int $appId
-     * @param string $appKey
+     * 实例
+     * @var null
      */
-    public function __construct(int $appId, string $appKey)
+    private static $instance = null;
+
+    /**
+     * QCloudSmsService constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
     {
-        $this->appId = $appId;
-        $this->appKey = $appKey;
+        $this->appId = isset($config['appId']) ? $config['appId'] : "";
+        $this->appKey = isset($config['appKey']) ? $config['appKey'] : "";
+    }
+
+    /**
+     * 配置
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function options()
+    {
+        $config = systemConfigMore(["sms_appid","sms_appkey"]);
+        return [
+            'appId' => $config['sms_appid'],
+            'appKey' => $config['sms_appkey']
+        ];
+    }
+
+    /**
+     * @return QCloudSmsService|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function app()
+    {
+        (self::$instance === null) && (self::$instance = new self(self::options()));
+        return self::$instance;
     }
 
     /**
@@ -55,12 +88,12 @@ class QCloudSmsService
     public function sendSingleSms(int $templId, array $params, string $sign)
     {
         try {
-            $this->smSender = new SmsSingleSender($this->appId,$this->appKey);
-            $res = json_decode($this->smSender->sendWithParam("86", $this->phoneNumbers[0], $templId, $params, $sign, "", ""),true);
-            return $res['result'] == 0 ? true : false;
+            self::$instance->smSender = new SmsSingleSender(self::$instance->appId,self::$instance->appKey);
+            $res = json_decode(self::$instance->smSender->sendWithParam("86", self::$instance->phoneNumbers[0], $templId, $params, $sign, "", ""),true);
+            return $res['result'] == 0;
         }catch (\Exception $e)
         {
-            var_dump($e);
+            var_dump($e->getMessage());
             return false;
         }
     }
@@ -75,12 +108,12 @@ class QCloudSmsService
     public function sendMultiSms(int $templId, array $params, string $sign)
     {
         try {
-            $this->smSender = new SmsMultiSender($this->appId,$this->appKey);
-            $res = json_decode($this->smSender->sendWithParam("86", $this->phoneNumbers, $templId, $params, $sign, "", ""),true);
-            return $res['result'] == 0 ? true : false;
+            self::$instance->smSender = new SmsMultiSender(self::$instance->appId,self::$instance->appKey);
+            $res = json_decode(self::$instance->smSender->sendWithParam("86", self::$instance->phoneNumbers, $templId, $params, $sign, "", ""),true);
+            return $res['result'] == 0;
         }catch (\Exception $e)
         {
-            var_dump($e);
+            var_dump($e->getMessage());
             return false;
         }
     }
@@ -93,12 +126,12 @@ class QCloudSmsService
     public function sendVoiceVerifySms(string $verifyCode)
     {
         try {
-            $this->smSender = new SmsVoiceVerifyCodeSender($this->appId,$this->appKey);
-            $res = json_decode($this->smSender->send("86", $this->phoneNumbers[0], $verifyCode),true);
-            return $res['result'] == 0 ? true : false;
+            self::$instance->smSender = new SmsVoiceVerifyCodeSender(self::$instance->appId,self::$instance->appKey);
+            $res = json_decode(self::$instance->smSender->send("86", self::$instance->phoneNumbers[0], $verifyCode),true);
+            return $res['result'] == 0;
         }catch (\Exception $e)
         {
-            var_dump($e);
+            var_dump($e->getMessage());
             return false;
         }
     }
@@ -111,12 +144,12 @@ class QCloudSmsService
     public function sendVoicePromptSms(string $msg)
     {
         try {
-            $this->smSender = new SmsVoicePromptSender($this->appId,$this->appKey);
-            $res = json_decode($this->smSender->send("86", $this->phoneNumbers[0], 2, $msg),true);
-            return $res['result'] == 0 ? true : false;
+            self::$instance->smSender = new SmsVoicePromptSender(self::$instance->appId,self::$instance->appKey);
+            $res = json_decode(self::$instance->smSender->send("86", self::$instance->phoneNumbers[0], 2, $msg),true);
+            return $res['result'] == 0;
         }catch (\Exception $e)
         {
-            var_dump($e);
+            var_dump($e->getMessage());
             return false;
         }
     }
@@ -124,9 +157,11 @@ class QCloudSmsService
     /**
      * 设置发送的手机号
      * @param array $phone
+     * @return null
      */
     public function setPhoneNumbers(array $phone)
     {
-        $this->phoneNumbers = is_array($phone) ? $phone : [$phone];
+        self::$instance->phoneNumbers = is_array($phone) ? $phone : [$phone];
+        return self::$instance;
     }
 }

@@ -9,6 +9,7 @@ use app\admin\model\widget\Attachment;
 use app\admin\model\widget\AttachmentCategory;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
+use learn\services\storage\QcloudCoService;
 use learn\services\UtilService as Util;
 use learn\utils\Json;
 
@@ -183,7 +184,15 @@ class Images extends AuthController
         if ($id == 0) return app("json")->fail("未选择图片");
         $image = Attachment::get($id);
         try {
-            unlink(app()->getRootPath() . 'public'.$image['path']);
+            switch ($image['storage'])
+            {
+                case 1:
+                    unlink(app()->getRootPath() . 'public'.$image['path']);
+                    break;
+                case 2:
+                    QcloudCoService::del(str_replace(systemConfig("storage_domain"),"",$image['path']));
+                    break;
+            }
             return Attachment::del($id) ? app("json")->success("删除成功") : app("json")->fail("删除失败");
         }catch (\Exception $e)
         {

@@ -6,6 +6,7 @@ namespace app\admin\controller\widget;
 
 use app\admin\controller\AuthController;
 use app\admin\model\widget\Attachment;
+use learn\services\storage\QcloudCoService;
 use learn\services\UtilService as Util;
 use think\facade\Filesystem;
 
@@ -14,12 +15,27 @@ class Files extends AuthController
     /**
      * 单个图片上传
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function image()
     {
         $file = $this->request->file("file");
-        $savename = Filesystem::putFile( 'image', $file);
-        return Attachment::addAttachment($this->request->param("cid"),$savename,"/upload/".$savename,'image',$file->getMime(),$file->getSize(),1) ? app("json")->code()->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+        switch (systemConfig("storage_type"))
+        {
+            case 1:
+                $savename = Filesystem::putFile( 'image', $file);
+                $filePath = "/upload/".$savename;
+                break;
+            case 2:
+                $savename = Filesystem::putFile( 'image', $file);
+                $ext = $file->getOriginalExtension();
+                $key = '/image/'.date('Ymd')."/".substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
+                $filePath = QcloudCoService::put($key, $file->getRealPath());
+                break;
+        }
+        return Attachment::addAttachment($this->request->param("cid"),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 
     /**
@@ -70,7 +86,19 @@ class Files extends AuthController
     {
         $file = $this->request->file("file");
         $type = getFileType($file->getMime());
-        $savename = Filesystem::putFile($type, $file);
-        return Attachment::addAttachment(0,$savename,"/upload/".$savename,$type,$file->getMime(),$file->getSize(),1) ? app("json")->code()->success("上传成功",['filePath'=>"/upload/".$savename,"name"=>$savename]) : app("json")->fail("上传失败");
+        switch (systemConfig("storage_type"))
+        {
+            case 1:
+                $savename = Filesystem::putFile($type, $file);
+                $filePath = "/upload/".$savename;
+                break;
+            case 2:
+                $savename = Filesystem::putFile($type, $file);
+                $ext = $file->getOriginalExtension();
+                $key = '/'.$type.'/'.date('Ymd')."/".substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
+                $filePath = QcloudCoService::put($key, $file->getRealPath());
+                break;
+        }
+        return Attachment::addAttachment(0,$savename,$filePath,$type,$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 }
