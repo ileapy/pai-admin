@@ -28,9 +28,17 @@ class SystemConfig extends AuthController
      */
     public function base($tab_id = 1)
     {
-        $this->assign("tab_id",$tab_id);
-        $this->assign("system",cModel::getLstByTabId($tab_id));
-        return $this->fetch();
+        if ($tab_id < 5)
+        {
+            $this->assign("tab_id",$tab_id);
+            $this->assign("system",cModel::getLstByTabId($tab_id));
+            return $this->fetch();
+        }else if ($tab_id < 7)
+        {
+            $this->assign("tab_id",$tab_id);
+            $this->assign("system",cModel::getLstByTabId($tab_id));
+            return $this->fetch("pay");
+        }
     }
 
     /**

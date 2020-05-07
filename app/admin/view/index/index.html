@@ -43,7 +43,7 @@
                                     </ul>
                                 </li>
                                 {else /}
-                                <li><a class="multitabs" href="{$val.href}">{$val.title}</a> </li>
+                                <li><a class="multitabs" href="{$val.href}{if $val.params}{$val.params}{/if}">{$val.title}</a> </li>
                                 {/if}
                                 {/foreach}
                             </ul>

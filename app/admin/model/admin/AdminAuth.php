@@ -44,10 +44,13 @@ class AdminAuth extends BaseModel
         $model = $model->where("status",1);
         $model = $model->where("pid",$pid);
         if ($auth != []) $model = $model->where("id",'in',$auth);
-        $model = $model->field(['name as title','path as href','icon','id','font_family as fontFamily','is_check as isCheck','spreed']);
+        $model = $model->field(['name as title','path as href','icon','id','font_family as fontFamily','is_check as isCheck','spreed','params']);
         $model = $model->order(["rank desc","id"]);
         $data = $model->select()->each(function ($item) use ($auth)
         {
+            if ($item['params'] && !empty($item['params']) && $item['params'] != "[]" && $item['params'] != "{}") var_dump(json_decode($item['params']));
+//            if ($item['params'] && !empty($item['params']) && $item['params'] != "[]" && $item['params'] != "{}") $item['params'] = http_build_query(json_decode($item['params']) , '' , '&');
+//            else $item['params'] = "";
             $item['children'] = self::getMenu($item['id'],$auth);
             $item['isCheck'] = $item['isCheck'] ? true : false;
             $item['spreed'] = $item['spreed'] ? true : false;

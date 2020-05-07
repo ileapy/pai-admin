@@ -60,7 +60,7 @@ class AdminAuth extends AuthController
         $form[] = Elm::input('module','模块名')->col(10);
         $form[] = Elm::input('controller','控制器名')->col(10);
         $form[] = Elm::input('action','方法名')->col(10);
-        $form[] = Elm::input('params','参数')->col(10);
+        $form[] = Elm::input('params','参数')->placeholder("php数组,不懂不要填写")->col(10);
         $form[] = Elm::number('rank','排序')->col(10);
         $form[] = Elm::radio('is_menu','是否菜单',1)->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(10);
         $form[] = Elm::radio('status','状态',1)->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
@@ -90,7 +90,7 @@ class AdminAuth extends AuthController
         $form[] = Elm::input('module','模块名',$ainfo['module'])->col(10);
         $form[] = Elm::input('controller','控制器名',$ainfo['controller'])->col(10);
         $form[] = Elm::input('action','方法名',$ainfo['action'])->col(10);
-        $form[] = Elm::input('params','参数',$ainfo['params'])->col(10);
+        $form[] = Elm::input('params','参数',$ainfo['params'])->placeholder("php数组,不懂不要填写")->col(10);
         $form[] = Elm::number('rank','排序',$ainfo['rank'])->col(10);
         $form[] = Elm::radio('is_menu','是否菜单',$ainfo['is_menu'])->options([['label'=>'是','value'=>1],['label'=>'否','value'=>0]])->col(10);
         $form[] = Elm::radio('status','状态',$ainfo['status'])->options([['label'=>'启用','value'=>1],['label'=>'冻结','value'=>0]])->col(10);
@@ -124,6 +124,7 @@ class AdminAuth extends AuthController
         if ($data['controller'] == "") return app("json")->fail("控制器名不能为空");
         if ($data['action'] == "") return app("json")->fail("方法名不能为空");
         $data['path'] = '/'.$data['module'].'/'.$data['controller'].'/'.$data['action'];
+        if ($data['params']) $data['params'] = json_encode($data['params'],true);
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;
