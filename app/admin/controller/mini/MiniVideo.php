@@ -5,7 +5,6 @@ namespace app\admin\controller\mini;
 
 use app\admin\controller\AuthController;
 use app\admin\model\mini\MiniVideo as videoModel;
-use app\admin\model\mini\MiniVideoItem;
 use app\Request;
 use FormBuilder\Factory\Elm;
 use learn\services\FormBuilderService as Form;
@@ -108,7 +107,7 @@ class MiniVideo extends AuthController
     public function item($vid)
     {
         if (!videoModel::be($vid,"vid")) return app("json")->fail("视频不存在");
-        $this->assign(MiniVideoItem::lst($vid));
+        $this->assign("vid",$vid);
         return $this->fetch();
     }
 
