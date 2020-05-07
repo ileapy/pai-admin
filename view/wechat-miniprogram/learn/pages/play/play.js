@@ -3,34 +3,28 @@
 const app = getApp()
 var util= require('../../utils/util.js')
 var video = null;
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
+Page({
 
-  },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
     vid:"",
     video_url:"",
     isGet:false,
     skip_sec:0,
     playTime:0,
+    dataSet:{}
   },
 
-  /**
-   * 组件的方法列表
-   */
-  methods: {
     onLoad: function (options) {
       this.data.vid = options.vid;
       this.data.xid = options.xid;
       this.info(options.vid,options.xid)
       video = wx.createVideoContext('video')
+      this.data.skip_sec = 0;
+    },
+
+    onUnload:function(e)
+    {
+      util.request(app.globalData.api_url+"/video/pause","POST",{vid:this.data.vid,xid:this.data.xid,sec:this.data.playTime},true);
     },
 
     play:function(e)
@@ -60,12 +54,14 @@ Component({
 
     itemPlay:function(e)
     {
+      this.data.skip_sec = 0;
       this.getUrl(e.currentTarget.dataset.vid,e.currentTarget.dataset.xid);
       this.setData({
         curNum:e.currentTarget.dataset.name,
       });
       this.data.skip_sec = e.currentTarget.dataset.sec != null ? parseFloat(e.currentTarget.dataset.sec) :  this.data.skip_sec;
     },
+
     getUrl:function(vid,xid="")
     {
       var that = this;
@@ -75,9 +71,10 @@ Component({
           that.setData({
             video_url:res.data.url,
             curNum:res.data.curNum,
-            skip_sec:res.data.skip_sec != "" ? parseFloat(res.data.skip_sec) : that.data.skip_sec,
           });
           that.data.xid = xid
+          that.data.skip_sec = res.data.skip_sec != "" ? parseFloat(res.data.skip_sec) : that.data.skip_sec;
+          video.seek(that.data.skip_sec);
         }else
         {
           wx.hideLoading()
@@ -102,6 +99,30 @@ Component({
         console.log(res);
       })
     },
+
+    playOver:function(e)
+    {
+      // 播放完成
+      util.request(app.globalData.api_url+"/video/pause","POST",{vid:this.data.vid,xid:this.data.xid,sec:this.data.playTime},true);
+      // 播放下一集
+      var xid =  this.nextItem();
+      if(xid) this.getUrl(this.data.vid,xid);
+    },
+
+    nextItem:function()
+    {
+      if (this.data.dataSet == undefined) return "";
+      var lst = [];
+      this.data.dataSet.forEach(val => {
+        lst.push(val.xid);
+      });
+      if(lst.length > lst.indexOf(this.data.xid)+1)
+      {
+        return lst[lst.indexOf(this.data.xid)+1];
+      }
+      return "";
+    },
+
     info:function(vid,xid="")
     {
       var that = this;
@@ -117,11 +138,13 @@ Component({
             list:res.data.list,
             type:res.data.type,
             curNum:res.data.curNum,
-            skip_sec: parseFloat(res.data.skip_sec),
+            info:res.data
           });
           that.data.curNum = res.data.curNum;
           that.data.xid =  res.data.curXid;
           that.data.skip_sec = parseFloat(res.data.skip_sec);
+          that.data.dataSet = res.data.list
+          video.seek(that.data.skip_sec);
           that.data.isGet = true;
           wx.setNavigationBarTitle({
             title: res.data.title
@@ -152,5 +175,4 @@ Component({
         console.log(res);
       })
     }
-  }
 })
