@@ -60,4 +60,13 @@ class MiniProgramController
         Cache::store("redis")->set($userInfo['openId'],$token);
         return app("json")->success(['token'=>$token]);
     }
+
+    /**
+     * @param Request $request
+     */
+    public function notify(Request $request)
+    {
+        var_dump($request);
+        file_put_contents("pay1.log",json_encode($request->param()));
+    }
 }

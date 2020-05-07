@@ -19,8 +19,8 @@
         <div class="col-lg-12">
             <div class="card">
                 <ul class="nav nav-tabs page-tabs">
-                    <li {eq name="tab_id" value="5"}class="active"{/eq}><a href="/admin/system.system_config/base?tab_id=1">微信</a></li>
-                    <li {eq name="tab_id" value="6"}class="active"{/eq}><a href="/admin/system.system_config/base?tab_id=2">支付宝</a></li>
+                    <li {eq name="tab_id" value="38"}class="active"{/eq}><a href="/admin/system.system_config/base?tab_id=38">公众号</a></li>
+                    <li {eq name="tab_id" value="39"}class="active"{/eq}><a href="/admin/system.system_config/base?tab_id=39">支付宝</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active">
@@ -44,7 +44,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="{$vo.form_name}" id="{$vo.form_name}" value="{$vo.value}" />
                                     <input type="file" id="file{$vo.form_name}" style="display: none;" onchange="upload('{$vo.form_name}')"/>
-                                    <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="btnClick('{$vo.form_name}')">上传图片</button></div>
+                                    <div class="input-group-btn"><button class="btn btn-success" type="button" for-input="{$vo.form_name}" onclick="btnClick('{$vo.form_name}')">上传</button></div>
                                 </div>
                                 {/case}
                                 {case radio}
@@ -102,7 +102,7 @@
         formData.append("cid",0);
         $.ajax({
             type:'POST',
-            url:'/admin/widget.files/image',
+            url:'/admin/widget.files/cert',
             data: formData,
             cache: false,
             processData: false,

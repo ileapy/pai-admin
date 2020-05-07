@@ -5,10 +5,13 @@ use think\facade\Route;
 // 公众号
 Route::group(function () {
     Route::any('wechat/serve', 'wechat.WechatController/serve');//公众号服务
+    Route::any('wechat/notify', 'wechat.WechatController/notify');//公众号服务
 });
 
 // 小程序 登录
 Route::group(function () {
+    // 支付回调
+    Route::post('mini_program/notify', 'wechat.MiniProgramController/notify');
     // 获取openid
     Route::post('mini_program/openid', 'wechat.MiniProgramController/getOpenid');
     // 通过openid 和 用户信息 来交换 token

@@ -124,7 +124,6 @@ class AdminAuth extends AuthController
         if ($data['controller'] == "") return app("json")->fail("控制器名不能为空");
         if ($data['action'] == "") return app("json")->fail("方法名不能为空");
         $data['path'] = '/'.$data['module'].'/'.$data['controller'].'/'.$data['action'];
-        if ($data['params']) $data['params'] = json_encode($data['params'],true);
         if ($id=="")
         {
             $data['create_user'] = $this->adminId;

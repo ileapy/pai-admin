@@ -4,6 +4,7 @@
 namespace app\api\controller\wechat;
 
 
+use app\Request;
 use learn\services\WechatService;
 
 /**
@@ -26,5 +27,15 @@ class WechatController
     public function serve()
     {
         return WechatService::serve();
+    }
+
+    /**
+     * 公众号支付后回调
+     * @param Request $request
+     */
+    public function notify(Request $request)
+    {
+        var_dump($request->param());
+        file_put_contents("pay.log",json_encode($request->param()));
     }
 }

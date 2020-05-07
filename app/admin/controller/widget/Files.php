@@ -78,9 +78,24 @@ class Files extends AuthController
     }
 
     /**
+     * 证书上传
+     * @return mixed
+     */
+    public function cert()
+    {
+        $file = $this->request->file("file");
+        $savename = Filesystem::putFile( 'file', $file);
+        $filePath = "/upload/".$savename;
+        return $savename ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
+    }
+
+    /**
      * 上传文件到cid:0,
      * 图片 视频 音频
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function file()
     {

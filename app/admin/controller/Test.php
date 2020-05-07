@@ -6,6 +6,7 @@ namespace app\admin\controller;
 use app\Request;
 use learn\services\crawler\QQService;
 use learn\services\mail\MailService;
+use learn\services\pay\PayService;
 use learn\services\sms\QCloudSmsService;
 use learn\services\storage\QcloudCoService;
 use think\facade\Cache;
@@ -19,6 +20,12 @@ class Test extends AuthController
 
     public function index()
     {
+        $res = PayService::app("wechat","scan")->pay([
+            'out_trade_no' => "O".time(),
+            'total_fee' => '1', // **单位：分**
+            'body' => '清平乐35集解锁',
+        ]);
+        var_dump($res);
 //        $res = QCloudSmsService::app()->setPhoneNumbers(['18438622618'])->sendSingleSms(systemConfig("sms_login"),['123456'],"");
 //        var_dump($res);
         //var_dump($sms->sendSingleSms(systemConfig("sms_login"),['123456'],""));

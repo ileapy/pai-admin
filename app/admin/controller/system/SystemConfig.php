@@ -33,7 +33,7 @@ class SystemConfig extends AuthController
             $this->assign("tab_id",$tab_id);
             $this->assign("system",cModel::getLstByTabId($tab_id));
             return $this->fetch();
-        }else if ($tab_id < 7)
+        }else if ($tab_id == 38 || $tab_id == 39)
         {
             $this->assign("tab_id",$tab_id);
             $this->assign("system",cModel::getLstByTabId($tab_id));
