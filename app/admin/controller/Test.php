@@ -3,6 +3,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\wechat\WechatUser;
 use app\Request;
 use learn\services\crawler\QQService;
 use learn\services\mail\MailService;
@@ -20,12 +21,13 @@ class Test extends AuthController
 
     public function index()
     {
-        $res = PayService::app("alipay","web")->pay([
-            'out_trade_no' => time(),
-            'total_amount' => '0.01',
-            'subject' => 'test subject - 测试',
-        ]);
-        var_dump($res);
+        var_dump(WechatUser::select());
+//        $res = PayService::app("wechat","scan")->pay([
+//            'out_trade_no' => time(),
+//            'body' => 'subject-测试',
+//            'total_fee'      => '1',
+//        ]);
+//        var_dump($res);
 //        $res = QCloudSmsService::app()->setPhoneNumbers(['18438622618'])->sendSingleSms(systemConfig("sms_login"),['123456'],"");
 //        var_dump($res);
         //var_dump($sms->sendSingleSms(systemConfig("sms_login"),['123456'],""));

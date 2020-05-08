@@ -12,6 +12,8 @@ Route::group(function () {
 Route::group(function () {
     // 支付回调
     Route::post('mini_program/notify', 'wechat.MiniProgramController/notify');
+    // 小程序调用
+    Route::get('mini_program/pay', 'wechat.MiniProgramController/pay');
     // 获取openid
     Route::post('mini_program/openid', 'wechat.MiniProgramController/getOpenid');
     // 通过openid 和 用户信息 来交换 token

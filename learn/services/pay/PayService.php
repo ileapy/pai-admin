@@ -118,7 +118,7 @@ class PayService
                 case 'miniapp':
                     return systemConfig("domain").Url("/api/mini_program/notify");
                 case 'scan':
-                    return systemConfig("domain").Url("/index/wechat/notify");
+                    return systemConfig("domain").Url("/api/wechat/notify");
             }
         }
         elseif ($type == "alipay")
@@ -151,6 +151,15 @@ class PayService
     }
 
     /**
+     * 支付服务
+     * @return mixed
+     */
+    public static function serve()
+    {
+        return Pay::{self::$instance->type}(self::$instance->options());
+    }
+
+    /**
      * 支付
      * @param array $order
      * @return bool
@@ -158,11 +167,42 @@ class PayService
     public function pay(array $order)
     {
         try {
-            return Pay::{self::$instance->type}(self::$instance->options())->{self::$instance->method}($order);
+           return self::serve()->{self::$instance->method}($order);
         }catch (\Exception $e)
         {
             var_dump($e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * 同步回调
+     * @return bool
+     */
+    public function return()
+    {
+        try {
+            return self::serve()->verify();
+        }catch (\Exception $e)
+        {
+            var_dump($e->getMessage());
+            return false;
+        }
+        return self::serve()->success()->send();
+    }
+
+    /**
+     * 异步支付回调
+     * @return bool
+     */
+    public function notify()
+    {
+        try {
+            event("PayOrderBefore",[self::serve()->verify()]);
+        }catch (\Exception $e)
+        {
+            var_dump($e->getMessage());
+        }
+        return self::serve()->success()->send();
     }
 }

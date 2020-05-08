@@ -7,6 +7,7 @@ use app\api\model\user\User;
 use app\api\model\wechat\WechatUser;
 use app\Request;
 use learn\services\MiniProgramService;
+use learn\services\pay\PayService;
 use learn\services\UtilService as Util;
 use learn\utils\Jwt;
 use think\facade\Cache;
@@ -66,7 +67,15 @@ class MiniProgramController
      */
     public function notify(Request $request)
     {
-        var_dump($request);
-        file_put_contents("pay1.log",json_encode($request->param()));
+        PayService::app("wechat","miniapp")->notify();
+    }
+
+    /**
+     * 微信小程序支付
+     * @param Request $request
+     */
+    public function pay(Request $request)
+    {
+        PayService::app("wechat","miniapp")->pay([]);
     }
 }

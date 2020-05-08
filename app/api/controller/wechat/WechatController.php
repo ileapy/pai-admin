@@ -5,6 +5,7 @@ namespace app\api\controller\wechat;
 
 
 use app\Request;
+use learn\services\pay\PayService;
 use learn\services\WechatService;
 
 /**
@@ -35,7 +36,15 @@ class WechatController
      */
     public function notify(Request $request)
     {
-        var_dump($request->param());
-        file_put_contents("pay.log",json_encode($request->param()));
+        PayService::app("wechat","scan")->notify();
+    }
+
+    /**
+     * 公众号支付
+     * @param Request $request
+     */
+    public function pay(Request $request)
+    {
+        PayService::app("wechat","mp")->pay([]);
     }
 }
