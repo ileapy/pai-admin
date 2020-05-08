@@ -20,10 +20,10 @@ class Test extends AuthController
 
     public function index()
     {
-        $res = PayService::app("wechat","scan")->pay([
-            'out_trade_no' => "O".time(),
-            'total_fee' => '1', // **单位：分**
-            'body' => '清平乐35集解锁',
+        $res = PayService::app("alipay","web")->pay([
+            'out_trade_no' => time(),
+            'total_amount' => '0.01',
+            'subject' => 'test subject - 测试',
         ]);
         var_dump($res);
 //        $res = QCloudSmsService::app()->setPhoneNumbers(['18438622618'])->sendSingleSms(systemConfig("sms_login"),['123456'],"");

@@ -67,8 +67,33 @@ class PayService
                 ];
                 break;
             case 'alipay':
-                $config = [];
+                $params = systemConfigMore(['pay_alipay_app_id','pay_alipay_ali_public_key','pay_alipay_private_key','pay_alipay_app_cert_public_key','pay_alipay_alipay_root_cert']);
+                $config = [
+                    'app_id' => $params['pay_alipay_app_id'],
+                    'notify_url' => 'http://yansongda.cn/notify.php',
+                    'return_url' => 'http://yansongda.cn/return.php',
+                    'ali_public_key' => $params['pay_alipay_ali_public_key'],
+                    // 加密方式： **RSA2**
+                    'private_key' => $params['pay_alipay_private_key'],
+                    // 使用公钥证书模式，请配置下面两个参数，同时修改ali_public_key为以.crt结尾的支付宝公钥证书路径，如（./cert/alipayCertPublicKey_RSA2.crt）
+                    // 'app_cert_public_key' => './cert/appCertPublicKey.crt', //应用公钥证书路径
+                    // 'alipay_root_cert' => './cert/alipayRootCert.crt', //支付宝根证书路径
+                    'log' => [ // optional
+                        'file' => './logs/alipay.log',
+                        'level' => 'info', // 建议生产环境等级调整为 info，开发环境为 debug
+                        'type' => 'single', // optional, 可选 daily.
+                        'max_file' => 30, // optional, 当 type 为 daily 时有效，默认 30 天
+                    ],
+                    'http' => [ // optional
+                        'timeout' => 5.0,
+                        'connect_timeout' => 5.0,
+                        // 更多配置项请参考 [Guzzle](https://guzzle-cn.readthedocs.io/zh_CN/latest/request-options.html)
+                    ],
+//                    'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
+                ];
                 break;
+            default:
+                $config = [];
         }
         return $config;
     }
@@ -93,7 +118,7 @@ class PayService
                 case 'miniapp':
                     return systemConfig("domain").Url("/api/mini_program/notify");
                 case 'scan':
-                    return systemConfig("domain").Url("/api/wechat/notify");
+                    return systemConfig("domain").Url("/index/wechat/notify");
             }
         }
         elseif ($type == "alipay")
@@ -126,21 +151,6 @@ class PayService
     }
 
     /**
-     * 支付对象
-     * @return \Yansongda\Pay\Gateways\Alipay|\Yansongda\Pay\Gateways\Wechat
-     */
-    public static function server()
-    {
-        switch (self::$instance->type)
-        {
-            case 'wechat':
-                return Pay::wechat(self::$instance->options());
-            case 'alipay':
-                return Pay::alipay(self::$instance->options());
-        }
-    }
-
-    /**
      * 支付
      * @param array $order
      * @return bool
@@ -148,17 +158,7 @@ class PayService
     public function pay(array $order)
     {
         try {
-            switch (self::$instance->method)
-            {
-                case 'mp':
-                    return self::server()->mp($order);
-                case 'wap':
-                    return self::server()->wap($order);
-                case 'miniapp':
-                    return self::server()->miniapp($order);
-                case 'scan':
-                    return self::server()->scan($order);
-            }
+            return Pay::{self::$instance->type}(self::$instance->options())->{self::$instance->method}($order);
         }catch (\Exception $e)
         {
             var_dump($e->getMessage());
