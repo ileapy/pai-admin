@@ -95,6 +95,7 @@ class ExcelService
      */
     public function setTitle()
     {
+        // 默认设置
         self::$excel->getProperties()
             ->setCreator("Neo")
             ->setLastModifiedBy("Neo")
@@ -103,22 +104,25 @@ class ExcelService
             ->setDescription("")
             ->setKeywords("Sheet1")
             ->setCategory("");
-        self::$excel ->getActiveSheet()->setCellValue('A1', self::$title);
-        self::$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        self::$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         self::$excel->setActiveSheetIndex(0);
         self::$excel->getActiveSheet()->setTitle("Sheet1");
-        self::$excel->getActiveSheet()->setCellValue('A2',self::$subTitle);
-        self::$excel->getActiveSheet()->mergeCells('A1:'.(self::$cellKey[self::$colNum-1]).'1');
-        self::$excel->getActiveSheet()->mergeCells('A2:'.(self::$cellKey[self::$colNum-1]).'2');
+        // 标题
+        self::$excel ->getActiveSheet()->setCellValue('A1', self::$title);
         self::$excel->getActiveSheet()->getRowDimension(1)->setRowHeight(40);
-        self::$excel->getActiveSheet()->getRowDimension(2)->setRowHeight(20);
+        self::$excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        self::$excel->getActiveSheet()->mergeCells('A1:'.(self::$cellKey[self::$colNum-1]).'1');
         self::$excel->getActiveSheet()->getStyle('A1')->getFont()->setName('黑体');
         self::$excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);
         self::$excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        // 二级标题
+        self::$excel->getActiveSheet()->setCellValue('A2',self::$subTitle);
+        self::$excel->getActiveSheet()->getRowDimension(2)->setRowHeight(20);
+        self::$excel->getActiveSheet()->mergeCells('A2:'.(self::$cellKey[self::$colNum-1]).'2');
+        self::$excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         self::$excel->getActiveSheet()->getStyle('A2')->getFont()->setName('宋体');
         self::$excel->getActiveSheet()->getStyle('A2')->getFont()->setSize(14);
-        // 标题头
+
+        // 表头
         $sheet=self::$excel->getActiveSheet();
         foreach(self::$header as $key=>$val){
             $row=self::$cellKey[$key];
@@ -127,9 +131,9 @@ class ExcelService
             $sheet->getStyle($row)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         }
         $sheet->getStyle('A1:'.(self::$cellKey[self::$colNum-1])."1")->applyFromArray(self::$styleArray);
-        //设置边框
         $sheet->getStyle('A2:'.(self::$cellKey[self::$colNum-1])."2")->applyFromArray(self::$styleArray);
         $sheet->getStyle('A3:'.(self::$cellKey[self::$colNum-1])."3")->applyFromArray(self::$styleArray);
+        $sheet->getDefaultRowDimension()->setRowHeight(self::$cellHeight);
         return $this;
     }
 
@@ -174,7 +178,6 @@ class ExcelService
                     }
                 }
             }
-            $sheet->getDefaultRowDimension()->setRowHeight(self::$cellHeight);
         }
         return $this;
     }
