@@ -8,12 +8,10 @@ Route::group(function () {
     Route::any('wechat/notify', 'wechat.WechatController/notify');//公众号服务
 });
 
-// 小程序 登录
+// 小程序 不需要登录
 Route::group(function () {
     // 支付回调
     Route::post('mini_program/notify', 'wechat.MiniProgramController/notify');
-    // 小程序调用
-    Route::get('mini_program/pay', 'wechat.MiniProgramController/pay');
     // 获取openid
     Route::post('mini_program/openid', 'wechat.MiniProgramController/getOpenid');
     // 通过openid 和 用户信息 来交换 token
@@ -26,7 +24,7 @@ Route::group(function () {
     Route::get('index/base', 'index/base');
 });
 
-// 更新用户信息
+// 需要登录
 Route::group(function () {
     // 获取视频信息
     Route::post('video/info', 'mini.mini_video/info');
@@ -34,4 +32,9 @@ Route::group(function () {
     Route::post('video/url', 'mini.mini_video/url');
     // 播放时间记录
     Route::post('video/pause', 'mini.mini_video/pause');
+    // 提交订单
+    Route::post('order/order', 'mini.mini_video_order/order');
+    // 支付调用
+    Route::post('order/pay', 'mini.mini_video_order/pay');
+
 })->middleware(\learn\middleware\AllowOriginMiddleware::class)->middleware(\learn\middleware\AuthTokenMiddleware::class);
