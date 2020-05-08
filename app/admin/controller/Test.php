@@ -6,6 +6,7 @@ namespace app\admin\controller;
 use app\admin\model\wechat\WechatUser;
 use app\Request;
 use learn\services\crawler\QQService;
+use learn\services\ExcelService;
 use learn\services\mail\MailService;
 use learn\services\pay\PayService;
 use learn\services\sms\QCloudSmsService;
@@ -21,7 +22,9 @@ class Test extends AuthController
 
     public function index()
     {
-        var_dump(WechatUser::select());
+//        ExcelService::setHeader("订单导出",['订单编号','商品名称','商品规格']);
+        ExcelService::setHeader("订单导出",['订单id','订单号','电话','收货人姓名'])->setBody([[1,2,3,4],[1,2,3,4]])->save();
+//        var_dump(WechatUser::select());
 //        $res = PayService::app("wechat","scan")->pay([
 //            'out_trade_no' => time(),
 //            'body' => 'subject-测试',

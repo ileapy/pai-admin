@@ -32,7 +32,8 @@
         "phpmailer/phpmailer": "^6.1",
         "qcloudsms/qcloudsms_php": "^0.1.4",
         "qcloud/cos-sdk-v5": "^2.0",
-        "spatie/macroable": "^1.0"
+        "spatie/macroable": "^1.0",
+        "phpoffice/phpexcel": "^1.8"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2"
