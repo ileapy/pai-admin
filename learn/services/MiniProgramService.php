@@ -6,7 +6,6 @@ namespace learn\services;
 
 use app\admin\model\wechat\WechatReply;
 use EasyWeChat\Factory;
-use EasyWeChat\Kernel\Messages\Text;
 
 /**
  * 小程序
@@ -160,7 +159,7 @@ class MiniProgramService
     /**
      * 文字信息
      * @param string $content
-     * @return Text
+     * @return array
      */
     public static function textMessage(string $content)
     {
