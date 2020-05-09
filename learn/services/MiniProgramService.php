@@ -6,6 +6,7 @@ namespace learn\services;
 
 use app\admin\model\wechat\WechatReply;
 use EasyWeChat\Factory;
+use EasyWeChat\Kernel\Messages\Text;
 
 /**
  * 小程序
@@ -143,20 +144,86 @@ class MiniProgramService
     /**
      * 回复客服文本消息
      * @param string $openid
-     * @param string $content
+     * @param array $message
+     * @return string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public static function sendService(string $openid, string $content)
+    public static function sendService(string $openid, array $message)
     {
-        self::staffService()->send([
-            'touser' => $openid,
-            'msgtype' => 'text',
-            'text' => [
-                "content" => $content,
+        $message['touser'] = $openid;
+        self::staffService()->send($message);
+        return "success";
+    }
+
+    /**
+     * 文字信息
+     * @param string $content
+     * @return Text
+     */
+    public static function textMessage(string $content)
+    {
+        return [
+            "msgtype"=>"text",
+            "text" => [
+                "content"=> $content,
             ],
-        ]);
+        ];
+    }
+
+    /**
+     * 图片信息
+     * @param string $media_id
+     * @return array
+     */
+    public static function imageMessage(string $media_id)
+    {
+        return [
+            "msgtype"=>"image",
+            "image" => [
+                "media_id"=> $media_id,
+            ],
+        ];
+    }
+
+    /**
+     * @param string $title
+     * @param string $description
+     * @param string $url
+     * @param string $thumb_url
+     * @return array
+     */
+    public static function linkMessage(string $title, string $description, string $url, string $thumb_url)
+    {
+        return [
+            "msgtype"=>"link",
+            "link" => [
+                "title"=> $title,
+                "description"=> $description,
+                "url"=> $url,
+                "thumb_url"=> $thumb_url,
+            ],
+        ];
+    }
+
+    /**
+     * 回复小程序
+     * @param string $title
+     * @param string $pagepath
+     * @param string $thumb_media_id
+     * @return array
+     */
+    public static function miniprogrampageMessage(string $title, string $pagepath, string $thumb_media_id)
+    {
+        return [
+            "msgtype"=>"miniprogrampage",
+            "miniprogrampage" => [
+                "title"=> $title,
+                "pagepath"=> $pagepath,
+                "thumb_media_id"=> $thumb_media_id,
+            ],
+        ];
     }
 
     /**

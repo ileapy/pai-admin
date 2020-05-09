@@ -6,6 +6,7 @@ namespace app\admin\model\wechat;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use learn\services\MiniProgramService;
 use learn\services\WechatService;
 
 /**
@@ -65,15 +66,15 @@ class WechatReply extends BaseModel
         switch ($res['type'])
         {
             case 'text':
-                return $res['content'];
+                return MiniProgramService::textMessage($res['content']);
             case 'image':
-            case 'news':
-            case 'audio':
-            case 'video':
                 $res['content'] = json_decode($res['content'],true);
-                return $res['content']['media_id'];
+                return MiniProgramService::imageMessage($res['content']['media_id']);
+            case 'miniprogrampage ':
+            case 'link':
+                break;
             default:
-                return "没有找到指定内容！";
+                return MiniProgramService::textMessage("没有找到指定内容！");
         }
     }
     /**
