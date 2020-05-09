@@ -3,6 +3,9 @@
 
 namespace learn\subscribes;
 
+use app\api\model\mini\MiniVideoOrder;
+use app\api\model\user\UserOrder;
+
 /**
  * Class PayOrderSubscribe
  * @package learn\subscribes
@@ -16,6 +19,6 @@ class PayOrderSubscribe
     public function onPayOrderBefore($event)
     {
         list($payInfo) = $event;
-        file_put_contents("payInfo.log",json_encode($payInfo));
+        if ($payInfo && $payInfo['result_code'] == "SUCCESS" && $payInfo['out_trade_no']) UserOrder::orderSuccess($payInfo['out_trade_no']);
     }
 }
