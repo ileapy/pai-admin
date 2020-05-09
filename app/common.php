@@ -70,3 +70,15 @@ if (!function_exists('systemConfig'))
         return \app\admin\model\system\SystemConfig::getValueByFormName($formName);
     }
 }
+
+if (!function_exists('createOrderId'))
+{
+    /**
+     * 创建订单id
+     * @return string
+     */
+    function createOrderId(): string
+    {
+        return "O".date("YmdHis").rand(1000,9999);
+    }
+}

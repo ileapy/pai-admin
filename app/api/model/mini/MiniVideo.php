@@ -141,4 +141,33 @@ class MiniVideo extends BaseModel
         }
         return $data ?: [];
     }
+
+    /**
+     * 是否可以观看
+     * @param int $uid
+     * @param string $vid
+     * @param string $xid
+     * @return bool
+     */
+    public static function isAllow(int $uid, string $vid, string $xid = ""): bool
+    {
+        if ($xid)
+        {
+            if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->value("fee") > 0) return MiniVideoOrder::videoIsPay($uid,$vid,$xid);
+        }
+        else if(self::where("vid",$vid)->value("fee") > 0) return MiniVideoOrder::videoIsPay($uid,$vid,$xid);
+        return true;
+    }
+
+    /**
+     * @param string $vid
+     * @param string $xid
+     * @return array
+     */
+    public static function info(string $vid, string $xid = "")
+    {
+        $fee = $xid ? MiniVideoItem::where("vid",$vid)->where("xid",$xid)->value("fee") : self::where("vid",$vid)->value("fee");
+        $type = $xid ? "tv" : "movie";
+        return [$fee,$type];
+    }
 }

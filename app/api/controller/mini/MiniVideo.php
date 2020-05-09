@@ -48,6 +48,7 @@ class MiniVideo
             ['xid','']
         ]);
         if ($where['vid'] == "") return app("json")->fail("视频ID为空！");
+        if (!vModel::isAllow($request->uid(),$where['vid'],$where['xid'])) return app("json")->make("2001","您不拥有该视频！");
         $url = vModel::getUrlByVid($where['vid'],$where['xid']);
         MiniVideoRecord::record($request->uid(),$where['vid'],$where['xid']);
         $curNum = $where['xid'] ? iModel::where("vid",$where['vid'])->where("xid",$where['xid'])->where("status",1)->value("name") : 1;
