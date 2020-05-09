@@ -107,7 +107,6 @@
             processData: false,
             contentType: false,
             success: function (res) {
-                if (!Array.isArray(res)) res = jQuery.parseJSON(res);
                 $("#"+inputName).val(res.data.filePath);
             }
         });

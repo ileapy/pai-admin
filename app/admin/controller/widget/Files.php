@@ -35,7 +35,7 @@ class Files extends AuthController
                 $filePath = QcloudCoService::put($key, $file->getRealPath());
                 break;
         }
-        return Attachment::addAttachment($this->request->param("cid"),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
+        return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
     }
 
     /**

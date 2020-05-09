@@ -128,6 +128,8 @@ class MiniVideo extends BaseModel
                 $data['curXid'] = MiniVideoRecord::curXid($vid,$uid);
             }
             if ($data['actor']) $data['actor'] = json_decode($data['actor'],true);
+            $data['isCollect'] = MiniVideoCollect::isCollect($uid,$vid);
+            $data['playNum'] = MiniVideoRecord::playNum($vid);
         }
         return $data ?: [];
     }

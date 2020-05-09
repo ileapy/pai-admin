@@ -34,6 +34,10 @@ Route::group(function () {
     Route::post('video/url', 'mini.mini_video/url');
     // 播放时间记录
     Route::post('video/pause', 'mini.mini_video/pause');
+    // 收藏
+    Route::post('video/collect', 'mini.mini_video/collect');
+    // 收藏
+    Route::post('video/record', 'mini.mini_video/record');
     // 提交订单
     Route::post('order/order', 'mini.mini_video_order/order');
     // 支付调用

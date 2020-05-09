@@ -59,7 +59,7 @@ class MiniProgramController
         $token = Jwt::signToken(User::getUserInfoByUid(WechatUser::getUidByOpenid($userInfo['openId'])));
         if (!$token) return app("json")->fail("登录失败！token生成失败！");
         Cache::store("redis")->set($userInfo['openId'],$token);
-        return app("json")->success(['token'=>$token]);
+        return app("json")->success(['token'=>$token,'userInfo'=>$userInfo]);
     }
 
     /**

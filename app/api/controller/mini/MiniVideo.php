@@ -3,6 +3,7 @@
 
 namespace app\api\controller\mini;
 
+use app\api\model\mini\MiniVideoCollect;
 use app\api\model\mini\MiniVideoItem;
 use app\api\model\mini\MiniVideoPlan;
 use app\api\model\mini\MiniVideoRecord;
@@ -70,5 +71,36 @@ class MiniVideo
         ]);
         if ($where['vid'] == "") return app("json")->fail("视频ID为空！");
         return MiniVideoPlan::pause($where['uid'],$where['vid'],$where['xid'],$where['sec']) ? app("json")->success("记录成功") : app("json")->fail("记录失败");
+    }
+
+    /**
+     * 收藏
+     * @param Request $request
+     * @return bool|int|string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function collect(Request $request)
+    {
+        $where = Util::postMore([
+           ['vid','']
+        ]);
+        if ($where['vid'] == "") return app("json")->fail("视频ID为空！");
+        return MiniVideoCollect::UnAndOncollect($request->uid(),$where['vid']) ? app("json")->success("操作成功") : app("json")->fail("操作失败");
+    }
+
+    /**
+     * 浏览记录
+     * @param Request $request
+     * @return
+     */
+    public function record(Request $request)
+    {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',10],
+        ]);
+        return app("json")->success("ok",MiniVideoPlan::lst($request->uid(),$where));
     }
 }

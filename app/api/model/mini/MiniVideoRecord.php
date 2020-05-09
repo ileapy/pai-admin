@@ -39,4 +39,14 @@ class MiniVideoRecord extends BaseModel
     {
         return self::where("vid",$vid)->where("uid",$uid)->order("add_time desc")->value("xid") ?: "";
     }
+
+    /**
+     * 播放次数
+     * @param string $vid
+     * @return int
+     */
+    public static function playNum(string $vid)
+    {
+        return self::where("vid",$vid)->count() ?: 0;
+    }
 }
