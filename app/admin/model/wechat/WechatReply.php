@@ -27,7 +27,6 @@ class WechatReply extends BaseModel
      */
     public static function reply(string $keyword)
     {
-        file_put_contents("k.log",$keyword);
         $res = self::where('keyword',$keyword)->where('status','1')->find();
         if(empty($res)) $res = self::where('keyword','default')->where('status','1')->find();
         switch ($res['type'])
