@@ -24,6 +24,9 @@ class MiniVideoOrder
      * 生成订单
      * @param Request $request
      * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function order(Request $request)
     {
@@ -36,8 +39,8 @@ class MiniVideoOrder
         $oInfo = OModel::where("vid",$where['vid'])->where("xid",$where['xid'])->where("uid",$request->uid())->find();
         if ($oInfo['paid'] && !$oInfo['is_refund']) return app("json")->fail("您已购买，不需要重复购买");
         $oid = createOrderId();
-        $res1 = OModel::insert(['oid'=>$oid,'vid'=>$where['vid'],'uid'=>$request->uid(),'type'=>$type,'cost'=>$cost,"xid"=>$where['xid']]);
-        $res2 = uoModel::insert(['oid'=>$oid,'uid'=>$request->uid(),'source'=>1,'pay_price'=>$cost]);
+        $res1 = OModel::insert(['oid'=>$oid,'vid'=>$where['vid'],'uid'=>$request->uid(),'type'=>$type,'cost'=>$cost,"xid"=>$where['xid'],'add_time'=>time()]);
+        $res2 = uoModel::insert(['oid'=>$oid,'uid'=>$request->uid(),'source'=>1,'pay_price'=>$cost,'add_time'=>time()]);
         return $res1 && $res2 ? app("json")->success("生成订单成功",['oid'=>$oid]) : app("json")->fail("生成订单失败");
     }
 
