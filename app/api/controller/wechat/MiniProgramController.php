@@ -78,4 +78,19 @@ class MiniProgramController
     {
         PayService::app("wechat","miniapp")->pay([]);
     }
+
+    /**
+     * 小程序服务
+     * @return \think\Response
+     * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function serve()
+    {
+        return MiniProgramService::serve();
+    }
 }

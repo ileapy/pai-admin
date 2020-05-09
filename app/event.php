@@ -17,7 +17,8 @@ return [
         'LogWrite' => [],
         'Test' => [],  // 后台通知测试
         'AdminLog' => [], // 操作日志记录
-        'MessageBefore' => [], //微信信息前置操作
+        'MessageBefore' => [], //微信信息前置操作,
+        'MiniProgramMessageBefore' => [], //小程序客服前置操作
         'EventUnsubscribeBefore' => [], //微信取消关注前置操作
         'EventSubscribeBefore' => [], //微信关注前者操作
         'UploadMediaAfter' => [], // 微信上传素材文件
@@ -31,5 +32,6 @@ return [
         \learn\subscribes\WechatMessageSubscribe::class, //微信操作
         \learn\subscribes\WechatMediaSubscribe::class, // 微信素材
         \learn\subscribes\PayOrderSubscribe::class, // 订单成功回调
+        \learn\subscribes\MiniProgramMessageSubscribe::class, //小程序客服
     ],
 ];

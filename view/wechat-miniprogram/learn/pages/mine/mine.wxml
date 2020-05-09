@@ -22,6 +22,6 @@
     <view class="view-line"><text class="left">收藏记录</text><image src="/utils/images/right.png"  class="right"/></view>
     <view class="view-line"><text class="left">充值记录</text><image src="/utils/images/right.png"  class="right"/></view>
     <view class="view-line"><text class="left">我想要看</text><image src="/utils/images/right.png"  class="right"/></view>
-    <view class="view-line"><text class="left">我的客服</text><image src="/utils/images/right.png"  class="right"/></view>
+    <button open-type="contact" class="btn"><view class="view-line"><text class="left">我的客服</text><image src="/utils/images/right.png"  class="right"/></view></button>
   </view>
 </view>

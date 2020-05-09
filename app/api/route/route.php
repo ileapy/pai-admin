@@ -10,6 +10,8 @@ Route::group(function () {
 
 // 小程序 不需要登录
 Route::group(function () {
+    // 小程序服务
+    Route::any('mini_program/serve', 'wechat.MiniProgramController/serve');//公众号服务
     // 支付回调
     Route::post('mini_program/notify', 'wechat.MiniProgramController/notify');
     // 获取openid

@@ -77,33 +77,23 @@ class MiniVideo extends BaseModel
         if ($xid == "")
         {
             if ($url =  Cache::store('redis')->get($vid)) return $url;
-            $i = 0;
-            while ($i<3)
+            $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html");
+            $res = json_decode($curl->run(),true);
+            if ($res['code'] == 200)
             {
-                $i++;
-                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html");
-                $res = json_decode($curl->run(),true);
-                if ($res['code'] == 200)
-                {
-                    Cache::store('redis')->set($vid,$res['url'],300);
-                    return $res['url'];
-                }
+                Cache::store('redis')->set($vid,$res['url'],300);
+                return $res['url'];
             }
             return "";
         }else
         {
             if ($url =  Cache::store('redis')->get($vid.$xid)) return $url;
-            $i = 0;
-            while ($i<3)
+            $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html");
+            $res = json_decode($curl->run(),true);
+            if ($res['code'] == 200)
             {
-                $i++;
-                $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html");
-                $res = json_decode($curl->run(),true);
-                if ($res['code'] == 200)
-                {
-                    Cache::store('redis')->set($vid.$xid,$res['url'],60);
-                    return $res['url'];
-                }
+                Cache::store('redis')->set($vid.$xid,$res['url'],60);
+                return $res['url'];
             }
             return "";
         }

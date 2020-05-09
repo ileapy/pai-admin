@@ -4,6 +4,7 @@
 namespace learn\services;
 
 
+use app\admin\model\wechat\WechatReply;
 use EasyWeChat\Factory;
 
 /**
@@ -28,10 +29,12 @@ class MiniProgramService
      */
     public static function options()
     {
-        $wechat = SystemConfigMore(['miniprogram_appid','miniprogram_appsecret']);
+        $wechat = SystemConfigMore(['miniprogram_appid','miniprogram_appsecret','miniprogram_token','miniprogram_aeskey','miniprogram_encry']);
         return [
             'app_id'=>isset($wechat['miniprogram_appid']) ? trim($wechat['miniprogram_appid']):'',
             'secret'=>isset($wechat['miniprogram_appsecret']) ? trim($wechat['miniprogram_appsecret']):'',
+            'token' =>isset($wechat['miniprogram_token']) ? trim($wechat['miniprogram_token']):'',
+            'aes_key' =>isset($wechat['miniprogram_aeskey']) ? trim($wechat['miniprogram_aeskey']):'',
             'response_type' => 'array',
         ];
     }
@@ -48,6 +51,43 @@ class MiniProgramService
     {
         (self::$instance === null || $cache === true) && (self::$instance = Factory::miniProgram(self::options()));
         return self::$instance;
+    }
+
+    /**
+     * 小程序客服
+     * @return \think\Response
+     * @throws \EasyWeChat\Kernel\Exceptions\BadRequestException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function serve()
+    {
+        $wechat = self::application(true);
+        $server = $wechat->server;
+        self::hook($server);
+        $response = $server->serve();
+        return response($response->getContent());
+    }
+
+    /**
+     * 小程序客服信息
+     * @param $server
+     */
+    private static function hook($server)
+    {
+        $server->push(function($message){
+            event('MiniProgramMessageBefore',[$message]);
+            switch ($message['MsgType']){
+                case 'text':
+                    self::sendService($message['FromUserName'], WechatReply::miniReply($message['Content']));
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     /**
@@ -98,6 +138,25 @@ class MiniProgramService
     public static function staffService()
     {
         return self::miniProgram()->customer_service;
+    }
+
+    /**
+     * 回复客服文本消息
+     * @param string $openid
+     * @param string $content
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function sendService(string $openid, string $content)
+    {
+        self::staffService()->send([
+            'touser' => $openid,
+            'msgtype' => 'text',
+            'text' => [
+                "content" => $content,
+            ],
+        ]);
     }
 
     /**

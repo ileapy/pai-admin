@@ -99,7 +99,6 @@ class WechatService
     private static function hook($server)
     {
         $server->push(function($message){
-            file_put_contents("message.log",json_encode($message));
             event('MessageBefore',[$message]);
             switch ($message['MsgType']){
                 case 'event':
@@ -150,38 +149,15 @@ class WechatService
                                 }
                             }
                             break;
-                        case 'location':
-                            $response = MessageRepositories::wechatEventLocation($message);
-                            break;
                         case 'click':
                             $response = WechatReply::reply($message['EventKey']);
-                            break;
-                        case 'view':
-                            $response = MessageRepositories::wechatEventView($message);
                             break;
                     }
                     break;
                 case 'text':
                     $response = WechatReply::reply($message['Content']);
                     break;
-                case 'image':
-                    $response = MessageRepositories::wechatMessageImage($message);
-                    break;
-                case 'voice':
-                    $response = MessageRepositories::wechatMessageVoice($message);
-                    break;
-                case 'video':
-                    $response = MessageRepositories::wechatMessageVideo($message);
-                    break;
-                case 'location':
-                    $response = MessageRepositories::wechatMessageLocation($message);
-                    break;
-                case 'link':
-                    $response = MessageRepositories::wechatMessageLink($message);
-                    break;
-                // ... 其它消息
                 default:
-                    $response = MessageRepositories::wechatMessageOther($message);
                     break;
             }
             return $response;

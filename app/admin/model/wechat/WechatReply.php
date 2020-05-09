@@ -27,6 +27,7 @@ class WechatReply extends BaseModel
      */
     public static function reply(string $keyword)
     {
+        file_put_contents("k.log",$keyword);
         $res = self::where('keyword',$keyword)->where('status','1')->find();
         if(empty($res)) $res = self::where('keyword','default')->where('status','1')->find();
         switch ($res['type'])
@@ -50,6 +51,32 @@ class WechatReply extends BaseModel
         }
     }
 
+    /**
+     * 小程序回复
+     * @param string $keyword
+     * @return mixed|string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function miniReply(string $keyword)
+    {
+        $res = self::where('keyword',$keyword)->where('status','1')->find();
+        if(empty($res)) $res = self::where('keyword','default')->where('status','1')->find();
+        switch ($res['type'])
+        {
+            case 'text':
+                return $res['content'];
+            case 'image':
+            case 'news':
+            case 'audio':
+            case 'video':
+                $res['content'] = json_decode($res['content'],true);
+                return $res['content']['media_id'];
+            default:
+                return "没有找到指定内容！";
+        }
+    }
     /**
      * 保存数据
      * @param array $data
