@@ -21,10 +21,13 @@ class MiniVideoOrder extends BaseModel
      * @param string $vid
      * @param string $xid
      * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public static function videoIsPay(int $uid, string $vid, string $xid):bool
     {
-        return self::where("uid",$uid)->where("vid",$vid)->where("xid",$xid)->value("paid") ? true : false;
+        return self::where("uid",$uid)->where("vid",$vid)->where("xid",$xid)->where("paid",1)->find() ? true : false;
     }
 
     /**
