@@ -24,6 +24,8 @@ Route::group(function () {
     Route::get('index/index', 'index/index');
     // 小程序基础信息
     Route::get('index/base', 'index/base');
+    // 视频搜索
+    Route::post('video/lst', 'mini.mini_video/lst');
 });
 
 // 需要登录
@@ -36,11 +38,15 @@ Route::group(function () {
     Route::post('video/pause', 'mini.mini_video/pause');
     // 收藏
     Route::post('video/collect', 'mini.mini_video/collect');
-    // 收藏
+    // 收藏记录
+    Route::post('video/collect/lst', 'mini.mini_video/collect_index');
+    // 记录
     Route::post('video/record', 'mini.mini_video/record');
     // 提交订单
     Route::post('order/order', 'mini.mini_video_order/order');
     // 支付调用
     Route::post('order/pay', 'mini.mini_video_order/pay');
+    // 支付调用
+    Route::post('order/buy', 'mini.mini_video_order/buyRecord');
 
 })->middleware(\learn\middleware\AllowOriginMiddleware::class)->middleware(\learn\middleware\AuthTokenMiddleware::class);

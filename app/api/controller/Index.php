@@ -32,8 +32,8 @@ class Index
     public function index()
     {
         $recommend = MiniVideo::love(10);
-        $movie = MiniVideo::lst("movie",6);
-        $tv = MiniVideo::lst("tv",6);
+        $movie = MiniVideo::lst("movie",10);
+        $tv = MiniVideo::lst("tv",10);
         return app("json")->success(compact("movie","tv","recommend"));
     }
 

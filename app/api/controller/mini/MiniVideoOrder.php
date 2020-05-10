@@ -3,7 +3,6 @@
 
 namespace app\api\controller\mini;
 
-use app\api\model\user\User;
 use app\api\model\wechat\WechatUser;
 use app\Request;
 use learn\services\pay\PayService;
@@ -71,5 +70,22 @@ class MiniVideoOrder
             'total_fee' => bcmul($oInfo['cost'],100,0),
             'openid' => $openid,
         ])]);
+    }
+
+    /**
+     * 购买记录
+     * @param Request $request
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function buyRecord(Request $request)
+    {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',10],
+        ]);
+        return app("json")->success("ok", OModel::buyRecord($request->uid(),$where));
     }
 }

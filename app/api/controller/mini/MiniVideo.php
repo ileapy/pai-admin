@@ -11,6 +11,7 @@ use app\Request;
 use learn\services\UtilService as Util;
 use app\api\model\mini\MiniVideo as vModel;
 use app\api\model\mini\MiniVideoItem as iModel;
+use app\api\model\mini\MiniVideoOrder;
 /**
  * Class MiniVideo
  * @package app\api\controller\mini
@@ -102,5 +103,35 @@ class MiniVideo
             ['limit',10],
         ]);
         return app("json")->success("ok",MiniVideoPlan::lst($request->uid(),$where));
+    }
+
+    /**
+     * 收藏列表
+     * @param Request $request
+     * @return mixed
+     */
+    public function collect_index(Request $request)
+    {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',10],
+        ]);
+        return app("json")->success("ok",MiniVideoCollect::lst($request->uid(),$where));
+    }
+
+    /**
+     * 视频列表
+     * @param Request $request
+     * @return mixed
+     */
+    public function lst(Request $request)
+    {
+        $where = Util::postMore([
+            ['page',1],
+            ['limit',10],
+            ['title',''],
+            ['type','']
+        ]);
+        return app("json")->success("ok",vModel::search($where));
     }
 }

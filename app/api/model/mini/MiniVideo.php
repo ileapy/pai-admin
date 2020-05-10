@@ -162,4 +162,42 @@ class MiniVideo extends BaseModel
         $type = $xid ? "tv" : "movie";
         return [$fee,$type];
     }
+
+    /**
+     * 视频搜索
+     * @param array $where
+     * @return array
+     */
+    public static function search(array $where)
+    {
+        $model = new self;
+        $model = $model->where("status",1);
+        if ($where['title'] != "") $model = $model->where("title","like","%$where[title]%");
+        if ($where['type'] != "") $model = $model->where("type",$where['type']);
+        $model = $model->order("rank desc");
+        $model = $model->order("recommend desc");
+        $model = $model->page((int)$where['page'],(int)$where['limit']);
+        $data = $model->select()->each(function ($item){
+            $tag = MiniVideoTV::tags($item['vid']);
+            if ($tag) $item['tag'] = implode(" ",$tag);
+            if ($item['actor']) $item['actor'] = implode(" ",array_column(json_decode($item['actor'],true),0));
+            if ($item['source']) $item['source'] = self::source($item['source']);
+            if ($item['type']) $item['type'] = $item['type'] == 'tv' ? '电视剧' : '电影';
+        });
+        return $data ? $data->toArray() : [];
+    }
+
+    /**
+     * 视频来源
+     * @param string $source
+     * @return string
+     */
+    public static function source(string $source): string
+    {
+        switch ($source)
+        {
+            case 'qq':
+                return '腾讯视频';
+        }
+    }
 }

@@ -43,4 +43,22 @@ class MiniVideoCollect extends BaseModel
     {
         return self::where("uid",$uid)->where("vid",$vid)->find() ? true : false;
     }
+
+    /**
+     * @param int $uid
+     * @param array $where
+     * @return array
+     */
+    public static function lst(int $uid,array $where)
+    {
+        $model = new self();
+        $model = $model->where("uid",$uid);
+        $model = $model->order("add_time desc");
+        $model = $model->group('vid');
+        $model = $model->page((int)$where['page'],(int)$where['limit']);
+        $data = $model->select()->each(function ($item){
+            $item['info'] = MiniVideo::get(['vid'=>$item['vid']]);
+        });
+        return $data ? $data->toArray() : [];
+    }
 }
