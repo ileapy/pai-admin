@@ -13,6 +13,10 @@ Page({
   },
 
   onLoad: function () {
+
+  },
+  onShow:function()
+  {
     this.GetBanner()
     this.GetVideo()
   },
@@ -52,10 +56,23 @@ Page({
       url: e.currentTarget.dataset.link,
     })
   },
+  // 播放
   play(e)
   {
     wx.navigateTo({
       url:"/pages/play/play?vid="+e.currentTarget.dataset.vid
     })
+  },
+
+  // 去搜索
+  search()
+  {
+    wx.reLaunch({
+      url: '/pages/category/category',
+    })
+  },
+  onShareAppMessage()
+  {
+
   }
 })

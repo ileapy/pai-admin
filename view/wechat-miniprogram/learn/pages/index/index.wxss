@@ -135,14 +135,20 @@
   margin-top: -22px;
   font-size: 22rpx;
   color: #ffffff;
-  margin-right: 10rpx;  
+  margin-right: 10rpx;
 }
 .movie-item-title{
   font-size: 16px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .movie-item-desc{
   color: #888888;
   font-size: 24rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .page-footer{
   text-align: center;

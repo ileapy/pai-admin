@@ -10,7 +10,10 @@ Page({
     isGet:false,
     skip_sec:0,
     playTime:0,
-    dataSet:{}
+    dataSet:{},
+    info:{},
+    isCollect:false,
+    playNum:0,
   },
 
     onLoad: function (options) {
@@ -48,16 +51,16 @@ Page({
 
     pause:function(e)
     {
+      if (this.data.vid == undefined) return false;
       util.request(app.globalData.api_url+"/video/pause","POST",{vid:this.data.vid,xid:this.data.xid,sec:this.data.playTime},true);
     },
 
     itemPlay:function(e)
     {
       this.data.skip_sec = 0;
+      this.data.xid = e.currentTarget.dataset.xid;
+      this.data.vid = e.currentTarget.dataset.vid;
       this.getUrl(e.currentTarget.dataset.vid,e.currentTarget.dataset.xid);
-      this.setData({
-        curNum:e.currentTarget.dataset.name,
-      });
       this.data.skip_sec = e.currentTarget.dataset.sec != null ? parseFloat(e.currentTarget.dataset.sec) :  this.data.skip_sec;
     },
 
@@ -74,6 +77,19 @@ Page({
           that.data.xid = xid
           that.data.skip_sec = res.data.skip_sec != "" ? parseFloat(res.data.skip_sec) : that.data.skip_sec;
           video.seek(that.data.skip_sec);
+        }else if(res.status == 2001)
+        {
+          wx.showModal({
+            title:"提示信息",
+            content:res.msg,
+            cancelText:"取消",
+            confirmText:"获取",
+            success(res){
+              if (res.confirm) {
+                that.pay();
+              }
+            }
+          });
         }else
         {
           wx.hideLoading()
@@ -85,10 +101,6 @@ Page({
             success(res){
               if (res.confirm) {
                 that.getUrl(vid,xid);
-              } else if (res.cancel) {
-                wx.navigateBack({
-                  delta: 1,
-                })
               }
             }
           });
@@ -97,6 +109,39 @@ Page({
       .catch((res)=>{
         console.log(res);
       })
+    },
+
+    pay:function()
+    {
+      var that = this;
+      util.request(app.globalData.api_url+"/order/order","POST",{vid:this.data.vid,xid:this.data.xid},true).then((res)=>{
+        if(res.status == 200)
+        {
+          util.request(app.globalData.api_url+"/order/pay","POSt",{oid:res.data.oid},true).then((res)=>{
+            if(res.status == 200)
+            {
+              wx.requestPayment({
+                timeStamp: res.data.data.timeStamp,
+                nonceStr:  res.data.data.nonceStr,
+                package: res.data.data.package,
+                signType: res.data.data.signType,
+                paySign: res.data.data.paySign,
+                success (res) {
+                  that.onLoad({vid:that.data.vid,xid:that.data.xid})
+                 },
+                fail (res) {
+                  wx.showModal({
+                    title:"信息提示",
+                    content:"支付失败了",
+                    cancelText:"取消",
+                    confirmText:"确认"
+                  });
+                 }
+              })
+            }
+          });
+        }
+      });
     },
 
     playOver:function(e)
@@ -137,7 +182,9 @@ Page({
             list:res.data.list,
             type:res.data.type,
             curNum:res.data.curNum,
-            info:res.data
+            info:res.data,
+            isCollect:res.data.isCollect,
+            playNum:res.data.playNum,
           });
           that.data.curNum = res.data.curNum;
           that.data.xid =  res.data.curXid;
@@ -145,6 +192,7 @@ Page({
           that.data.dataSet = res.data.list
           video.seek(that.data.skip_sec);
           that.data.isGet = true;
+          this.data.info = res.data
           wx.setNavigationBarTitle({
             title: res.data.title
           });
@@ -172,6 +220,26 @@ Page({
       })
       .catch((res)=>{
         console.log(res);
+      })
+    },
+    onShareAppMessage:function(options)
+    {
+      return {
+        title: app.globalData.userInfo.nickName +" 邀请您观看《"+ this.data.title+"》",
+        imageUrl: this.data.info.image != null ?  this.data.info.image : this.data.info.cover,
+      }
+    },
+    collect:function()
+    {
+      var that = this;
+      util.request(app.globalData.api_url+"/video/collect","POST",{vid:this.data.vid},true).then((res)=>{
+        if(res.status == 200)
+        {
+          that.data.isCollect = !that.data.isCollect;
+          that.setData({
+            isCollect:that.data.isCollect,
+          });
+        }
       })
     }
 })

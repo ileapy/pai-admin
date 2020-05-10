@@ -1,2 +1,7 @@
 <!--pages/record/record.wxml-->
-<text>pages/record/record.wxml</text>
+<block wx:for="{{lst}}">
+  <view class="c-item" bindtap="play" data-vid="{{item.vid}}">
+    <image src="{{item.info.image? item.info.image : item.info.cover}}" class="c-image"/>
+    <text class="c-title">{{item.info.title}}</text>
+  </view>
+</block>

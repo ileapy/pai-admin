@@ -1,23 +1,46 @@
 // pages/record/record.js
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
+const app = getApp()
+var util = require('../../utils/util.js')
 
-  },
-
+Page({
   /**
    * 组件的初始数据
    */
   data: {
-
+    lst:{},
   },
 
   /**
-   * 组件的方法列表
+   * 加载数据
    */
-  methods: {
+  onLoad:function(options)
+  {
 
-  }
+  },
+
+  onShow:function()
+  {
+    if (!app.globalData.isLogin) return wx.navigateTo({
+      url: '/pages/login/login',
+    });
+    this.getData();
+  },
+
+  getData:function()
+  {
+    var that = this;
+    util.request(app.globalData.api_url+"/video/record","POST",{},true).then((res)=>{
+      that.setData({
+        lst:res.data
+      });
+    });
+  },
+
+  // 图播放
+  play(e)
+  {
+    wx.navigateTo({
+      url:"/pages/play/play?vid="+e.currentTarget.dataset.vid
+    })
+  },
 })

@@ -1,26 +1,26 @@
 <!--pages/mine/mine.wxml-->
 <!-- <text>pages/mine/mine.wxml</text> -->
 <view>
-  <view class="head">
+  <view class="head" bindtap="toLogin">
     <view><image src="{{avatar}}" class="avatar"/></view>
     <view><text class="nickname">{{nickname}}</text></view>
   </view>
   <view class="body">
-    <view>
-      <view class="view-line"><text class="left">观看历史</text><image src="/utils/images/right.png" class="right"/></view>
+    <view class="view-line" bindtap="recordLst"><text class="left">观看历史</text><image src="/utils/images/right.png" class="right"/></view>
+    <view class="record">
       <scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
-        <block wx:for="{{like}}" wx:key="index">
-          <view class="scroll-like-item flex-item" bindtap="play" data-vid="{{item.vid}}">
-            <view class="scroll-like-image-view"><image src="{{item.image}}" class="scroll-like-img"/></view>
-            <view class="scroll-like-notice">{{item.time}}</view>
-            <view class="scroll-like-title">{{item.title}}</view>
+        <block wx:for="{{record}}" wx:key="index">
+          <view class="scroll-like-item flex-item" bindtap="play" data-vid="{{item.info.vid}}">
+            <view class="scroll-like-image-view"><image src="{{item.info.image ? item.info.image : item.info.cover}}" class="scroll-like-img"/></view>
+            <view class="scroll-like-notice" wx:if="{{item.info.type == 'tv' && item.info.num > item.info.now_num}}">更新至{{item.info.now_num}}集</view>
+            <view class="scroll-like-notice" wx:elif="{{item.info.type == 'tv' && item.info.num <= item.info.now_num}}">{{item.info.now_num}}集已完结</view>
+            <view class="scroll-like-title">{{item.info.title}}</view>
           </view>
         </block>
       </scroll-view>
     </view>
-    <view class="view-line"><text class="left">我的视频</text><image src="/utils/images/right.png" class="right"/></view>
-    <view class="view-line"><text class="left">收藏记录</text><image src="/utils/images/right.png"  class="right"/></view>
-    <view class="view-line"><text class="left">充值记录</text><image src="/utils/images/right.png"  class="right"/></view>
+    <view class="view-line" bindtap="collect"><text class="left">收藏记录</text><image src="/utils/images/right.png"  class="right"/></view>
+    <view class="view-line"  bindtap="pay"><text class="left">购买记录</text><image src="/utils/images/right.png"  class="right"/></view>
     <view class="view-line"><text class="left">我想要看</text><image src="/utils/images/right.png"  class="right"/></view>
     <button open-type="contact" class="btn"><view class="view-line"><text class="left">我的客服</text><image src="/utils/images/right.png"  class="right"/></view></button>
   </view>

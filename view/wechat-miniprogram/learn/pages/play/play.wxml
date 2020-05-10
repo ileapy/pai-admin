@@ -1,11 +1,18 @@
 <!--pages/play/play.wxml-->
 <view class="page">
-<video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" bindplay="play" danmu-btn="true" bindpause="pause" id="video" bindtimeupdate="timeChange" bindended="playOver"></video>
+<video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" picture-in-picture-mode="['push', 'pop']" controls="true" bindplay="play" danmu-btn="true" bindpause="pause" id="video" bindtimeupdate="timeChange" bindended="playOver"></video>
 <view class="title-line">
 <text class="title">{{title}}</text>
 <!-- <view class="desc">简介<image src="/utils/images/right-block.png" class="right"/></view> -->
 </view>
 <view class="tag">{{tag}}</view>
+<view class="paly-bar">
+<text class="num">播放次数：{{playNum}}</text>
+<image src="/utils/images/play_collect2.png" class="collect" bindtap="collect" wx:if="{{isCollect}}"/>
+<image src="/utils/images/play_collect.png" class="collect" bindtap="collect" wx:if="{{!isCollect}}"/>
+<image src="/utils/images/buy.png" class="buy"/>
+<button open-type='share' class="btn" style="width: 50px;"><image src="/utils/images/share.png" class="share"/></button>
+</view>
 <view class="line-height" wx:if="{{type=='tv'}}"></view>
 <view class="item" wx:if="{{type=='tv'}}">
 <view wx:if="{{info.num > info.now_num}}" class="item-title"><text>剧集</text><text class="item-title-right">共{{info.num}}集，更新至{{info.now_num}}集</text></view>
@@ -23,7 +30,7 @@
     <block wx:for="{{actor}}" wx:key="index">
       <view class="scroll-item flex-item">
         <view><image src="{{item[1]}}" class="scroll-item-image"/></view>
-        <view>{{item[0]}}</view>
+        <view class="actor-name">{{item[0]}}</view>
       </view>
     </block>
 </scroll-view>

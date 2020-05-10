@@ -1,2 +1,34 @@
 <!--pages/category/category.wxml-->
-<text>pages/category/category.wxml</text>
+<!-- <text>pages/category/category.wxml</text> -->
+<view style="border-bottom: 1px solid #eee; background: #fff; position: fixed; z-index: 999;top:0; width: 100%;">
+<view class="header">
+  <view class="search">
+  <label><image src="/utils/images/search.png" class="s-image"/></label>
+  <input auto-focus placeholder="请输入视频名称" bindinput="inputText" class="s-input"/>
+  </view>
+  <view class="s-btn">
+  <button style="width:50px;" class="i-btn {{checkType == ''? 'active' : ''}}" bindtap="cType" data-type="">全部</button>
+  <button style="width:70px;" class="i-btn {{checkType == 'tv'? 'active' : ''}}" bindtap="cType" data-type="tv">电视剧</button>
+  <button style="width:50px;" class="i-btn {{checkType == 'movie'? 'active' : ''}}" bindtap="cType" data-type="movie">电影</button>
+  </view>
+</view>
+</view>
+<view class="body">
+  <scroll-view scroll-y="true" scroll-top='{{topNum}}' bindscrolltolower="getData" lower-threshold="50" style="height:{{bodyHeight}}rpx;">
+    <view class="scroll-view-item i-item" wx:for="{{lst}}">
+    <view bindtap="play" data-vid="{{item.vid}}">
+      <view class="i-left">
+          <image src="{{item.cover}}" class="i-left-image"/>
+        </view>
+        <view class="i-right">
+          <view class="i-text">[{{item.type}}] <text style="color:#fa5200;">{{item.title}}</text></view>
+          <view class="i-text i-time">时间：{{item.time}}</view>
+          <view class="i-text i-actor">演员：{{item.actor}}</view>
+          <view class="i-text i-source">来源：{{item.source}}</view>
+          <view class="i-text i-btn-play">立即观看</view>
+        </view>
+      </view>
+    </view>
+    <view class="noMore" wx:if="{{noMore}}">没有更多了</view>
+  </scroll-view>
+</view>

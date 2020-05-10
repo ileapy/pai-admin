@@ -1,0 +1,7 @@
+<!--pages/pay/pay.wxml-->
+<!-- <text>pages/pay/pay.wxml</text> -->
+<view class="p-item" wx:for="{{lst}}">
+  <view class="p-title"><text class="p-title-left">解锁《{{item.info.title}}》<text wx-if="{{item.item}}">第{{item.item.name}}集</text></text><text class="p-title-right">{{item.cost}}元</text></view>
+  <view class="p-time" style="padding-top:20px;">订单号：{{item.oid}}</view>
+  <view class="p-time">购买时间：{{item.pay_time}}</view>
+</view>

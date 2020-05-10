@@ -1,7 +1,7 @@
 <!--pages/login/login.wxml-->
 <!-- <text>pages/login/login.wxml</text> -->
 <view class="sign">
-<view><image src="{{url}}{{icon}}" class="icon"/></view>
+<view><image src="{{icon}}" class="icon"/></view>
 <view><text class="name">{{name}}</text></view>
 </view>
 

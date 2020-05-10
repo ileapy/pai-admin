@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/category/category",
     "pages/collect/collect",
     "pages/record/record",
     "pages/mine/mine",
     "pages/login/login",
-    "pages/category/category",
-    "pages/play/play"
-    
+    "pages/play/play",
+    "pages/pay/pay"
   ],
   "window": {
     "backgroundTextStyle": "light",

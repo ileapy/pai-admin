@@ -1,0 +1,27 @@
+/* pages/pay/pay.wxss */
+page{
+  background: rgb(236, 236, 236);
+}
+.p-item{
+  background: #fff;
+  margin: 20px 0;
+  padding-bottom: 20px;
+}
+.p-title{
+  padding: 0 20px;
+  border-bottom: 1px solid #eee;
+  height: 50px;
+  line-height: 50px;
+}
+.p-title-left{
+  float: left;
+}
+.p-title-right{
+  float: right;
+}
+.p-time{
+  padding: 0 20px;
+  color: #888;
+  line-height: 30px;
+  font-size: 14px;
+}

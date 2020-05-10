@@ -1,1 +1,95 @@
 /* pages/category/category.wxss */
+.header{
+  margin: 0 20px;
+  background: #fff;
+ 
+}
+.search{
+  display: flex;
+  align-items: center;
+  background: #eee;
+  padding: 2px 10px;
+  border-radius: 5px;
+}
+.s-input{
+  width: 80%;
+}
+.s-image{
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  padding-right: 10px;  
+}
+.s-btn{
+  padding: 16px 0 20px 0;
+  height: 20px;
+}
+.i-btn{
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: #888;
+  float: left;
+  background: #fff;
+  padding: 5px 10px;
+}
+.active{
+  color: #fa5200;
+  background: #eee;
+}
+
+page{
+  background: #eee;
+}
+.i-item{
+  background: #fff;
+  padding: 10px 20px;
+  height: 180px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.i-left{
+  width: 40%;
+  overflow: hidden;
+  float: left;
+}
+.i-right{
+  width: 60%;
+  overflow: hidden;
+  float: right;
+}
+.i-left-image{
+  width: 100%;
+  height: 180px;
+}
+.i-text{
+  padding-left: 10px;
+}
+.i-time,.i-actor,.i-source
+{
+  font-size: 14px;
+  color: #888;
+  line-height: 22px;
+}
+.i-time{
+  margin-top: 10px;
+}
+.i-btn-play{
+  color: #fff;
+  background: #fa5200;
+  padding: 5px 10px;
+  font-size: 14px;
+  width: 58px;
+  border-radius: 4px;
+  margin-left: 10px;
+  position: absolute;
+  bottom: 10px;
+}
+.body{
+  margin-top: 90px;
+}
+.noMore{
+  text-align: center;
+  line-height: 30px;
+  margin-bottom: 20px;
+}

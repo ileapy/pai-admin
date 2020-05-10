@@ -39,15 +39,34 @@ Page({
         if (res.status === 200) {
           app.globalData.isLogin = true;
           app.globalData.token = res.data.token
+          app.globalData.userInfo = res.data.userInfo
           wx.setStorageSync('token', res.data.token)
           var pages = getCurrentPages();
           if (pages.length > 1) {
             var beforePage = pages[pages.length - 2];//获取上一个页面实例对象
-            beforePage.play();
+            if (beforePage.__route__ == 'pages/play/play') 
+            {
+              beforePage.play();
+              return wx.navigateBack({
+                delta: 1,
+              })
+            }else if(beforePage.__route__ == 'pages/mine/mine')
+            {
+              return wx.reLaunch({
+                url: '/pages/mine/mine',
+              })
+            }else if(beforePage.__route__ == 'pages/collect/collect')
+            {
+              return wx.reLaunch({
+                url: 'pages/collect/collect',
+              })
+            }
           }
+          // 返回
           wx.navigateBack({
             delta: 1,
           })
+
         }else
         {
           wx.showModal({

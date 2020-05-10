@@ -1,1 +1,15 @@
 /* pages/record/record.wxss */
+.c-image{
+  width: 120px;
+  height: 80px;
+  border-radius: 5%;
+  
+}
+.c-item{
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+.c-title{
+  margin-left: 20px;
+}

@@ -1,11 +1,11 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="search"><image src="/utils/images/search.png" class="search-img"/>周星驰喜剧电影</view>
+  <view class="search" bindtap="search"><image src="/utils/images/search.png" class="search-img"/>周星驰喜剧电影</view>
   <view>
     <swiper class="swiper" autoplay="true">
     <block wx:for="{{banner}}" wx:key="index">
       <swiper-item bindtap="goto_page" data-link="{{item.link}}">
-         <view class="item-image-view"><image src="{{url}}{{item.image}}" class="item-image"/></view>
+         <view class="item-image-view"><image src="{{item.image}}" class="item-image"/></view>
          <view class="swiper-item"><view class="swiper-item-title">{{item.name}}</view><view class="swiper-item-time">{{item.tinyname}}</view></view>
       </swiper-item>
     </block>
