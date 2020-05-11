@@ -47,6 +47,8 @@ class Index
     {
         $icon = systemConfig("miniprogram_logo");
         $name = systemConfig("miniprogram_name");
-        return app("json")->success(compact("name","icon"));
+        $audit = systemConfig("miniprogram_audit");
+        $search = systemConfig("miniprogram_search");
+        return app("json")->success(compact("name","icon","audit","search"));
     }
 }

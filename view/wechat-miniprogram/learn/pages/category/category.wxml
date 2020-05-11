@@ -4,7 +4,7 @@
 <view class="header">
   <view class="search">
   <label><image src="/utils/images/search.png" class="s-image"/></label>
-  <input auto-focus placeholder="请输入视频名称" bindinput="inputText" class="s-input"/>
+  <input auto-focus placeholder="{{search}}" bindinput="inputText" class="s-input"/>
   </view>
   <view class="s-btn">
   <button style="width:50px;" class="i-btn {{checkType == ''? 'active' : ''}}" bindtap="cType" data-type="">全部</button>

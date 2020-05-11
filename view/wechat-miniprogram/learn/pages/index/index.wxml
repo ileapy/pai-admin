@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="search" bindtap="search"><image src="/utils/images/search.png" class="search-img"/>周星驰喜剧电影</view>
+  <view class="search" bindtap="search"><image src="/utils/images/search.png" class="search-img"/>{{search}}</view>
   <view>
     <swiper class="swiper" autoplay="true">
     <block wx:for="{{banner}}" wx:key="index">

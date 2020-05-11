@@ -28,7 +28,7 @@ const request = function(url,type="GET",data={},isLogin=false)
       success:(res) => {
         if(res.statusCode === 200)
         {
-          if (res.data.status === 410000) wx.navigateTo({
+          if (res.data.status === 410000 || res.data.status === 410001 || res.data.status === 410002) wx.navigateTo({
             url: '/pages/login/login',
           });
           else resolve(res.data);

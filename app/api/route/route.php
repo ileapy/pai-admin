@@ -48,5 +48,7 @@ Route::group(function () {
     Route::post('order/pay', 'mini.mini_video_order/pay');
     // 支付调用
     Route::post('order/buy', 'mini.mini_video_order/buyRecord');
+    // 支付调用
+    Route::post('user/message', 'user.UserMessage/message');
 
 })->middleware(\learn\middleware\AllowOriginMiddleware::class)->middleware(\learn\middleware\AuthTokenMiddleware::class);

@@ -15,13 +15,17 @@ Page({
     bodyHeight:2000,
     lst:[],
     noMore:false,
-    topNum:0
+    topNum:0,
+    search:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      'search': app.globalData.base.search
+    });
     this.getData();
   },
 

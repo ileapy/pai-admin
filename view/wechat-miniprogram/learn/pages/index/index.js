@@ -9,14 +9,24 @@ Page({
     url:app.globalData.url,
     like:{},
     movie:{},
-    tv:{}
+    tv:{},
+    search:"",
   },
 
   onLoad: function () {
-
+    
   },
   onShow:function()
   {
+    if (app.globalData.base.audit == 1) return wx.redirectTo({
+      url: '/pages/love/love',
+    });
+    wx.setNavigationBarTitle({
+      title: app.globalData.base.name
+    });
+    this.setData({
+      'search': app.globalData.base.search
+    });
     this.GetBanner()
     this.GetVideo()
   },

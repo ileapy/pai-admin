@@ -76,6 +76,12 @@ Page({
       url: '/pages/record/record',
     });
   },
+  love:function()
+  {
+    wx.navigateTo({
+      url: '/pages/love/love',
+    });
+  },
   pay:function()
   {
     wx.navigateTo({

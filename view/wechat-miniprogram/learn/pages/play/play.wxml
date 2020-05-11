@@ -10,7 +10,7 @@
 <text class="num">播放次数：{{playNum}}</text>
 <image src="/utils/images/play_collect2.png" class="collect" bindtap="collect" wx:if="{{isCollect}}"/>
 <image src="/utils/images/play_collect.png" class="collect" bindtap="collect" wx:if="{{!isCollect}}"/>
-<image src="/utils/images/buy.png" class="buy"/>
+<image src="/utils/images/buy.png" class="buy" wx:if="{{info.cost}}"/>
 <button open-type='share' class="btn" style="width: 50px;"><image src="/utils/images/share.png" class="share"/></button>
 </view>
 <view class="line-height" wx:if="{{type=='tv'}}"></view>

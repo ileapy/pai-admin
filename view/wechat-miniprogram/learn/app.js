@@ -7,6 +7,9 @@ App({
     util.request(this.globalData.api_url + "/index/base").then((res) => {
       if (res.status == 200) {
         this.globalData.base = res.data
+        if (this.globalData.base.audit == 1) return wx.redirectTo({
+          url: '/pages/love/love',
+        });
       }
     });
     // 登录
