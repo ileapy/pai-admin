@@ -17,6 +17,11 @@ Page({
   },
 
     onLoad: function (options) {
+      if (app.globalData.base.audit == 1) {
+        return wx.redirectTo({
+          url: '/pages/love/love',
+        });
+      }
       this.data.vid = options.vid;
       this.data.xid = options.xid;
       this.info(options.vid,options.xid)

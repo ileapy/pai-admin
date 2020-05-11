@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>留言反馈</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 </head>
 <body>
-<img src="{$qrcode}">
+<form action="#" method="post" onsubmit="toSubmit()">
+    <p>用户名<input type="text" name="username"></p>
+    <p>留言板<textarea name="content"></textarea></p>
+    <p><input type="submit" value="留言"></p>
+</form>
+<script>
+    function toSubmit() {
+        alert("提交成功")
+    }
+</script>
 </body>
 </html>

@@ -12,9 +12,6 @@ class Index extends BaseController
 {
     public function index()
     {
-        $qrcode = WechatService::qrcodeService();
-        $res = $qrcode->temporary("type=login&token=asdfghjklmn6677",300);
-        $this->assign("qrcode",$qrcode->url($res['ticket']));
         return $this->fetch();
     }
 

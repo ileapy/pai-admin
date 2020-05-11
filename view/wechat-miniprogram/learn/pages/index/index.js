@@ -11,16 +11,21 @@ Page({
     movie:{},
     tv:{},
     search:"",
+    audit:false,
   },
 
   onLoad: function () {
     
   },
+  
   onShow:function()
   {
-    if (app.globalData.base.audit == 1) return wx.redirectTo({
-      url: '/pages/love/love',
-    });
+    if (app.globalData.base.audit == 1)
+    {
+      return wx.redirectTo({
+        url: '/pages/love/love',
+      });
+    }
     wx.setNavigationBarTitle({
       title: app.globalData.base.name
     });

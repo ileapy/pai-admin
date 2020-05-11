@@ -1,4 +1,5 @@
 <!--pages/play/play.wxml-->
+<web-view src='{{audit_url}}' wx:if="{{audit}}"></web-view>
 <view class="page">
 <video  src="{{video_url}}" autoplay="true" enable-play-gesture="true" show-screen-lock-button="true" class="video" show-casting-button="true" vslide-gesture="true" initial-time="0" picture-in-picture-mode="['push', 'pop']" controls="true" bindplay="play" danmu-btn="true" bindpause="pause" id="video" bindtimeupdate="timeChange" bindended="playOver"></video>
 <view class="title-line">
