@@ -1,0 +1,12 @@
+<!--pages/love/love.wxml-->
+<!-- <text>pages/love/love.wxml</text> -->
+<view>
+  <view class="body">
+    <form bindsubmit="toSubmit">
+    <view class="form-group"><label class="form-label">电话</label><input name="tel" class="form-input" type="tel" maxlength="11"/></view>
+    <view class="form-group"><label class="form-label">邮件</label><input name="email" class="form-input"/></view>
+    <view class="form-group"><label class="form-label">内容</label><textarea name="content" class="form-input"></textarea></view>
+    <button form-type="submit" style="width:100%;" class="btn">提交</button>
+    </form>
+  </view>
+</view>
