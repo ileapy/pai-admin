@@ -42,19 +42,24 @@
     </div>
     <!-- 流程数据详情 -->
     <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
-    <div v-show="menuVisible">
-      <ul id="menu" class="menu">
-        <li class="menu_item" @click="">平级添加</li>
-        <li class="menu_item" @click="">下级添加</li>
-        <li class="menu_item" @click="">删除</li>
-      </ul>
-    </div>
   </div>
 
 </template>
 
+<template>
+  <context-menu class="right-menu"
+                :target="contextMenuTarget"
+                :show="contextMenuVisible"
+                @update:show="(show) => contextMenuVisible = show">
+    <a href="javascript:;" @click="">复制</a>
+    <a href="javascript:;" @click="">引用</a>
+    <a href="javascript:;" @click="">删除</a>
+  </context-menu>
+</template>
+
 <script>
   import draggable from 'vuedraggable'
+  import { component as VueContextMenu } from '@xunlei/vue-context-menu'
   // import { jsPlumb } from 'jsplumb'
   // 使用修改后的jsplumb
   import './jsplumb'
@@ -71,6 +76,8 @@
   export default {
     data() {
       return {
+        contextMenuTarget: document.body, //绑定的dom
+        contextMenuVisible: false,
         // jsPlumb 实例
         jsPlumb: null,
         // 控制画布销毁
@@ -91,14 +98,12 @@
           sourceId: undefined,
           targetId: undefined
         },
-        // 菜单是否显示
-        menuVisible: true,
       }
     },
     // 一些基础配置移动该文件中
     mixins: [easyFlowMixin],
     components: {
-      draggable, flowNode, nodeMenu, FlowInfo, FlowNodeForm
+      draggable, flowNode, nodeMenu, FlowInfo, FlowNodeForm,'vue-context-menu': VueContextMenu
     },
     directives: {
       'flowDrag': {
@@ -108,11 +113,13 @@
           }
           el.onmousedown = (e) => {
             if (e.button == 2) {
+              var menuVisible = document.querySelector('#menuVisible')
               var menu = document.querySelector('#menu')
+              menuVisible.style.display = "block"
               menu.style.display = "block";
               menu.style.left = MouseEvent.clientX - 0 + 'px'
               menu.style.top = MouseEvent.clientY - 80 + 'px'
-              return
+              console.log(MouseEvent.clientX)
             }
             //  鼠标按下，计算当前原始距离可视区的高度
             let disX = e.clientX
@@ -141,6 +148,7 @@
       }
     },
     mounted() {
+      this.data.menuVisible = true;
       this.jsPlumb = jsPlumb.getInstance()
       this.$nextTick(() => {
         // 默认加载流程A的数据、在这里可以根据具体的业务返回符合流程数据格式的数据即可
