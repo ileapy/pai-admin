@@ -7,6 +7,13 @@ App({
     util.request(this.globalData.api_url + "/index/base").then((res) => {
       if (res.status == 200) {
         this.globalData.base = res.data
+        this.globalData.audit = res.data.audit
+        if (this.globalData.audit == 1)
+        {
+          return wx.redirectTo({
+            url: '/pages/love/love',
+          });
+        }
       }
     });
     // 登录
@@ -63,6 +70,7 @@ App({
     url:"https://learn.leapy.cn",
     isLogin:false,
     token:null,
-    base:null
+    base:null,
+    audit:0,
   }
 })

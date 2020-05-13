@@ -90,6 +90,11 @@ php think worker [start|stop|reload|restart|status]
 账号 admin  
 密码 123456  
 
+小程序体验，仅供学习研究　　　　　　　　 微信公众号
+
+![Image text](http://file.cos.leapy.cn/image/20200513/7c007202005130755013790.jpg)　　　　
+![Image text](http://file.cos.leapy.cn/image/20200513/8795c202005130757437787.jpg)
+
 ## 联系我
 邮箱：cfn@leapy.cn  
 微信：C17896852019（此手机号已不用）  
