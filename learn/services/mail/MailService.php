@@ -53,7 +53,7 @@ class MailService
             self::$instance->Port = $config['port'];
             self::$instance->setFrom($config['from'],$config['from_name']);
             return self::$instance;
-        }else
+        }else if($config['type'] == 1)
         {
             (self::$instance === null) && (self::$instance = new Mail());
             self::$instance->host = $config['host'];
