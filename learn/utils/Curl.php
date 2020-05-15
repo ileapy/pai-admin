@@ -17,7 +17,7 @@ class Curl
 
     /**
      * 参数
-     * @var array
+     * @var null
      */
     public $params;
 
@@ -38,9 +38,9 @@ class Curl
      * Curl constructor.
      * @param string $url
      * @param string $type
-     * @param array $params
+     * @param string $params
      */
-    public function __construct(string $url, string $type = 'GET', array $params = [])
+    public function __construct(string $url, string $type = 'GET', $params = "")
     {
         $this->url = $url;
         $this->type = $type;
@@ -53,7 +53,7 @@ class Curl
      * @param array $params
      * @return Curl
      */
-    public static function app(string $url, string $type = 'GET', array $params = [])
+    public static function app(string $url, string $type = 'GET', $params = "")
     {
         return new self( $url, $type, $params);
     }
@@ -105,7 +105,6 @@ class Curl
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $this->params);
         $data = curl_exec($curl);
-        var_dump($data);
         if (!curl_error($curl)) {curl_close($curl);return $data;}
         else print "Error: " . curl_error($curl);
     }

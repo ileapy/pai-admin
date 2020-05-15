@@ -70,9 +70,7 @@ class Authorization extends AuthController
         $data['client_id'] = $provider['client_id'];
         $data['grant_type'] = "authorization_code";
         $data['client_secret'] = $provider['client_secret'];
-        $curl = new Curl("https://open-api.pinduoduo.com/oauth/token","POST",$data);
-        $curl->header(["Content-Type:application/json"]);
-        return json_decode($curl->run(),true);
+        return json_decode(Curl::app("https://open-api.pinduoduo.com/oauth/token","POST",json_encode($data))->header(["Content-Type:application/json"])->run(),true);
     }
 
     /**
@@ -89,10 +87,7 @@ class Authorization extends AuthController
         $data['access_token'] = $token['access_token'];
         $data['timestamp'] = time();
         $data['data_type'] = 'JSON';
-        $curl = new Curl("https://gw-api.pinduoduo.com/api/router","POST",$data);
-        $curl->header(["Content-Type:application/json"]);
-        $curl->buildSign($provider['client_secret']);
-        $res = json_decode($curl->run(),true);
+        $res = json_decode(Curl::app("https://gw-api.pinduoduo.com/api/router","POST",json_encode($data))->header(["Content-Type:application/json"])->buildSign($provider['client_secret'])->run(),true);
         if (array_key_exists("mall_info_get_response",$res))
         {
             $ins['aid'] = $this->adminId;

@@ -77,8 +77,7 @@ class MiniVideo extends BaseModel
         if ($xid == "")
         {
             if ($url =  Cache::store('redis')->get($vid)) return $url;
-            $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html");
-            $res = json_decode($curl->run(),true);
+            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html")->run(),true);
             if ($res['code'] == 200)
             {
                 Cache::store('redis')->set($vid,$res['url'],300);
@@ -88,8 +87,7 @@ class MiniVideo extends BaseModel
         }else
         {
             if ($url =  Cache::store('redis')->get($vid.$xid)) return $url;
-            $curl = new Curl("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html");
-            $res = json_decode($curl->run(),true);
+            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html")->run(),true);
             if ($res['code'] == 200)
             {
                 Cache::store('redis')->set($vid.$xid,$res['url'],60);

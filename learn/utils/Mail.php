@@ -80,7 +80,7 @@ class Mail
         $param = [
             'mail_from' => $this->mail_from,
             'password' => $this->password,
-            'mail_to' => $this->host,
+            'mail_to' => $this->mail_to,
             'subject' => $this->Subject,
             'content' => $this->Body,
             'subtype' => $this->subtype,

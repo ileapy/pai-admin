@@ -114,8 +114,7 @@ class QQService
      */
     public function openUrl()
     {
-        $curl = new Curl($this->url);
-        $this->html = $curl->run();
+        $this->html = Curl::app($this->url)->run();
         $this->html = preg_replace("/[\t\n\r]+/","",$this->html);
     }
 
