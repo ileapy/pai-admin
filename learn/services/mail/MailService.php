@@ -61,7 +61,6 @@ class MailService
             self::$instance->mail_from = $config['username'];
             return self::$instance;
         }
-
     }
 
     /**
