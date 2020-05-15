@@ -103,8 +103,9 @@ class Curl
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE );
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE );
         curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->params));
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $this->params);
         $data = curl_exec($curl);
+        var_dump($data);
         if (!curl_error($curl)) {curl_close($curl);return $data;}
         else print "Error: " . curl_error($curl);
     }
