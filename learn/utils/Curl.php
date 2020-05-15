@@ -48,12 +48,25 @@ class Curl
     }
 
     /**
+     * @param string $url
+     * @param string $type
+     * @param array $params
+     * @return Curl
+     */
+    public static function app(string $url, string $type = 'GET', array $params = [])
+    {
+        return new self( $url, $type, $params);
+    }
+
+    /**
      * 设置请求头
      * @param $header
+     * @return Curl
      */
     public function header($header)
     {
         $this->header = $header;
+        return $this;
     }
 
     /**
@@ -122,5 +135,6 @@ class Curl
         foreach ($this->params as $k=>$v) $sign .=$k.$v;
         $sign.=$client_secret;
         $this->params['sign'] = strtoupper(md5($sign));
+        return $this;
     }
 }

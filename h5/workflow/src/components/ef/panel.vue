@@ -13,7 +13,6 @@
             <el-button plain round @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button>
             <el-button plain round @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C</el-button>
           </div>
-
         </div>
       </el-col>
     </el-row>
@@ -43,20 +42,7 @@
     <!-- 流程数据详情 -->
     <flow-info v-if="flowInfoVisible" ref="flowInfo" :data="data"></flow-info>
   </div>
-
 </template>
-
-<template>
-  <context-menu class="right-menu"
-                :target="contextMenuTarget"
-                :show="contextMenuVisible"
-                @update:show="(show) => contextMenuVisible = show">
-    <a href="javascript:;" @click="">复制</a>
-    <a href="javascript:;" @click="">引用</a>
-    <a href="javascript:;" @click="">删除</a>
-  </context-menu>
-</template>
-
 <script>
   import draggable from 'vuedraggable'
   import { component as VueContextMenu } from '@xunlei/vue-context-menu'
@@ -76,8 +62,6 @@
   export default {
     data() {
       return {
-        contextMenuTarget: document.body, //绑定的dom
-        contextMenuVisible: false,
         // jsPlumb 实例
         jsPlumb: null,
         // 控制画布销毁
@@ -103,7 +87,7 @@
     // 一些基础配置移动该文件中
     mixins: [easyFlowMixin],
     components: {
-      draggable, flowNode, nodeMenu, FlowInfo, FlowNodeForm,'vue-context-menu': VueContextMenu
+      draggable, flowNode, nodeMenu, FlowInfo, FlowNodeForm
     },
     directives: {
       'flowDrag': {
@@ -113,13 +97,7 @@
           }
           el.onmousedown = (e) => {
             if (e.button == 2) {
-              var menuVisible = document.querySelector('#menuVisible')
-              var menu = document.querySelector('#menu')
-              menuVisible.style.display = "block"
-              menu.style.display = "block";
-              menu.style.left = MouseEvent.clientX - 0 + 'px'
-              menu.style.top = MouseEvent.clientY - 80 + 'px'
-              console.log(MouseEvent.clientX)
+
             }
             //  鼠标按下，计算当前原始距离可视区的高度
             let disX = e.clientX
