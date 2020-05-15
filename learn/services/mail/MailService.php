@@ -35,6 +35,7 @@ class MailService
     /**
      * @param array $config
      * @return null
+     * @throws Exception
      */
     public static function init(array $config)
     {
