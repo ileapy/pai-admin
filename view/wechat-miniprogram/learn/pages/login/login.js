@@ -23,6 +23,55 @@ Page({
     });
   },
 
+  onShow:function()
+  {
+    // 登录
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        util.request(app.globalData.api_url + "/mini_program/openid", "POST", { code: res.code})
+        .then((res) => {
+          if(res.status === 200)
+          {
+            var tmp = res;
+            app.globalData.session = tmp.data;
+            // 获取用户信息
+            wx.getSetting({
+              success: res => {
+                if (res.authSetting['scope.userInfo']) {
+                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                  wx.getUserInfo({
+                    success: res => {
+                      // 可以将 res 发送给后台解码出 unionId
+                      app.globalData.userInfo = res.userInfo
+                      util.request(app.globalData.api_url + "/mini_program/login", "POST", 
+                      { session_key: tmp.data.session_key,
+                        encryptedData: res.encryptedData,
+                        iv: res.iv
+                      }).then((res)=>{
+                        if(res.status === 200)
+                        {
+                          app.globalData.isLogin = true;
+                          app.globalData.token = res.data.token
+                          wx.setStorageSync('token', res.data.token)
+                        }
+                      });
+                      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+                      // 所以此处加入 callback 以防止这种情况
+                      if (this.userInfoReadyCallback) {
+                        this.userInfoReadyCallback(res)
+                      }
+                    }
+                  })
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+  },
+
   bindGetUserInfo:function(e)
   {
     if (!e.detail.userInfo) return wx.showModal({

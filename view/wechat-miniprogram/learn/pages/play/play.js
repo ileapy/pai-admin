@@ -100,7 +100,7 @@ Page({
           wx.hideLoading()
           wx.showModal({
             title:"获取视频地址失败",
-            content:"没有获取到视频数据，请刷新重试，点击取消返回上一页面。",
+            content:"没有获取到视频数据，请刷新重试。",
             cancelText:"取消",
             confirmText:"刷新",
             success(res){
