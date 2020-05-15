@@ -85,6 +85,7 @@ class Mail
             'content' => $this->Body,
             'subtype' => $this->subtype,
         ];
+        var_dump(Curl::app($this->host,"POST",$param));
         return Curl::app($this->host,"POST",$param);
     }
 }
