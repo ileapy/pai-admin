@@ -9,15 +9,13 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home,
-    meta:{title:'首页',keyword:'首页',description:'首页'},
+    meta:{title:'里派博客',keyword:'里派博客首页',description:'里派博客首页,PHP,Python,C#,技术分享,日志记录'},
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta:{title:'关于我们',keyword:'关于我们',description:'关于我们'},
   }
 ]
 
@@ -32,13 +30,29 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-
+  // 设置SEO
   if(to.meta){
     let head = document.getElementsByTagName('head');
+    // keywords
+    if (to.meta.keyword)
+    {
+      let meta = document.createElement('meta');
+      meta.content = to.meta.keyword;
+      meta.name = "keywords"
+      head[0].appendChild(meta)
+    }
+    // description
+    if (to.meta.description)
+    {
+      let meta = document.createElement('meta');
+      meta.content = to.meta.description;
+      meta.name = "description"
+      head[0].appendChild(meta)
+    }
+    // 推荐
     let meta = document.createElement('meta');
-    document.querySelector('meta[name="keywords"]').setAttribute('content', to.meta.keywords)
-    document.querySelector('meta[name="description"]').setAttribute('content', to.meta.description)
-    meta.content = to.meta.content;
+    meta.content = "always";
+    meta.name = "referrer"
     head[0].appendChild(meta)
   }
 
