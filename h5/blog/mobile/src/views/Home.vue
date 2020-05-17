@@ -25,7 +25,7 @@
                 @load="onLoad"
         >
           <div class="card">
-            <a href="" title="">
+            <a href="/details/1" title="此景只应天上有，人间能得几回闻">
               <div class="card-image">
                 <van-image src="http://file.cos.leapy.cn/image/20200516/91f08202005161354061360.jpg" alt="" title="" lazy-load/>
               </div>
@@ -44,7 +44,7 @@
             </a>
           </div>
           <div class="card">
-            <a href="" title="">
+            <a href="/details/2" title="此景只应天上有，人间能得几回闻">
               <van-row>
                 <van-col span="15">
                   <h1 class="card-title2">此景只应天上有，人间能得几回闻</h1>
@@ -52,101 +52,7 @@
                 </van-col>
                 <van-col span="9">
                   <div class="card-image2">
-                    <van-image src="http://file.cos.leapy.cn/image/20200510/e570d202005102121265003.jpg" alt="" title="" lazy-load height="80px" width="120px"/>
-                  </div>
-                </van-col>
-              </van-row>
-              <div class="card-foot">
-                <van-image
-                        round
-                        src="http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg"
-                        alt=""
-                        title=""
-                        lazy-load class="card-foot-image"/>
-                <span class="card-foot-author">cfn</span>
-                <span class="card-foot-time">20分钟之前</span>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="" title="">
-              <van-row>
-                <van-col span="15">
-                  <h1 class="card-title2">此景只应天上有，人间能得几回闻</h1>
-                  <h2 class="card-desc">我们本应珍惜,而物欲的膨胀带动下的所谓现代科学的发展,却正在无度的破坏着我们原本美好的家园,如此下去,也许有一天,梦中只有 “此景只应天上有,人间得有几回闻"</h2>
-                </van-col>
-                <van-col span="9">
-                  <div class="card-image2">
-                    <van-image src="http://file.cos.leapy.cn/image/20200510/e570d202005102121265003.jpg" alt="" title="" lazy-load height="80px" width="120px"/>
-                  </div>
-                </van-col>
-              </van-row>
-              <div class="card-foot">
-                <van-image
-                        round
-                        src="http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg"
-                        alt=""
-                        title=""
-                        lazy-load class="card-foot-image"/>
-                <span class="card-foot-author">cfn</span>
-                <span class="card-foot-time">20分钟之前</span>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="" title="">
-              <div class="card-image">
-                <van-image src="http://file.cos.leapy.cn/image/20200516/91f08202005161354061360.jpg" alt="" title="" lazy-load/>
-              </div>
-              <h1 class="card-title">此景只应天上有，人间能得几回闻</h1>
-              <h2 class="card-desc">我们本应珍惜,而物欲的膨胀带动下的所谓现代科学的发展,却正在无度的破坏着我们原本美好的家园,如此下去,也许有一天,梦中只有 “此景只应天上有,人间得有几回闻"</h2>
-              <div class="card-foot">
-                <van-image
-                        round
-                        src="http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg"
-                        alt=""
-                        title=""
-                        lazy-load class="card-foot-image"/>
-                <span class="card-foot-author">cfn</span>
-                <span class="card-foot-time">20分钟之前</span>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="" title="">
-              <van-row>
-                <van-col span="15">
-                  <h1 class="card-title2">此景只应天上有，人间能得几回闻</h1>
-                  <h2 class="card-desc">我们本应珍惜,而物欲的膨胀带动下的所谓现代科学的发展,却正在无度的破坏着我们原本美好的家园,如此下去,也许有一天,梦中只有 “此景只应天上有,人间得有几回闻"</h2>
-                </van-col>
-                <van-col span="9">
-                  <div class="card-image2">
-                    <van-image src="http://file.cos.leapy.cn/image/20200510/e570d202005102121265003.jpg" alt="" title="" lazy-load height="80px" width="120px"/>
-                  </div>
-                </van-col>
-              </van-row>
-              <div class="card-foot">
-                <van-image
-                        round
-                        src="http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg"
-                        alt=""
-                        title=""
-                        lazy-load class="card-foot-image"/>
-                <span class="card-foot-author">cfn</span>
-                <span class="card-foot-time">20分钟之前</span>
-              </div>
-            </a>
-          </div>
-          <div class="card">
-            <a href="" title="">
-              <van-row>
-                <van-col span="15">
-                  <h1 class="card-title2">此景只应天上有，人间能得几回闻</h1>
-                  <h2 class="card-desc">我们本应珍惜,而物欲的膨胀带动下的所谓现代科学的发展,却正在无度的破坏着我们原本美好的家园,如此下去,也许有一天,梦中只有 “此景只应天上有,人间得有几回闻"</h2>
-                </van-col>
-                <van-col span="9">
-                  <div class="card-image2">
-                    <van-image src="http://file.cos.leapy.cn/image/20200510/e570d202005102121265003.jpg" alt="" title="" lazy-load height="80px" width="120px"/>
+                    <van-image src="http://file.cos.leapy.cn/image/20200510/e570d202005102121265003.jpg" alt="" title="" lazy-load/>
                   </div>
                 </van-col>
               </van-row>
@@ -171,80 +77,7 @@
     </van-tabs>
   </div>
 </template>
-<style>
-  .van-tabs__line{
-    background: rgba(255,235,59,0.5) !important;
-    bottom: 30px !important;
-    height: 6px !important;
-  }
-  .card{
-    margin: 10px;
-    background: #ffffff;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  .card-image{
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-  }
-  .card-image2{
-    width: 120px;
-    overflow: hidden;
-    padding-top: 10px;
-    height: 80px;
-  }
-  .card-title{
-    font-size: 15px;
-    margin: 0 10px;
-    color: #383838;
-    line-height: 38px;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    overflow:hidden;
-  }
-  .card-title2{
-    font-size: 15px;
-    margin: 10px 10px;
-    color: #383838;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow:hidden;
-  }
-  .card-desc{
-    margin: 0 10px;
-    font-size: 12px;
-    color: #999;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-height: 16px;
-  }
-  .card-foot{
-    margin: 15px 10px;
-  }
-  .card-foot-image{
-    width: 20px;
-    height: 20px;
-  }
-  .card-foot-author{
-    color: #777;
-    vertical-align: 26%;
-    margin-left: 5px;
-  }
-  .card-foot-time{
-    float: right;
-    color: #888;
-    font-size: 12px;
-    margin-top: 3px;
-  }
-  .tab{
-    margin-top: 45px;
-  }
-</style>
+
 <script>
 // @ is an alias to /src
 import Vue from 'vue';
@@ -296,3 +129,80 @@ export default {
   },
 }
 </script>
+
+<style>
+  .van-tabs__line{
+    background: rgba(255,235,59,0.5) !important;
+    bottom: 30px !important;
+    height: 6px !important;
+  }
+  .card{
+    margin: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .card-image{
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+  }
+  .card-image2{
+    overflow: hidden;
+    margin: 10px;
+  }
+  .card-title{
+    font-size: 15px;
+    margin: 0 10px;
+    color: #383838;
+    line-height: 38px;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+  }
+  .card-title2{
+    font-size: 15px;
+    margin: 10px 10px;
+    color: #383838;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
+  }
+  .card-desc{
+    margin: 0 10px;
+    font-size: 12px;
+    color: #999;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: 16px;
+  }
+  .card-foot{
+    margin: 15px 10px;
+  }
+  .card-foot-image{
+    width: 20px;
+    height: 20px;
+  }
+  .card-foot-author{
+    color: #777;
+    vertical-align: 26%;
+    margin-left: 5px;
+  }
+  .card-foot-time{
+    float: right;
+    color: #888;
+    font-size: 12px;
+    margin-top: 3px;
+  }
+  .tab{
+    margin-top: 45px;
+  }
+  .card-image2 .van-image img{
+    width: 100%;
+    height: 80px;
+  }
+</style>

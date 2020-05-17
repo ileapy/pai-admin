@@ -7,4 +7,9 @@
   body{
     background: #f2f2f2;
   }
+  #app
+  {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 </style>

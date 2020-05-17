@@ -5,18 +5,24 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
   const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-    meta:{title:'里派博客',keyword:'里派博客首页',description:'里派博客首页,PHP,Python,C#,技术分享,日志记录'},
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta:{title:'关于我们',keyword:'关于我们',description:'关于我们'},
-  }
+    {
+      path: '/',
+      name: 'Home',
+      component: Home,
+      meta:{title:'里派博客',keyword:'里派博客首页',description:'里派博客首页,PHP,Python,C#,技术分享,日志记录'},
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+      meta:{title:'关于我们',keyword:'关于我们',description:'关于我们'},
+    },
+    {
+      path: '/details/:id',
+      name: 'Details',
+      component: () => import(/* webpackChunkName: "details" */ '../views/Details.vue'),
+      meta:{title:'文章详情',keyword:'文章详情',description:'文章详情'},
+    },
 ]
 
 const router = new VueRouter({
