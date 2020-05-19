@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -9,13 +10,19 @@ Vue.use(VueRouter)
       path: '/',
       name: 'Home',
       component: Home,
-      meta:{title:'里派博客',keyword:'里派博客首页',description:'里派博客首页,PHP,Python,C#,技术分享,日志记录'},
+      meta:{title:'里派博客',keyword:'里派博客首页',description:'里派博客首页,PHP,Python,C#,技术分享,日志记录',auth: true},
     },
     {
       path: '/about',
       name: 'About',
       component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
       meta:{title:'关于我们',keyword:'关于我们',description:'关于我们'},
+    },
+    {
+      path: '/author',
+      name: 'Author',
+      component: () => import('../views/Author.vue'),
+      meta:{title:'登录',keyword:'登录',description:'登录'},
     },
     {
       path: '/details/:id',
@@ -32,6 +39,12 @@ const router = new VueRouter({
 
 // 修改页面title
 router.beforeEach((to, from, next) => {
+  if (to.matched.some(m => m.meta.auth)) {
+    if(!store.state.isLogin){
+      next({path: '/author'})
+      return false;
+    }
+  }
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title

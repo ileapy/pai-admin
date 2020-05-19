@@ -5,6 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    isLogin:false,
+    userInfo:null,
+    isWeChat:false,
+    isAndroid:true,
+    isIos:true,
   },
   mutations: {
   },

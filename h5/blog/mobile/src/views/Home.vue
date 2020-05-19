@@ -39,6 +39,8 @@
                         title=""
                         lazy-load class="card-foot-image"/>
                 <span class="card-foot-author">cfn</span>
+                <img src="@/assets/iconfont/zuji.svg" width="20" height="20" class="card-foot-zuji"/>
+                <span class="card-foot-num">200</span>
                 <span class="card-foot-time">20分钟之前</span>
               </div>
             </a>
@@ -64,6 +66,8 @@
                         title=""
                         lazy-load class="card-foot-image"/>
                 <span class="card-foot-author">cfn</span>
+                <img src="@/assets/iconfont/zuji.svg" width="20" height="20" class="card-foot-zuji"/>
+                <span class="card-foot-num">200</span>
                 <span class="card-foot-time">20分钟之前</span>
               </div>
             </a>
@@ -204,5 +208,13 @@ export default {
   .card-image2 .van-image img{
     width: 100%;
     height: 80px;
+  }
+  .card-foot-zuji{
+    margin-left: 10px;
+  }
+  .card-foot-num{
+    color: #777;
+    vertical-align: 25%;
+    margin-left: 5px;
   }
 </style>

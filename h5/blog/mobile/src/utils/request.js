@@ -1,11 +1,14 @@
+import axios from "axios";
+import $store from "../store";
+
 // 请求
-const request = function(url,type="GET",data={},isLogin=false)
+export function request(url,type="GET",data={},isLogin=false)
 {
     return new Promise(function(resolve, reject)
     {
         var header = {};
         if (isLogin) header = {"Authori-zation":wx.getStorageSync('token')}
-        wx.request({
+        axios.type({
             url: url,
             method: type,
             data:data,
@@ -28,4 +31,3 @@ const request = function(url,type="GET",data={},isLogin=false)
     })
 }
 
-export default request;
