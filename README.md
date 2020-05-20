@@ -85,6 +85,23 @@ php think worker [start|stop|reload|restart|status]
 [Workerman](http://doc.workerman.net/)  
 [EasyWeChat](https://www.easywechat.com/docs)  
 
+## 截图
+![Image text](http://file.cos.leapy.cn/image/20200520/320b1202005201016139883.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/4870e202005201017078544.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/28395202005201017322794.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/99214202005201017522849.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/ebd6420200520101809963.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/99c2d202005201018228828.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/1125e20200520101908339.png)
+
+![Image text](http://file.cos.leapy.cn/image/20200520/befdd202005201019221055.png)
+
 ## 后台体验
 后台地址 https://learn.leapy.cn/admin  
 账号 admin  
