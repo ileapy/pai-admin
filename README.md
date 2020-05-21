@@ -24,7 +24,9 @@ Pai-admin 派后台管理系统
 
 ## 特别感谢
 
-[笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://www.kancloud.cn/manual/thinkphp6_0/content) 
+[笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://gitee.com/yinqi/Light-Year-Admin-Template) 
+
+[xaboy / form-builder PHP表单生成器，使用PHP快速生成现代化的form表单。](https://gitee.com/xaboy/form-builder) 
  
 ## 手动安装
 
