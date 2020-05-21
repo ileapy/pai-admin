@@ -22,6 +22,10 @@ Pai-admin 派后台管理系统
 ### 微信开发
 后台已嵌入微信开发插件
 
+## 特别感谢
+
+[笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://www.kancloud.cn/manual/thinkphp6_0/content) 
+ 
 ## 手动安装
 
 1.创建数据库，倒入数据库文件
