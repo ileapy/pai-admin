@@ -2,52 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>我的信息 - 派后台管理系统</title>
     {include file="public/header" /}
 </head>
 <body>
-<h5>手风琴效果</h5>
-<!--手风琴效果-->
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-primary">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    第一回 赈民饥包公奉旨　图谋害庞相施计
-                </a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                话说大宋开基之主太祖赵匡胤，此位天子，原乃上界赤龙临凡，英雄猛勇，豪侠情怀，创开四百年天下。陈桥兵变，黄袍加身，代位于后周而归一统。前书已有《两宋》表明，兹不絮谈。且说大宋相传继统四世仁宗嘉佑王，当时天子英明，群臣为国，四方宁靖，百姓安康。前者宋太祖既殁之后，杨家父子众英雄相继而亡。今者人得五虎，英雄佐粥，保护江山，扫除国敌。后话休题多表。忽一日，仁宗天子临朝。但见祥光灿烂，瑞色辉煌。
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>搜索</h4></div>
+                <div class="card-body">
+                    <form class="form-inline searchForm">
+                        <div class="form-group">
+                            <label for="title">关键词</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title" value="{$where.title}" name="title" placeholder="请输入标题或者内容">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_time">时间</label>
+                            <div class="input-group">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" value="{$where.start_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <span class="input-group-addon">~</span>
+                                <input class="form-control js-datetimepicker" type="text" name="end_time" value="{$where.end_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_read">是否已读</label>
+                            <select name="is_read" id="is_read" class="form-control">
+                                <option value="" {if $where.is_read === ''} selected {/if}>所有</option>
+                                <option value="1" {if $where.is_read === '1'} selected {/if}>已读</option>
+                                <option value="0" {if $where.is_read === '0'} selected {/if}>未读</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-cyan">
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    第二回 孙兵部到关权理　狄元帅奉旨征西
-                </a>
-            </h4>
-        </div>
-        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-                且说三关狄元帅平生梗直，铁性无私，智勇双全。自从幼年山西家乡遭逢水难，王禅老祖救了他，带上水帘洞传授兵书武略，知他仙道无缘，王侯有位。学艺数年，命他下山扶助宋君，原是一条国栋金梁，与单单赛花公主有宿世良缘。自从押送征衣，上年大破西辽，仁宗天子知他英勇，杨宗保败亡，便封他镇守此关。号令威严，兵遵将应，就是朝中文武，何人不看重这小英雄？
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-danger">
-        <div class="panel-heading" role="tab" id="headingThree">
-            <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    第三回 火叉岗焦先锋问路　安平关秃总兵阵亡
-                </a>
-            </h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-                话说狄元帅奉旨征代西辽，以为本事高强，所以只带得五万雄兵，四员虎将。点兵三千，令焦廷贵为前部先锋，点孟定国领兵三千为后队解粮官，大队人马排开行伍向西辽大道而行。且喜天色晴明，风和日暖，正是行兵的时候。一自出了雄关，行有十余天，人烟稠密地方还属中原辖管，也有文官武职接送，纷纷不绝不断。元帅一路甚是安然，日行程夜睡宿，不再烦谈。
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>我的信息</h4></div>
+                <div class="card-body">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        {volist name="list" id="vo"}
+                        <div class="panel">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        {$vo.title} <span style="float: right;">{$vo.add_time|date="Y-m-d H:i:s"}</span>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    {$vo.content}
+                                </div>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                    {$list|raw}
+                </div>
             </div>
         </div>
     </div>

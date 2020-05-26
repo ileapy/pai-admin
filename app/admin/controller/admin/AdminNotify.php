@@ -17,15 +17,19 @@ class AdminNotify extends AuthController
     /**
      * 列表
      * @return mixed
+     * @throws \Exception
      */
     public function index()
     {
         $where = Util::postMore([
             ['title',''],
+            ['start_time',''],
+            ['end_time',''],
             ['is_read',''],
-            ['page',1],
-            ['limit',20],
+            ['aid',$this->adminId],
         ]);
-        return app("json")->layui(nModel::systemPage($where));
+        $this->assign("where",$where);
+        $this->assign("list",nModel::systemPage($where));
+        return $this->fetch();
     }
 }
