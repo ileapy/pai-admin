@@ -18,7 +18,7 @@ class AdminNotify extends AuthController
      * 列表
      * @return mixed
      */
-    public function lst()
+    public function index()
     {
         $where = Util::postMore([
             ['title',''],
