@@ -21,6 +21,7 @@ class AdminNotify extends BaseModel
     public static function systemPage(array $where)
     {
         $model = new self;
+        if ($where['title'] != '') $model = $model->where("title|content","like","%$where[title]%");
         if ($where['is_read'] != '') $model = $model->where("is_read",$where['is_read']);
         $model = $model->order("add_time desc");
         $model = $model->page((int)$where['page'], (int)$where['limit']);

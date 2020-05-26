@@ -21,6 +21,7 @@ class AdminNotify extends AuthController
     public function lst()
     {
         $where = Util::postMore([
+            ['title',''],
             ['is_read',''],
             ['page',1],
             ['limit',20],
