@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <title>我的信息 - 派后台管理系统</title>
     {include file="public/header" /}
+    <style>
+        .mytb{
+            float: right;
+            font-size: 14px;
+        }
+        .mytb::after {
+            font-family: 'Material Design Icons';
+            color: rgb(170, 170, 170);
+            display: block;
+            float: right;
+            content: "\f35d";
+            padding-left: 5px;
+        }
+        .collapsed > .mytb:after {
+            content: '\f142';
+        }
+        .panel-title{
+            color: #666;
+        }
+        .panel-title .active{
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid p-t-15">
@@ -17,16 +40,16 @@
                             <label for="title">关键词</label>
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="title" value="{$where.title}" name="title" placeholder="请输入标题或者内容">
+                                    <input type="text" class="form-control" id="title" value="{$where.title}" autocomplete="off" name="title" placeholder="请输入标题或者内容">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="start_time">时间</label>
                             <div class="input-group">
-                                <input class="form-control js-datetimepicker" type="text" id="start_time" name="start_time" value="{$where.start_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
+                                <input class="form-control js-datetimepicker" type="text" id="start_time" autocomplete="off" name="start_time" value="{$where.start_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="开始时间">
                                 <span class="input-group-addon">~</span>
-                                <input class="form-control js-datetimepicker" type="text" name="end_time" value="{$where.end_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
+                                <input class="form-control js-datetimepicker" type="text" name="end_time" autocomplete="off" value="{$where.end_time}" data-side-by-side="true" data-locale="zh-cn" data-format="YYYY-MM-DD" placeholder="结束时间">
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,17 +69,17 @@
             <div class="card">
                 <div class="card-header"><h4>我的信息</h4></div>
                 <div class="card-body">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
                         {volist name="list" id="vo"}
-                        <div class="panel">
-                            <div class="panel-heading" role="tab" id="headingOne">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading{$vo.id}">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                        {$vo.title} <span style="float: right;">{$vo.add_time|date="Y-m-d H:i:s"}</span>
+                                    <a role="button" class="collapsed {if $vo.is_read == 0}active{/if}" data-toggle="collapse" data-parent="#accordion" href="#collapse{$vo.id}" aria-expanded="false" aria-controls="collapse{$vo.id}" onclick="isRead('{$vo.id}')">
+                                        {$vo.title} <span class="mytb">{$vo.add_time|date="Y-m-d H:i:s"}</span>
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div id="collapse{$vo.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{$vo.id}">
                                 <div class="panel-body">
                                     {$vo.content}
                                 </div>
@@ -72,4 +95,9 @@
 </div>
 </body>
 {include file="public/footer"/}
+<script>
+    function isRead(id) {
+        $.post(url="/admin/admin.admin_notify/field?id="+id,{field:'is_read',value:1}); // 点击已读
+    }
+</script>
 </html>

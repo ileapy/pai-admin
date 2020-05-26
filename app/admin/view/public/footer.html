@@ -33,4 +33,13 @@
         });
         return f;
     }
+
+    /**
+     * @param status
+     * @param msg
+     */
+    function message(status,msg) {
+        if (status === 200) {lightyear.notify(msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');setTimeout(function () {parent.location.reload()},3000)}
+        else lightyear.notify(msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+    }
 </script>
