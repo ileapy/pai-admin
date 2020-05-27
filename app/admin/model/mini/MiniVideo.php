@@ -80,6 +80,7 @@ class MiniVideo extends BaseModel
                     $res1 = self::where("vid",$vid)->update([
                         'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
+                        'url' => $data['url'],
                         'title' => $data['title'],
                         'cover' => $data['cover'],
                         'actor' => $data['actor'],
@@ -95,6 +96,7 @@ class MiniVideo extends BaseModel
                         'vid' => $vid,
                         'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
+                        'url' => $data['url'],
                         'title' => $data['title'],
                         'cover' => $data['cover'],
                         'actor' => $data['actor'],
@@ -123,6 +125,7 @@ class MiniVideo extends BaseModel
                     $res1 = self::where("vid",$vid)->update([
                             'source' => $source == "qq" ? $source : $data['source'],
                             'type' => $type,
+                            'url' => "",
                             'title' => $data['title'],
                             'cover' => $data['cover'],
                             'actor' => $data['actor'],
@@ -137,8 +140,8 @@ class MiniVideo extends BaseModel
                     $i = 0;
                     foreach ($data['item'] as $k => $v)
                     {
-                        preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html/', $v, $xid);
-                        $xid = $xid[2];
+                        preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html(.*?)/', $v, $xid);
+                        $xid = key_exists(2,$xid) ? $xid[2] : $k;
                         if (MiniVideoItem::where("vid",$vid)->where("name",$k)->count() > 1) MiniVideoItem::where("vid",$vid)->where("name",$k)->delete();
                         self::commitTrans();
                         if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->find())
@@ -146,6 +149,7 @@ class MiniVideo extends BaseModel
                             $res3 = $res3 && MiniVideoItem::update([
                                     'name' => $k,
                                     'rank' => $i,
+                                    'url' => $v,
                                     'status' => 1,
                                     'update_time'=>time(),
                                     'update_user' => $adminId
@@ -155,6 +159,7 @@ class MiniVideo extends BaseModel
                             $res3 = $res3 && MiniVideoItem::insert([
                                     'xid' =>$xid,
                                     'vid' => $vid,
+                                    'url' => $v,
                                     'name' => $k,
                                     'rank' => $i,
                                     'status' => 1,
@@ -171,6 +176,7 @@ class MiniVideo extends BaseModel
                         'vid' => $vid,
                         'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
+                        'url' => "",
                         'title' => $data['title'],
                         'cover' => $data['cover'],
                         'actor' => $data['actor'],
@@ -188,7 +194,7 @@ class MiniVideo extends BaseModel
                     foreach ($data['item'] as $k => $v)
                     {
                         preg_match('/https:\/\/v.qq.com\/x\/cover\/(.*?)\/(.*?)\.html/', $v, $xid);
-                        $xid = $xid[2];
+                        $xid = key_exists(2,$xid) ? $xid[2] : $k;
                         if (MiniVideoItem::where("vid",$vid)->where("name",$k)->count() > 1) MiniVideoItem::where("vid",$vid)->where("name",$k)->delete();
                         self::commitTrans();
                         if (MiniVideoItem::where("vid",$vid)->where("xid",$xid)->count() > 0)
@@ -197,6 +203,7 @@ class MiniVideo extends BaseModel
                                     'name' => $k,
                                     'rank' => $i,
                                     'status' => 1,
+                                    'url' => $v,
                                     'update_time'=>time(),
                                     'update_user' => $adminId
                                 ],['xid' =>$xid,'vid' => $vid]);
@@ -205,6 +212,7 @@ class MiniVideo extends BaseModel
                             $res3 = $res3 && MiniVideoItem::insert([
                                     'xid' =>$xid,
                                     'vid' => $vid,
+                                    'url' => $v,
                                     'name' => $k,
                                     'rank' => $i,
                                     'status' => 1,

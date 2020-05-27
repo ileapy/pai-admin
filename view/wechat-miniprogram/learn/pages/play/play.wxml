@@ -30,7 +30,7 @@
 <scroll-view scroll-x="true" class="scroll-like flex-wrp" style="width: 100%">
     <block wx:for="{{actor}}" wx:key="index">
       <view class="scroll-item flex-item">
-        <view><image src="{{item[1]}}" class="scroll-item-image"/></view>
+        <view wx:if="{{item[1]}}"><image src="{{item[1]}}" class="scroll-item-image"/></view>
         <view class="actor-name">{{item[0]}}</view>
       </view>
     </block>

@@ -77,7 +77,10 @@ class MiniVideo extends BaseModel
         if ($xid == "")
         {
             if ($url =  Cache::store('redis')->get($vid)) return $url;
-            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/".$vid.".html")->run(),true);
+            // 电影 判断url不为空直接使用url
+            $info = MiniVideo::where("vid",$vid)->value("url");
+            $_url = $info ?: "https://v.qq.com/x/cover/".$vid.".html";
+            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url=".$_url)->run(),true);
             if ($res['code'] == 200)
             {
                 Cache::store('redis')->set($vid,$res['url'],300);
@@ -87,7 +90,10 @@ class MiniVideo extends BaseModel
         }else
         {
             if ($url =  Cache::store('redis')->get($vid.$xid)) return $url;
-            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url="."https://v.qq.com/x/cover/$vid/$xid.html")->run(),true);
+            // 电视剧 判断url不为空直接使用url
+            $info = MiniVideoItem::where("vid",$vid)->where("xid",$xid)->value("url");
+            $_url = $info ?: "https://v.qq.com/x/cover/$vid/$xid.html";
+            $res = json_decode(Curl::app("http://5.nmgbq.com/j1/api.php?url=".$_url)->run(),true);
             if ($res['code'] == 200)
             {
                 Cache::store('redis')->set($vid.$xid,$res['url'],60);
@@ -138,6 +144,9 @@ class MiniVideo extends BaseModel
      * @param string $vid
      * @param string $xid
      * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public static function isAllow(int $uid, string $vid, string $xid = ""): bool
     {
@@ -196,6 +205,20 @@ class MiniVideo extends BaseModel
         {
             case 'qq':
                 return '腾讯视频';
+            case 'imgo':
+                return '芒果';
+            case 'qiyi':
+                return '爱奇艺';
+            case 'youku':
+                return '优酷';
+            case 'pptv':
+                return 'PP';
+            case 'leshi':
+                return '乐视';
+            case 'sohu':
+                return '搜狐';
+            case 'm1905':
+                return '电影网';
         }
     }
 }

@@ -91,6 +91,11 @@ class KanService
     const SOURCE_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\">/";
 
     /**
+     * 视频地址
+     */
+    const URL_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\">/";
+
+    /**
      * QQService constructor.
      * @param string $vid
      * @param string|null $type
@@ -145,7 +150,8 @@ class KanService
             switch ($this->type)
             {
                 case "movie":
-                    return compact("title","desc","time","cover","tag","actor","source");
+                    $url = self::url();
+                    return compact("title","desc","time","cover","tag","actor","source","url");
                 case "tv":
                     $num = self::num();
                     $item = self::item();
@@ -156,6 +162,16 @@ class KanService
         {
 
         }
+    }
+
+    /**
+     * 视频地址
+     * @return mixed
+     */
+    public function url()
+    {
+        preg_match(self::URL_MATCH,$this->html,$source);
+        return $source[count($source)-2];
     }
 
     /**
@@ -237,6 +253,7 @@ class KanService
     public function num()
     {
         preg_match(self::NUM_MATCH,$this->html,$num);
+        $this->now_num = $num[count($num)-2];
         return $num[count($num)-1];
     }
 
@@ -247,10 +264,7 @@ class KanService
     {
         preg_match_all(self::ITEM_MATCH,$this->html,$item);
         $tmp = [];
-        foreach (array_unique(array_filter($item[1])) as $key => $value)
-        {
-            $tmp[$value] = $item[3][$key];
-        }
+        for ($i=1;$i<$this->now_num+1;$i++) $tmp[$i] = $item[3][array_search($i, $item[4])];
         return $tmp;
     }
 }
