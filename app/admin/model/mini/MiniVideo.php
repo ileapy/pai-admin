@@ -6,6 +6,7 @@ namespace app\admin\model\mini;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use learn\services\crawler\KanService;
 use learn\services\crawler\QQService;
 use think\Db;
 
@@ -49,6 +50,9 @@ class MiniVideo extends BaseModel
             case "qq.com":
                 preg_match('/https:\/\/v.qq.com\/detail\/(.*?)\/(.*?).html/', $data['link'], $vid);
                 return self::saveData($vid[2],$data['type'],"qq", $data['adminId']);
+            case "360kan.com":
+                preg_match('/https:\/\/www.360kan.com\/(.*?)\/(.*?).html/', $data['link'], $vid);
+                return self::saveData($vid[2],$data['type'],"360", $data['adminId']);
             default:
                 return false;
         }
@@ -66,14 +70,15 @@ class MiniVideo extends BaseModel
     {
         self::startTrans();
         try {
-            $data = $source == "qq" ? QQService::app($vid,$type)->message() : "";
+            if ($source == "qq") $data = QQService::app($vid,$type)->message();
+            elseif ($source == "360") $data = KanService::app($vid,$type)->message();
             if ($type == "movie")
             {
                 if (self::be($vid,"vid"))
                 {
                     // 更新主表 删除标签
                     $res1 = self::where("vid",$vid)->update([
-                        'source' => $source,
+                        'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
                         'title' => $data['title'],
                         'cover' => $data['cover'],
@@ -88,7 +93,7 @@ class MiniVideo extends BaseModel
                     // 插入主表
                     $res1 = self::insert([
                         'vid' => $vid,
-                        'source' => $source,
+                        'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
                         'title' => $data['title'],
                         'cover' => $data['cover'],
@@ -116,7 +121,7 @@ class MiniVideo extends BaseModel
                 {
                     // 更新主表 删除标签 删除剧集数据
                     $res1 = self::where("vid",$vid)->update([
-                            'source' => $source,
+                            'source' => $source == "qq" ? $source : $data['source'],
                             'type' => $type,
                             'title' => $data['title'],
                             'cover' => $data['cover'],
@@ -164,7 +169,7 @@ class MiniVideo extends BaseModel
                     // 插入主表
                     $res1 = self::insert([
                         'vid' => $vid,
-                        'source' => $source,
+                        'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
                         'title' => $data['title'],
                         'cover' => $data['cover'],

@@ -232,6 +232,7 @@ Page({
       return {
         title: app.globalData.userInfo.nickName +" 邀请您观看《"+ this.data.title+"》",
         imageUrl: this.data.info.image != null && this.data.info.image != "" ? this.data.info.image : "",
+        path:"/pages/play/play?vid="+this.data.vid+"&xid="+this.data.xid,
       }
     },
     collect:function()

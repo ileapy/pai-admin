@@ -74,8 +74,13 @@ class MiniVideo extends AuthController
         })->col(10);
         $form[] = Elm::select('source','视频来源')->options(function (){
             $menu[] = ['label'=>"腾讯",'value'=>"qq"];
-            $menu[] = ['label'=>"爱奇艺",'value'=>"iqiyi"];
+            $menu[] = ['label'=>"爱奇艺",'value'=>"qiyi"];
             $menu[] = ['label'=>"优酷",'value'=>"youku"];
+            $menu[] = ['label'=>"芒果",'value'=>"imgo"];
+            $menu[] = ['label'=>"PP",'value'=>"pptv"];
+            $menu[] = ['label'=>"乐视",'value'=>"leshi"];
+            $menu[] = ['label'=>"搜狐",'value'=>"sohu"];
+            $menu[] = ['label'=>"电影网",'value'=>"m1905"];
             return $menu;
         })->col(10);
         $form[] = Elm::input('time','上映时间')->col(10);
@@ -133,8 +138,13 @@ class MiniVideo extends AuthController
         })->col(10);
         $form[] = Elm::select('source','视频来源',$ainfo['source'])->options(function (){
             $menu[] = ['label'=>"腾讯",'value'=>"qq"];
-            $menu[] = ['label'=>"爱奇艺",'value'=>"iqiyi"];
+            $menu[] = ['label'=>"爱奇艺",'value'=>"qiyi"];
             $menu[] = ['label'=>"优酷",'value'=>"youku"];
+            $menu[] = ['label'=>"芒果",'value'=>"imgo"];
+            $menu[] = ['label'=>"PP",'value'=>"pptv"];
+            $menu[] = ['label'=>"乐视",'value'=>"leshi"];
+            $menu[] = ['label'=>"搜狐",'value'=>"sohu"];
+            $menu[] = ['label'=>"电影网",'value'=>"m1905"];
             return $menu;
         })->col(10);
         $form[] = Elm::input('time','上映时间',$ainfo['time'])->col(10);

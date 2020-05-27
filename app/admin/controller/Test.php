@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 use app\admin\model\wechat\WechatUser;
 use app\Request;
+use learn\services\crawler\KanService;
 use learn\services\crawler\QQService;
 use learn\services\ExcelService;
 use learn\services\mail\MailService;
@@ -23,6 +24,8 @@ class Test extends AuthController
 
     public function index()
     {
+        KanService::app("gKLoZBH5RnX0UB","movie")->message();
+//        KanService::app("Q4FrbX7lSzbrMX","tv")->message();
 //        ExcelService::setHeader("订单导出",['订单编号','商品名称','商品规格']);
 //        ExcelService::setHeader("订单导出",['订单id','订单号','电话','收货人姓名'])->setBody([[1,2,3,4],[1,2,3,4]])->save();
 //        var_dump(WechatUser::select());
