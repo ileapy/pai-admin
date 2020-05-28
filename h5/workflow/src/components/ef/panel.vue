@@ -1,24 +1,24 @@
 <template>
   <div v-if="easyFlowVisible" style="height: calc(100vh);">
-    <el-row>
-      <!--顶部工具菜单-->
-      <el-col :span="24">
-        <div class="ef-tooltar">
-          <el-link type="primary" :underline="false">{{data.name}}</el-link>
-          <el-divider direction="vertical"></el-divider>
-          <el-button type="text" icon="el-icon-delete" size="large" @click="deleteElement" :disabled="!this.activeElement.type"></el-button>
-          <div style="float: right;margin-right: 5px">
-            <el-button plain round icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>
-            <el-button plain round @click="dataReloadA" icon="el-icon-refresh" size="mini">切换流程A</el-button>
-            <el-button plain round @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button>
-            <el-button plain round @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C</el-button>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
+<!--    <el-row>-->
+<!--      &lt;!&ndash;顶部工具菜单&ndash;&gt;-->
+<!--      <el-col :span="24">-->
+<!--        <div class="ef-tooltar">-->
+<!--          <el-link type="primary" :underline="false">{{data.name}}</el-link>-->
+<!--          <el-divider direction="vertical"></el-divider>-->
+<!--          <el-button type="text" icon="el-icon-delete" size="large" @click="deleteElement" :disabled="!this.activeElement.type"></el-button>-->
+<!--          <div style="float: right;margin-right: 5px">-->
+<!--            <el-button plain round icon="el-icon-document" @click="dataInfo" size="mini">流程信息</el-button>-->
+<!--            <el-button plain round @click="dataReloadA" icon="el-icon-refresh" size="mini">切换流程A</el-button>-->
+<!--            <el-button plain round @click="dataReloadB" icon="el-icon-refresh" size="mini">切换流程B</el-button>-->
+<!--            <el-button plain round @click="dataReloadC" icon="el-icon-refresh" size="mini">切换流程C</el-button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
     <div style="display: flex;height: calc(100% - 47px);">
       <div style="width: 230px;border-right: 1px solid #dce3e8;">
-        <node-menu @addNode="addNode" ref="nodeMenu"></node-menu>
+        <node-menu @addNode="addNode" @dataInfo="dataInfo" @checkData="dataInfo" ref="nodeMenu"></node-menu>
       </div>
       <div id="efContainer" ref="efContainer" class="container" v-flowDrag>
         <template v-for="node in data.nodeList">
@@ -30,6 +30,7 @@
             @changeNodeSite="changeNodeSite"
             @nodeRightMenu="nodeRightMenu"
             @clickNode="clickNode"
+            @clickRightNode="clickRightNode"
           >
           </flow-node>
         </template>
@@ -56,8 +57,6 @@
   import FlowNodeForm from './node_form'
   import lodash from 'lodash'
   import { getDataA } from './data_A'
-  import { getDataB } from './data_B'
-  import { getDataC } from './data_C'
 
   export default {
     data() {
@@ -97,7 +96,6 @@
           }
           el.onmousedown = (e) => {
             if (e.button == 2) {
-
             }
             //  鼠标按下，计算当前原始距离可视区的高度
             let disX = e.clientX
@@ -130,7 +128,7 @@
       this.jsPlumb = jsPlumb.getInstance()
       this.$nextTick(() => {
         // 默认加载流程A的数据、在这里可以根据具体的业务返回符合流程数据格式的数据即可
-        this.dataReload(getDataB())
+        this.dataReload(getDataA())
       })
     },
     methods: {
@@ -185,8 +183,18 @@
           })
 
           // 连线右击
-          this.jsPlumb.bind("contextmenu", (evt) => {
-            console.log('contextmenu', evt)
+          this.jsPlumb.bind("contextmenu", (conn, originalEvent) => {
+            this.activeElement.type = 'line'
+            this.activeElement.sourceId = conn.sourceId
+            this.activeElement.targetId = conn.targetId
+            this.$refs.nodeForm.lineInit({
+              from: conn.sourceId,
+              to: conn.targetId,
+              label: conn.getLabel()
+            })
+            // console.log('contextmenu', evt)
+            this.deleteElement()
+            window.event.returnValue = false;
           })
 
           // 连线
@@ -227,7 +235,7 @@
           this.jsPlumb.makeTarget(node.id, this.jsplumbTargetOptions)
           this.jsPlumb.draggable(node.id, {
             containment: 'parent', stop: function (el) {
-              console.log('停止拖拽', el)
+              // console.log('停止拖拽', el)
             }
           })
         }
@@ -243,7 +251,7 @@
       setLineLabel(from, to, label) {
         var conn = this.jsPlumb.getConnections({
           source: from,
-          target: to
+          target: to,
         })[0]
         if (!label || label === '') {
           conn.removeClass('flowLabel')
@@ -254,6 +262,9 @@
         conn.setLabel({
           label: label,
         })
+        this.data.lineList.forEach(function (val,index) {
+          if (val.from == from && val.to == to) val.label = label;
+        });
       },
       // 删除激活的元素
       deleteElement() {
@@ -393,6 +404,12 @@
         this.activeElement.nodeId = nodeId
         this.$refs.nodeForm.nodeInit(this.data, nodeId)
       },
+      clickRightNode(nodeId) {
+        this.activeElement.type = 'node'
+        this.activeElement.nodeId = nodeId
+        this.$refs.nodeForm.nodeInit(this.data, nodeId)
+        this.deleteElement();
+      },
       // 是否具有该线
       hasLine(from, to) {
         for (var i = 0; i < this.data.lineList.length; i++) {
@@ -440,14 +457,6 @@
       // 模拟载入数据dataA
       dataReloadA() {
         this.dataReload(getDataA())
-      },
-      // 模拟载入数据dataB
-      dataReloadB() {
-        this.dataReload(getDataB())
-      },
-      // 模拟载入数据dataC
-      dataReloadC() {
-        this.dataReload(getDataC())
       },
       changeLabel() {
         var lines = this.jsPlumb.getConnections({

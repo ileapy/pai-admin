@@ -4,7 +4,7 @@
             <div class="ef-node-form-header">
                 编辑
             </div>
-            <div class="ef-node-form-body">
+            <div class="ef-node-form-body" v-if="type === 'line' || node.name">
                 <el-form :model="node" ref="dataForm" label-width="80px" v-show="type === 'node'">
                     <el-form-item label="类型">
                         <el-input v-model="node.type" :disabled="true"></el-input>

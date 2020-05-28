@@ -10,6 +10,10 @@
                 </draggable>
             </ul>
         </div>
+      <div style="margin: 20px;">
+        <el-button type="el-button" icon="el-icon-circle-plus-outline" @click="checkData">检查</el-button>
+        <el-button type="primary" icon="el-icon-circle-check" @click="dataInfo">保存</el-button>
+      </div>
     </div>
 </template>
 <script>
@@ -24,7 +28,6 @@
         data() {
             return {
                 activeNames: '1',
-                // draggable配置参数参考 https://www.cnblogs.com/weixin186/p/10108679.html
                 draggableOptions: {
                     preventOnFilter: false,
                     sort: false,
@@ -64,13 +67,13 @@
                     children: [
                       {
                         id: '21',
-                        type: 'middle',
+                        type: 'people',
                         name: '人员处理',
                         ico: 'el-icon-s-custom',
                         style: {}
                       }, {
                         id: '22',
-                        type: 'middle',
+                        type: 'timer',
                         name: '定时任务',
                         ico: 'el-icon-timer',
                         // 自定义覆盖样式
@@ -79,7 +82,7 @@
                     ]
                   },
                   {
-                    id: '2',
+                    id: '3',
                     type: 'end',
                     name: '结束节点',
                     ico: 'el-icon-video-pause',
@@ -145,7 +148,14 @@
                     return true
                 }
                 return false
-            }
+            },
+          dataInfo(){
+            this.$emit('dataInfo')
+          },
+          checkData()
+          {
+            this.$emit('checkData')
+          },
         }
     }
 </script>

@@ -3,6 +3,7 @@
             ref="node"
             :style="nodeContainerStyle"
             @click="clickNode"
+            @contextmenu="clickRightNode"
             @mouseup="changeNodeSite"
             :class="nodeContainerClass"
     >
@@ -58,22 +59,27 @@
             }
         },
         methods: {
-            // 点击节点
-            clickNode() {
-                this.$emit('clickNode', this.node.id)
-            },
-            // 鼠标移动后抬起
-            changeNodeSite() {
-                // 避免抖动
-                if (this.node.left == this.$refs.node.style.left && this.node.top == this.$refs.node.style.top) {
-                    return;
-                }
-                this.$emit('changeNodeSite', {
-                    nodeId: this.node.id,
-                    left: this.$refs.node.style.left,
-                    top: this.$refs.node.style.top,
-                })
+          // 点击节点
+          clickNode() {
+            this.$emit('clickNode', this.node.id)
+          },
+          clickRightNode()
+          {
+            this.$emit('clickRightNode', this.node.id)
+            window.event.returnValue = false
+          },
+          // 鼠标移动后抬起
+          changeNodeSite() {
+            // 避免抖动
+            if (this.node.left == this.$refs.node.style.left && this.node.top == this.$refs.node.style.top) {
+              return;
             }
+            this.$emit('changeNodeSite', {
+              nodeId: this.node.id,
+              left: this.$refs.node.style.left,
+              top: this.$refs.node.style.top,
+            })
+          }
         }
     }
 </script>
