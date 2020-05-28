@@ -7,6 +7,8 @@
 </template>
 
 <script>
+    import store from '../store'
+    import {_URL} from "../utils";
 
     export default {
         data(){
@@ -17,7 +19,7 @@
         mounted() {
             if (store.state.isWeChat)
             {
-                require
+                window.location.href = _URL+"/blog/auth/code";
             }
         },
         methods: {

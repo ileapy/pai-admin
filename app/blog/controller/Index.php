@@ -1,8 +1,10 @@
 <?php
-namespace app\api\controller;
+namespace app\blog\controller;
 
 use app\api\model\mini\MiniVideo;
 use app\api\model\mini\MiniVideoBanner;
+use app\Request;
+use learn\services\WechatService;
 
 /**
  * Class Index
@@ -11,44 +13,18 @@ use app\api\model\mini\MiniVideoBanner;
 class Index
 {
     /**
-     * 轮播
-     * @return mixed
+     * 获取code
+     * @param Request $request
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function banner()
+    public function code(Request $request)
     {
-        return app("json")->success(MiniVideoBanner::lst(3),'code');
-    }
-
-    /**
-     * 视频列表
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function index()
-    {
-        $recommend = MiniVideo::love(10);
-        $movie = MiniVideo::lst("movie",10);
-        $tv = MiniVideo::lst("tv",10);
-        return app("json")->success(compact("movie","tv","recommend"));
-    }
-
-    /**
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function base()
-    {
-        $icon = systemConfig("miniprogram_logo");
-        $name = systemConfig("miniprogram_name");
-        $audit = systemConfig("miniprogram_audit");
-        $search = systemConfig("miniprogram_search");
-        return app("json")->success(compact("name","icon","audit","search"));
+        $uri = urlencode($request->domain() . "/Wechat/login");
+        $appid = systemConfig("wechat_appid");
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$uri}&response_type=code&scope=snsapi_base&state=200&connect_redirect=1#wechat_redirect";
+        header("Location:" . $url);
+        exit;
     }
 }

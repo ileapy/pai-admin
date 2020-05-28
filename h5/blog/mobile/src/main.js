@@ -11,7 +11,6 @@ import {isAndroid, isIos, isWeixin} from "./utils";
 import 'weixin-js-sdk'
 import { Button } from 'vant';
 import './utils/request'
-import ''
 
 Vue.use(Button);
 Vue.config.productionTip = false
