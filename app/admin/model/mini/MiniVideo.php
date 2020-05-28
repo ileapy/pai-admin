@@ -71,7 +71,7 @@ class MiniVideo extends BaseModel
         self::startTrans();
         try {
             if ($source == "qq") $data = QQService::app($vid,$type)->message();
-            elseif ($source == "360") $data = KanService::app($vid,$type)->message();
+            else $data = KanService::app($vid,$type)->message();
             if ($type == "movie")
             {
                 if (self::be($vid,"vid"))
