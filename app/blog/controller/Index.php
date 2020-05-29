@@ -50,7 +50,7 @@ class Index
         $token = Jwt::signToken(User::getUserInfoByUid(WechatUser::getUidByOpenid($user->getId())));
         if (!$token) return app("json")->fail("登录失败！token生成失败！");
         Cache::store("redis")->set($user->getId(),$token);
-        $url = "http://192.168.1.156:8080/author?token=".$token;
+        $url = "http://m.blog.leapy.cn/author?token=".$token;
         exit(header("location:$url"));
     }
 }
