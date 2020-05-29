@@ -140,7 +140,7 @@ switch ($step) {
         
         $folder = array(
             'public/install',
-            'public/uploads',
+            'public/upload',
             'runtime',
             '.env',
         );
@@ -202,7 +202,7 @@ switch ($step) {
             $dbName = strtolower(trim($_POST['dbname']));            
             $dbUser = trim($_POST['dbuser']);
             $dbPwd = trim($_POST['dbpw']);
-            $dbPrefix = empty($_POST['dbprefix']) ? 'eb_' : trim($_POST['dbprefix']);
+            $dbPrefix = empty($_POST['dbprefix']) ? 'lea_' : trim($_POST['dbprefix']);
 
             $username = trim($_POST['manager']);
             $password = trim($_POST['manager_pwd']);
@@ -255,22 +255,22 @@ switch ($step) {
             for ($i = $n; $i < $counts; $i++) {
                 $sql = trim($sqlFormat[$i]);
                 if (strstr($sql, 'CREATE TABLE')) {
-                    preg_match('/CREATE TABLE (IF NOT EXISTS)? `eb_([^ ]*)`/is', $sql, $matches);
-                    mysqli_query($conn,"DROP TABLE IF EXISTS `$matches[2]");
+                    preg_match('/CREATE TABLE `lea_([^ ]*)`/is', $sql, $matches);
+                    mysqli_query($conn,"DROP TABLE IF EXISTS `$matches[1]");
                     $sql = str_replace('`lea_','`'.$dbPrefix,$sql);//替换表前缀
                     $ret = mysqli_query($conn,$sql);
                     if ($ret) {
-                        $message = '<li><span class="correct_span">&radic;</span>创建数据表['.$dbPrefix.$matches[2] . ']完成!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li> ';
+                        $message = '<li><span class="correct_span">&radic;</span>创建数据表['.$dbPrefix.$matches[1] . ']完成!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li> ';
                     } else {
-                        $message = '<li><span class="correct_span error_span">&radic;</span>创建数据表['.$dbPrefix.$matches[2] . ']失败!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li>';
+                        $message = '<li><span class="correct_span error_span">&radic;</span>创建数据表['.$dbPrefix.$matches[1] . ']失败!<span style="float: right;">'.date('Y-m-d H:i:s').'</span></li>';
                     }
                     $i++;
                     $arr = array('n' => $i, 'msg' => $message);
                     echo json_encode($arr);
                     exit;
                 } else {
-					if(trim($sql) == '')
-					   continue;
+                    if(trim($sql) == '')
+                        continue;
                     $sql = str_replace('`lea_','`'.$dbPrefix,$sql);//替换表前缀
                     $ret = mysqli_query($conn,$sql);
                     $message = '';
@@ -278,14 +278,12 @@ switch ($step) {
 //                    echo json_encode($arr); exit;
                 }
             }
-
-
+            // 清理掉管理员表
+            mysqli_query($conn,"truncate table ".str_replace('lea_',$dbPrefix,'lea_admin'));
 			// 清空测试数据			
 			if(!$_POST['demo'])
-			{				
-				$result = mysqli_query($conn,"show tables");      
-				$tables=mysqli_fetch_all($result);//参数MYSQL_ASSOC、MYSQLI_NUM、MYSQLI_BOTH规定产生数组类型
-				$bl_table = array('lea_admimn'
+			{
+				$bl_table = array('lea_admin'
                 ,'lea_admin_log'
                 ,'lea_admin_notify'
                 ,'lea_wechat_user'
@@ -299,14 +297,11 @@ switch ($step) {
 					$bl_table[$k] = str_replace('lea_',$dbPrefix,$v);
 				}			      
 			
-				foreach($tables as $key => $val)
-				{					
-					if(!in_array($val[0], $bl_table))
-					{
-						mysqli_query($conn,"truncate table ".$val[0]);
-					}		
+				foreach($bl_table as $key => $val)
+				{
+                    mysqli_query($conn,"truncate table ".$val);
 				}   	
-				delFile(APP_DIR.'/uploads'); // 清空测试图片
+				delFile(APP_DIR.'/public/upload'); // 清空测试图片
 			}
             //读取配置文件，并替换真实配置数据1
             $strConfig = file_get_contents(SITE_DIR . 'install/' . $configFile);
@@ -333,8 +328,8 @@ switch ($step) {
             $time = time();
             $password = md5(md5(trim($_POST['manager_pwd'])));
             mysqli_query($conn,"truncate table {$dbPrefix}system_admin");
-            $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `pwd`, `realname`, `role_id`, `status`, `create_time`, `create_user`) VALUES
-(1, '".$username."', 'admin' ,'".$password."', 'admin', '1', '1', $time, 1)";
+            $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `pwd`, `role_id`, `status`, `create_time`, `create_user`) VALUES
+(1, '".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
 			$res = mysqli_query($conn,$addadminsql);
 			if($res){
                 $message = '成功添加管理员<br />成功写入配置文件<br>安装完成．';
