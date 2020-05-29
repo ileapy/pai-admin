@@ -54,4 +54,16 @@ class User extends BaseModel
             'sex' => $data['sex'],
         ]);
     }
+
+    /**
+     * @param int $uid
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getUserInfoByUid(int $uid)
+    {
+        return self::where("uid",$uid)->find()->toArray();
+    }
 }
