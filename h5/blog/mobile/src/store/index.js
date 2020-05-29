@@ -10,6 +10,7 @@ export default new Vuex.Store({
     isWeChat:false,
     isAndroid:true,
     isIos:true,
+    token:'',
   },
   mutations: {
   },

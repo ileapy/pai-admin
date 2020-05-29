@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store'
+import toLogin from "../libs/login";
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,7 @@ Vue.use(VueRouter)
       path: '/about',
       name: 'About',
       component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-      meta:{title:'关于我们',keyword:'关于我们',description:'关于我们'},
+      meta:{title:'关于我们',keyword:'关于我们',description:'关于我们',auth: true},
     },
     {
       path: '/author',
@@ -40,8 +41,8 @@ const router = new VueRouter({
 // 修改页面title
 router.beforeEach((to, from, next) => {
   if (to.matched.some(m => m.meta.auth)) {
-    if(!store.state.isLogin){
-      next({path: '/author'})
+    if(to.name !== 'Author' && !store.state.isLogin){
+      toLogin(to.path);
       return false;
     }
   }
