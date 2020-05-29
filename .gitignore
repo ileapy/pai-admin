@@ -2,5 +2,5 @@
 /.vscode
 /public/upload
 *.log
-.env
+/.env
 /runtime
