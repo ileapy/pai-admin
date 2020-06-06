@@ -211,6 +211,8 @@ class MiniVideo extends BaseModel
                 return '爱奇艺';
             case 'youku':
                 return '优酷';
+            case 'tudou':
+                return '土豆';
             case 'pptv':
                 return 'PP';
             case 'leshi':
@@ -219,6 +221,12 @@ class MiniVideo extends BaseModel
                 return '搜狐';
             case 'm1905':
                 return '电影网';
+            case 'hanju':
+                return '韩剧网';
+            case 'cntv':
+                return '央视';
+            default:
+                return "未知资源";
         }
     }
 }

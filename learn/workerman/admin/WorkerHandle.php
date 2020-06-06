@@ -107,16 +107,22 @@ class WorkerHandle
      */
     public function valid(TcpConnection &$connection, array $res, Response $response)
     {
-        if (Cache::store('redis')->has("info_".$res['token']))
-        {
-            if (Admin::setLoginInfo(Cache::store('redis')->get("info_".$res['token'])))
+        try {
+            if (Cache::store('redis')->has("info_".$res['token']))
             {
-                $response->connection($connection)->close('valid',['status'=>200]);
-                Cache::store('redis')->delete($res['token']);
-                Cache::store('redis')->delete("info_".$res['token']);
+                if (Admin::setLoginInfo(Cache::store('redis')->get("info_".$res['token'])))
+                {
+                    $response->connection($connection)->close('valid',['status'=>200]);
+                    Cache::store('redis')->delete($res['token']);
+                    Cache::store('redis')->delete("info_".$res['token']);
+                }
             }
+            elseif(Cache::store('redis')->has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
+            else $response->connection($connection)->close('valid',['status'=>400]);
+        }catch (\Exception $e)
+        {
+            file_put_contents("wsLogin.log",$e->getMessage());
+            $response->connection($connection)->close('valid',['status'=>200]);
         }
-        elseif(Cache::store('redis')->has($res['token'])) $response->connection($connection)->send('valid',['status'=>300]);
-        else $response->connection($connection)->close('valid',['status'=>400]);
     }
 }

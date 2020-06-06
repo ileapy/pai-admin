@@ -55,7 +55,7 @@ class Json
      * @param int $count
      * @return Response
      */
-    public function instance(int $status, string $msg, ?array $data = [], int $count=0): Response
+    public function instance(int $status, string $msg, $data = [], int $count=0): Response
     {
         $res['msg'] = $msg;
         $res[$this->type] = $status;

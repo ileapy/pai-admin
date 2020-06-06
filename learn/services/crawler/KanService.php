@@ -81,6 +81,11 @@ class KanService
     const NUM_MATCH = "/<p class=\"tag\">更新至<span>([^<>]+)<\/span>\/共([^<>]+)集 <\/p>/";
 
     /**
+     * 总集数
+     */
+    const NUM2_MATCH = "/<p class=\"tag\">全<span>([^<>]+)<\/span>集<\/p>/";
+
+    /**
      * 每集信息
      */
     const ITEM_MATCH = "/<a data-num=\"([^<>]+)\" data-daochu=\"([^<>]+)\" href=\"([^<>]+)\">            ([^<>]+)            (.*?)<\/a>/";
@@ -253,6 +258,12 @@ class KanService
     public function num()
     {
         preg_match(self::NUM_MATCH,$this->html,$num);
+        if (empty($num))
+        {
+            preg_match(self::NUM2_MATCH,$this->html,$num);
+            $this->now_num = $num[count($num)-1];
+            return $num[count($num)-1];
+        }
         $this->now_num = $num[count($num)-2];
         return $num[count($num)-1];
     }

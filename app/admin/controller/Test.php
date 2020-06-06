@@ -4,6 +4,8 @@
 namespace app\admin\controller;
 
 use app\admin\model\wechat\WechatUser;
+use app\api\model\user\UserOrder;
+use app\models\user\UserBill;
 use app\Request;
 use learn\services\crawler\KanService;
 use learn\services\crawler\QQService;
@@ -24,8 +26,10 @@ class Test extends AuthController
 
     public function index()
     {
+//        $order = UserOrder::where("oid","O202005300921423654")->find()->toArray();
+//        UserBill::addBill($order);
 //        KanService::app("gKLoZBH5RnX0UB","movie")->message();
-//        $data = KanService::app("Q4FrbX7lSzbrMX","tv")->message();
+//        $data = KanService::app("PrNqb07lRGPnMX","tv")->message();
 //        var_dump($data);
 //        ExcelService::setHeader("订单导出",['订单编号','商品名称','商品规格']);
 //        ExcelService::setHeader("订单导出",['订单id','订单号','电话','收货人姓名'])->setBody([[1,2,3,4],[1,2,3,4]])->save();

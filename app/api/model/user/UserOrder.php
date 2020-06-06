@@ -7,6 +7,7 @@ namespace app\api\model\user;
 use app\api\model\BaseModel;
 use app\api\model\mini\MiniVideoOrder;
 use app\api\model\ModelTrait;
+use app\models\user\UserBill;
 
 /**
  * Class UserOrder
@@ -28,18 +29,22 @@ class UserOrder extends BaseModel
             if (!$oid) return false;
             $order = self::where("oid",$oid)->find();
             if (!$order) return false;
+            $order = $order->toArray();
             self::where("oid",$oid)->update(['pay_time'=>time(),'paid'=>1,'status'=>1]);
             switch ($order['source'])
             {
                 case 1: // 视频小程序订单
-                    MiniVideoOrder::orderPayOver($oid);
+                    MiniVideoOrder::orderPayOver($oid);  //订单完成
+                    UserBill::addBill($order);
                     break;
             }
             self::commit();
+            return true;
         }catch (\Exception $e)
         {
             var_dump($e->getMessage());
             self::rollback();
+            return false;
         }
     }
 }

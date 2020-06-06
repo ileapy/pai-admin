@@ -188,6 +188,7 @@
         switch (data['status'])
         {
           case 200:
+            clearInterval(t1);
             window.location = "/admin/index/index";
             break;
           case 300:

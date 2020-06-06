@@ -81,6 +81,7 @@ class MiniVideo extends AuthController
             $menu[] = ['label'=>"乐视",'value'=>"leshi"];
             $menu[] = ['label'=>"搜狐",'value'=>"sohu"];
             $menu[] = ['label'=>"电影网",'value'=>"m1905"];
+            $menu[] = ['label'=>"韩剧网",'value'=>"hanju"];
             return $menu;
         })->col(10);
         $form[] = Elm::input('time','上映时间')->col(10);
@@ -145,6 +146,7 @@ class MiniVideo extends AuthController
             $menu[] = ['label'=>"乐视",'value'=>"leshi"];
             $menu[] = ['label'=>"搜狐",'value'=>"sohu"];
             $menu[] = ['label'=>"电影网",'value'=>"m1905"];
+            $menu[] = ['label'=>"韩剧网",'value'=>"hanju"];
             return $menu;
         })->col(10);
         $form[] = Elm::input('time','上映时间',$ainfo['time'])->col(10);
