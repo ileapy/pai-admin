@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图文管理 - 派后台管理系统</title>
+    {include file="public/header" /}
+</head>
+<body>
+<div class="container-fluid p-t-15">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-inline searchForm">
+                        <div class="form-group">
+                            <label for="title">关键词</label>
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="title" value="" autocomplete="off" name="title" placeholder="请输入文章标题">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                        <button type="button" class="btn btn-success" style="margin: -10px 0 0 10px;" id="sync">同步</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><h4>图文列表</h4></div>
+                <div class="card-body">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file="public/footer"/}
+<script>
+
+</script>
+</html>

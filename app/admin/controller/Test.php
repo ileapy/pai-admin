@@ -4,6 +4,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\mini\MiniVideo;
+use app\admin\model\wechat\WechatNews;
 use app\admin\model\wechat\WechatUser;
 use app\api\model\user\UserOrder;
 use app\models\user\UserBill;
@@ -16,6 +17,7 @@ use learn\services\mail\MailService;
 use learn\services\pay\PayService;
 use learn\services\sms\QCloudSmsService;
 use learn\services\storage\QcloudCoService;
+use learn\services\WechatService;
 use learn\utils\Curl;
 use think\facade\Cache;
 
@@ -28,7 +30,7 @@ class Test extends AuthController
 
     public function index()
     {
-        MiniVideo::updateVideoRank("tv");
+//        MiniVideo::updateVideoRank("tv");
 //        var_dump(KanRankService::app("tv")->run());
 //        MiniVideo::UpdateTimer();
 //        $order = UserOrder::where("oid","O202005300921423654")->find()->toArray();
@@ -84,5 +86,6 @@ class Test extends AuthController
 //总数：1928
 //操作员	操作类型	操作模块	操作描述	操作IP	操作时间
 //admin	删除	课程管理	删除ID:0的课程下ID:853的章节	180.175.1.70	2020-04-30 15:28:38");
+        return WechatNews::sync();
     }
 }
