@@ -22,7 +22,9 @@ return [
         'EventUnsubscribeBefore' => [], //微信取消关注前置操作
         'EventSubscribeBefore' => [], //微信关注前者操作
         'UploadMediaAfter' => [], // 微信上传素材文件
-        'PayOrderBefore' => [], // 订单支付成功回调
+        'PayOrderBefore' => [], // 订单支付成功回调,
+        'VideoUpdateOver' => [], //电视剧更新完成记录,
+        'VideoRankUpdateOver' => [], //排行榜更新
     ],
 
     'subscribe' => [
@@ -33,5 +35,6 @@ return [
         \learn\subscribes\WechatMediaSubscribe::class, // 微信素材
         \learn\subscribes\PayOrderSubscribe::class, // 订单成功回调
         \learn\subscribes\MiniProgramMessageSubscribe::class, //小程序客服
+        \learn\subscribes\VideoSubscribe::class, //视频操作
     ],
 ];

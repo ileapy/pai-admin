@@ -32,4 +32,14 @@ class AdminNotify extends BaseModel
         $model = $model->order("add_time desc");
         return $model->paginate(10)->appends($where);
     }
+
+    /**
+     * 添加记录
+     * @param array $data
+     * @return int|string
+     */
+    public static function addLog(array $data)
+    {
+        return self::insert($data);
+    }
 }

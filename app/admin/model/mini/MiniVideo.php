@@ -6,6 +6,7 @@ namespace app\admin\model\mini;
 
 use app\admin\model\BaseModel;
 use app\admin\model\ModelTrait;
+use learn\services\crawler\KanRankService;
 use learn\services\crawler\KanService;
 use learn\services\crawler\QQService;
 use think\Db;
@@ -51,7 +52,7 @@ class MiniVideo extends BaseModel
                 preg_match('/https:\/\/v.qq.com\/detail\/(.*?)\/(.*?).html/', $data['link'], $vid);
                 return self::saveData($vid[2],$data['type'],"qq", $data['adminId']);
             case "360kan.com":
-                preg_match('/https:\/\/www.360kan.com\/(.*?)\/(.*?).html/', $data['link'], $vid);
+                preg_match('/[https|http]:\/\/www.360kan.com\/(.*?)\/(.*?).html/', $data['link'], $vid);
                 return self::saveData($vid[2],$data['type'],"360", $data['adminId']);
             default:
                 return false;
@@ -125,7 +126,7 @@ class MiniVideo extends BaseModel
                     $res1 = self::where("vid",$vid)->update([
                             'source' => $source == "qq" ? $source : $data['source'],
                             'type' => $type,
-                            'url' => "",
+                            'url' => $data['url'],
                             'title' => $data['title'],
                             'cover' => $data['cover'],
                             'actor' => $data['actor'],
@@ -176,7 +177,7 @@ class MiniVideo extends BaseModel
                         'vid' => $vid,
                         'source' => $source == "qq" ? $source : $data['source'],
                         'type' => $type,
-                        'url' => "",
+                        'url' => $data['url'],
                         'title' => $data['title'],
                         'cover' => $data['cover'],
                         'actor' => $data['actor'],
@@ -253,8 +254,37 @@ class MiniVideo extends BaseModel
         $model = $model->where("status",1);
         $model = $model->where("type","tv");
         $model = $model->where("num > now_num");
-        $model->select()->each(function ($item){
+        $data = $model->select()->each(function ($item){
             self::saveData($item['vid'],$item['type'],$item['source'],0);
         });
+        if ($data) $data = $data->toArray();
+        event("VideoUpdateOver",[$data]);
+    }
+
+    /**
+     * 从排行榜更新视频
+     * @param string $type
+     */
+    public static function updateVideoRank(string $type = "movie")
+    {
+        switch ($type)
+        {
+            case 'movie':
+                $data = KanRankService::app("movie")->run();
+                foreach ($data['list'][0] as $item)
+                {
+                    self::saveByLink(['link'=>$item,'adminId'=>0,'type'=>'movie']);
+                }
+                event("VideoRankUpdateOver",[$data['list'][1]]);
+                return;
+            case 'tv':
+                $data = KanRankService::app("tv")->run();
+                foreach ($data['list'][0] as $item)
+                {
+                    self::saveByLink(['link'=>$item,'adminId'=>0,'type'=>'tv']);
+                }
+                event("VideoRankUpdateOver",[$data['list'][1]]);
+                return;
+        }
     }
 }

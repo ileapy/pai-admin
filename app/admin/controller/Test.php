@@ -3,10 +3,12 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\mini\MiniVideo;
 use app\admin\model\wechat\WechatUser;
 use app\api\model\user\UserOrder;
 use app\models\user\UserBill;
 use app\Request;
+use learn\services\crawler\KanRankService;
 use learn\services\crawler\KanService;
 use learn\services\crawler\QQService;
 use learn\services\ExcelService;
@@ -26,6 +28,9 @@ class Test extends AuthController
 
     public function index()
     {
+        MiniVideo::updateVideoRank("tv");
+//        var_dump(KanRankService::app("tv")->run());
+//        MiniVideo::UpdateTimer();
 //        $order = UserOrder::where("oid","O202005300921423654")->find()->toArray();
 //        UserBill::addBill($order);
 //        KanService::app("gKLoZBH5RnX0UB","movie")->message();

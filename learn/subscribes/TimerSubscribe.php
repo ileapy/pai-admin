@@ -56,4 +56,16 @@ class TimerSubscribe
          */
         MiniVideo::UpdateTimer();
     }
+
+    /**
+     * 每隔一天执行的任务
+     */
+    public function onTask_86400()
+    {
+        /**
+         * 更新视频排行榜
+         */
+        MiniVideo::updateVideoRank("movie");
+        MiniVideo::updateVideoRank("tv");
+    }
 }
