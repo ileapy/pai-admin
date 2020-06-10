@@ -30,9 +30,17 @@
             <div class="card">
                 <div class="card-header"><h4>图文列表</h4></div>
                 <div class="card-body">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-
+                    <div class="row">
+                        {volist name="item" id="vo"}
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="item-title">{$vo.cover.title}</div>
+                            <div class="item-image"><img src="{$vo.cover.thumb_url}"></div>
+                            <div class="item-desc">{$vo.cover.digest}</div>
+                            <div class="item-footer">更新于{$vo.update_time|date='Y-m-d'}</div>
+                        </div>
+                        {/volist}
                     </div>
+                    {$item|raw}
                 </div>
             </div>
         </div>

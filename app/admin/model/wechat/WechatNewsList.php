@@ -15,4 +15,18 @@ use app\admin\model\ModelTrait;
 class WechatNewsList extends BaseModel
 {
     use ModelTrait;
+
+    /**
+     * 图文列表
+     * @param array $where
+     * @return \think\Paginator
+     * @throws \think\db\exception\DbException
+     */
+    public static function system(array $where)
+    {
+        $model = new self;
+        return $model->paginate($where['limit'])->each(function ($item){
+            $item['cover'] = WechatNews::get(explode(",",$item['content'])[0]);
+        })->appends($where);
+    }
 }
