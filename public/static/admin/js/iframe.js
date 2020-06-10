@@ -28,10 +28,10 @@ var iframe = function(){
         $('#myModal').on('hide.bs.modal', function () {
             $('#myModal').remove();
         });
-        $('#myModal').on("show.bs.modal", function () {
-            $(this).draggable();
-            $(this).css("overflow-y", "scroll");
-        });
+        // $('#myModal').on("show.bs.modal", function () {
+        //     $(this).draggable();
+        //     $(this).css("scroll", "false");
+        // });
     };
 
     var open = function ($title,$url,$param={}) {
