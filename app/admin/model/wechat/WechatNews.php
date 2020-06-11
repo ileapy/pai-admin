@@ -53,14 +53,14 @@ class WechatNews extends BaseModel
                         ]);
                     }
                     $list = WechatNewsList::where("media_id",$v['media_id'])->find();
-                    if ($list) WechatNewsList::where("media_id",$v['media_id'])->update(['content'=>implode(",",$news),'create_time'=>$v['content']['create_time'],'update_time'=>$v['content']['update_time']]);
-                    else WechatNewsList::insert(['media_id'=>$v['media_id'],'content'=>implode(",",$news),'create_time'=>$v['content']['create_time'],'update_time'=>$v['content']['update_time']]);
+                    if ($list) WechatNewsList::where("media_id",$v['media_id'])->update(['item'=>implode(",",$news),'content'=>json_encode($v['content'],true),'create_time'=>$v['content']['create_time'],'update_time'=>$v['content']['update_time']]);
+                    else WechatNewsList::insert(['media_id'=>$v['media_id'],'item'=>implode(",",$news),'content'=>json_encode($v['content'],true),'create_time'=>$v['content']['create_time'],'update_time'=>$v['content']['update_time']]);
                 }
             }
-            return app("json")->success("更新成功");
+            return true;
         }catch (\Exception $exception)
         {
-            return app("json")->fail($exception->getMessage());
+            return false;
         }
     }
 }

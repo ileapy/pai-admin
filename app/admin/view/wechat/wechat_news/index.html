@@ -21,6 +21,7 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-success" style="margin: -10px 0 0 10px;" id="search">搜索</button>
+                        <button type="button" class="btn btn-success" style="margin: -10px 0 0 10px;" onclick="iframe.createIframe('添加图文','/admin/wechat.wechat_news/add')">添加</button>
                         <button type="button" class="btn btn-success" style="margin: -10px 0 0 10px;" id="sync">同步</button>
                     </form>
                 </div>
@@ -32,11 +33,11 @@
                 <div class="card-body">
                     <div class="row">
                         {volist name="item" id="vo"}
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="item-title">{$vo.cover.title}</div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 item-card">
+                            <h1 class="item-title">{$vo.cover.title}</h1>
                             <div class="item-image"><img src="{$vo.cover.thumb_url}"></div>
                             <div class="item-desc">{$vo.cover.digest}</div>
-                            <div class="item-footer">更新于{$vo.update_time|date='Y-m-d'}</div>
+                            <div class="item-footer"><span>更新于{$vo.update_time|date='Y-m-d'}</span><span style="float: right;"><span class="mdi mdi-table-edit item-footer-icon"></span><span class="mdi mdi-delete-circle item-footer-icon"></span></span></div>
                         </div>
                         {/volist}
                     </div>
@@ -49,6 +50,38 @@
 </body>
 {include file="public/footer"/}
 <script>
-
+    $("#sync").click(function () {
+        $.post("/admin/wechat.wechat_news/sync",{},function (res) {
+            if (res.status == 200) {parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');$("#tb_departments").bootstrapTable('refresh');}
+            else parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+        });
+    });
 </script>
+<style>
+    .item-title{
+        font-size: 16px;
+    }
+    .item-card{
+        margin: auto;
+        max-width: 320px;
+        padding: 10px;
+        box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 2px;
+    }
+    .item-desc{
+        padding: 10px 0;
+        font-size: 14px;
+        color: #848484;
+    }
+    .item-footer{
+        line-height: 50px;
+    }
+    .item-image img{
+        max-width: 100%;
+    }
+    .item-footer-icon{
+        font-size: 20px;
+        margin-left: 10px;
+    }
+</style>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>图文编辑 - 派后台管理系统</title>
+    <link rel="icon" href="__ADMIN_PATH__favicon.ico" type="image/ico">
+    <meta name="keywords" content="派后台管理系统">
+    <meta name="description" content="派后台管理系统">
+    <meta name="author" content="cfn">
+    <link href="__ADMIN_PATH__css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="__ADMIN_PATH__css/style.min.css" rel="stylesheet">
+    <style>
+        .active{
+            border: 2px solid #4CAF50;
+        }
+        .item-one{
+            height: 150px;
+            width: 290px;
+            background: #e1e1e1;
+        }
+        .item-one-title{
+            position: relative;
+            top: 120px;
+            padding-left: 10px;
+            z-index: 10;
+            color: #fff;
+        }
+        .item-one-img{
+            position: absolute;
+            width: 100%;
+            height: 60%;
+        }
+        .item{
+            height: 84px;
+            padding-top: 10px;
+            width: 290px;
+        }
+        .item-title{
+            padding-left: 10px;float: left;width: 190px;height: 70px;
+        }
+        .item-img{
+            background: #e1e1e1;width: 60px;height: 60px;float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid p-t-15" id="app">
+    <div class="row">
+        <div class="col-sm-4" style="margin: 0 auto; width: 290px;">
+            <div v-for="(value, key) in data">
+                <div class="item-one" v-if="key == 0">
+                    <img :src="value.thumb_url" class="item-one-img active" v-if="value.thumb_url"/>
+                    <img class="item-one-img active" v-else/>
+                    <p class="item-one-title">{{value.title}}</p>
+                </div>
+                <div class="item" v-else>
+                    <p class="item-title">{{value.title}}</p>
+                    <img class="item-img" :src="value.thumb_url" v-if="value.thumb_url"/>
+                    <img class="item-img" v-else/>
+                </div>
+            </div>
+            <div v-if="data.length < 8">
+                <span class="mdi mdi-plus"></span>新建图文
+            </div>
+        </div>
+        <div class="col-sm-8">
+            1212
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__ADMIN_PATH__js/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/main.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/vue/vue.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data() {
+            return {
+                data:[
+                    {
+                        thumb_url:'',
+                        title:'Python3+Pyqt5爬取抖音视频实战',
+                    },
+                    {
+                        thumb_url:'',
+                        title:'Python3+Pyqt5爬取抖音视频实战',
+                    },
+                ]
+            }
+        },
+        methods: {
+
+        }
+    });
+</script>
+</body>
+</html>

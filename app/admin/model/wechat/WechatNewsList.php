@@ -26,7 +26,7 @@ class WechatNewsList extends BaseModel
     {
         $model = new self;
         return $model->paginate($where['limit'])->each(function ($item){
-            $item['cover'] = WechatNews::get(explode(",",$item['content'])[0]);
+            $item['cover'] = WechatNews::get(explode(",",$item['item'])[0]);
         })->appends($where);
     }
 }
