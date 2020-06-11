@@ -42,6 +42,18 @@ class KanService
     const TV_URL = "https://www.360kan.com/tv/";
 
     /**
+     * 动漫视频地址
+     * @var
+     */
+    const D_URL = "https://www.360kan.com/ct/";
+
+    /**
+     * 综艺视频地址
+     * @var
+     */
+    const Z_URL = "https://www.360kan.com/va/";
+
+    /**
      * 标题
      */
     const TITLE_MATCH = "/<h1>([^<>]+)<\/h1>/";
@@ -114,6 +126,12 @@ class KanService
         }elseif ($type == "movie")
         {
             $this->url = self::M_URL.$vid.".html";
+        }elseif ($type == "dm")
+        {
+            $this->url = self::D_URL.$vid.".html";
+        }elseif ($type == "zy")
+        {
+            $this->url = self::Z_URL.$vid.".html";
         }
     }
 
@@ -158,6 +176,8 @@ class KanService
                     $url = self::url();
                     return compact("title","desc","time","cover","tag","actor","source","url");
                 case "tv":
+                case "dm":
+                case "zy":
                     $num = self::num();
                     $item = self::item();
                     $now_num = count($item);

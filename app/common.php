@@ -82,3 +82,46 @@ if (!function_exists('createOrderId'))
         return "O".date("YmdHis").rand(1000,9999);
     }
 }
+
+if (!function_exists('unicodeEncode'))
+{
+    /**
+     * 中文转unicode
+     * @param $str
+     * @return string
+     */
+    function unicodeEncode($str)
+    {
+        $strArr = preg_split('/(?<!^)(?!$)/u', $str);
+        $resUnicode = '';
+        foreach ($strArr as $str)
+        {
+            $bin_str = '';
+            $arr = is_array($str) ? $str : str_split($str);
+            foreach ($arr as $value) $bin_str .= decbin(ord($value));
+            $bin_str = preg_replace('/^.{4}(.{4}).{2}(.{6}).{2}(.{6})$/', '$1$2$3', $bin_str);
+            $unicode = dechex(bindec($bin_str));
+            $_sup = '';
+            for ($i = 0; $i < 4 - strlen($unicode); $i++) $_sup .= '0';
+            $str =  '\\u' . $_sup . $unicode;
+            $resUnicode .= $str;
+        }
+        return $resUnicode;
+    }
+}
+
+if (!function_exists('unicodeDecode'))
+{
+    /**
+     * unicode转中文
+     * @param $unicode_str
+     * @return string
+     */
+    function unicodeDecode($unicode_str)
+    {
+        $json = '{"str":"'.$unicode_str.'"}';
+        $arr = json_decode($json,true);
+        if(empty($arr)) return '';
+        return $arr['str'];
+    }
+}
