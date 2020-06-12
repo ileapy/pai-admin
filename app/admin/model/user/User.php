@@ -51,4 +51,21 @@ class User extends BaseModel
         ]);
     }
 
+    /**
+     * 半个月内的用户统计
+     * @return array
+     */
+    public static function statistics()
+    {
+        //半个月内用户注册统计
+        $model = new self;
+        $model = $model->where("register_time","between",[strtotime(date("Y-m-d 00:00:00",strtotime("-14 day"))),strtotime(date("Y-m-d 23:59:59",strtotime("-1 day")))]);
+        $model = $model->field("from_unixtime(register_time, '%m-%d') as date, count(*) as num");
+        $model = $model->group("date");
+        $data = $model->select();
+        if ($data) $data = $data->toArray();
+        $label = array_column($data,"date");
+        $data = array_column($data,"num");
+        return compact("data","label");
+    }
 }

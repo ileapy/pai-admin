@@ -5,6 +5,7 @@ namespace app\admin\model\admin;
 
 
 use app\admin\model\BaseModel;
+use app\admin\model\ModelTrait;
 
 /**
  * 消息通知
@@ -13,6 +14,8 @@ use app\admin\model\BaseModel;
  */
 class AdminNotify extends BaseModel
 {
+    use ModelTrait;
+
     /**
      * 系统分页
      * @param array $where
@@ -29,6 +32,7 @@ class AdminNotify extends BaseModel
         if ($where['title'] != '') $model = $model->where("title|content","like","%$where[title]%");
         if ($where['is_read'] != '') $model = $model->where("is_read",$where['is_read']);
         if ($where['aid'] != '') $model = $model->where("aid",$where['aid']);
+        $model = $model->order("is_read");
         $model = $model->order("add_time desc");
         return $model->paginate(10)->appends($where);
     }
@@ -41,5 +45,25 @@ class AdminNotify extends BaseModel
     public static function addLog(array $data)
     {
         return self::insert($data);
+    }
+
+    /**
+     * 后台首页获取通知信息
+     * @param int $num
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function pageList(int $num)
+    {
+        $model = new self;
+        $model = $model->where("is_read",0);
+        $count = self::counts($model);
+        $model = $model->order("add_time desc");
+        $model = $model->page(1,$num);
+        $data = $model->select();
+        if ($data) $data = $data->toArray();
+        return compact("data","count");
     }
 }

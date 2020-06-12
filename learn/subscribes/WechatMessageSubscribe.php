@@ -13,6 +13,17 @@ use app\admin\model\wechat\WechatUser;
 class WechatMessageSubscribe
 {
     /**
+     * 微信公众号前置操作
+     * @param $event
+     */
+    public function onMessageBefore($event)
+    {
+        list($message) = $event;
+        $event = strtolower($message['MsgType']) == 'event' ? strtolower($message['Event']) : strtolower($message['MsgType']) ;
+        WechatMessage::saveMessage($message['FromUserName'], $event, json_encode($message,true));
+    }
+
+    /**
      * 用户信息前置操作
      * @param $event
      */

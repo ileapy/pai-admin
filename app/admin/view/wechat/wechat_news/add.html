@@ -29,8 +29,7 @@
         }
         .item-one-img{
             position: absolute;
-            width: 100%;
-            height: 60%;
+            height: 62%;
         }
         .item{
             height: 84px;
@@ -43,30 +42,61 @@
         .item-img{
             background: #e1e1e1;width: 60px;height: 60px;float: right;
         }
+        .item-add{
+            position: absolute;
+            width: 290px;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
 <div class="container-fluid p-t-15" id="app">
     <div class="row">
-        <div class="col-sm-4" style="margin: 0 auto; width: 290px;">
+        <div class="col-sm-4 col-xs-4 col-md-4">
             <div v-for="(value, key) in data">
-                <div class="item-one" v-if="key == 0">
-                    <img :src="value.thumb_url" class="item-one-img active" v-if="value.thumb_url"/>
-                    <img class="item-one-img active" v-else/>
+                <div class="item-one" :class="{ 'active': key == cur }" v-if="key == 0">
+                    <img :src="value.thumb_url" class="item-one-img" v-if="value.thumb_url"/>
+                    <img class="item-one-img" v-else/>
                     <p class="item-one-title">{{value.title}}</p>
                 </div>
-                <div class="item" v-else>
+                <div class="item" :class="{ 'active': key == cur }" v-else>
                     <p class="item-title">{{value.title}}</p>
                     <img class="item-img" :src="value.thumb_url" v-if="value.thumb_url"/>
                     <img class="item-img" v-else/>
                 </div>
             </div>
-            <div v-if="data.length < 8">
+            <div v-if="data.length < 8" class="item-add">
                 <span class="mdi mdi-plus"></span>新建图文
             </div>
         </div>
-        <div class="col-sm-8">
-            1212
+        <div class="col-sm-8 col-xs-8 col-md-8">
+            <div style="margin: 0 20px;padding:10px 20px;width: 100%;background: #fff;position: relative;">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input name="title" id="title" v-model="data[cur].title" class="form-control" autocomplete="off" placeholder="请输入文章标题"/>
+                </div>
+                <div class="form-group">
+                    <label for="author">作者</label>
+                    <input id="author" name="author" v-model="data[cur].author" class="form-control" placeholder="请输入文章作者"/>
+                </div>
+                <div class="form-group">
+                    <textarea id="content" name="content" v-model="data[cur].content"  class="form-control" placeholder="请输入文章内容" autocomplete="off"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="thumb_url">封面</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" v-model="data[cur].thumb_url" name="thumb_url" id="thumb_url" autocomplete="off"/>
+                        <input type="file" id="filethumb_url" style="display: none;" onchange="upload('thumb_url')"/>
+                        <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('thumb_url')">上传</button></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="digest">摘要</label>
+                    <textarea id="digest" name="digest" v-model="data[cur].digest" class="form-control" placeholder="请输入文章摘要" autocomplete="off"></textarea>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -76,25 +106,72 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/vue/vue.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/bootstrap-notify.min.js"></script>
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
+<script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
 <script>
+
+    /**
+     * 选择文件
+     * @param inputName
+     */
+    function btnClick(inputName) {
+        $("#file"+inputName).click()
+    }
+    /**
+     * 异步上传
+     * @param inputName
+     */
+    function upload(inputName) {
+        var formData = new FormData();
+        formData.append("file",$("#file"+inputName)[0].files[0]);
+        $.ajax({
+            type:'POST',
+            url:'/admin/widget.files/image',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                $("#"+inputName).text(res.data.filePath);
+            }
+        });
+    }
+
+    /**
+     * vue
+     */
     var vm = new Vue({
         el: "#app",
         data() {
             return {
+                cur:0,
                 data:[
                     {
                         thumb_url:'',
                         title:'Python3+Pyqt5爬取抖音视频实战',
-                    },
-                    {
-                        thumb_url:'',
-                        title:'Python3+Pyqt5爬取抖音视频实战',
-                    },
+                    }
                 ]
             }
         },
         methods: {
 
+        },
+        mounted(){
+            tinymce.init({
+                selector: '#content',
+                language: 'zh_CN',
+                directionality: 'ltl',
+                browser_spellcheck: true,
+                contextmenu: false,
+                height: 480,
+                plugins: [
+                    "advlist autolink lists link image charmap print preview anchor",
+                    "searchreplace visualblocks code fullscreen",
+                    "insertdatetime media table contextmenu paste imagetools wordcount",
+                    "code"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
+                images_upload_url: '/admin/widget.files/tinymce',
+            });
         }
     });
 </script>

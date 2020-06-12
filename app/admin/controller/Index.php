@@ -4,7 +4,12 @@
 namespace app\admin\controller;
 
 use app\admin\model\admin\AdminAuth;
+use app\admin\model\admin\AdminNotify;
 use app\admin\model\project\project;
+use app\admin\model\user\User;
+use app\admin\model\user\UserBill;
+use app\admin\model\user\UserMessage;
+use app\admin\model\wechat\WechatMessage;
 use app\Request;
 use learn\services\UtilService as Util;
 
@@ -24,6 +29,7 @@ class Index extends AuthController
     {
         $this->assign("adminInfo",$this->adminInfo);
         $this->assign("menu",AdminAuth::getMenu(0,$this->auth));
+        $this->assign("message",AdminNotify::pageList(5));
         return $this->fetch();
     }
 
@@ -39,6 +45,12 @@ class Index extends AuthController
             ['limit',20],
         ]);
         $this->assign("project",project::lst($where)['data']);
+        $this->assign("billMoney",UserBill::getAllEarn()); //全部收入
+        $this->assign("userNum",User::count()); //用户总数
+        $this->assign("wechatMessageNum",WechatMessage::where("add_time","between",[mktime(0,0,0,date('m'),date('d'),date('Y')),mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1])->count()); //今日公众号操作数量
+        $this->assign("messageNum",UserMessage::where("is_read",0)->count()); //新增留言
+        $this->assign("user",User::statistics()); // 最近14天用户注册统计
+        $this->assign("bill",UserBill::statistics());// 最近14天交易统计
         return $this->fetch();
     }
 

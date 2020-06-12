@@ -128,11 +128,11 @@
                                 <li class="drop-skin-li clearfix">
                   <span class="inverse">
                     <input type="radio" name="header_bg" value="default" id="header_bg_1" checked>
-                    <label for="header_bg_1"></label>                      
+                    <label for="header_bg_1"></label>
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_2" id="header_bg_2">
-                    <label for="header_bg_2"></label>                      
+                    <label for="header_bg_2"></label>
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_3" id="header_bg_3">
@@ -140,15 +140,15 @@
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_4" id="header_bg_4">
-                    <label for="header_bg_4"></label>                      
+                    <label for="header_bg_4"></label>
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_5" id="header_bg_5">
-                    <label for="header_bg_5"></label>                      
+                    <label for="header_bg_5"></label>
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_6" id="header_bg_6">
-                    <label for="header_bg_6"></label>                      
+                    <label for="header_bg_6"></label>
                   </span>
                                     <span>
                     <input type="radio" name="header_bg" value="color_7" id="header_bg_7">
@@ -201,38 +201,20 @@
                         <li class="dropdown notifications-menu">
               <span class="dropdown-toggle icon-notifications" data-toggle="dropdown">
                 <i class="mdi mdi-bell"></i>
-                <span class="label label-warning">10</span>
+                <span class="label label-warning">{$message.count}</span>
               </span>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li class="header">您有10个未读消息</li>
+                                <li class="header">您有{$message.count}个未读消息</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
+                                        {volist name="message.data" id="vo"}
                                         <li>
-                                            <a data-url="#" class="multitabs">
-                                                <i class="mdi mdi-account text-primary"></i> 今天有5个新成员加入
+                                            <a data-url="/admin/admin.admin_notify/index" data-title="我的消息" class="multitabs">
+                                                {if $vo.type=='timer'}<i class="mdi mdi-timer-sand-empty text-primary"></i>{elseif $vo.type=='system'/}<i class="mdi mdi-access-point text-primary"></i>{else/}<i class="mdi mdi-timer-sand text-primary"></i>{/if} {$vo.title}
                                             </a>
                                         </li>
-                                        <li>
-                                            <a data-url="#" class="multitabs">
-                                                <i class="mdi mdi-weather-snowy text-yellow"></i> 今天将要下雪
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-url="#" class="multitabs">
-                                                <i class="mdi mdi-shield text-danger"></i> 很长的描述可能不适合页面并可能导致设计问题
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-url="#" class="multitabs">
-                                                <i class="mdi mdi-shopping text-success"></i> 25万销售额
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a data-url="#" class="multitabs">
-                                                <i class="mdi mdi-flask-outline text-cyan"></i> 您更新了用户名
-                                            </a>
-                                        </li>
+                                        {/volist}
                                     </ul>
                                 </li>
                                 <li class="text-center"><a data-url="/admin/admin.adminNotify/index" class="multitabs" style="cursor: pointer;">我的消息</a></li>

@@ -65,7 +65,7 @@ class TimerSubscribe
         /**
          * 更新视频排行榜
          */
-        MiniVideo::updateVideoRank("movie");
+//        MiniVideo::updateVideoRank("movie");
         MiniVideo::updateVideoRank("tv");
     }
 }

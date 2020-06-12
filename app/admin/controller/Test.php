@@ -31,7 +31,7 @@ class Test extends AuthController
     public function index()
     {
 //        https://www.360kan.com/ct/OUPkaZ7kNY7vDj.html
-        var_dump(KanService::app("OUPkaZ7kNY7vDj","dm")->message());
+//        var_dump(KanService::app("OUPkaZ7kNY7vDj","dm")->message());
 //        MiniVideo::updateVideoRank("tv");
 //        var_dump(KanRankService::app("tv")->run());
 //        MiniVideo::UpdateTimer();
@@ -89,5 +89,7 @@ class Test extends AuthController
 //操作员	操作类型	操作模块	操作描述	操作IP	操作时间
 //admin	删除	课程管理	删除ID:0的课程下ID:853的章节	180.175.1.70	2020-04-30 15:28:38");
 //        return WechatNews::sync();
+//        MiniVideo::updateVideoRank("movie");
+//        MiniVideo::updateVideoRank("tv");
     }
 }

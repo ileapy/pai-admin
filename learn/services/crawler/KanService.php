@@ -170,10 +170,10 @@ class KanService
             $tag = self::tag();
             $actor = self::actor();
             $source = self::source();
+            $url = self::url();
             switch ($this->type)
             {
                 case "movie":
-                    $url = self::url();
                     return compact("title","desc","time","cover","tag","actor","source","url");
                 case "tv":
                 case "dm":
@@ -181,7 +181,7 @@ class KanService
                     $num = self::num();
                     $item = self::item();
                     $now_num = count($item);
-                    return compact("title","desc","time","cover","tag","actor","num","item","now_num","source");
+                    return compact("title","desc","time","cover","tag","actor","num","item","now_num","source","url");
             }
         }catch (\Exception $e)
         {
