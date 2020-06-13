@@ -45,11 +45,17 @@ class WechatNews extends AuthController
 
     /**
      * 添加
+     * @param int $id
      * @return string
      * @throws \Exception
      */
-    public function add()
+    public function add($id = 0)
     {
+        $data = [];
+        if ($id) $data = WechatNewsList::getAllItem($id);
+        if ($id == 0 || empty($data)) $data = [['title'=>'标题','thumb_url'=>'']];
+        $this->assign("id",$id);
+        $this->assign("data",$data);
         return $this->fetch();
     }
 }

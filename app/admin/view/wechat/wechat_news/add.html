@@ -29,7 +29,6 @@
         }
         .item-one-img{
             position: absolute;
-            height: 62%;
         }
         .item{
             height: 84px;
@@ -49,6 +48,12 @@
             border: 1px solid #ccc;
             padding: 10px 0;
         }
+        .btn-group{
+            position: fixed;
+            bottom:0;
+            right: 20px;
+            z-index: 66;
+        }
     </style>
 </head>
 <body>
@@ -56,23 +61,23 @@
     <div class="row">
         <div class="col-sm-4 col-xs-4 col-md-4">
             <div v-for="(value, key) in data">
-                <div class="item-one" :class="{ 'active': key == cur }" v-if="key == 0">
+                <div class="item-one" :class="{ 'active': key == cur }" @click="itemClick(key)" v-if="key == 0">
                     <img :src="value.thumb_url" class="item-one-img" v-if="value.thumb_url"/>
                     <img class="item-one-img" v-else/>
                     <p class="item-one-title">{{value.title}}</p>
                 </div>
-                <div class="item" :class="{ 'active': key == cur }" v-else>
+                <div class="item" :class="{ 'active': key == cur }" @click="itemClick(key)" v-else>
                     <p class="item-title">{{value.title}}</p>
                     <img class="item-img" :src="value.thumb_url" v-if="value.thumb_url"/>
                     <img class="item-img" v-else/>
                 </div>
             </div>
-            <div v-if="data.length < 8" class="item-add">
+            <div v-if="data.length < 8" class="item-add" @click="addItem">
                 <span class="mdi mdi-plus"></span>新建图文
             </div>
         </div>
         <div class="col-sm-8 col-xs-8 col-md-8">
-            <div style="margin: 0 20px;padding:10px 20px;width: 100%;background: #fff;position: relative;">
+            <div style="margin: 0 20px 30px 20px;padding:10px 20px;width: 100%;background: #fff;position: relative;">
                 <div class="form-group">
                     <label for="title">标题</label>
                     <input name="title" id="title" v-model="data[cur].title" class="form-control" autocomplete="off" placeholder="请输入文章标题"/>
@@ -88,14 +93,20 @@
                     <label for="thumb_url">封面</label>
                     <div class="input-group">
                         <input type="text" class="form-control" v-model="data[cur].thumb_url" name="thumb_url" id="thumb_url" autocomplete="off"/>
-                        <input type="file" id="filethumb_url" style="display: none;" onchange="upload('thumb_url')"/>
-                        <div class="input-group-btn"><button class="btn btn-default" type="button" onclick="btnClick('thumb_url')">上传</button></div>
+                        <input type="file" id="filethumb_url" style="display: none;" @change="upload('thumb_url')"/>
+                        <div class="input-group-btn"><button class="btn btn-default" type="button" @click="btnClick('thumb_url')">上传</button></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="digest">摘要</label>
                     <textarea id="digest" name="digest" v-model="data[cur].digest" class="form-control" placeholder="请输入文章摘要" autocomplete="off"></textarea>
                 </div>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-success" @click="upClick">上移</a>
+                <a class="btn btn-success" @click="downClick">下移</a>
+                <a class="btn btn-success" @click="saveData">保存</a>
+                <a class="btn btn-danger" @click="delData">删除</a>
             </div>
         </div>
     </div>
@@ -108,34 +119,6 @@
 <script type="text/javascript" src="__ADMIN_PATH__js/lightyear.js"></script>
 <script src="__ADMIN_PATH__js/tinymce/tinymce.min.js"></script>
 <script>
-
-    /**
-     * 选择文件
-     * @param inputName
-     */
-    function btnClick(inputName) {
-        $("#file"+inputName).click()
-    }
-    /**
-     * 异步上传
-     * @param inputName
-     */
-    function upload(inputName) {
-        var formData = new FormData();
-        formData.append("file",$("#file"+inputName)[0].files[0]);
-        $.ajax({
-            type:'POST',
-            url:'/admin/widget.files/image',
-            data: formData,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                $("#"+inputName).text(res.data.filePath);
-            }
-        });
-    }
-
     /**
      * vue
      */
@@ -143,17 +126,77 @@
         el: "#app",
         data() {
             return {
+                id:{$id},
                 cur:0,
-                data:[
-                    {
-                        thumb_url:'',
-                        title:'Python3+Pyqt5爬取抖音视频实战',
-                    }
-                ]
+                data:{:json_encode($data)}
             }
         },
         methods: {
+            btnClick: function(inputName) {
+                $("#file"+inputName).click()
+            },
+            upload : function(inputName) {
+                var that = this;
+                var formData = new FormData();
+                formData.append("file",$("#file"+inputName)[0].files[0]);
+                $.ajax({
+                    type:'POST',
+                    url:'/admin/widget.files/image',
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        that.data[that.cur].thumb_url = res.data.filePath;
+                    }
+                });
+            },
+            addItem:function ()
+            {
+                this.data.push({
+                    thumb_url:'',
+                    title:'标题',
+                })
+                this.cur++;
+            },
+            itemClick(val)
+            {
+                this.cur = val;
+            },
+            upClick()
+            {
+                if (this.cur > 0)
+                {
+                    var tmp = this.data[this.cur-1];
+                    this.data[this.cur-1] = this.data[this.cur];
+                    this.data[this.cur] = tmp;
+                    this.cur--;
+                }
+            },
+            downClick()
+            {
+                if (this.cur < this.data.length-1)
+                {
+                    var tmp = this.data[this.cur+1];
+                    this.data[this.cur+1] = this.data[this.cur];
+                    this.data[this.cur] = tmp;
+                    this.cur++;
+                }
+            },
+            delData()
+            {
+                if (this.data.length == 1) return lightyear.notify('请至少保存一个', 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                else
+                {
+                    var i = this.cur;
+                    if (this.cur == this.data.length-1) this.cur--;
+                    this.data.splice(i,1);
+                }
+            },
+            saveData()
+            {
 
+            }
         },
         mounted(){
             tinymce.init({

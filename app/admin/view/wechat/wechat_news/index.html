@@ -37,7 +37,7 @@
                             <h1 class="item-title">{$vo.cover.title}</h1>
                             <div class="item-image"><img src="{$vo.cover.thumb_url}"></div>
                             <div class="item-desc">{$vo.cover.digest}</div>
-                            <div class="item-footer"><span>更新于{$vo.update_time|date='Y-m-d'}</span><span style="float: right;"><span class="mdi mdi-table-edit item-footer-icon"></span><span class="mdi mdi-delete-circle item-footer-icon"></span></span></div>
+                            <div class="item-footer"><span>更新于{$vo.update_time|date='Y-m-d'}</span><span style="float: right;"><a onclick="iframe.createIframe('编辑图文','/admin/wechat.wechat_news/add?id={$vo.id}')"><span class="mdi mdi-table-edit item-footer-icon"></span></a><span class="mdi mdi-delete-circle item-footer-icon"></span></span></div>
                         </div>
                         {/volist}
                     </div>

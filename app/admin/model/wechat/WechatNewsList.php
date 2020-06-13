@@ -29,4 +29,20 @@ class WechatNewsList extends BaseModel
             $item['cover'] = WechatNews::get(explode(",",$item['item'])[0]);
         })->appends($where);
     }
+
+    /**
+     * 获取图文子数据
+     * @param int $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public static function getAllItem(int $id)
+    {
+        $item = self::where("id",$id)->value("item");
+        $model = WechatNews::where("id","in",explode(",",$item));
+        $data = $model->select();
+        return $data ? $data->toArray() : [];
+    }
 }
