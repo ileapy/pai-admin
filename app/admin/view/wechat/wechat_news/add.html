@@ -21,14 +21,15 @@
             background: #e1e1e1;
         }
         .item-one-title{
-            position: relative;
-            top: 120px;
             padding-left: 10px;
             z-index: 10;
-            color: #fff;
+            color: #000000;
+            margin-top: 115px;
+            position: absolute;
         }
         .item-one-img{
-            position: absolute;
+            width: 100%;
+            height: 100%;
         }
         .item{
             height: 84px;
@@ -36,7 +37,16 @@
             width: 290px;
         }
         .item-title{
-            padding-left: 10px;float: left;width: 190px;height: 70px;
+            padding-left: 10px;
+            float: left;
+            width: 220px;
+            height: 66px;
+            font-weight: 500;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .item-img{
             background: #e1e1e1;width: 60px;height: 60px;float: right;
@@ -62,9 +72,9 @@
         <div class="col-sm-4 col-xs-4 col-md-4">
             <div v-for="(value, key) in data">
                 <div class="item-one" :class="{ 'active': key == cur }" @click="itemClick(key)" v-if="key == 0">
+                    <p class="item-one-title">{{value.title}}</p>
                     <img :src="value.thumb_url" class="item-one-img" v-if="value.thumb_url"/>
                     <img class="item-one-img" v-else/>
-                    <p class="item-one-title">{{value.title}}</p>
                 </div>
                 <div class="item" :class="{ 'active': key == cur }" @click="itemClick(key)" v-else>
                     <p class="item-title">{{value.title}}</p>
@@ -78,29 +88,31 @@
         </div>
         <div class="col-sm-8 col-xs-8 col-md-8">
             <div style="margin: 0 20px 30px 20px;padding:10px 20px;width: 100%;background: #fff;position: relative;">
-                <div class="form-group">
-                    <label for="title">标题</label>
-                    <input name="title" id="title" v-model="data[cur].title" class="form-control" autocomplete="off" placeholder="请输入文章标题"/>
-                </div>
-                <div class="form-group">
-                    <label for="author">作者</label>
-                    <input id="author" name="author" v-model="data[cur].author" class="form-control" placeholder="请输入文章作者"/>
-                </div>
-                <div class="form-group">
-                    <textarea id="content" name="content" v-model="data[cur].content"  class="form-control" placeholder="请输入文章内容" autocomplete="off"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="thumb_url">封面</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" v-model="data[cur].thumb_url" name="thumb_url" id="thumb_url" autocomplete="off"/>
-                        <input type="file" id="filethumb_url" style="display: none;" @change="upload('thumb_url')"/>
-                        <div class="input-group-btn"><button class="btn btn-default" type="button" @click="btnClick('thumb_url')">上传</button></div>
+                <form @submit="checkData">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input name="title" id="title" v-model="data[cur].title" class="form-control" autocomplete="off" placeholder="请输入文章标题"/>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="digest">摘要</label>
-                    <textarea id="digest" name="digest" v-model="data[cur].digest" class="form-control" placeholder="请输入文章摘要" autocomplete="off"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="author">作者</label>
+                        <input id="author" name="author" v-model="data[cur].author" class="form-control" placeholder="请输入文章作者"/>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="content" name="content" class="form-control" placeholder="请输入文章内容" autocomplete="off" v-model="data[cur].content"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="thumb_url">封面</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" v-model="data[cur].thumb_url" name="thumb_url" id="thumb_url" autocomplete="off"/>
+                            <input type="file" id="filethumb_url" style="display: none;" @change="upload('thumb_url')"/>
+                            <div class="input-group-btn"><button class="btn btn-default" type="button" @click="btnClick('thumb_url')">上传</button></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="digest">摘要</label>
+                        <textarea id="digest" name="digest" v-model="data[cur].digest" class="form-control" placeholder="请输入文章摘要" autocomplete="off"></textarea>
+                    </div>
+                </form>
             </div>
             <div class="btn-group">
                 <a class="btn btn-success" @click="upClick">上移</a>
@@ -141,7 +153,7 @@
                 formData.append("file",$("#file"+inputName)[0].files[0]);
                 $.ajax({
                     type:'POST',
-                    url:'/admin/widget.files/image',
+                    url:'/admin/widget.files/uploadWechatImage',
                     data: formData,
                     cache: false,
                     processData: false,
@@ -153,18 +165,24 @@
             },
             addItem:function ()
             {
+                this.getContent();
                 this.data.push({
                     thumb_url:'',
                     title:'标题',
+                    content:'',
                 })
                 this.cur++;
+                this.setContent();
             },
             itemClick(val)
             {
+                this.getContent();
                 this.cur = val;
+                this.setContent();
             },
             upClick()
             {
+                this.getContent();
                 if (this.cur > 0)
                 {
                     var tmp = this.data[this.cur-1];
@@ -172,9 +190,11 @@
                     this.data[this.cur] = tmp;
                     this.cur--;
                 }
+                this.setContent();
             },
             downClick()
             {
+                this.getContent();
                 if (this.cur < this.data.length-1)
                 {
                     var tmp = this.data[this.cur+1];
@@ -182,6 +202,7 @@
                     this.data[this.cur] = tmp;
                     this.cur++;
                 }
+                this.setContent();
             },
             delData()
             {
@@ -192,10 +213,57 @@
                     if (this.cur == this.data.length-1) this.cur--;
                     this.data.splice(i,1);
                 }
+                this.setContent();
+            },
+            setContent()
+            {
+                tinyMCE.activeEditor.setContent(this.data[this.cur].content);
+            },
+            getContent(){
+                this.data[this.cur].content = tinymce.get('content').getContent();
+            },
+            checkData(callback)
+            {
+                var t = true;
+                this.data.forEach(function (value, index, array) {
+                    console.log(index);
+                    if (!value.title) {
+                        lightyear.notify('第'+index+"篇文章标题为空", 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        t = false;
+                    }
+                    if (!value.author) {
+                        lightyear.notify('第'+index+"篇文章作者为空", 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        t = false;
+                    }
+                    if (!value.content) {
+                        lightyear.notify('第'+index+"篇文章内容为空", 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        t = false;
+                    }
+                    if (!value.thumb_url) {
+                        lightyear.notify('第'+index+"篇文章封面为空", 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        t = false;
+                    }
+                    if (!value.digest) {
+                        lightyear.notify('第'+index+"篇文章摘要为空", 'danger', 1000, 'mdi mdi-emoticon-neutral', 'top', 'center');
+                        t = false;
+                    }
+                });
+                if (t) callback();
             },
             saveData()
             {
-
+                this.getContent();
+                this.checkData(this.submit);
+            },
+            submit()
+            {
+                $.post("/admin/wechat.wechat_news/save",{id:this.id,data:this.data},function (res) {
+                    if (res.status == 200) {
+                        parent.lightyear.notify(res.msg, 'success', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                        parent.window.location.reload();
+                    }
+                    else parent.lightyear.notify(res.msg, 'danger', 3000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                });
             }
         },
         mounted(){
@@ -213,7 +281,7 @@
                     "code"
                 ],
                 toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | code",
-                images_upload_url: '/admin/widget.files/tinymce',
+                images_upload_url: '/admin/widget.files/uploadWechatArticleImage',
             });
         }
     });

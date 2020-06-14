@@ -24,7 +24,8 @@ return [
         'UploadMediaAfter' => [], // 微信上传素材文件
         'PayOrderBefore' => [], // 订单支付成功回调,
         'VideoUpdateOver' => [], //电视剧更新完成记录,
-        'VideoRankUpdateOver' => [], //排行榜更新
+        'VideoRankUpdateOver' => [], //排行榜更新,
+        'UploadMaterialAfter' => [], // 图文素材
     ],
 
     'subscribe' => [

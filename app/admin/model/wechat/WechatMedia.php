@@ -24,4 +24,14 @@ class WechatMedia extends BaseModel
     {
         return self::insert($data);
     }
+
+    /**
+     * 获取MediaId
+     * @param string $path
+     * @return mixed
+     */
+    public static function getMediaIdByPath(string $path)
+    {
+        return self::where("path",$path)->value("media_id");
+    }
 }

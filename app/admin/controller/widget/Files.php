@@ -8,6 +8,7 @@ use app\admin\controller\AuthController;
 use app\admin\model\widget\Attachment;
 use learn\services\storage\QcloudCoService;
 use learn\services\UtilService as Util;
+use learn\services\WechatService;
 use think\facade\Filesystem;
 
 class Files extends AuthController
@@ -36,6 +37,62 @@ class Files extends AuthController
                 break;
         }
         return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
+    }
+
+    /**
+     * 图片上传至微信素材
+     * @return mixed
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function uploadWeChatImage()
+    {
+        // 微信资源文件上传
+        $material = WechatService::materialService();
+        $file = $this->request->file("file");
+        $savename = Filesystem::putFile( 'image', $file);
+        $filePath = "/upload/".$savename;
+        $res = $material->uploadThumb(app()->getRootPath().'public'.$filePath);
+        event("UploadMaterialAfter",[$res,$filePath,0]);
+        return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? app("json")->code()->success("上传成功",['filePath'=>$filePath,"name"=>$savename]) : app("json")->fail("上传失败");
+    }
+
+    /**
+     * 图片上传至微信素材
+     * @return mixed
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidArgumentException
+     * @throws \EasyWeChat\Kernel\Exceptions\InvalidConfigException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function uploadWechatArticleImage()
+    {
+        // 微信资源文件上传
+        $material = WechatService::materialService();
+        $file = $this->request->file("file");
+        switch (systemConfig("storage_type"))
+        {
+            case 1:
+                $savename = Filesystem::putFile( 'image', $file);
+                $filePath = "/upload/".$savename;
+                $res = $material->uploadArticleImage(app()->getRootPath().'public'.$filePath);
+                break;
+            case 2:
+                $savename = Filesystem::putFile( 'image', $file);
+                $filePath = "/upload/".$savename;
+                $res = $material->uploadArticleImage(app()->getRootPath().'public'.$filePath);
+                $ext = $file->getOriginalExtension();
+                $key = '/image/'.date('Ymd')."/".substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
+                $filePath = QcloudCoService::put($key, $file->getRealPath());
+                break;
+        }
+        return Attachment::addAttachment($this->request->param("cid",0),$savename,$filePath,'image',$file->getMime(),$file->getSize(),systemConfig("storage_type")) ? json_encode(['location'=>$res['url']]) : app("json")->fail("上传失败");
     }
 
     /**

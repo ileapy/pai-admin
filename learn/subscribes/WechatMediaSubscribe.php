@@ -21,4 +21,14 @@ class WechatMediaSubscribe
         list($res,$path,$temporary) = $event;
         WechatMedia::saveData(['type'=>$res['type'],'media_id'=>$res['media_id'],'create_time'=>$res['created_at'],'path'=>$path,'temporary'=>$temporary]);
     }
+
+    /**
+     * 文章素材图片
+     * @param $event
+     */
+    public function onUploadMaterialAfter($event)
+    {
+        list($res,$path,$temporary) = $event;
+        WechatMedia::saveData(['type'=>'material_image','media_id'=>$res['media_id'],'create_time'=>time(),'path'=>$path,'temporary'=>$temporary]);
+    }
 }

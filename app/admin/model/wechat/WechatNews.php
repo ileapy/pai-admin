@@ -63,4 +63,27 @@ class WechatNews extends BaseModel
             return false;
         }
     }
+
+    /**
+     * @param int $id
+     * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function del2(int $id)
+    {
+        self::startTrans();
+        try {
+            $material = WechatService::materialService();
+            $artice = WechatNewsList::get($id);
+            $material->delete($artice['media_id']);
+            self::where("id","in",explode(",",$artice['item']))->delete();
+            WechatNewsList::del($id);
+            self::commit();
+            return true;
+        }catch (\Exception $e)
+        {
+            self::rollback();
+            return false;
+        }
+    }
 }
