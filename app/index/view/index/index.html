@@ -2,19 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>留言反馈</title>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>PaiAdmin后台管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{$logo}" type="image/png">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        .active a{
+            color: #15ae67 !important;
+            border-bottom: 2px solid;
+        }
+        .nav-item{
+            padding: 0 10px;
+        }
+    </style>
 </head>
 <body>
-<form action="#" method="post" onsubmit="toSubmit()">
-    <p>用户名<input type="text" name="username"></p>
-    <p>留言板<textarea name="content"></textarea></p>
-    <p><input type="submit" value="留言"></p>
-</form>
-<script>
-    function toSubmit() {
-        alert("提交成功")
-    }
-</script>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="{$logo}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            PaiAdmin
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/doc">文档</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">演示</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">交流</a>
+                </li>
+                <li class="nav-item" style="line-height: 36px;padding: 0 10px;">
+                    <a href='https://gitee.com/cfn2333/pai/stargazers'><img src='https://gitee.com/cfn2333/pai/badge/star.svg?theme=dark' alt='star'></img></a>
+                </li>
+                <li class="nav-item" style="line-height: 36px;padding: 0 10px;">
+                    <a href='https://gitee.com/cfn2333/pai/members'><img src='https://gitee.com/cfn2333/pai/badge/fork.svg?theme=dark' alt='fork'></img></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
 </body>
+<script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.slim.min.js" type="text/javascript"></script>
+<script src="https://cdn.staticfile.org/popper.js/1.16.0/umd/popper.min.js" type="text/javascript"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/4.5.0/js/bootstrap.min.js" type="text/javascript"></script>
 </html>
