@@ -13,3 +13,8 @@
 .c-title{
   margin-left: 20px;
 }
+.noMore{
+  text-align: center;
+  line-height: 30px;
+  margin-bottom: 20px;
+}

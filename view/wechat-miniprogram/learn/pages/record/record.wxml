@@ -1,7 +1,10 @@
 <!--pages/record/record.wxml-->
+<scroll-view scroll-y="true" scroll-top='{{topNum}}' bindscrolltolower="getData" lower-threshold="50" style="height:{{bodyHeight}}rpx;">
 <block wx:for="{{lst}}">
   <view class="c-item" bindtap="play" data-vid="{{item.vid}}">
     <image src="{{item.info.image? item.info.image : item.info.cover}}" class="c-image"/>
     <text class="c-title">{{item.info.title}}</text>
   </view>
 </block>
+<view class="noMore" wx:if="{{noMore}}">没有更多了</view>
+</scroll-view>
