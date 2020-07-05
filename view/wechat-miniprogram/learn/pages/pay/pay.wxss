@@ -25,3 +25,8 @@ page{
   line-height: 30px;
   font-size: 14px;
 }
+.noMore{
+  text-align: center;
+  line-height: 30px;
+  margin-bottom: 20px;
+}

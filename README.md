@@ -1,9 +1,6 @@
-自荐
-===============
-本人正在寻求新的发展机遇，有好的公司推荐一下我呗，在此我先谢过了。  
-本项目更新不会受到影响。
+###### 开源不易，请随手给个Star! 感谢支持！
 
-Pai-admin 派后台管理系统
+PaiAdmin 派后台管理系统
 ===============
 
 > 运行环境要求PHP7.1+。  
@@ -33,7 +30,16 @@ Pai-admin 派后台管理系统
 [笔下光年 / Light Year Admin   一个基于Bootstrap v3.3.7的后台HTML模板。](https://gitee.com/yinqi/Light-Year-Admin-Template) 
 
 [xaboy / form-builder PHP表单生成器，使用PHP快速生成现代化的form表单。](https://gitee.com/xaboy/form-builder) 
- 
+
+## 自动安装
+1. 上传文件到网站根目录
+2. 运行composer install 安装依赖
+3. 修改目录权限（linux系统）777  
+   /public  
+   /runtime
+4. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
+5. 后台登录 http://域名/admin
+
 ## 手动安装
 
 1.创建数据库，倒入数据库文件

@@ -10,13 +10,13 @@ use learn\services\WechatService;
  */
 class Index extends BaseController
 {
+    /**
+     * @return string
+     * @throws \Exception
+     */
     public function index()
     {
+        $this->assign("logo",systemConfig("favicon"));
         return $this->fetch();
-    }
-
-    public function hello($name = 'ThinkPHP6')
-    {
-        return 'hello,' . $name;
     }
 }

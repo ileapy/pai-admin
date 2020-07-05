@@ -9,7 +9,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    lst:{}
+    lst:[],
+    noMore: false,
+    topNum: 0,
+    page: 1,
+    limit: 10,
+    bodyHeight: 2000,
   },
 
   /**
@@ -21,14 +26,15 @@ Page({
 
   getData:function()
   {
+    if (this.data.noMore) return;
     var that = this;
-    util.request(app.globalData.api_url+"/order/buy","POST",{},true).then((res)=>{
-      if(res.status == 200)
-      {
-        that.setData({
-          lst:res.data
-        });
-      }
+    util.request(app.globalData.api_url + "/order/buy", "POST", { page: this.data.page, limit: this.data.limit },true).then((res)=>{
+      if (res.data.length >= that.data.limit) that.data.page = that.data.page + 1;
+      else that.data.noMore = true;
+      that.setData({
+        lst: that.data.lst.concat(res.data),
+        noMore: that.data.noMore
+      });
     });
   },
 
