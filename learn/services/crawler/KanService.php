@@ -61,7 +61,7 @@ class KanService
     /**
      * 简介
      */
-    const DESC_MATCH = "/<p class=\"item-desc\">([^<>]+)<a href=\"#\" class=\"js-close btn\">收起&lt;&lt;<\/a><\/p>/";
+    const DESC_MATCH = "/<p class=\"item-desc\">([^<>]+)<\/p>/";
 
     /**
      * 上映时间
@@ -80,7 +80,7 @@ class KanService
     /**
      * 标签
      */
-    const TAG_MATCH = "/<a class=\"cat(.*?)\" href=\"([^<>]+)\" target=\"_blank\">([^<>]+)<\/a>/";
+    const TAG_MATCH = "/<a class=\"cat(.*?)\" href=\"([^<>]+)\" target=\"_blank\" monitor-shortpv-c-sub=\"([^<>]+)\">([^<>]+)<\/a>/";
 
     /**
      * 演员
@@ -105,12 +105,12 @@ class KanService
     /**
      * 资源类型
      */
-    const SOURCE_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\">/";
+    const SOURCE_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\"     monitor-shortpv-c-sub=\"([^<>]+)\">/";
 
     /**
      * 视频地址
      */
-    const URL_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\">/";
+    const URL_MATCH = "/<a href=\"([^<>]+)\" class=\"g-playicon s-cover-img\" data-daochu=\"to=([^<>]+)\" data-num=\"1\"     monitor-shortpv-c-sub=\"([^<>]+)\">/";
 
     /**
      * QQService constructor.
@@ -206,7 +206,7 @@ class KanService
     public function source()
     {
         preg_match(self::SOURCE_MATCH,$this->html,$source);
-        return $source[count($source)-1];
+        return $source[count($source)-2];
     }
 
     /**
