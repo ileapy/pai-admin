@@ -16,7 +16,7 @@ use learn\services\UtilService as Util;
 class Index extends AuthController
 {
     // 无需登录的
-    protected $noNeedLogin = ['test','accessauth','pddlogin'];
+    protected $noNeedLogin = [''];
     // 无需权限的
     protected $noNeedRight = [''];
 
@@ -44,7 +44,6 @@ class Index extends AuthController
             ['page',1],
             ['limit',20],
         ]);
-        $this->assign("project",project::lst($where)['data']);
         $this->assign("billMoney",UserBill::getAllEarn()); //全部收入
         $this->assign("userNum",User::count()); //用户总数
         $this->assign("wechatMessageNum",WechatMessage::where("add_time","between",[mktime(0,0,0,date('m'),date('d'),date('Y')),mktime(0,0,0,date('m'),date('d')+1,date('Y'))-1])->count()); //今日公众号操作数量

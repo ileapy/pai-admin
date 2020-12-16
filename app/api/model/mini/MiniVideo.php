@@ -67,16 +67,15 @@ class MiniVideo extends BaseModel
     /**
      * 获取视频url
      * @param string $vid
+     * @param string $xid
      * @return string
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public static function getUrlByVid(string $vid,string $xid = ""):string
+    public static function getUrlByVid(string $vid, string $xid = ""):string
     {
         if ($xid == "")
         {
-            if ($url =  Cache::store('redis')->get($vid)) return $url;
+            if ($url = Cache::store('redis')->get($vid)) return $url;
             // 电影 判断url不为空直接使用url
             $info = MiniVideo::where("vid",$vid)->value("url");
             $_url = $info ?: "https://v.qq.com/x/cover/".$vid.".html";
@@ -89,7 +88,7 @@ class MiniVideo extends BaseModel
             return "";
         }else
         {
-            if ($url =  Cache::store('redis')->get($vid.$xid)) return $url;
+            if ($url = Cache::store('redis')->get($vid.$xid)) return $url;
             // 电视剧 判断url不为空直接使用url
             $info = MiniVideoItem::where("vid",$vid)->where("xid",$xid)->value("url");
             $_url = $info ?: "https://v.qq.com/x/cover/$vid/$xid.html";

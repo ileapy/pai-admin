@@ -32,7 +32,10 @@ class Curl
      * 请求头
      * @var array
      */
-    public $header = array();
+    public $header = array(
+        "User-Agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+        "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+        );
 
     /**
      * Curl constructor.
@@ -55,7 +58,7 @@ class Curl
      */
     public static function app(string $url, string $type = 'GET', $params = "")
     {
-        return new self( $url, $type, $params);
+        return new self($url, $type, $params);
     }
 
     /**
@@ -78,7 +81,7 @@ class Curl
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);

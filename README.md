@@ -1,5 +1,3 @@
-###### 开源不易，请随手给个Star! 感谢支持！
-
 PaiAdmin 派后台管理系统
 ===============
 
@@ -35,7 +33,7 @@ PaiAdmin 派后台管理系统
 1. 上传文件到网站根目录
 2. 运行composer install 安装依赖
 3. 修改目录权限（linux系统）777  
-   /public  
+   /public
    /runtime
 4. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
 5. 后台登录 http://域名/admin
@@ -118,17 +116,10 @@ php think worker [start|stop|reload|restart|status]
 
 ![Image text](http://file.cos.leapy.cn/image/20200520/1125e20200520101908339.png)
 
-![Image text](http://file.cos.leapy.cn/image/20200520/befdd202005201019221055.png)
-
 ## 后台体验
 后台地址 https://learn.leapy.cn/admin  
 账号 admin  
 密码 123456  
-
-小程序体验，仅供学习研究　　　　　　　　 微信公众号
-
-![Image text](http://file.cos.leapy.cn/image/20200513/7c007202005130755013790.jpg)　　　　
-![Image text](http://file.cos.leapy.cn/image/20200513/8795c202005130757437787.jpg)
 
 ## 联系我
 邮箱：cfn@leapy.cn  

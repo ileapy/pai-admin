@@ -31,7 +31,7 @@ class Admin extends BaseModel
     {
         $info = self::where("name|tel","=", $name)->find();
         if (!$info) return self::setErrorInfo("登录账号不存在");
-        if ($info['pwd'] != md5(md5($pwd))) return self::setErrorInfo("密码不正确！");
+        if ($info['pwd'] != md5($pwd)) return self::setErrorInfo("密码不正确！");
         if ($info['status'] == 2) return self::setErrorInfo("账号已被冻结！");
         self::setLoginInfo($info);
         return true;
