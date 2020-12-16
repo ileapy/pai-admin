@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 16/12/2020 16:42:31
+ Date: 16/12/2020 17:28:44
 */
 
 SET NAMES utf8mb4;
@@ -141,11 +141,31 @@ CREATE TABLE `lea_admin_log`  (
   `create_time` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作时间',
   `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'User-Agent',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of lea_admin_log
 -- ----------------------------
+INSERT INTO `lea_admin_log` VALUES (1, 1, 'admin', 'admin', 'index', 'main', '127.0.0.1', '1608109419', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (2, 1, 'admin', 'admin', 'mini.mini_video', 'index', '127.0.0.1', '1608109424', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (3, 1, 'admin', 'admin', 'mini.mini_video_tag', 'index', '127.0.0.1', '1608109425', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (4, 1, 'admin', 'admin', 'wechat.wechat_menu', 'menu', '127.0.0.1', '1608109429', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (5, 1, 'admin', 'admin', 'wechat.wechat_reply', 'focus', '127.0.0.1', '1608109433', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (6, 1, 'admin', 'admin', 'login', 'login', '222.210.214.92', '1608109440', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (7, 1, 'admin', 'admin', 'index', 'main', '222.210.214.92', '1608109441', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (8, 1, 'admin', 'admin', 'mini.mini_video', 'index', '222.210.214.92', '1608109452', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (9, 1, 'admin', 'admin', 'mini.mini_video_tag', 'index', '222.210.214.92', '1608109453', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (10, 1, 'admin', 'admin', 'mini.mini_video_banner', 'index', '222.210.214.92', '1608109454', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (11, 1, 'admin', 'admin', 'login', 'login', '223.98.149.188', '1608110486', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57');
+INSERT INTO `lea_admin_log` VALUES (12, 1, 'admin', 'admin', 'index', 'main', '223.98.149.188', '1608110487', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57');
+INSERT INTO `lea_admin_log` VALUES (13, 1, 'admin', 'admin', 'cms.cms_category', 'index', '223.98.149.188', '1608110512', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57');
+INSERT INTO `lea_admin_log` VALUES (14, 1, 'admin', 'admin', 'cms.cms_article', 'index', '223.98.149.188', '1608110527', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57');
+INSERT INTO `lea_admin_log` VALUES (15, 1, 'admin', 'admin', 'mini.mini_video', 'index', '223.98.149.188', '1608110544', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57');
+INSERT INTO `lea_admin_log` VALUES (16, 1, 'admin', 'admin', 'system.system_config', 'wechat', '127.0.0.1', '1608110669', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (17, 1, 'admin', 'admin', 'system.system_config', 'base', '127.0.0.1', '1608110671', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (18, 1, 'admin', 'admin', 'admin.admin_icon', 'index', '127.0.0.1', '1608110675', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (19, 1, 'admin', 'admin', 'system.system_config_tab', 'index', '127.0.0.1', '1608110692', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
+INSERT INTO `lea_admin_log` VALUES (20, 1, 'admin', 'admin', 'system.system_config_tab', 'index', '127.0.0.1', '1608110729', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36');
 
 -- ----------------------------
 -- Table structure for lea_admin_notify
@@ -637,53 +657,53 @@ INSERT INTO `lea_system_config` VALUES (6, 1, '后台LOGO', 'admin_logo', 'file'
 INSERT INTO `lea_system_config` VALUES (7, 1, '版权信息', 'copyright', 'text', 'textarea', 0, '', 'Power by LEARY.', '', 84, 1, 1, '1', '1582793470', '1', '1582793495');
 INSERT INTO `lea_system_config` VALUES (8, 1, '备案信息', 'icp', 'text', 'textarea', 0, '', 'xxx', '', 83, 1, 1, '1', '1582793563', '1', '1583375542');
 INSERT INTO `lea_system_config` VALUES (9, 3, '短信平台', 'sms_type', 'radio', 'input', 0, '1=>腾讯云\n2=>阿里云', '1', '', 99, 1, 1, '1', '1583126643', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (10, 3, 'AppID', 'sms_appid', 'text', 'input', 0, '', '1400323535', '', 98, 1, 1, '1', '1583126757', '1', '1583126769');
-INSERT INTO `lea_system_config` VALUES (11, 3, 'App Key', 'sms_appkey', 'text', 'input', 0, '', '0777dd251be53632c95da276738b9fd0', '', 97, 1, 1, '1', '1583126826', '1', '1583131539');
+INSERT INTO `lea_system_config` VALUES (10, 3, 'AppID', 'sms_appid', 'text', 'input', 0, '', '', '', 98, 1, 1, '1', '1583126757', '1', '1583126769');
+INSERT INTO `lea_system_config` VALUES (11, 3, 'App Key', 'sms_appkey', 'text', 'input', 0, '', '', '', 97, 1, 1, '1', '1583126826', '1', '1583131539');
 INSERT INTO `lea_system_config` VALUES (12, 3, '短信登录模板ID', 'sms_login', 'number', 'input', 0, '', '545149', '', 0, 0, 1, '1', '1583137085', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (13, 3, '短信签名', 'sms_sign', 'text', 'input', 0, '', '里派LEAPY', '', 0, 1, 1, '1', '1583137174', '1', '1583140447');
-INSERT INTO `lea_system_config` VALUES (14, 3, '找回密码', 'sms_retrieve', 'number', 'input', 0, '', ' 545151', '', 0, 0, 1, '1', '1583138408', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (14, 3, '找回密码', 'sms_retrieve', 'number', 'input', 0, '', '545151', '', 0, 0, 1, '1', '1583138408', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (15, 3, '注册', 'sms_register', 'number', 'input', 0, '', '545150', '', 0, 0, 1, '1', '1583138507', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (17, 13, '公众号名称', 'wechat_app_name', 'text', 'input', 0, '', '', '', 99, 1, 1, '1', '1583221905', '1', '1583222192');
-INSERT INTO `lea_system_config` VALUES (18, 13, '微信号', 'wechat_app_number', 'text', 'input', 0, '', 'LEAPY_CN', '', 98, 1, 1, '1', '1583221970', '1', '1583222198');
-INSERT INTO `lea_system_config` VALUES (19, 13, '原始ID', 'wechat_app_origin_id', 'text', 'input', 0, '', 'gh_f9e2116bdc11', '', 97, 1, 1, '1', '1583222185', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (20, 13, 'AppID', 'wechat_appid', 'text', 'input', 0, '', 'wxcf8c233220bbf42f', '', 96, 1, 1, '1', '1583222266', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (21, 13, 'AppSecret', 'wechat_appsecret', 'text', 'input', 0, '', '2575cab179dff5b22f3c9285d4c565b7', '', 95, 1, 1, '1', '1583222345', '1', '1583222356');
+INSERT INTO `lea_system_config` VALUES (18, 13, '微信号', 'wechat_app_number', 'text', 'input', 0, '', '', '', 98, 1, 1, '1', '1583221970', '1', '1583222198');
+INSERT INTO `lea_system_config` VALUES (19, 13, '原始ID', 'wechat_app_origin_id', 'text', 'input', 0, '', '', '', 97, 1, 1, '1', '1583222185', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (20, 13, 'AppID', 'wechat_appid', 'text', 'input', 0, '', '', '', 96, 1, 1, '1', '1583222266', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (21, 13, 'AppSecret', 'wechat_appsecret', 'text', 'input', 0, '', '', '', 95, 1, 1, '1', '1583222345', '1', '1583222356');
 INSERT INTO `lea_system_config` VALUES (22, 13, '微信验证TOKEN', 'wechat_token', 'text', 'input', 0, '', 'learn', '', 94, 1, 1, '1', '1583222439', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (23, 13, '消息加解密方式', 'wechat_encry', 'radio', 'input', 0, '1=>明文模式\n2=>兼容模式\n3=>安全模式', '1', '', 93, 1, 1, '1', '1583222535', '1', '1583223241');
-INSERT INTO `lea_system_config` VALUES (24, 13, 'EncodingAESKey', 'wechat_aeskey', 'text', 'input', 0, '', 'EnRXjvDAHlqKbxaaSeQE3pnNBkNHMLmqL5QuB4KsNYt', '', 92, 1, 1, '1', '1583223110', '1', '1583223252');
+INSERT INTO `lea_system_config` VALUES (24, 13, 'EncodingAESKey', 'wechat_aeskey', 'text', 'input', 0, '', '', '', 92, 1, 1, '1', '1583223110', '1', '1583223252');
 INSERT INTO `lea_system_config` VALUES (25, 13, '公众号类型', 'wechat_type', 'radio', 'input', 0, '1=>服务号\n2=>订阅号', '1', '', 91, 1, 1, '1', '1583223219', '1', '1583223257');
 INSERT INTO `lea_system_config` VALUES (26, 13, '接口地址', 'wechat_url', 'text', 'input', 0, '', 'https://learn.leapy.cn/api/wechat/serve', '', 90, 1, 1, '1', '1583223343', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (29, 14, '小程序APPID', 'miniprogram_appid', 'text', 'input', 0, '', 'wxe37eb9fc00f03a58', '', 99, 1, 1, '1', '1587732068', '1', '1587967147');
-INSERT INTO `lea_system_config` VALUES (30, 14, '小程序密钥', 'miniprogram_appsecret', 'text', 'input', 0, '', '144ddbf99b8cf58b644410c36666865d', '', 98, 1, 1, '1', '1587732178', '1', '1587967175');
+INSERT INTO `lea_system_config` VALUES (29, 14, '小程序APPID', 'miniprogram_appid', 'text', 'input', 0, '', '', '', 99, 1, 1, '1', '1587732068', '1', '1587967147');
+INSERT INTO `lea_system_config` VALUES (30, 14, '小程序密钥', 'miniprogram_appsecret', 'text', 'input', 0, '', '', '', 98, 1, 1, '1', '1587732178', '1', '1587967175');
 INSERT INTO `lea_system_config` VALUES (31, 14, '小程序LOGO', 'miniprogram_logo', 'file', 'input', 0, '', 'http://file.cos.leapy.cn/image/20200509/29a4a202005092052147675.jpg', '', 0, 1, 1, '1', '1588201532', '1', '1589028469');
 INSERT INTO `lea_system_config` VALUES (32, 14, '小程序名称', 'miniprogram_name', 'text', 'input', 0, '', '里派社区', '', 0, 1, 1, '1', '1588202282', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (33, 2, '存储方式', 'storage_type', 'radio', 'input', 0, '1=>本地储存\n2=>腾讯云COS', '2', '', 0, 1, 1, '1', '1588819285', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (34, 2, 'CDN域名', 'storage_domain', 'text', 'input', 0, '', 'http://file.cos.leapy.cn', '', 0, 1, 1, '1', '1588819651', '1', '1588828871');
-INSERT INTO `lea_system_config` VALUES (35, 2, 'SecretId', 'storage_secretid', 'text', 'input', 0, '', 'AKIDBFBzd7aUNEvVv9F7sphOwKWuAuY3qVwI', '', 0, 1, 1, '1', '1588820386', '1', '1588828877');
-INSERT INTO `lea_system_config` VALUES (36, 2, 'SecretKey', 'storage_secretkey', 'text', 'input', 0, '', 'fGgw0sY4TiyfFdoqhQyKUTFqJcYM2YxE', '', 0, 1, 1, '1', '1588820426', '1', '1588828883');
-INSERT INTO `lea_system_config` VALUES (37, 2, '存储位置', 'storage_region', 'text', 'input', 0, '', 'ap-chengdu', '腾讯云COS填写', 0, 1, 1, '1', '1588821134', '1', '1588828897');
-INSERT INTO `lea_system_config` VALUES (38, 2, '存储桶名称', 'storage_bucket', 'text', 'input', 0, '', 'pipasheng-1252563008', '', 0, 1, 1, '1', '1588821538', '1', '1588828889');
-INSERT INTO `lea_system_config` VALUES (39, 4, 'SMTP服务器', 'mail_host', 'text', 'input', 0, '', 'http://bt.leapy.cn:618/mail_sys/send_mail_http.json', '', 0, 1, 1, '1', '1588835717', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (40, 4, '邮箱用户名', 'mail_username', 'text', 'input', 0, '', 'mail@leapy.cn', '', 0, 1, 1, '1', '1588835775', '1', '1588836096');
-INSERT INTO `lea_system_config` VALUES (41, 4, '授权码', 'mail_password', 'text', 'input', 0, '', '52Xia666', '', 0, 1, 1, '1', '1588835807', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (35, 2, 'SecretId', 'storage_secretid', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588820386', '1', '1608110715');
+INSERT INTO `lea_system_config` VALUES (36, 2, 'SecretKey', 'storage_secretkey', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588820426', '1', '1608110724');
+INSERT INTO `lea_system_config` VALUES (37, 2, '存储位置', 'storage_region', 'text', 'input', 0, '', '', '腾讯云COS填写', 0, 1, 1, '1', '1588821134', '1', '1588828897');
+INSERT INTO `lea_system_config` VALUES (38, 2, '存储桶名称', 'storage_bucket', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588821538', '1', '1608110744');
+INSERT INTO `lea_system_config` VALUES (39, 4, 'SMTP服务器', 'mail_host', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588835717', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (40, 4, '邮箱用户名', 'mail_username', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588835775', '1', '1588836096');
+INSERT INTO `lea_system_config` VALUES (41, 4, '授权码', 'mail_password', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588835807', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (42, 4, '服务器端口', 'mail_port', 'text', 'input', 0, '', '25', '', 0, 1, 1, '1', '1588836004', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (43, 4, '发件人', 'mail_from', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588836080', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (44, 4, '发件人签名', 'mail_from_name', 'text', 'input', 0, '', '里派', '', 0, 1, 1, '1', '1588844572', '1', '1588845488');
 INSERT INTO `lea_system_config` VALUES (45, 38, 'APP支付APPID', 'pay_wechat_appid', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588854973', '1', '1588855071');
-INSERT INTO `lea_system_config` VALUES (46, 38, '公众号APPID', 'pay_wechat_app_id', 'text', 'input', 0, '', 'wxcf8c233220bbf42f', '', 0, 1, 1, '1', '1588855050', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (47, 38, '小程序APPID', 'pay_wechat_miniapp_id', 'text', 'input', 0, '', 'wxe37eb9fc00f03a58', '', 0, 1, 1, '1', '1588855120', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (46, 38, '公众号APPID', 'pay_wechat_app_id', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588855050', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (47, 38, '小程序APPID', 'pay_wechat_miniapp_id', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588855120', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (48, 38, '商户号', 'pay_wechat_mch_id', 'text', 'input', 0, '', '1588549971', '', 0, 1, 1, '1', '1588855177', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (49, 38, 'API密钥', 'pay_wechat_key', 'text', 'input', 0, '', 'wsCQDTupznzYfH8oKH89PVvbUC5h4tb0', '', 0, 1, 1, '1', '1588855400', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (50, 38, '支付证书', 'pay_wechat_apiclient_cert', 'file', 'input', 0, '', '/upload/file/20200507/c0b5fc54d03d194078899202059e41a1.pem', '', 0, 1, 1, '1', '1588855742', '1', '1588856093');
-INSERT INTO `lea_system_config` VALUES (51, 38, '支付密钥', 'pay_wechat_apiclient_key', 'file', 'input', 0, '', '/upload/file/20200507/53315d3c81bd5e7d6626410cc81f6d45.pem', '', 0, 1, 1, '1', '1588855797', '1', '1588856105');
+INSERT INTO `lea_system_config` VALUES (49, 38, 'API密钥', 'pay_wechat_key', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588855400', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (50, 38, '支付证书', 'pay_wechat_apiclient_cert', 'file', 'input', 0, '', '', '', 0, 1, 1, '1', '1588855742', '1', '1588856093');
+INSERT INTO `lea_system_config` VALUES (51, 38, '支付密钥', 'pay_wechat_apiclient_key', 'file', 'input', 0, '', '', '', 0, 1, 1, '1', '1588855797', '1', '1588856105');
 INSERT INTO `lea_system_config` VALUES (52, 1, '网站域名', 'domain', 'text', 'input', 0, '', 'https://learn.leapy.cn', '', 0, 1, 1, '1', '1588858018', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (53, 39, '支付宝APPID', 'pay_alipay_app_id', 'text', 'input', 0, '', '2018071160550945', '', 0, 1, 1, '1', '1588894650', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (54, 39, '支付宝公钥', 'pay_alipay_ali_public_key', 'text', 'input', 0, '', 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqdwBWnAd0DT973SyIGheDBWFpbRhEowyQwo5K/ryDLl5jQcBnhufgtvxYu7OIP365maGnEjb1VokNFi+9jWLogl9cgHKVOCTpmEwtAfjC6LT2+8bCp/xTQyFtvL5rvQBt5vDiM6n1t3NACPOBKEo5dJoPHv0Frdvmmqs8pWbw1gJDKmVdAxh8YYP5/b4mtG+JruPYOjTzuYms5UPbW3N3/JnMCeoQcJHVOpyZsvztJFqaASMA0OY9N5u8Wr6wJiifN+PWUa8eKFVJ2wc7fDKeNIqUpIP+YiQjzz69h0//3inLeshLsYlEQCjXJUDveXTY/PKBLm3vmSrY0zF2cAt2QIDAQAB', '', 0, 1, 1, '1', '1588894847', '1', '1588895236');
-INSERT INTO `lea_system_config` VALUES (55, 39, '支付宝私钥', 'pay_alipay_private_key', 'text', 'input', 0, '', 'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCp3AFacB3QNP3vdLIgaF4MFYWltGESjDJDCjkr+vIMuXmNBwGeG5+C2/Fi7s4g/frmZoacSNvVWiQ0WL72NYuiCX1yAcpU4JOmYTC0B+MLotPb7xsKn/FNDIW28vmu9AG3m8OIzqfW3c0AI84EoSjl0mg8e/QWt2+aaqzylZvDWAkMqZV0DGHxhg/n9via0b4mu49g6NPO5iazlQ9tbc3f8mcwJ6hBwkdU6nJmy/O0kWpoBIwDQ5j03m7xavrAmKJ8349ZRrx4oVUnbBzt8Mp40ipSkg/5iJCPPPr2HT//eKct6yEuxiURAKNclQO95dNj88oEube+ZKtjTMXZwC3ZAgMBAAECggEAPjS9JiLDOFn/2W8SQP4X2zMSk+HgXwuK6LRYxbuMY46VbklvlTimjSUBXOr6AGkjNre7eobQQ21UrvsFTGPFtFznXRY8xCLOz/LuBDCTPNKv5e7GJ3j1xPLeEWcge6sO6fAYhwSvwOfPyMpUC6v9r1UEKYp3lM4vCA0jM2AJAFum+XrGz0zLyKyaSb88GdxTU8FsbM/EbJn6ReQmzNF5O0P+mrBBhb5JQ0a8ixsOB6DIc48tJGMWFf+AVb4QG93qmUP9vyErJCEj6/Cz8gF7SxOE88YtS/baiJGedLayS0Kzxr5Fy2ch/+7q5CLg5n/oN//gJcxIFcGvY/kwp0d4pQKBgQDjpxxIDPSR/FRpgqZXQwK+eZ5aW1GgILZeGH/iF1vsqY3eDqwxD3+fQARHUTYTy86pRTgbEhHAFItKe9cwd2CztDkiz/Avw3DCNmVE6H14deqb89h3fxMeVwuBzsidvvQB0nFbtCDaiG+YGDndh3gVrPY8Bz18dTDBDnrHHh44KwKBgQC/Ap1fjkjwp8j42kO3DvQoaN/Pd1rA/kZoc4GqofUEM1GE6Qx98rPQgCicMMycvJrGzoSg8d/6l19JplmFrn52qKqdnEg+TBTv8H9XY8cqEjDzOggkE4ypRidZypjKdtHmprQ6K8fICs1SGc+aSgDUzuR3U/Om4C+E8R3ujtVMCwKBgQDKwO4WWbuFPcfshNkjhOIvxN+9N/HV/OyPl6BmPEm52TUqHcVMmLIgooJtBi50qSMxbR3QNmKqwWFhgDSizN/KjWwJzkrsL1QBFTNSkQIWxGakaSRVIU9kyT/NZ98TZ5uo98XQV/ieyb8iJgl7fQj9vSM9SXGApFs8xmmhZ/igKwKBgCqei7zJg67m0SntkZRj6sildeLVz9MmKVGfDDylfIUeaj8MvPPRVpvcLLOFE/KZBrP7Wo6KyZ4hbmqBipIQeDlDsyYNu/Tihv1unQtDwSm6+18aAL0D+6u9coRPdz4duwILCkW8hQw2lM+P4MmdX4gcTc/uVHxUo2W3YyVai283AoGAB4+/SHoXFkN+Wez0mxOcQ68o+5SiVDVi19nH1zRY8rxjoxIZ7OkQYyBNMIaT7dwchlLSevUyRI8q56m2vFsYI5LSBnm6ZKfTZhT1DrcpRdk7UFZCi+MQ8PXxDlsXilZOUNvTyBqCsBzRjPehHrzMiv9RSB61uncQnJy0+d1D3OU=', '', 0, 1, 1, '1', '1588894902', '1', '1588895266');
+INSERT INTO `lea_system_config` VALUES (53, 39, '支付宝APPID', 'pay_alipay_app_id', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588894650', NULL, NULL);
+INSERT INTO `lea_system_config` VALUES (54, 39, '支付宝公钥', 'pay_alipay_ali_public_key', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588894847', '1', '1588895236');
+INSERT INTO `lea_system_config` VALUES (55, 39, '支付宝私钥', 'pay_alipay_private_key', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1588894902', '1', '1588895266');
 INSERT INTO `lea_system_config` VALUES (56, 39, '应用公钥证书路径', 'pay_alipay_app_cert_public_key', 'file', 'input', 0, '', '', '公钥证书模式使用', 0, 1, 1, '1', '1588895349', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (57, 39, '支付宝根证书路径', 'pay_alipay_alipay_root_cert', 'file', 'input', 0, '', '', '公钥证书模式使用', 0, 1, 1, '1', '1588895390', '1', '1588895402');
 INSERT INTO `lea_system_config` VALUES (58, 14, '小程序Token', 'miniprogram_token', 'text', 'input', 0, '', 'learn.leapy.cn', '', 0, 1, 1, '1', '1589007729', NULL, NULL);
-INSERT INTO `lea_system_config` VALUES (59, 14, 'EncodingAESKey', 'miniprogram_aeskey', 'text', 'input', 0, '', '4aFLNbclHer8Qhx4PdmBUhohsMR7Ngm0lsQwgllwk4H', '', 0, 1, 1, '1', '1589007789', '1', '1589007836');
+INSERT INTO `lea_system_config` VALUES (59, 14, 'EncodingAESKey', 'miniprogram_aeskey', 'text', 'input', 0, '', '', '', 0, 1, 1, '1', '1589007789', '1', '1589007836');
 INSERT INTO `lea_system_config` VALUES (60, 14, '加密方式', 'miniprogram_encry', 'radio', 'input', 0, '1=>明文模式\n2=> 兼容模式\n3=> 安全模式（推荐）', '1', '', 0, 1, 1, '1', '1589007953', NULL, NULL);
 INSERT INTO `lea_system_config` VALUES (61, 14, '接口地址', 'miniprogram_url', 'text', 'input', 0, '', 'https://learn.leapy.cn/api/mini_program/serve', '', 0, 1, 1, '1', '1589008013', '1', '1589008053');
 INSERT INTO `lea_system_config` VALUES (62, 14, '审核模式', 'miniprogram_audit', 'radio', 'input', 0, '0=>关闭\n1=>开启', '0', '', 0, 1, 1, '1', '1589177436', '1', '1593151328');
