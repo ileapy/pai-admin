@@ -102,29 +102,29 @@ php think worker [start|stop|reload|restart|status]
 [EasyWeChat](https://www.easywechat.com/docs)  
 
 ## 截图
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/320b1202005201016139883.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/1929fe8858061a55247f80d663e03866.png)
 
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/4870e202005201017078544.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/f07eb3ee03a10c8134e58280c6b498d7.png)
 
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/28395202005201017322794.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/1eedff0f93f57eb679089207f76d8b36.png)
 
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/99214202005201017522849.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/28757747c20d2d5e10899d3b509009f3.png)
 
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/ebd6420200520101809963.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/f71acaa4cf5249bd651c78bdd22cbac9.png)
 
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/99c2d202005201018228828.png)
-
-![Image text](https://pipasheng-1252563008.cos.ap-chengdu.myqcloud.com/image/20200520/1125e20200520101908339.png)
+![Image text](https://asset.leapy.cn/upload/image/20201219/e38e26194d5d81a9cf5f5c465f01e979.png)
 
 ## 后台体验
 后台地址 https://learn.leapy.cn/admin  
 账号 admin  
 密码 123456  
 
+## 其它项目
+[Sweet Girl 直播商城](https://gitee.com/leapy/sweet-girl) 
+
 ## 联系我
 邮箱：cfn@leapy.cn  
-微信：C17896852019（此手机号已不用）  
-
+微信：SH-CFN
 ## 版权信息
 
 Pai-admin遵循Apache2开源协议发布，并提供免费使用。
