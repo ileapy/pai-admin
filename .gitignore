@@ -4,3 +4,7 @@
 *.log
 /.env
 /runtime
+composer.lock
+/public/nginx.htaccess
+/public/robots.txt
+/public/.htaccess
