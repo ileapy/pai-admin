@@ -1,8 +1,6 @@
 <?php
 
 include 'auto.php';
-if(IS_SAE)
-header("Location: index_sae.php");
 
 if (file_exists('./install.lock')) {
     echo '
@@ -16,29 +14,26 @@ if (file_exists('./install.lock')) {
         </html>';
     exit;
 }
-@set_time_limit(1000);
 
 if (PHP_EDITION > phpversion()){
 	header("Content-type:text/html;charset=utf-8");
 	exit('您的php版本过低，不能安装本软件，请升级到'.PHP_EDITION.'或更高版本再安装，谢谢！');
 }
 
-define("LEAPY_VERSION", '20200601');
 date_default_timezone_set('PRC');
 error_reporting(E_ALL & ~E_NOTICE);
 header('Content-Type: text/html; charset=UTF-8');
 define('SITE_DIR', _dir_path(substr(dirname(__FILE__), 0, -8)));//入口文件目录
 define('APP_DIR', _dir_path(substr(dirname(__FILE__), 0, -15)));//项目目录
-//define('SITEDIR2', substr(SITEDIR,0,-7));
-//echo SITEDIR;
-//exit;SITE_DIR
-//数据库
+
+// 检测数据库文件是否存在
 $sqlFile = 'leapy.sql';
 $configFile = '.env';
 if (!file_exists(SITE_DIR . 'install/' . $sqlFile) || !file_exists(SITE_DIR . 'install/' . $configFile)) {
     echo '缺少必要的安装文件!';
     exit;
 }
+
 $Title = "Pai-admin安装向导";
 $Powered = "Powered by LEAPY";
 $steps = array(
@@ -54,6 +49,7 @@ $step = isset($_GET['step']) ? $_GET['step'] : 1;
 $scriptName = !empty($_SERVER["REQUEST_URI"]) ? $scriptName = $_SERVER["REQUEST_URI"] : $scriptName = $_SERVER["PHP_SELF"];
 $rootpath = @preg_replace("/\/(I|i)nstall\/index\.php(.*)$/", "", $scriptName);
 $domain = empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+
 if ((int) $_SERVER['SERVER_PORT'] != 80) {
     $domain .= ":" . $_SERVER['SERVER_PORT'];
 }
@@ -66,14 +62,13 @@ switch ($step) {
         exit();
 
     case '2':
-
         if (phpversion() <= PHP_EDITION) {
             die('本系统需要PHP版本 >= '.PHP_EDITION.'环境，当前PHP版本为：' . phpversion());
         }
 
-        $phpv = @ phpversion();
+        $phpv = @phpversion();
         $os = PHP_OS;
-        //$os = php_uname();
+
         $tmp = function_exists('gd_info') ? gd_info() : array();
         $server = $_SERVER["SERVER_SOFTWARE"];
         $host = (empty($_SERVER["SERVER_ADDR"]) ? $_SERVER["SERVER_HOST"] : $_SERVER["SERVER_ADDR"]);
@@ -137,7 +132,7 @@ switch ($step) {
             $finfo_open = '<font color=red>[×]不支持</font>';
             $err++;
         }
-        
+
         $folder = array(
             'public/install',
             'public/upload',
@@ -163,43 +158,33 @@ switch ($step) {
 
     case '3':
 		$dbName = strtolower(trim($_POST['dbName']));
-		$_POST['dbport'] = $_POST['dbport'] ? $_POST['dbport'] : '3306';
+		$_POST['dbport'] = $_POST['dbport'] ?: '3306';
         if ($_GET['testdbpwd']) {
             $dbHost = $_POST['dbHost'];
-            $conn = @mysqli_connect($dbHost, $_POST['dbUser'], $_POST['dbPwd'],NULL,$_POST['dbport']);			
-            if (mysqli_connect_errno($conn)){				
-				die(json_encode(0));                
+            $conn = @mysqli_connect($dbHost, $_POST['dbUser'], $_POST['dbPwd'],NULL,$_POST['dbport']);
+            if (mysqli_connect_errno($conn)){
+				die(json_encode(0));
             } else {
-//				$result = mysqli_query($conn,"SELECT @@global.sql_mode");
-//				$result = $result->fetch_array();
-//				$version = mysqli_get_server_info($conn);
-//				if ($version >= 5.7)
-//				{
-//					if(strstr($result[0],'STRICT_TRANS_TABLES') || strstr($result[0],'STRICT_ALL_TABLES') || strstr($result[0],'TRADITIONAL') || strstr($result[0],'ANSI'))
-//						exit(json_encode(-1));
-//				}
 				$result = mysqli_query($conn,"select count(table_name) as c from information_schema.`TABLES` where table_schema='$dbName'");
 				$result = $result->fetch_array();
 				if($result['c'] > 0)
 					exit(json_encode(-2));
-				
+
                 exit(json_encode(1));
             }
-        }		 		
+        }
         include_once ("./templates/step3.php");
         exit();
-
-
     case '4':
         if (intval($_GET['install'])) {
             $n = intval($_GET['n']);
-            if ($i == 999999)
+            if ($n == 999999)
                 exit;
             $arr = array();
 
             $dbHost = trim($_POST['dbhost']);
             $_POST['dbport'] = $_POST['dbport'] ? $_POST['dbport'] : '3306';
-            $dbName = strtolower(trim($_POST['dbname']));            
+            $dbName = strtolower(trim($_POST['dbname']));
             $dbUser = trim($_POST['dbuser']);
             $dbPwd = trim($_POST['dbpw']);
             $dbPrefix = empty($_POST['dbprefix']) ? 'lea_' : trim($_POST['dbprefix']);
@@ -207,7 +192,7 @@ switch ($step) {
             $username = trim($_POST['manager']);
             $password = trim($_POST['manager_pwd']);
             $email	  = trim($_POST['manager_email']);
-            
+
             if (!function_exists('mysqli_connect')) {
                 $arr['msg'] = "请安装 mysqli 扩展!";
                 echo json_encode($arr);
@@ -215,7 +200,7 @@ switch ($step) {
             }
             $conn = @mysqli_connect($dbHost, $dbUser, $dbPwd,NULL,$_POST['dbport']);
             if (mysqli_connect_errno($conn)){
-                $arr['msg'] = "连接数据库失败!".mysqli_connect_error($conn);           
+                $arr['msg'] = "连接数据库失败!".mysqli_connect_error($conn);
                 echo json_encode($arr);
                 exit;
             }
@@ -226,7 +211,7 @@ switch ($step) {
                 echo json_encode($arr);
                 exit;
             }
-            
+
             if (!mysqli_select_db($conn,$dbName)) {
                 //创建数据时同时设置编码
                 if (!mysqli_query($conn,"CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
@@ -256,7 +241,7 @@ switch ($step) {
                 $sql = trim($sqlFormat[$i]);
                 if (strstr($sql, 'CREATE TABLE')) {
                     preg_match('/CREATE TABLE `lea_([^ ]*)`/is', $sql, $matches);
-                    mysqli_query($conn,"DROP TABLE IF EXISTS `$matches[1]");
+                    mysqli_query($conn,"DROP TABLE IF EXISTS $matches[1]");
                     $sql = str_replace('`lea_','`'.$dbPrefix,$sql);//替换表前缀
                     $ret = mysqli_query($conn,$sql);
                     if ($ret) {
@@ -280,7 +265,7 @@ switch ($step) {
             }
             // 清理掉管理员表
             mysqli_query($conn,"truncate table ".str_replace('lea_',$dbPrefix,'lea_admin'));
-			// 清空测试数据			
+			// 清空测试数据
 			if(!$_POST['demo'])
 			{
 				$bl_table = array('lea_admin'
@@ -295,12 +280,12 @@ switch ($step) {
 				foreach($bl_table as $k => $v)
 				{
 					$bl_table[$k] = str_replace('lea_',$dbPrefix,$v);
-				}			      
-			
+				}
+
 				foreach($bl_table as $key => $val)
 				{
                     mysqli_query($conn,"truncate table ".$val);
-				}   	
+				}
 				delFile(APP_DIR.'/public/upload'); // 清空测试图片
 			}
             //读取配置文件，并替换真实配置数据1
@@ -312,21 +297,12 @@ switch ($step) {
             $strConfig = str_replace('#DB_PORT#', $_POST['dbport'], $strConfig);
             $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
             $strConfig = str_replace('#DB_CHARSET#', 'utf8', $strConfig);
-            // $strConfig = str_replace('#DB_DEBUG#', false, $strConfig);
-            @chmod(APP_DIR . '/.env',0777); //数据库配置文件的地址
-            @file_put_contents(APP_DIR . '/.env', $strConfig); //数据库配置文件的地址
-            
-            //读取配置文件，并替换换配置
-//            $strConfig = file_get_contents(SITE_DIR . '/application/config.php');
-//            $strConfig = str_replace('CRMEB_cache_prefix', $uniqid_str, $strConfig);
-//            @chmod(SITE_DIR . '/application/config.php',0777); //配置文件的地址
-//            @file_put_contents(SITE_DIR . '/application/config.php', $strConfig); //配置文件的地址
 
-            //更新网站配置信息2
-
+            @chmod(APP_DIR . '.env',0777); //数据库配置文件的地址
+            @file_put_contents(APP_DIR . '.env', $strConfig); //数据库配置文件的地址
             //插入管理员表字段tp_admin表
             $time = time();
-            $password = md5(md5(trim($_POST['manager_pwd'])));
+            $password = md5(trim($_POST['manager_pwd']));
             mysqli_query($conn,"truncate table {$dbPrefix}system_admin");
             $addadminsql = "INSERT INTO `{$dbPrefix}admin` (`id`, `name`, `nickname`, `pwd`, `role_id`, `status`, `create_time`, `create_user`) VALUES
 (1, '".$username."', 'admin' ,'".$password."', 1, 1, $time, '1')";
@@ -343,7 +319,6 @@ switch ($step) {
         }
         include_once ("./templates/step4.php");
         exit();
-
     case '5':
     	$ip = get_client_ip();
     	$host = $_SERVER['HTTP_HOST'];
@@ -388,9 +363,9 @@ function sql_split($sql, $tablepre) {
 
     if ($tablepre != "tp_")
     	$sql = str_replace("tp_", $tablepre, $sql);
-          
+
     $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=utf8", $sql);
-    
+
     $sql = str_replace("\r", "\n", $sql);
     $ret = array();
     $num = 0;
