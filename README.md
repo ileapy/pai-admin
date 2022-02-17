@@ -38,6 +38,8 @@ PaiAdmin 派后台管理系统
 4. 配置好域名，在浏览器里打开域名，根据安装向导进行安装
 5. 后台登录 http://域名/admin
 
+注意：linux自动安装.env文件可能会被创建成文件夹，要手动修改下
+
 ## 手动安装
 
 1.创建数据库，倒入数据库文件
@@ -115,7 +117,7 @@ php think worker [start|stop|reload|restart|status]
 ![Image text](https://asset.leapy.cn/upload/image/20201219/e38e26194d5d81a9cf5f5c465f01e979.png)
 
 ## 后台体验
-后台地址 https://learn.leapy.cn/admin  
+后台地址 https://demo.kuzuozhou.cn/
 账号 admin  
 密码 123456  
 
@@ -131,6 +133,6 @@ Pai-admin遵循Apache2开源协议发布，并提供免费使用。
 
 本项目包含的第三方源码和二进制文件之版权信息另行标注。
 
-版权所有Copyright © 2019-2020 by LEAPY (https://learn.leapy.cn/admin)
+版权所有Copyright © 2019-2020 by LEAPY (https://demo.kuzuozhou.cn/)
 
 All rights reserved。
