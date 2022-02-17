@@ -117,7 +117,7 @@ php think worker [start|stop|reload|restart|status]
 ![Image text](https://asset.leapy.cn/upload/image/20201219/e38e26194d5d81a9cf5f5c465f01e979.png)
 
 ## 后台体验
-后台地址 https://demo.kuzuozhou.cn/
+后台地址 https://demo.kuzuozhou.cn/  
 账号 admin  
 密码 123456  
 
